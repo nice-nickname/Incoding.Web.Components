@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Components.Demo", "Incoding.Web.Components.Demo\Incoding.Web.Components.Demo.csproj", "{94DCC808-FC93-4CEF-97AC-B67EAA9C8A90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Components", "Incoding.Web.Components\Incoding.Web.Components.csproj", "{14B77065-2DAD-435C-A504-F6271941CEED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94DCC808-FC93-4CEF-97AC-B67EAA9C8A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DCC808-FC93-4CEF-97AC-B67EAA9C8A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DCC808-FC93-4CEF-97AC-B67EAA9C8A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DCC808-FC93-4CEF-97AC-B67EAA9C8A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14B77065-2DAD-435C-A504-F6271941CEED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14B77065-2DAD-435C-A504-F6271941CEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14B77065-2DAD-435C-A504-F6271941CEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14B77065-2DAD-435C-A504-F6271941CEED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C9AF46D-052B-44E8-9A12-4394E60789A4}
+	EndGlobalSection
+EndGlobal

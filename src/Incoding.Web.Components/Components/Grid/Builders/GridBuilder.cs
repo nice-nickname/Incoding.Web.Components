@@ -1,84 +1,51 @@
-namespace Incoding.Web.Components
+namespace Incoding.Web.Components.Grid
 {
     #region << Using >>
 
     using System;
-    using Incoding.Web.Extensions;
-    using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
 
-    public class GridBuilder<TModel>
+    public class GridBuilder<T>
     {
-        private readonly Grid<TModel> _grid;
+        private readonly Grid<T> _grid;
 
-        private Action<ColumnBuilder<TModel>> _buildColumnsAction;
+        private readonly IHtmlHelper _html;
 
-        public IHtmlHelper Html { get; }
+        public Grid<T> __grid__ => this._grid;
 
-        public GridBuilder(IHtmlHelper html, string eachName)
+        public GridBuilder()
         {
-            this.Html = html;
-
-            this._grid = new Grid<TModel>(eachName);
+            _grid = new Grid<T>();
         }
-        
-        public GridBuilder<TModel> Css(string css)
+
+        public GridBuilder<T> Css(string css)
         {
-            this._grid.CssClass = css;
+            this._grid.Css = css;
+
             return this;
         }
 
-        public GridBuilder<TModel> Columns(Action<ColumnBuilder<TModel>> builderAction)
+        public GridBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
         {
-            this._buildColumnsAction = builderAction;
+            var cb = new ColumnListBuilder<T>();
+            buildAction(cb);
+
+            this._grid.Columns = cb.Columns;
+            this._grid.Header = cb.Headers;
+
             return this;
         }
 
-        public GridBuilder<TModel> Row(Action<RowBuilder<TModel>> buildRow)
+        public GridBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
         {
-            var rowBuilder = new RowBuilder<TModel>(Html);
-            buildRow(rowBuilder);
+            var rb = new RowBuilder<T>();
+            buildAction(rb);
 
-            this._grid.Row = rowBuilder.Row;
+            this._grid.Row = rb.Row;
+
             return this;
-        }
-            
-        public GridBuilder<TModel> Sortable(bool value = true)
-        {
-            this._grid.Sortable = value;
-            return this;
-        }
-
-        public GridBuilder<TModel> Filterable(bool value = true)
-        {
-            this._grid.Filterable = value;
-            return this;
-        }
-
-        public GridBuilder<TModel> Totalable(bool value = true)
-        {
-            this._grid.Totalable = value;
-            return this;
-        }
-
-        public GridBuilder<TModel> Empty(IHtmlContent content)
-        {
-            this._grid.EmptyTemplate = content.HtmlContentToString();
-            return this;
-        }
-
-        public HtmlString RenderTmpl()
-        {
-            var renderer = new GridTemplateRenderer<TModel>(this.Html, this._grid);
-
-            var columnsBuilder = new ColumnBuilder<TModel>(this.Html, this._grid);
-            this._buildColumnsAction(columnsBuilder);
-
-            this._grid.Columns = columnsBuilder.Columns;
-
-            return renderer.RenderTmpl();
         }
     }
 }

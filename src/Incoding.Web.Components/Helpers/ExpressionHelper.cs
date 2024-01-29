@@ -1,16 +1,12 @@
+using System;
+using System.Linq.Expressions;
+using System.Reflection;
+
 namespace Incoding.Web.Components
 {
-    #region << Using >>
-
-    using System;
-    using System.Linq.Expressions;
-    using System.Reflection;
-
-    #endregion
-
-    public static class PropertyHelper
+    public static class ExpressionHelper
     {
-        public static string PropertyNameFromExpr<T>(Expression<Func<T, object>> field)
+        public static string GetFieldName<T, U>(Expression<Func<T, U>> field)
         {
             var member = field.Body as MemberExpression;
 

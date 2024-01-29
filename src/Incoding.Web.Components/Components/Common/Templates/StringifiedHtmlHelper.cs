@@ -2,30 +2,29 @@ namespace Incoding.Web.Components
 {
     #region << Using >>
 
-    using System;
     using System.IO;
     using System.Text;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
 
-    public class StringWrapperHtmlHelper : IDisposable
+    public class StringifiedHtmlHelper
     {
-        private readonly IHtmlHelper _helper;
+        private readonly IHtmlHelper _html;
 
         private readonly TextWriter _originWriter;
 
-        public StringWrapperHtmlHelper(IHtmlHelper html, StringBuilder sb)
+        public StringifiedHtmlHelper(IHtmlHelper html)
         {
-            this._helper = html;
+            this._html = html;
             this._originWriter = html.ViewContext.Writer;
 
-            this._helper.ViewContext.Writer = new StringWriter(sb);
+            this._html.ViewContext.Writer = new StringWriter(new StringBuilder());
         }
 
         public void Dispose()
         {
-            this._helper.ViewContext.Writer = this._originWriter;
+            this._html.ViewContext.Writer = this._originWriter;
         }
     }
 }

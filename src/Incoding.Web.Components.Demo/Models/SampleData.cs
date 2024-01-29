@@ -4,7 +4,7 @@ namespace Incoding.Web.Components.Demo
     {
         public decimal JTD { get; set; }
 
-        public decimal HOurs { get; set; }
+        public decimal Hours { get; set; }
     }
 
     public record SampleData

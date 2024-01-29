@@ -1,4 +1,39 @@
 @{
     Layout = "_Layout";
+
+    var g = Html.Components().Grid<SampleData>()
+            .Css("table table-primary")
+            .Rows(row => row.Css("tr-item-calculate"))
+            .Columns(cols =>
+            {
+                cols.Add().Prop(s => s.Name);
+                cols.Add().Prop(s => s.Description).Title("Notes");
+
+                cols.Add().Prop(s => s.Amount);
+                cols.Add().Prop(s => s.AmountPercentage);
+                cols.Add().Prop(s => s.Balance);
+
+                cols.Stacked("Dates", stacked =>
+                {
+                    stacked.Add().Prop(s => s.Start);
+                    stacked.Add().Prop(s => s.End);
+                });
+
+                cols.Stacked("JTD", stacked =>
+                {
+                    stacked.Add().Prop(s => s.JTDHours).Title("Hrs");
+                    stacked.Add().Prop(s => s.JTDDollars).Title("$");
+                });
+
+                @* cols.Spreaded(s => s.Period, 12, (spreaded, index) =>
+                {
+                    spreaded.Stacked(index.ToString(), stacked =>
+                    {
+                        stacked.Add().Prop(s => s.Hours);
+                        stacked.Add().Prop(s => s.JTD);
+                    });
+                }); *@
+            }).__grid__;
 }
 
+@(Newtonsoft.Json.JsonConvert.SerializeObject(g))

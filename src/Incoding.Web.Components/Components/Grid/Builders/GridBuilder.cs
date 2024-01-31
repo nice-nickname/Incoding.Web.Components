@@ -3,6 +3,9 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
+    using Incoding.Core.Extensions;
+    using Incoding.Web.Extensions;
+    using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
@@ -13,11 +16,10 @@ namespace Incoding.Web.Components.Grid
 
         private readonly IHtmlHelper _html;
 
-        public Grid<T> __grid__ => this._grid;
-
-        public GridBuilder()
+        public GridBuilder(IHtmlHelper html, string id)
         {
-            _grid = new Grid<T>();
+            this._html = html;
+            _grid = new Grid<T>(id);
         }
 
         public GridBuilder<T> Css(string css)
@@ -29,11 +31,12 @@ namespace Incoding.Web.Components.Grid
 
         public GridBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
         {
-            var cb = new ColumnListBuilder<T>();
-            buildAction(cb);
+            var clb = new ColumnListBuilder<T>();
+            buildAction(clb);
 
-            this._grid.Columns = cb.Columns;
-            this._grid.Header = cb.Headers;
+            this._grid.Columns = clb.Columns;
+            this._grid.Cells = clb.Cells;
+            this._grid.CellRenderers = clb.CellRenderers;
 
             return this;
         }
@@ -46,6 +49,11 @@ namespace Incoding.Web.Components.Grid
             this._grid.Row = rb.Row;
 
             return this;
+        }
+
+        public IHtmlContent Render()
+        {
+            return new GridRenderer<T>(this._html, this._grid).Render();
         }
     }
 }

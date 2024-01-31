@@ -4,52 +4,27 @@ namespace Incoding.Web.Components.Grid
 
     using System;
     using System.Linq.Expressions;
+    using Incoding.Web.Extensions;
 
     #endregion
 
     public class ColumnBuilder<T>
     {
-        private readonly Column<T> _column;
+        private readonly Cell<T> _cell;
 
-        private readonly ColumnHeader _header;
+        private readonly Column _column;
 
         public ColumnBuilder()
         {
-            _header = new ColumnHeader();
-            _column = new Column<T>
-            {
-                Type = ColumnType.String
-            };
+            this._cell = new Cell<T>();
+            this._column = new Column();
+
+            this._cell.Column = this._column;
         }
 
-        public ColumnBuilder<T> Prop(Expression<Func<T, object>> expr)
-        {
-            var propertyName = ExpressionHelper.GetFieldName(expr);
+        internal Column Column => this._column;
 
-            this._column.Property = propertyName;
-            if (string.IsNullOrWhiteSpace(this._column.Title))
-            {
-                this._column.Title = propertyName;
-                this._header.Title = propertyName;
-            }
-
-            return this;
-        }
-
-        public ColumnBuilder<T> Title(string title)
-        {
-            this._column.Title = title;
-            this._header.Title = title;
-
-            return this;
-        }
-
-        public ColumnBuilder<T> Type(ColumnType type)
-        {
-            this._column.Type = type;
-
-            return this;
-        }
+        internal Cell<T> Cell => this._cell;
 
         public ColumnBuilder<T> Css(string css)
         {
@@ -58,15 +33,44 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public ColumnBuilder<T> Content(TemplateContent<T> content)
+        public ColumnBuilder<T> Width(int width)
         {
-            this._column.Content = content;
+            this._column.Width = width;
 
             return this;
         }
 
-        internal Column<T> Column => this._column;
+        public ColumnBuilder<T> Title(string title)
+        {
+            this._column.Title = title;
 
-        internal ColumnHeader Header => this._header;
+            return this;
+        }
+
+        public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
+        {
+            var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);
+
+            this._cell.Field = fieldName;
+
+            if (string.IsNullOrWhiteSpace(this._column.Title))
+            {
+                this._column.Title = fieldName;
+            }
+
+            if (this.Cell.Content == null)
+            {
+                Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
+            }
+
+            return this;
+        }
+
+        public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
+        {
+            this._cell.Content = contentLambda;
+
+            return this;
+        }
     }
 }

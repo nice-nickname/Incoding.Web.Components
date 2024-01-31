@@ -16,9 +16,9 @@ namespace Incoding.Web.Components
             this._html = html;
         }
 
-        public GridBuilder<T> Grid<T>()
+        public GridBuilder<T> Grid<T>(string id)
         {
-            return new GridBuilder<T>();
+            return new GridBuilder<T>(this._html, id);
         }
     }
 }

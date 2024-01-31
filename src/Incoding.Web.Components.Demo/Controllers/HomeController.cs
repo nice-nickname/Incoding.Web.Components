@@ -1,6 +1,9 @@
 namespace Incoding.Web.Components.Demo.Controllers
 {
     using Bogus;
+    using Incoding.Core.Block.IoC;
+    using Incoding.Web.MvcContrib;
+
     #region << Using >>
 
     using Microsoft.AspNetCore.Mvc;

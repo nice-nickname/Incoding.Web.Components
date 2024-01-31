@@ -6,23 +6,16 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class ColumnHeader
+    public class Column
     {
+        public int Index { get; set; }
+
+        public int Width { get; set; }
+
         public string Title { get; set; }
-
-        public List<ColumnHeader> Stacked { get; set; } = new();
-    }
-
-    public class Column<T>
-    {
-        public string Title { get; set; }
-
-        public string Property { get; set; }
 
         public string Css { get; set; }
 
-        public ColumnType Type { get; set; }
-
-        public TemplateContent<T> Content { get; set; }
+        public List<Column> Columns { get; set; } = new();
     }
 }

@@ -3,6 +3,8 @@ namespace Incoding.Web.Components.Demo
     #region << Using >>
 
     using Incoding.Core;
+    using Incoding.Core.Block.IoC;
+    using Incoding.Core.Block.IoC.Provider;
 
     #endregion
 
@@ -19,7 +21,6 @@ namespace Incoding.Web.Components.Demo
             builder.Services.ConfigureIncodingWebServices();
             builder.Services.ConfigureIncodingCoreServices();
 
-
             var app = builder.Build();
 
             app.UseHttpsRedirection();
@@ -30,6 +31,8 @@ namespace Incoding.Web.Components.Demo
             app.UseAuthorization();
 
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            IoCFactory.Instance.Initialize(ioc => ioc.WithProvider(new MSDependencyInjectionIoCProvider(app.Services)));
 
             app.Run();
         }

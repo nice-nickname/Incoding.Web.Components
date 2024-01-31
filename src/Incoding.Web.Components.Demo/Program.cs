@@ -32,6 +32,7 @@ namespace Incoding.Web.Components.Demo
 
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
+
             IoCFactory.Instance.Initialize(ioc => ioc.WithProvider(new MSDependencyInjectionIoCProvider(app.Services)));
 
             app.Run();

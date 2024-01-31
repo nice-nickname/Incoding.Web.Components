@@ -1,0 +1,24 @@
+@(Html.Components().Grid<SampleData>("sample-table")
+      .Css("table table-striped table-bordered")
+      .Rows(row => row.Css("tr-item-calculate"))
+      .Columns(cols =>
+               {
+                   cols.Add().Field(s => s.Name);
+                   cols.Add().Field(s => s.Description).Title("Notes");
+
+                   cols.Add().Field(s => s.Amount);
+                   cols.Add().Field(s => s.AmountPercentage);
+                   cols.Add().Field(s => s.Balance);
+
+                   cols.Spreaded(s => s.Period, 5,
+                                 (cols, i) =>
+                                 {
+                                     cols.Stacked(s => s.Title("JTD"),
+                                                  cols =>
+                                                  {
+                                                      cols.Add().Field(s => s.Hours).Title("Hrs");
+                                                      cols.Add().Field(s => s.JTD).Title("$");
+                                                  });
+                                 });
+               })
+      .Render())

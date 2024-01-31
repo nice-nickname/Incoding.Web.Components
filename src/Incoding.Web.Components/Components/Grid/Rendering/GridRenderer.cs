@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Incoding.Web.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,7 @@ namespace Incoding.Web.Components.Grid
         public IHtmlContent Render()
         {
             var table = new TagBuilder("table");
+            table.AddCssClass(this._grid.Css);
 
             table.InnerHtml.AppendHtml(RenderHeader());
             table.InnerHtml.AppendHtml(RenderBody());
@@ -43,29 +45,39 @@ namespace Incoding.Web.Components.Grid
         {
             var header = new TagBuilder("thead");
 
+            var hasStacked = this._grid.Columns.Any(s => s.Columns.Any());
+
             if (this._grid.Columns.Any())
             {
-                header.InnerHtml.AppendHtml(RenderHeaderRow(this._grid.Columns));
+                header.InnerHtml.AppendHtml(RenderHeaderRow(this._grid.Columns, hasStacked));
             }
 
             var stackedColumns = this._grid.Columns.SelectMany(s => s.Columns).ToList();
             if (stackedColumns.Any())
             {
-                header.InnerHtml.AppendHtml(RenderHeaderRow(stackedColumns));
+                header.InnerHtml.AppendHtml(RenderHeaderRow(stackedColumns, false));
             }
 
             return header;
         }
 
-        private IHtmlContent RenderHeaderRow(List<Column> columns)
+        private IHtmlContent RenderHeaderRow(List<Column> columns, bool hasStacked)
         {
             var row = new TagBuilder("tr");
 
             foreach (var column in columns)
             {
+                var isStacked = column.Columns.Any();
+
                 var cell = new TagBuilder("th");
 
                 cell.InnerHtml.AppendHtml(column.Title);
+
+                if (hasStacked)
+                {
+                    cell.Attributes.Add("rowspan", isStacked ? "1" : "2");
+                    cell.Attributes.Add("colspan", isStacked ? "2" : "1");
+                }
 
                 row.InnerHtml.AppendHtml(cell);
             }
@@ -94,10 +106,17 @@ namespace Incoding.Web.Components.Grid
 
         private void AppendRowWithContent(ITemplateSyntax<T> tmpl, TextWriter contentWriter)
         {
+            var row = new TagBuilder("tr");
+            row.AddCssClass(this._grid.Row.Css);
+
+            contentWriter.Write(row.RenderStartTag().ToHtmlString());
+
             foreach (var cellRenderer in this._grid.CellRenderers)
             {
                 cellRenderer.Render(tmpl, contentWriter);
             }
+
+            contentWriter.Write(row.RenderEndTag().ToHtmlString());
         }
 
         private IHtmlContent RenderFooter()

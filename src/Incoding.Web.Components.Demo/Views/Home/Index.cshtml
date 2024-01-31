@@ -3,55 +3,31 @@
     Layout = "_Layout";
 }
 
-@(Html.Components().Grid<SampleData>("sample-table")
-                        .Css("table table-primary")
-                        .Rows(row => row.Css("tr-item-calculate"))
-                        .Columns(cols =>
-                                 {
-                                     cols.Add().Field(s => s.Name);
-                                     cols.Add().Field(s => s.Description).Title("Notes");
 
-                                     cols.Add().Field(s => s.Amount);
-                                     cols.Add().Field(s => s.AmountPercentage);
-                                     cols.Add().Field(s => s.Balance);
+<div class="d-flex flex-column vh-100">
+    <div class="d-flex gap-3 mx-3 my-3">
+        @(Html.When(JqueryBind.Click)
+              .Ajax(Url.Action("Data", "Home"))
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-primary"
+                                })
+              .ToButton(@<text>
+                             Regular
+                         </text>))
 
-                                     cols.Stacked(s => s.Title("Dates"),
-                                                  stacked =>
-                                                  {
-                                                      stacked.Add().Field(s => s.Start);
-                                                      stacked.Add().Field(s => s.End);
-                                                  });
+        @(Html.When(JqueryBind.Click)
+              .Ajax(Url.Action("Data", "Home"))
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Spread.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-primary"
+                                })
+              .ToButton(@<text>
+                             Spread
+                         </text>))
+    </div>
 
-                                     cols.Stacked(s => s.Title("JTD"),
-                                                  stacked =>
-                                                  {
-                                                      stacked.Add().Field(s => s.JTDHours).Title("Hrs");
-                                                      stacked.Add().Field(s => s.JTDDollars).Title("$");
-                                                  });
-
-                                     cols.Spreaded(s => s.Period, 12,
-                                                   (period, index) =>
-                                                   {
-                                                       period.Stacked(s => s.Title(index.ToString()),
-                                                                     cols =>
-                                                                     {
-                                                                         cols.Add().Field(s => s.Hours).Title("Hrs");
-                                                                         cols.Add().Field(s => s.JTD).Title("$");
-                                                                     });
-                                                   });
-
-                                     cols.Spreaded(s => s.Period, 2,
-                                                   (period, index) =>
-                                                   {
-                                                       period.Stacked(s => s.Title(index.ToString()),
-                                                                      cols =>
-                                                                      {
-                                                                          cols.Add().Field(s => s.Hours).Title("Hrs");
-                                                                          cols.Add().Field(s => s.JTD).Title("$");
-                                                                      });
-                                                       period.Add().Title("Eblo").Content(@<div>ass we @item.For(s => s.JTD) can</div>);
-                                                   });
-                                 })
-                        .Render())
-
-
+    <div class="container flex-grow-1 overflow-auto" role="main"></div>
+</div>

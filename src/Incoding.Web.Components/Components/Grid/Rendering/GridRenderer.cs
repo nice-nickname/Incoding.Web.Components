@@ -31,12 +31,17 @@ namespace Incoding.Web.Components.Grid
 
         public IHtmlContent Render()
         {
-            var table = new TagBuilder("table");
-            table.AddCssClass(this._grid.Css);
-
-            table.InnerHtml.AppendHtml(RenderHeader());
-            table.InnerHtml.AppendHtml(RenderBody());
-            table.InnerHtml.AppendHtml(RenderFooter());
+            var table = this._html.When(JqueryBind.InitIncoding)
+                            .OnSuccess(dsl => dsl.Self())
+                            .AsHtmlAttributes(new
+                                              {
+                                                      @class = this._grid.Css,
+                                                      style = "table-layout: fixed"
+                                              })
+                            .ToTag(HtmlTag.Table,
+                                   RenderHeader().HtmlContentToString() +
+                                   RenderBody().HtmlContentToString() +
+                                   RenderFooter().HtmlContentToString());
 
             return table;
         }
@@ -77,6 +82,11 @@ namespace Incoding.Web.Components.Grid
                 {
                     cell.Attributes.Add("rowspan", isStacked ? "1" : "2");
                     cell.Attributes.Add("colspan", isStacked ? "2" : "1");
+                }
+
+                if (!isStacked && column.Width.HasValue)
+                {
+                    cell.Attributes.Add("style", $"width: {column.Width}px;");
                 }
 
                 row.InnerHtml.AppendHtml(cell);

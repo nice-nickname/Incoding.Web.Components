@@ -3,12 +3,12 @@
       .Rows(row => row.Css("tr-item-calculate"))
       .Columns(cols =>
                {
-                   cols.Add().Field(s => s.Name);
+                   cols.Add().Field(s => s.Name).Width(200);
                    cols.Add().Field(s => s.Description).Title("Notes");
 
-                   cols.Add().Field(s => s.Amount);
-                   cols.Add().Field(s => s.AmountPercentage);
-                   cols.Add().Field(s => s.Balance);
+                   cols.Add().Field(s => s.Amount).Width(100);
+                   cols.Add().Field(s => s.AmountPercentage).Width(100);
+                   cols.Add().Field(s => s.Balance).Width(100);
 
                    cols.Spreaded(s => s.Period, 5,
                                  (cols, i) =>
@@ -16,8 +16,8 @@
                                      cols.Stacked(s => s.Title("JTD"),
                                                   cols =>
                                                   {
-                                                      cols.Add().Field(s => s.Hours).Title("Hrs");
-                                                      cols.Add().Field(s => s.JTD).Title("$");
+                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(100);
+                                                      cols.Add().Field(s => s.JTD).Title("$").Width(100);
                                                   });
                                  });
                })

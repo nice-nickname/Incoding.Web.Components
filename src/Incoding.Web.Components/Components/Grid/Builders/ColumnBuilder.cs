@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
+    using System.Collections.Generic;
     using System.Linq.Expressions;
     using Incoding.Web.Extensions;
 
@@ -47,16 +48,31 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public ColumnBuilder<T> Attr(string attr, string value)
+        {
+            return Attr(attr, _ => value.ToHtmlString());
+        }
+
+        public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
+        {
+            this._cell.Attrs[attr] = value;
+            
+            return this;
+        }
+
         public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
         {
             var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);
 
             this._cell.Field = fieldName;
+            this._cell.Type = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
 
             if (string.IsNullOrWhiteSpace(this._column.Title))
             {
                 this._column.Title = fieldName;
             }
+
+            
 
             if (this.Cell.Content == null)
             {

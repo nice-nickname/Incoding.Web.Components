@@ -10,4 +10,8 @@
     <PackageReference Include="Incoding.Web" Version="1.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Grid\Store\" />
+  </ItemGroup>
+
 </Project>

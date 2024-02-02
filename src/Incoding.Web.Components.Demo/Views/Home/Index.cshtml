@@ -5,7 +5,6 @@
 <div class="d-flex flex-column vh-100">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
-              .Ajax(Url.Action("Data", "Home"))
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
@@ -16,7 +15,6 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .Ajax(Url.Action("Data", "Home"))
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Spread.cshtml").Html())
               .AsHtmlAttributes(new
                                 {

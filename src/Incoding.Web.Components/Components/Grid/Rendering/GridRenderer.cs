@@ -5,6 +5,8 @@ namespace Incoding.Web.Components.Grid
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using HandlebarsDotNet;
+    using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
@@ -31,17 +33,34 @@ namespace Incoding.Web.Components.Grid
 
         public IHtmlContent Render()
         {
-            var table = this._html.When(JqueryBind.InitIncoding)
-                            .OnSuccess(dsl => dsl.Self())
+            var columns = this._grid.Cells.Select(s => new
+                                                       {
+                                                               s.Field,
+                                                               s.Type
+                                                       })
+                              .ToArray()
+                              .ToJsonString();
+
+            var rowTemplate = RenderRowTemplate();
+            
+            rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
+
+            var initBind = this._html.When(JqueryBind.InitIncoding)
+                               .OnSuccess(dsl => dsl.Self().JQuery.Call("gridComponent", columns, rowTemplate));
+
+            var table = this._grid.Binding(initBind)
                             .AsHtmlAttributes(new
                                               {
                                                       @class = this._grid.Css,
-                                                      style = "table-layout: fixed"
+                                                      style = "table-layout: fixed",
+                                                      id = this._grid.Id
                                               })
                             .ToTag(HtmlTag.Table,
                                    RenderHeader().HtmlContentToString() +
                                    RenderBody().HtmlContentToString() +
                                    RenderFooter().HtmlContentToString());
+
+            GridTemplatesStore.Global.Set(this._grid.Id, rowTemplate);
 
             return table;
         }
@@ -88,6 +107,10 @@ namespace Incoding.Web.Components.Grid
                 {
                     cell.Attributes.Add("style", $"width: {column.Width}px;");
                 }
+                else if (isStacked)
+                {
+                    cell.Attributes.Add("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
+                }
 
                 row.InnerHtml.AppendHtml(cell);
             }
@@ -99,6 +122,11 @@ namespace Incoding.Web.Components.Grid
         {
             var body = new TagBuilder("tbody");
 
+            return body;
+        }
+
+        private string RenderRowTemplate()
+        {
             var content = StringBuilderHelper.Default;
 
             using (var _ = new StringifiedHtmlHelper(this._html, content))
@@ -109,9 +137,7 @@ namespace Incoding.Web.Components.Grid
                 AppendRowWithContent(each, _.CurrentWriter);
             }
 
-            body.InnerHtml.AppendHtml(content.ToString());
-
-            return body;
+            return content.ToString();
         }
 
         private void AppendRowWithContent(ITemplateSyntax<T> tmpl, TextWriter contentWriter)

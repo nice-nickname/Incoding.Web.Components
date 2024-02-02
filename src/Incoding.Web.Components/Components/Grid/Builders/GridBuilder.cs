@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid
     using System;
     using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
+    using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -47,6 +48,13 @@ namespace Incoding.Web.Components.Grid
             buildAction(rb);
 
             this._grid.Row = rb.Row;
+
+            return this;
+        }
+
+        public GridBuilder<T> Binding(Func<IIncodingMetaLanguageEventBuilderDsl, IIncodingMetaLanguageEventBuilderDsl> bindings)
+        {
+            this._grid.Binding = bindings;
 
             return this;
         }

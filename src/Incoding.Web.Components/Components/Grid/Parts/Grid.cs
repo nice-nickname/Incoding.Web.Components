@@ -2,7 +2,10 @@ namespace Incoding.Web.Components.Grid
 {
     #region << Using >>
 
+    using System;
     using System.Collections.Generic;
+    using Incoding.Web.MvcContrib;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
 
@@ -24,5 +27,8 @@ namespace Incoding.Web.Components.Grid
         public List<Cell> Cells { get; set; }
 
         public List<ICellRenderer<T>> CellRenderers { get; set; }
+
+        public Func<IIncodingMetaLanguageEventBuilderDsl, IIncodingMetaLanguageEventBuilderDsl> Binding { get; set; } = iml => iml.When("_")
+                                                                                                                                    .OnSuccess(dsl => dsl.Self());
     }
 }

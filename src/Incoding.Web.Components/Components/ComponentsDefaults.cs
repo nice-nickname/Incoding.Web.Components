@@ -1,4 +1,4 @@
-namespace Incoding.Web.Components
+namespace Incoding.Web.Components.Components
 {
     public static class ComponentsDefaults
     {

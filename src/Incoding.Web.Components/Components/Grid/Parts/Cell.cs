@@ -12,6 +12,8 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnType Type { get; set; }
 
+        public ColumnFormat Format { get; set; }
+
         public Column Column { get; set; }
     }
 

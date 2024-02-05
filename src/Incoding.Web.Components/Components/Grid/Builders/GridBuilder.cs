@@ -3,6 +3,8 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
     using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Incoding.Web.MvcContrib;
@@ -59,9 +61,20 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public GridBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<GridBuilder<U>> buildAction)
+        {
+            var nestedGrid = new GridBuilder<U>(this._html, "");
+
+            buildAction(nestedGrid);
+
+            this._grid.Nested = new NestedGridRenderer<T, U>(nestedGrid._grid, this._html, nestedField);
+
+            return this;
+        }
+
         public IHtmlContent Render()
         {
-            return new GridRenderer<T>(this._html, this._grid).Render();
+            return new GridRenderer<T>(this._html, this._grid).RenderComponent();
         }
     }
 }

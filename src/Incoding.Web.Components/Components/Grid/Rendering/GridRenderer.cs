@@ -2,10 +2,10 @@ namespace Incoding.Web.Components.Grid
 {
     #region << Using >>
 
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using HandlebarsDotNet;
     using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Incoding.Web.MvcContrib;
@@ -20,18 +20,28 @@ namespace Incoding.Web.Components.Grid
 
         private readonly IHtmlHelper _html;
 
-        public GridRenderer(IHtmlHelper html, Grid<T> grid)
+        private readonly Func<ITemplateSyntax<T>> _template;
+
+        public GridRenderer(IHtmlHelper html, Grid<T> grid, Func<ITemplateSyntax<T>> template = null)
         {
             this._html = html;
             this._grid = grid;
-        }
-
-        public PartialResult RenderPartial()
-        {
-            return new PartialResult { };
+            this._template = template;
         }
 
         public IHtmlContent Render()
+        {
+            var table = new TagBuilder("table");
+            table.AddCssClass(this._grid.Css);
+
+            table.InnerHtml.AppendHtml(RenderHeader().HtmlContentToString());
+            table.InnerHtml.AppendHtml(RenderBody(true).HtmlContentToString());
+            table.InnerHtml.AppendHtml(RenderFooter().HtmlContentToString());
+
+            return table;
+        }
+
+        public IHtmlContent RenderComponent()
         {
             var columns = this._grid.Cells.Select(s => new
                                                        {
@@ -46,7 +56,8 @@ namespace Incoding.Web.Components.Grid
             rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
 
             var initBind = this._html.When(JqueryBind.InitIncoding)
-                               .OnSuccess(dsl => dsl.Self().JQuery.Call("gridComponent", columns, rowTemplate));
+                               .OnSuccess(dsl => dsl.Self().JQuery.Call("gridComponent", columns, rowTemplate))
+                               .OnComplete(dsl => dsl.Self().Trigger.Invoke(IncodingGridBind.Init));
 
             var table = this._grid.Binding(initBind)
                             .AsHtmlAttributes(new
@@ -57,7 +68,7 @@ namespace Incoding.Web.Components.Grid
                                               })
                             .ToTag(HtmlTag.Table,
                                    RenderHeader().HtmlContentToString() +
-                                   RenderBody().HtmlContentToString() +
+                                   RenderBody(false).HtmlContentToString() +
                                    RenderFooter().HtmlContentToString());
 
             GridTemplatesStore.Global.Set(this._grid.Id, rowTemplate);
@@ -118,9 +129,14 @@ namespace Incoding.Web.Components.Grid
             return row;
         }
 
-        private IHtmlContent RenderBody()
+        private IHtmlContent RenderBody(bool includeTemplate)
         {
             var body = new TagBuilder("tbody");
+
+            if (includeTemplate)
+            {
+                body.InnerHtml.AppendHtml(RenderRowTemplate());
+            }
 
             return body;
         }
@@ -131,10 +147,19 @@ namespace Incoding.Web.Components.Grid
 
             using (var _ = new StringifiedHtmlHelper(this._html, content))
             {
-                using var template = this._html.Incoding().Template<T>();
-                using var each = template.ForEach();
+                if (this._template == null)
+                {
+                    using var template = this._html.Incoding().Template<T>();
+                    using var each = template.ForEach();
 
-                AppendRowWithContent(each, _.CurrentWriter);
+                    AppendRowWithContent(each, _.CurrentWriter);
+                }
+                else
+                {
+                    using var each = this._template.Invoke();
+
+                    AppendRowWithContent(each, _.CurrentWriter);
+                }
             }
 
             return content.ToString();
@@ -153,6 +178,25 @@ namespace Incoding.Web.Components.Grid
             }
 
             contentWriter.Write(row.RenderEndTag().ToHtmlString());
+
+            if (this._grid.Nested != null)
+            {
+                row = new TagBuilder("tr");
+                var cell = new TagBuilder("td");
+
+                row.AddCssClass("hidden");
+                row.AddCssClass("nested");
+
+                cell.Attributes.Add("colspan", int.MaxValue.ToString());
+
+                contentWriter.Write(row.RenderStartTag().ToHtmlString());
+                contentWriter.Write(cell.RenderStartTag().ToHtmlString());
+
+                this._grid.Nested.Render(tmpl, contentWriter);
+
+                contentWriter.Write(cell.RenderEndTag().ToHtmlString());
+                contentWriter.Write(row.RenderEndTag().ToHtmlString());
+            }
         }
 
         private IHtmlContent RenderFooter()

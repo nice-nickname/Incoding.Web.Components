@@ -38,6 +38,9 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
                     ;
 
+            fakerData = fakerData.RuleFor(s => s.Children, fakerData.Generate(5));
+
+
             var data = fakerData.Generate(20);
 
             return IncodingResult.Success(data);

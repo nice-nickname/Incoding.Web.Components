@@ -3,10 +3,26 @@
 }
 
 @(Html.Components().Grid<SampleData>("regular")
-      .Css("table table-striped table-bordered grid-component")
+      .Css("table table-bordered grid-component")
       .Rows(row => row.Css("tr-item-calculate"))
       .Columns(cols =>
                {
+                   cols.Add().Content(@<text>
+                                           @(Html.When(JqueryBind.Click)
+                                                 .OnSuccess(dsl =>
+                                                            {
+                                                                dsl.WithSelf(s => s.Closest(HtmlTag.Tr).Next(HtmlTag.Tr).Method("filter", ".nested"))
+                                                                   .JQuery.Attr.ToggleClass("hidden");
+                                                            })
+                                                 .AsHtmlAttributes(new
+                                                                   {
+                                                                           
+                                                                   })
+                                                 .ToTag(HtmlTag.Button, "H"))
+                                       </text>)
+                       .Width(40)
+                       .Title("");
+
                    cols.Add().Field(s => s.Name).Width(70);
                    cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
@@ -21,7 +37,8 @@
                                     cols.Add().Field(s => s.End).Width(70);
                                 });
 
-                   cols.Spreaded(s => s.Period, 5,
+                   cols.Spreaded(s => s.Period,
+                                 5,
                                  (cols, i) =>
                                  {
                                      cols.Stacked(s => s.Title("JTD"),
@@ -32,7 +49,8 @@
                                                   });
                                  });
 
-                   cols.Spreaded(s => s.Period, 5,
+                   cols.Spreaded(s => s.Period,
+                                 5,
                                  (cols, i) =>
                                  {
                                      cols.Stacked(s => s.Title("JTD"),
@@ -43,7 +61,8 @@
                                                   });
                                  });
 
-                   cols.Spreaded(s => s.Period, 5,
+                   cols.Spreaded(s => s.Period,
+                                 5,
                                  (cols, i) =>
                                  {
                                      cols.Stacked(s => s.Title("History"),
@@ -54,11 +73,52 @@
                                                   });
                                  });
                })
-      .Binding(html => html.When(JqueryBind.Load)
-                           .Ajax("/data")
-                           .OnSuccess(dsl =>
-                                      {
-                                          gridController.Load(dsl);
-                                      }))
-      .Render())
+      .Nested(s => s.Children,
+              nested =>
+              {
+                  nested.Css("table table-striped table-bordered grid-component")
+                        .Columns(cols =>
+                                 {
+                                     cols.Add().Field(s => s.Name).Width(70);
+                                     cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
+                                     cols.Add().Field(s => s.Amount).Width(70);
+                                     cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
+                                     cols.Add().Field(s => s.Balance).Width(70);
+
+                                     cols.Stacked(s => s.Title("Dates"),
+                                                  cols =>
+                                                  {
+                                                      cols.Add().Field(s => s.Start).Width(70);
+                                                      cols.Add().Field(s => s.End).Width(70);
+                                                  });
+
+                                     cols.Spreaded(s => s.Period,
+                                                   5,
+                                                   (cols, i) =>
+                                                   {
+                                                       cols.Stacked(s => s.Title("JTD"),
+                                                                    cols =>
+                                                                    {
+                                                                        cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
+                                                                        cols.Add().Field(s => s.JTD).Title("$").Width(70);
+                                                                    });
+                                                   });
+
+                                     cols.Spreaded(s => s.Period,
+                                                   5,
+                                                   (cols, i) =>
+                                                   {
+                                                       cols.Stacked(s => s.Title("History"),
+                                                                    cols =>
+                                                                    {
+                                                                        cols.Add().Field(s => s.Hours).Title("Planned").Width(70);
+                                                                        cols.Add().Field(s => s.JTD).Title("Actual").Width(70);
+                                                                    });
+                                                   });
+                                 });
+              })
+      .Binding(html => html.When(IncodingGridBind.Init)
+                           .Ajax("/data")
+                           .OnSuccess(dsl => { gridController.Load(dsl); }))
+      .Render())

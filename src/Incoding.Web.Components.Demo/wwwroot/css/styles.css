@@ -12,9 +12,20 @@
 
 }
 
-
 .grid-component > thead > tr > th,
 .grid-component > tbody > tr > td {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.nested {
+
+}
+
+.hidden {
+    display: none;
+}
+
+.negative-number {
+    color: red !important;
 }

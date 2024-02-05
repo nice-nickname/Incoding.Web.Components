@@ -66,18 +66,24 @@ namespace Incoding.Web.Components.Grid
 
             this._cell.Field = fieldName;
             this._cell.Type = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
+            this._cell.Format = this._cell.Type.ToColumnFormat();
 
             if (string.IsNullOrWhiteSpace(this._column.Title))
             {
                 this._column.Title = fieldName;
             }
 
-            
-
             if (this.Cell.Content == null)
             {
                 Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
             }
+
+            return this;
+        }
+
+        public ColumnBuilder<T> Format(ColumnFormat format)
+        {
+            this._cell.Format = format;
 
             return this;
         }

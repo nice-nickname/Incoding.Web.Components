@@ -59,9 +59,33 @@ namespace Incoding.Web.Components.Grid
 
         public void Render(ITemplateSyntax<T> template, TextWriter contentWriter)
         {
-            var gridRenderer = new GridRenderer<U>(this._html, this._grid, () => template.ForEach(this._nestedField));
+            using var ea = template.Is(ConvertLambda(this._nestedField));
 
+            var row = new TagBuilder("tr");
+            var cell = new TagBuilder("td");
+
+            row.AddCssClass("hidden");
+            row.AddCssClass("nested");
+
+            cell.Attributes.Add("colspan", int.MaxValue.ToString());
+
+            contentWriter.Write(row.RenderStartTag().ToHtmlString());
+            contentWriter.Write(cell.RenderStartTag().ToHtmlString());
+
+            var gridRenderer = new GridRenderer<U>(this._html, this._grid, () => template.ForEach(this._nestedField));
             contentWriter.Write(gridRenderer.Render().HtmlContentToString());
+
+            contentWriter.Write(cell.RenderEndTag().ToHtmlString());
+            contentWriter.Write(row.RenderEndTag().ToHtmlString());
+        }
+
+        public Expression<Func<T, object>> ConvertLambda(Expression<Func<T, IEnumerable<U>>> expression)
+        {
+            ParameterExpression parameter = expression.Parameters[0];
+
+            UnaryExpression body = Expression.Convert(expression.Body, typeof(object));
+
+            return Expression.Lambda<Func<T, object>>(body, parameter);
         }
     }
 }

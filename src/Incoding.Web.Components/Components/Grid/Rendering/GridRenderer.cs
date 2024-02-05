@@ -181,21 +181,7 @@ namespace Incoding.Web.Components.Grid
 
             if (this._grid.Nested != null)
             {
-                row = new TagBuilder("tr");
-                var cell = new TagBuilder("td");
-
-                row.AddCssClass("hidden");
-                row.AddCssClass("nested");
-
-                cell.Attributes.Add("colspan", int.MaxValue.ToString());
-
-                contentWriter.Write(row.RenderStartTag().ToHtmlString());
-                contentWriter.Write(cell.RenderStartTag().ToHtmlString());
-
                 this._grid.Nested.Render(tmpl, contentWriter);
-
-                contentWriter.Write(cell.RenderEndTag().ToHtmlString());
-                contentWriter.Write(row.RenderEndTag().ToHtmlString());
             }
         }
 

@@ -83,6 +83,48 @@ class GridComponent {
 
     }
 
+    _reload(index, data) {
+        const changes = []
+        const htmlString = ExecutableInsert.Template.render(this.rowTemplate, { data })
+
+        const template = document.createElement('template')
+        template.innerHTML = htmlString
+
+        let newRow = template.content.children[0]
+        let oldRow = this.$table.children('tbody').children('tr').eq(index)[0]
+
+        const hasNewNested = template.content.children.length == 2
+        const hasOldNested = this.$table.children('tbody').children('tr').eq(index + 1).is('.nested')
+
+        morphdom(oldRow, newRow, {
+            childrenOnly: true
+        })
+
+        changes.push(oldRow)
+
+        if (hasNewNested && hasOldNested) {
+            newRow = template.content.children[1]
+            oldRow = this.$table.children('tbody').children('tr').eq(index + 1)[0]
+
+            morphdom(oldRow, newRow, {
+                childrenOnly: true
+            })
+
+            changes.push(oldRow)
+        }
+        else if (hasOldNested) {
+            this.$table.children('tbody').children('tr').eq(index + 1).detach()
+        }
+        else if (hasNewNested) {
+            newRow = template.content.children[1]
+            newRow.parentElement.insertBefore(newRow, oldRow.nextSibling)
+
+            changes.push(oldRow)
+        }
+
+        this.format($(changes))
+    }
+
     format($context) {
         $context.find('td[data-format]').each(function() {
             const format = this.dataset.format

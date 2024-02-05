@@ -8,17 +8,17 @@
       .Columns(cols =>
                {
                    cols.Add().Content(@<text>
-                                           @(Html.When(JqueryBind.Click)
-                                                 .OnSuccess(dsl =>
-                                                            {
-                                                                dsl.WithSelf(s => s.Closest(HtmlTag.Tr).Next(HtmlTag.Tr).Method("filter", ".nested"))
-                                                                   .JQuery.Attr.ToggleClass("hidden");
-                                                            })
-                                                 .AsHtmlAttributes(new
-                                                                   {
+                                           @item.IsInline(s => s.Children, Html.When(JqueryBind.Click)
+                                                                               .OnSuccess(dsl =>
+                                                                                          {
+                                                                                              dsl.WithSelf(s => s.Closest(HtmlTag.Tr).Next(HtmlTag.Tr).Method("filter", ".nested"))
+                                                                                                 .JQuery.Attr.ToggleClass("hidden");
+                                                                                          })
+                                                                               .AsHtmlAttributes(new
+                                                                                                 {
                                                                            
-                                                                   })
-                                                 .ToTag(HtmlTag.Button, "H"))
+                                                                                                 })
+                                                                               .ToTag(HtmlTag.Button, "H"))
                                        </text>)
                        .Width(40)
                        .Title("");

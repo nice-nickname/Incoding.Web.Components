@@ -6,6 +6,8 @@ namespace Incoding.Web.Components.Grid
 
     public class Row<T>
     {
-        public string Css { get; set; }
+        public string Css { get; set; } = string.Empty;
+
+        public TemplateContent<T> Id { get; set; }
     }
 }

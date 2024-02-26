@@ -11,39 +11,35 @@ namespace Incoding.Web.Components.Grid
 
     public class ColumnBuilder<T>
     {
-        private readonly Cell<T> _cell;
+        public Cell<T> Cell { get; }
 
-        private readonly Column _column;
+        public Column Column { get; }
 
         public ColumnBuilder()
         {
-            this._cell = new Cell<T>();
-            this._column = new Column();
+            this.Cell = new Cell<T>();
+            this.Column = new Column();
 
-            this._cell.Column = this._column;
+            this.Cell.Column = this.Column;
         }
-
-        internal Column Column => this._column;
-
-        internal Cell<T> Cell => this._cell;
 
         public ColumnBuilder<T> Css(string css)
         {
-            this._column.Css = css;
+            this.Column.Css = css;
 
             return this;
         }
 
         public ColumnBuilder<T> Width(int width)
         {
-            this._column.Width = width;
+            this.Column.Width = width;
 
             return this;
         }
 
         public ColumnBuilder<T> Title(string title)
         {
-            this._column.Title = title;
+            this.Column.Title = title;
 
             return this;
         }
@@ -55,8 +51,8 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
         {
-            this._cell.Attrs[attr] = value;
-            
+            this.Cell.Attrs[attr] = value;
+
             return this;
         }
 
@@ -64,13 +60,13 @@ namespace Incoding.Web.Components.Grid
         {
             var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);
 
-            this._cell.Field = fieldName;
-            this._cell.Type = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
-            this._cell.Format = this._cell.Type.ToColumnFormat();
+            this.Cell.Field = fieldName;
+            this.Cell.Type = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
+            this.Cell.Format = this.Cell.Type.ToColumnFormat();
 
-            if (string.IsNullOrWhiteSpace(this._column.Title))
+            if (string.IsNullOrWhiteSpace(this.Column.Title))
             {
-                this._column.Title = fieldName;
+                this.Column.Title = fieldName;
             }
 
             if (this.Cell.Content == null)
@@ -83,14 +79,14 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnBuilder<T> Format(ColumnFormat format)
         {
-            this._cell.Format = format;
+            this.Cell.Format = format;
 
             return this;
         }
 
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
         {
-            this._cell.Content = contentLambda;
+            this.Cell.Content = contentLambda;
 
             return this;
         }

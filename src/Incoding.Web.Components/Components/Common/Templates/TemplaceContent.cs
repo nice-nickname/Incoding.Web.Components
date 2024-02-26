@@ -8,4 +8,6 @@ namespace Incoding.Web.Components
     #endregion
 
     public delegate IHtmlContent TemplateContent<T>(ITemplateSyntax<T> tmpl);
+
+    public delegate IIncodingMetaLanguageEventBuilderDsl ImlBinding(IIncodingMetaLanguageEventBuilderDsl dsl);
 }

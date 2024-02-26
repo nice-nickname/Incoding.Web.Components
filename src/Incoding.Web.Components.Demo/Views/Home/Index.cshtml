@@ -2,7 +2,7 @@
     Layout = "_Layout";
 }
 
-<div class="d-flex flex-column vh-100">
+<div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())

@@ -4,10 +4,6 @@ namespace Incoding.Web.Components.Grid
 
     using System;
     using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using Incoding.Core.Extensions;
-    using Incoding.Web.Extensions;
-    using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -15,66 +11,37 @@ namespace Incoding.Web.Components.Grid
 
     public class GridBuilder<T>
     {
-        private readonly Grid<T> _grid;
-
         private readonly IHtmlHelper _html;
+
+        private readonly Grid<T> _grid;
 
         public GridBuilder(IHtmlHelper html, string id)
         {
             this._html = html;
-            _grid = new Grid<T>(id);
+            this._grid = new Grid<T>(id);
         }
 
-        public GridBuilder<T> Css(string css)
+        public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
         {
-            this._grid.Css = css;
+            var splitter = new TableSplitBuilder<T>(this._html);
+
+            buildAction(splitter);
+
+            this._grid.Tables.AddRange(splitter.Tables);
 
             return this;
         }
 
-        public GridBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
+        public GridBuilder<T> Bind(ImlBinding binding)
         {
-            var clb = new ColumnListBuilder<T>();
-            buildAction(clb);
-
-            this._grid.Columns = clb.Columns;
-            this._grid.Cells = clb.Cells;
-            this._grid.CellRenderers = clb.CellRenderers;
+            this._grid.Binds = binding;
 
             return this;
         }
 
-        public GridBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
+        public IHtmlContent Render(bool useConcurrentRender = false)
         {
-            var rb = new RowBuilder<T>();
-            buildAction(rb);
-
-            this._grid.Row = rb.Row;
-
-            return this;
-        }
-
-        public GridBuilder<T> Binding(Func<IIncodingMetaLanguageEventBuilderDsl, IIncodingMetaLanguageEventBuilderDsl> bindings)
-        {
-            this._grid.Binding = bindings;
-
-            return this;
-        }
-
-        public GridBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<GridBuilder<U>> buildAction)
-        {
-            var nestedGrid = new GridBuilder<U>(this._html, "");
-
-            buildAction(nestedGrid);
-
-            this._grid.Nested = new NestedGridRenderer<T, U>(nestedGrid._grid, this._html, nestedField);
-
-            return this;
-        }
-
-        public IHtmlContent Render()
-        {
-            return new GridRenderer<T>(this._html, this._grid).RenderComponent();
+            return new GridComponentRenderer<T>(this._html, this._grid, useConcurrentRender).Render();
         }
     }
 }

@@ -6,20 +6,18 @@ namespace Incoding.Web.Components.Grid
 
     public class RowBuilder<T>
     {
-        private readonly Row<T> _row;
+        public Row<T> Row { get; }
 
         public RowBuilder()
         {
-            this._row = new Row<T>();
+            this.Row = new Row<T>();
         }
 
         public RowBuilder<T> Css(string css)
         {
-            this._row.Css = css;
+            this.Row.Css += " " + css;
 
             return this;
         }
-
-        internal Row<T> Row => this._row;
     }
 }

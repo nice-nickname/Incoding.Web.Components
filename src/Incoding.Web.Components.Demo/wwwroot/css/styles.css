@@ -1,4 +1,57 @@
 
+::-webkit-scrollbar {
+    background-color: #ebeef0;
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #a4abb5;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.grid-splitter-container {
+    display: flex;
+    height: 100%;
+}
+
+.grid-splitter-container > .splitter-panel {
+    overflow-y: auto;
+    overflow-y: auto;
+}
+
+.grid-splitter-container > .splitter-divider {
+    width: 2px;
+
+    background-color: rgb(216, 216, 216);
+
+    cursor: col-resize;
+}
+
+.grid-splitter-container > .splitter-panel > table {
+    margin: 0;
+}
+
+.table-component {
+    table-layout: fixed;
+    white-space: nowrap;
+}
+
+.table-component > thead {
+
+}
+
+.table-component > tfoot {
+
+}
+
+
+
 .grid-component {
     table-layout: fixed;
     white-space: nowrap;

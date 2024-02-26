@@ -1,47 +1,52 @@
-@{
-    var gridController = new GridController("regular");
-}
+@using Incoding.Web.Components.Grid;
 
-@(Html.Components().Grid<SampleData>("regular")
-      .Css("table table-bordered grid-component")
-      .Rows(row => row.Css("tr-item-calculate"))
-      .Columns(cols =>
-               {
-                   cols.Add().Content(@<text>
-                                           @item.IsInline(s => s.Children, Html.When(JqueryBind.Click)
-                                                                               .OnSuccess(dsl =>
-                                                                                          {
-                                                                                              dsl.WithSelf(s => s.Closest(HtmlTag.Tr).Next(HtmlTag.Tr).Method("filter", ".nested"))
-                                                                                                 .JQuery.Attr.ToggleClass("hidden");
-                                                                                          })
-                                                                               .AsHtmlAttributes(new
-                                                                                                 {
-                                                                           
-                                                                                                 })
-                                                                               .ToTag(HtmlTag.Button, "H"))
-                                       </text>)
-                       .Width(40)
-                       .Title("");
+@{ }
 
-                   cols.Add().Field(s => s.Name).Width(70);
-                   cols.Add().Field(s => s.Description).Title("Notes").Width(200);
+@(Html.Components().Grid<SampleData>("grid")
+      .Split(splitting =>
+      {
+            splitting.Add("regular", table =>
+            {
+                table.Css("table table-primary table-bordered")
+                     .Rows(row => row.Css("tr-item-calculate"))
+                     .Columns(cols =>
+                     {
+                        cols.Add().Field(s => s.Name).Width(70);
+                        cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
-                   cols.Add().Field(s => s.Amount).Width(70);
-                   cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
-                   cols.Add().Field(s => s.Balance).Width(70);
+                        cols.Add().Field(s => s.Amount).Width(70);
+                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
+                        cols.Add().Field(s => s.Balance).Width(70);
 
-                   cols.Stacked(s => s.Title("Dates"),
-                                cols =>
-                                {
-                                    cols.Add().Field(s => s.Start).Width(70);
-                                    cols.Add().Field(s => s.End).Width(70);
-                                });
+                        cols.Stacked(s => s.Title("Dates"),
+                                        cols =>
+                                        {
+                                            cols.Add().Field(s => s.Start).Width(70);
+                                            cols.Add().Field(s => s.End).Width(70);
+                                        });
+                     })
+                     .Nested(s => s.Children, nested =>
+                     {
+                            nested.Css("table table-primary table-bordered")
+                                  .Rows(row => row.Css("tr-item-calculate"))
+                                  .Columns(cols =>
+                                  {
+                                        cols.Add().Field(s => s.Name).Width(70);
+                                        cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
-                   cols.Spreaded(s => s.Period,
-                                 5,
+                                        cols.Add().Field(s => s.Amount).Width(70);
+                                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
+                                        cols.Add().Field(s => s.Balance).Width(70);
+                                  });
+                     });
+            });
+
+            splitting.Add("period", table =>
+            {
+                Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
                                  (cols, i) =>
                                  {
-                                     cols.Stacked(s => s.Title("JTD"),
+                                     cols.Stacked(s => s.Title(DateTime.Now.AddDays(i).ToShortDateString()),
                                                   cols =>
                                                   {
                                                       cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
@@ -49,76 +54,27 @@
                                                   });
                                  });
 
-                   cols.Spreaded(s => s.Period,
-                                 5,
-                                 (cols, i) =>
-                                 {
-                                     cols.Stacked(s => s.Title("JTD"),
-                                                  cols =>
-                                                  {
-                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
-                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70);
-                                                  });
-                                 });
+                table.Css("table table-primary table-bordered")
+                     .Rows(row => row.Css("tr-item-calculate"))
+                     .Columns(periodCols);
 
-                   cols.Spreaded(s => s.Period,
-                                 5,
-                                 (cols, i) =>
-                                 {
-                                     cols.Stacked(s => s.Title("History"),
-                                                  cols =>
-                                                  {
-                                                      cols.Add().Field(s => s.Hours).Title("Planned").Width(70);
-                                                      cols.Add().Field(s => s.JTD).Title("Actual").Width(70);
-                                                  });
-                                 });
-               })
-      .Nested(s => s.Children,
-              nested =>
-              {
-                  nested.Css("table table-striped table-bordered grid-component")
-                        .Columns(cols =>
-                                 {
-                                     cols.Add().Field(s => s.Name).Width(70);
-                                     cols.Add().Field(s => s.Description).Title("Notes").Width(200);
+                table.Nested(s => s.Children, nested =>
+                {
+                    nested.Css("table table-primary table-bordered")
+                          .Rows(row => row.Css("tr-item-calculate"))
+                          .Columns(periodCols);
+                });
+            });
 
-                                     cols.Add().Field(s => s.Amount).Width(70);
-                                     cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
-                                     cols.Add().Field(s => s.Balance).Width(70);
-
-                                     cols.Stacked(s => s.Title("Dates"),
-                                                  cols =>
-                                                  {
-                                                      cols.Add().Field(s => s.Start).Width(70);
-                                                      cols.Add().Field(s => s.End).Width(70);
-                                                  });
-
-                                     cols.Spreaded(s => s.Period,
-                                                   5,
-                                                   (cols, i) =>
-                                                   {
-                                                       cols.Stacked(s => s.Title("JTD"),
-                                                                    cols =>
-                                                                    {
-                                                                        cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
-                                                                        cols.Add().Field(s => s.JTD).Title("$").Width(70);
-                                                                    });
-                                                   });
-
-                                     cols.Spreaded(s => s.Period,
-                                                   5,
-                                                   (cols, i) =>
-                                                   {
-                                                       cols.Stacked(s => s.Title("History"),
-                                                                    cols =>
-                                                                    {
-                                                                        cols.Add().Field(s => s.Hours).Title("Planned").Width(70);
-                                                                        cols.Add().Field(s => s.JTD).Title("Actual").Width(70);
-                                                                    });
-                                                   });
-                                 });
-              })
-      .Binding(html => html.When(IncodingGridBind.Init)
-                           .Ajax("/data")
-                           .OnSuccess(dsl => { gridController.Load(dsl); }))
-      .Render())
+            // splitting.Add("history", table =>
+            // {
+            //
+            // });
+      })
+      .Bind(dsl => dsl.When(Bindings.Grid.Init)
+                      .Ajax(o => {
+                          o.Global = false;
+                          o.Url = Url.Action("Data", "Home");
+                      })
+                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Result))) // m-controller
+      .Render(useConcurrentRender: false))

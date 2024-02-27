@@ -11,14 +11,35 @@ namespace Incoding.Web.Components.Grid
 
     public class GridBuilder<T>
     {
-        private readonly IHtmlHelper _html;
+        public Grid<T> Grid { get; }
 
-        private readonly Grid<T> _grid;
+        private readonly IHtmlHelper _html;
 
         public GridBuilder(IHtmlHelper html, string id)
         {
             this._html = html;
-            this._grid = new Grid<T>(id);
+            this.Grid = new Grid<T>(id);
+        }
+
+        public GridBuilder<T> Css(string css)
+        {
+            this.Grid.Css = css;
+
+            return this;
+        }
+
+        public GridBuilder<T> Virtualize(Action<Grid<T>.VirtualizationOptions> buildOptions)
+        {
+            buildOptions(this.Grid.Virtualization);
+
+            return this;
+        }
+
+        public GridBuilder<T> UI(Action<Grid<T>.UIOptions> buildOptions)
+        {
+            buildOptions(this.Grid.UI);
+
+            return this;
         }
 
         public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
@@ -27,21 +48,21 @@ namespace Incoding.Web.Components.Grid
 
             buildAction(splitter);
 
-            this._grid.Tables.AddRange(splitter.Tables);
+            this.Grid.Tables.AddRange(splitter.Tables);
 
             return this;
         }
 
         public GridBuilder<T> Bind(ImlBinding binding)
         {
-            this._grid.Binds = binding;
+            this.Grid.Binds = binding;
 
             return this;
         }
 
         public IHtmlContent Render(bool useConcurrentRender = false)
         {
-            return new GridComponentRenderer<T>(this._html, this._grid, useConcurrentRender).Render();
+            return new GridComponentRenderer<T>(this._html, this.Grid, useConcurrentRender).Render();
         }
     }
 }

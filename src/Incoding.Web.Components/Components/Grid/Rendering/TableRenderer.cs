@@ -38,8 +38,7 @@ namespace Incoding.Web.Components.Grid
             // Колонки с именами, поля для этих колонок, тип и формат темплейст собственной строки
             // Контент внутренней таблицы, темплейт внутренней строки колонки внутренней таблицы и тд рекурсивно от 2 до 4 уровней вложенности
             var initBind = this._html.When(JqueryBind.InitIncoding)
-                                     .OnSuccess(dsl => dsl.Self())
-                                     .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Table.Init));
+                                     .OnSuccess(dsl => dsl.Self().Trigger.Invoke(Bindings.Table.Init));
 
             var table = this._table.Binding(initBind)
                             .AsHtmlAttributes(new

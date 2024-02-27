@@ -1,7 +1,5 @@
 @using Incoding.Web.Components.Grid;
 
-@{ }
-
 @(Html.Components().Grid<SampleData>("grid")
       .Split(splitting =>
       {
@@ -65,16 +63,21 @@
                           .Columns(periodCols);
                 });
             });
-
-            // splitting.Add("history", table =>
-            // {
-            //
-            // });
       })
-      .Bind(dsl => dsl.When(Bindings.Grid.Init)
-                      .Ajax(o => {
+      .Bind(iml => iml.When(Bindings.Grid.Init)
+                      .Ajax(o =>
+                      {
                           o.Global = false;
                           o.Url = Url.Action("Data", "Home");
                       })
                       .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Result))) // m-controller
+      .Virtualize(v =>
+      {
+          v.InfinteScrolling = true;
+          v.ChunkSize = 40;
+      })
+      .UI(ui =>
+      {
+          ui.HighlightRowsOnHover = true;
+      })
       .Render(useConcurrentRender: false))

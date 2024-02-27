@@ -1,5 +1,11 @@
 namespace Incoding.Web.Components.Demo
 {
+    #region << Using >>
+
+    using Incoding.Web.Components.Grid;
+
+    #endregion
+
     public record SamplePeriod
     {
         public decimal JTD { get; set; }
@@ -7,7 +13,7 @@ namespace Incoding.Web.Components.Demo
         public decimal Hours { get; set; }
     }
 
-    public record SampleData
+    public record SampleData : IRowData
     {
         public string Id { get; set; }
 
@@ -34,5 +40,7 @@ namespace Incoding.Web.Components.Demo
         public List<SampleData> Children { get; set; } = new List<SampleData>();
 
         public bool HasChildren => Children.Any();
+
+        public string RowId => this.Id;
     }
 }

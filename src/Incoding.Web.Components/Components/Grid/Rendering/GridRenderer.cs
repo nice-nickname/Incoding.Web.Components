@@ -1,5 +1,6 @@
 namespace Incoding.Web.Components.Grid
 {
+    using System.Diagnostics;
     #region << Using >>
 
     using System.Linq;
@@ -26,11 +27,16 @@ namespace Incoding.Web.Components.Grid
 
         public IHtmlContent Render()
         {
+
             var root = Root();
 
-            var tables = this._useConcurrentRender ? this._grid.Tables.AsParallel() : this._grid.Tables.AsEnumerable();
+            var watch = Stopwatch.StartNew();
 
-            var splits = tables.Select(this.RenderSplitPanel).ToList();
+            var splits = this._useConcurrentRender
+                    ? this._grid.Tables.AsParallel().Select(RenderSplitPanel).ToList()
+                    : this._grid.Tables.AsEnumerable().Select(RenderSplitPanel).ToList();
+
+            watch.Stop();
 
             var index = 0;
             foreach (var split in splits)
@@ -51,11 +57,12 @@ namespace Incoding.Web.Components.Grid
             var root = new TagBuilder("div");
 
             var initBinding = this._html.When(JqueryBind.InitIncoding)
-                                        .OnSuccess(dsl => dsl.Self().JQuery.Call("initializeSplitGrid"))
+                                        .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid"))
                                         .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
 
             var incodingAttributes = this._grid.Binds(initBinding)
-                                        .AsHtmlAttributes(new {
+                                        .AsHtmlAttributes(new
+                                        {
                                             @class = "grid-splitter-container",
                                             id = this._grid.Id
                                         })

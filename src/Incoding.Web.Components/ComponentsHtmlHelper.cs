@@ -16,7 +16,7 @@ namespace Incoding.Web.Components
             this._html = html;
         }
 
-        public GridBuilder<T> Grid<T>(string id)
+        public GridBuilder<T> Grid<T>(string id) where T : IRowData
         {
             return new GridBuilder<T>(this._html, id);
         }

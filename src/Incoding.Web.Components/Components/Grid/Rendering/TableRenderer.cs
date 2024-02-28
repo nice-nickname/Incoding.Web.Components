@@ -12,7 +12,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class TableRenderer<T>
+    public class TableRenderer<T> where T : IRowData
     {
         private readonly Table<T> _table;
 
@@ -143,6 +143,11 @@ namespace Incoding.Web.Components.Grid
         {
             var row = new TagBuilder("tr");
             row.AddCssClass(this._table.Row.Css);
+
+            foreach (var (attr, tmplValue) in this._table.Row.Attr)
+            {
+                row.Attributes.Add(attr, tmplValue(tmpl).HtmlContentToString());
+            }
 
             contentWriter.Write(row.RenderStartTag().ToHtmlString());
 

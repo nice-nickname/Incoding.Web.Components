@@ -56,26 +56,6 @@
     text-overflow: ellipsis;
 }
 
-
-.grid-component {
-    table-layout: fixed;
-    white-space: nowrap;
-}
-
-.grid-component thead {
-
-}
-
-.grid-component tfoot {
-
-}
-
-.grid-component > thead > tr > th,
-.grid-component > tbody > tr > td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
 .nested {
 
 }

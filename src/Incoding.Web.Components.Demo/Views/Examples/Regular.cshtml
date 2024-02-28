@@ -13,6 +13,14 @@
 
     Action<ColumnListBuilder<SampleData>> regularCols = cols =>
                      {
+                        cols.Add().Content(
+                        @<text>
+                            @Html.Components().GridUtils.ExpandButton(settings =>
+                            {
+                                settings.Content = "";
+                            })
+                        </text>).Width(40);
+
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 

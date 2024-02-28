@@ -3,11 +3,10 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System.Collections.Generic;
-    using System.Linq;
 
     #endregion
 
-    public class Grid<T>
+    public class Grid<T> where T : IRowData
     {
         public string Id { get; }
 

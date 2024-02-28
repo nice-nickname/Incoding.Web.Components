@@ -1,9 +1,8 @@
 namespace Incoding.Web.Components.Grid
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
     #region << Using >>
 
+    using System.Collections.Generic;
     using System.Linq;
     using Incoding.Core.Extensions;
     using Incoding.Web.MvcContrib;
@@ -12,7 +11,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class GridComponentRenderer<T>
+    public class GridComponentRenderer<T> where T : IRowData
     {
         private readonly Grid<T> _grid;
 

@@ -13,12 +13,18 @@ class TableController {
     /**
      * @type { any }
      */
+    parent
+
+    /**
+     * @type { any }
+     */
     schema;
 
-    constructor(element, schema, data) {
+    constructor(element, schema, data, parent) {
         this.$table = $(element);
         this.schema = schema;
         this.data = data;
+        this.parent = parent
     }
 
     appendRows(start = 0, end = undefined) {
@@ -33,13 +39,37 @@ class TableController {
 
     renderChildren(rowId) { }
 
-    expand(rowId) { }
+    expand(rowId) {
+        console.log('expand', rowId)
+    }
 
-    totals() { }
+    totals() {
 
-    filter(criteria) { }
+    }
 
-    sort(criteria) { }
+    filter(criteria) {
+
+    }
+
+    sort(criteria) {
+
+    }
+
+    enableSort() {
+
+    }
+
+    disableSort() {
+
+    }
+
+    enableFilter() {
+
+    }
+
+    disableFilter() {
+
+    }
 
     _renderRows(data) {
         const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data })

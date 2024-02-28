@@ -8,7 +8,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class GridBuilder<T>
+    public class GridBuilder<T> where T : IRowData
     {
         public Grid<T> Grid { get; }
 

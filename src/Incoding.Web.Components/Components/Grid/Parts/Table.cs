@@ -7,7 +7,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class Table<T>
+    public class Table<T> where T : IRowData
     {
         public string Id { get; }
 
@@ -32,7 +32,7 @@ namespace Incoding.Web.Components.Grid
             this.Id = id;
         }
 
-        public void InheritStyles<U>(Table<U> other)
+        public void InheritStyles<U>(Table<U> other) where U : IRowData
         {
             this.Css = other.Css;
             this.Row.Css = other.Row.Css;

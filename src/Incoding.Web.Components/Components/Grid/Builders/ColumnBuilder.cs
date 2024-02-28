@@ -79,14 +79,17 @@ namespace Incoding.Web.Components.Grid
                 Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
             }
 
-            return this;
+            return this.Attr("data-value", tmpl => tmpl.For(fieldName))
+                       .Attr("data-title", tmpl => tmpl.For(fieldName))
+                       .Attr("data-type", this.Cell.Type.ToString())
+                       .Attr("data-format", this.Cell.Format.ToString());
         }
 
         public ColumnBuilder<T> Format(ColumnFormat format)
         {
             this.Cell.Format = format;
 
-            return this;
+            return this.Attr("data-format", this.Cell.Format.ToString());
         }
 
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)

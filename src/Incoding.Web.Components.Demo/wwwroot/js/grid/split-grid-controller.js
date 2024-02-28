@@ -59,8 +59,10 @@ class SplitGridController {
             const controller = new TableController(table, this.schemas[i], this.data)
 
             $(table).data('grid', controller)
-        })
 
+            controller.disableSort()
+            controller.disableFilter()
+        })
     }
 
     initializeScroll() {

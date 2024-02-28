@@ -24,7 +24,6 @@ namespace Incoding.Web.Components.Grid
         {
             var cell = new TagBuilder("td");
             cell.AddCssClass(this._cell.Column.Css);
-            cell.Attributes.Add("data-format", this._cell.Format.ToString());
 
             foreach (var (key, templateValue) in this._cell.Attrs)
             {

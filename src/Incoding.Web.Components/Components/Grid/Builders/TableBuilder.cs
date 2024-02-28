@@ -9,7 +9,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class TableBuilder<T>
+    public class TableBuilder<T> where T : IRowData
     {
         public Table<T> Table;
 
@@ -63,6 +63,7 @@ namespace Incoding.Web.Components.Grid
         }
 
         public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
+            where U : IRowData
         {
             var tableBuilder = new TableBuilder<U>(this._html, "");
             tableBuilder.Table.InheritStyles(this.Table);

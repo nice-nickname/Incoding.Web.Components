@@ -16,6 +16,8 @@ namespace Incoding.Web.Components
             this._html = html;
         }
 
+        public InputHtmlHelper Inputs => new InputHtmlHelper(this._html);
+
         public GridBuilder<T> Grid<T>(string id) where T : IRowData
         {
             return new GridBuilder<T>(this._html, id);

@@ -34,7 +34,7 @@
       {
             splitting.Add("regular", table =>
             {
-                table.Css("table table-primary table-bordered")
+                table.Css("table table-bordered table-component")
                      .Rows(row => row.Css("tr-item-calculate"))
                      .Columns(regularCols)
                      .Nested(s => s.Children, nested =>
@@ -45,7 +45,7 @@
 
             splitting.Add("period", table =>
             {
-                table.Css("table table-primary table-bordered")
+                table.Css("table table-bordered table-component")
                      .Rows(row => row.Css("tr-item-calculate"))
                      .Columns(periodCols);
 

@@ -50,6 +50,11 @@
 
 }
 
+.table-component > thead > tr > th,
+.table-component > tbody > tr > td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
 .grid-component {

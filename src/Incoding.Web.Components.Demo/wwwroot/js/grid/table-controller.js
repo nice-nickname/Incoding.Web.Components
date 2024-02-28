@@ -21,10 +21,6 @@ class TableController {
         this.data = data;
     }
 
-    appendData(data) {
-        this.data.push(...data);
-    }
-
     appendRows(start = 0, end = undefined) {
         if (!end) {
             end = this.data.length

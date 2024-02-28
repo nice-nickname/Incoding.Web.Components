@@ -70,7 +70,13 @@ class SplitGridController {
     }
 
     appendData(data) {
+        let lastIndex = this.data.length
+
         this.data.push(...data);
+
+        this.$tables.each((i, table) => {
+            $(table).data('grid').appendRows(lastIndex)
+        })
     }
 
     reload(data) {

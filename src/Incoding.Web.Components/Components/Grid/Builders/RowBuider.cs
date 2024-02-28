@@ -13,8 +13,13 @@ namespace Incoding.Web.Components.Grid
             this.Row = new Row<T>();
         }
 
-        public RowBuilder<T> Css(string css)
+        public RowBuilder<T> Css(string css, bool replace = false)
         {
+            if (replace)
+            {
+                this.Row.Css = string.Empty;
+            }
+
             this.Row.Css += " " + css;
 
             return this;

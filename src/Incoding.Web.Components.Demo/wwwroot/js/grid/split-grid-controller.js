@@ -23,7 +23,13 @@ class SplitGridController {
     data;
 
     /**
-     * @type { any[] }
+     * @type { {
+     *      Columns: any[],
+     *      RowTemplate: string,
+     *      ContentHtml: string,
+     *      NestedField: string,
+     *      NestedTable: any
+     * }[] }
      */
     schemas;
 
@@ -40,6 +46,7 @@ class SplitGridController {
         this.data = [];
 
         this.schemas = schemas;
+        this.options = options
 
         this.initializeScroll();
         this.initializeTables();
@@ -47,6 +54,12 @@ class SplitGridController {
 
     initializeTables() {
         this.$tables = this.$root.find('table');
+
+        this.$tables.each((i, table) => {
+            const controller = new TableController(table, this.schemas[i], this.data)
+
+            $(table).data('grid', controller)
+        })
 
     }
 

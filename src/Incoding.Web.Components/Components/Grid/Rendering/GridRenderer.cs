@@ -1,9 +1,11 @@
 namespace Incoding.Web.Components.Grid
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
     #region << Using >>
 
     using System.Linq;
+    using Incoding.Core.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -27,23 +29,19 @@ namespace Incoding.Web.Components.Grid
 
         public IHtmlContent Render()
         {
+            var tables = this._useConcurrentRender
+                    ? this._grid.Tables.AsParallel().Select(RenderTable).ToList()
+                    : this._grid.Tables.AsEnumerable().Select(RenderTable).ToList();
 
-            var root = Root();
 
-            var watch = Stopwatch.StartNew();
-
-            var splits = this._useConcurrentRender
-                    ? this._grid.Tables.AsParallel().Select(RenderSplitPanel).ToList()
-                    : this._grid.Tables.AsEnumerable().Select(RenderSplitPanel).ToList();
-
-            watch.Stop();
+            var root = Root(tables);
 
             var index = 0;
-            foreach (var split in splits)
+            foreach (var table in tables)
             {
-                root.InnerHtml.AppendHtml(split);
+                root.InnerHtml.AppendHtml(RenderSplitPanel(table));
 
-                if (++index < splits.Count)
+                if (++index < tables.Count)
                 {
                     root.InnerHtml.AppendHtml(RenderDivider());
                 }
@@ -52,12 +50,14 @@ namespace Incoding.Web.Components.Grid
             return root;
         }
 
-        private TagBuilder Root()
+        private TagBuilder Root(List<TableComponent> tables)
         {
             var root = new TagBuilder("div");
 
+            var tableDtos = tables.Select(t => t.ToDto()).ToList();
+
             var initBinding = this._html.When(JqueryBind.InitIncoding)
-                                        .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid"))
+                                        .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid", tableDtos.ToJsonString()))
                                         .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
 
             var incodingAttributes = this._grid.Binds(initBinding)
@@ -86,13 +86,11 @@ namespace Incoding.Web.Components.Grid
             return div;
         }
 
-        private IHtmlContent RenderSplitPanel(Table<T> table)
+        private IHtmlContent RenderSplitPanel(TableComponent table)
         {
             var divContainer = new TagBuilder("div");
 
-            var component = RenderTable(table);
-
-            divContainer.InnerHtml.AppendHtml(component.LayoutHtml);
+            divContainer.InnerHtml.AppendHtml(table.LayoutHtml);
             divContainer.AddCssClass("splitter-panel");
 
             return divContainer;

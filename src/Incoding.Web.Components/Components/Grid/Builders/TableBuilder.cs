@@ -21,8 +21,13 @@ namespace Incoding.Web.Components.Grid
             Table = new Table<T>(id);
         }
 
-        public TableBuilder<T> Css(string css)
+        public TableBuilder<T> Css(string css, bool replace = false)
         {
+            if (replace)
+            {
+                this.Table.Css = string.Empty;
+            }
+
             this.Table.Css += " " + css;
 
             return this;
@@ -59,11 +64,14 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
         {
-            var nestedGrid = new TableBuilder<U>(this._html, "");
+            var tableBuilder = new TableBuilder<U>(this._html, "");
+            tableBuilder.Table.InheritStyles(this.Table);
 
-            buildAction(nestedGrid);
+            buildAction(tableBuilder);
 
-            this.Table.NestedTable = new TableRenderer<U>(this._html, nestedGrid.Table).RenderComponent();
+            var fieldName = ExpressionHelper.GetFieldName(nestedField);
+            this.Table.NestedField = fieldName;
+            this.Table.NestedTable = new TableRenderer<U>(this._html, tableBuilder.Table).RenderComponent();
 
             return this;
         }

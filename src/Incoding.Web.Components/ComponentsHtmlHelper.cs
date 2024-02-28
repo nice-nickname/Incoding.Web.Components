@@ -20,5 +20,10 @@ namespace Incoding.Web.Components
         {
             return new GridBuilder<T>(this._html, id);
         }
+
+        public void Splitter()
+        {
+
+        }
     }
 }

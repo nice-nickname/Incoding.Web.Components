@@ -1,8 +1,8 @@
 namespace Incoding.Web.Components.Grid
 {
-    using System;
     #region << Using >>
 
+    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -10,7 +10,7 @@ namespace Incoding.Web.Components.Grid
 
     public class TableSplitBuilder<T>
     {
-        public List<Table<T>> Tables;
+        public List<Table<T>> Tables { get; }
 
         private readonly IHtmlHelper _html;
 

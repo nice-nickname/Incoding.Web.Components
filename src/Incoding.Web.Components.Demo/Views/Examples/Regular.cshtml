@@ -1,13 +1,17 @@
 @using Incoding.Web.Components.Grid;
+@{
+    Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
+                                 (cols, i) =>
+                                 {
+                                     cols.Stacked(s => s.Title(DateTime.Now.AddDays(i).ToShortDateString()),
+                                                  cols =>
+                                                  {
+                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
+                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70);
+                                                  });
+                                 });
 
-@(Html.Components().Grid<SampleData>("grid")
-      .Split(splitting =>
-      {
-            splitting.Add("regular", table =>
-            {
-                table.Css("table table-primary table-bordered")
-                     .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(cols =>
+    Action<ColumnListBuilder<SampleData>> regularCols = cols =>
                      {
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);
@@ -22,45 +26,32 @@
                                             cols.Add().Field(s => s.Start).Width(70);
                                             cols.Add().Field(s => s.End).Width(70);
                                         });
-                     })
+                     };
+}
+
+@(Html.Components().Grid<SampleData>("grid")
+      .Split(splitting =>
+      {
+            splitting.Add("regular", table =>
+            {
+                table.Css("table table-primary table-bordered")
+                     .Rows(row => row.Css("tr-item-calculate"))
+                     .Columns(regularCols)
                      .Nested(s => s.Children, nested =>
                      {
-                            nested.Css("table table-primary table-bordered")
-                                  .Rows(row => row.Css("tr-item-calculate"))
-                                  .Columns(cols =>
-                                  {
-                                        cols.Add().Field(s => s.Name).Width(70);
-                                        cols.Add().Field(s => s.Description).Title("Notes").Width(200);
-
-                                        cols.Add().Field(s => s.Amount).Width(70);
-                                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
-                                        cols.Add().Field(s => s.Balance).Width(70);
-                                  });
+                            nested.Columns(regularCols);
                      });
             });
 
             splitting.Add("period", table =>
             {
-                Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
-                                 (cols, i) =>
-                                 {
-                                     cols.Stacked(s => s.Title(DateTime.Now.AddDays(i).ToShortDateString()),
-                                                  cols =>
-                                                  {
-                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
-                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70);
-                                                  });
-                                 });
-
                 table.Css("table table-primary table-bordered")
                      .Rows(row => row.Css("tr-item-calculate"))
                      .Columns(periodCols);
 
                 table.Nested(s => s.Children, nested =>
                 {
-                    nested.Css("table table-primary table-bordered")
-                          .Rows(row => row.Css("tr-item-calculate"))
-                          .Columns(periodCols);
+                    nested.Columns(periodCols);
                 });
             });
       })

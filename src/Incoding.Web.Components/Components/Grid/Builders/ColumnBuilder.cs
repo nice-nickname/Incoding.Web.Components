@@ -23,9 +23,14 @@ namespace Incoding.Web.Components.Grid
             this.Cell.Column = this.Column;
         }
 
-        public ColumnBuilder<T> Css(string css)
+        public ColumnBuilder<T> Css(string css, bool replace = false)
         {
-            this.Column.Css = css;
+            if (replace)
+            {
+                this.Column.Css = string.Empty;
+            }
+
+            this.Column.Css += " " + css;
 
             return this;
         }

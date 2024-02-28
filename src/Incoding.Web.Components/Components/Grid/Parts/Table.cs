@@ -2,19 +2,13 @@ namespace Incoding.Web.Components.Grid
 {
     #region << Using >>
 
-    using System;
     using System.Collections.Generic;
-    using Incoding.Web.MvcContrib;
+    using System.Linq;
 
     #endregion
 
     public class Table<T>
     {
-        public Table(string id)
-        {
-            this.Id = id;
-        }
-
         public string Id { get; }
 
         public string Css { get; set; } = string.Empty;
@@ -29,6 +23,19 @@ namespace Incoding.Web.Components.Grid
 
         public ImlBinding Binding { get; set; } = iml => iml.When("_").OnSuccess(dsl => dsl.Self());
 
+        public string NestedField { get; set; }
+
         public TableComponent NestedTable { get; set; }
+
+        public Table(string id)
+        {
+            this.Id = id;
+        }
+
+        public void InheritStyles<U>(Table<U> other)
+        {
+            this.Css = other.Css;
+            this.Row.Css = other.Row.Css;
+        }
     }
 }

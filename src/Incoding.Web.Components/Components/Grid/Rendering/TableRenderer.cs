@@ -54,7 +54,8 @@ namespace Incoding.Web.Components.Grid
                 Columns = this._table.Cells,
                 LayoutHtml = table,
                 RowTemplate = rowTemplate,
-                Nested = this._table.NestedTable
+                Nested = this._table.NestedTable,
+                NestedField = this._table.NestedField
             };
         }
 
@@ -182,5 +183,27 @@ namespace Incoding.Web.Components.Grid
         public TableComponent Nested { get; set; }
 
         public string NestedField { get; set; }
+
+        public TableDto ToDto()
+        {
+            var columnDtos = Columns.Select(s =>
+            {
+                return new ColumnDto(s.Field, s.Column.Title)
+                {
+                    Format = s.Format,
+                    Type = s.Type,
+                    SpreadField = s.SpreadField,
+                    SpreadIndex = s.SpreadIndex
+                };
+            }).ToList();
+
+            var dto = new TableDto(columnDtos, RowTemplate, LayoutHtml.HtmlContentToString())
+            {
+                NestedField = NestedField,
+                NestedTable = Nested?.ToDto()
+            };
+
+            return dto;
+        }
     }
 }

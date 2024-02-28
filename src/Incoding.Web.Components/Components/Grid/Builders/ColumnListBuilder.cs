@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using JetBrains.Annotations;
 
     #endregion
 
@@ -27,10 +28,12 @@ namespace Incoding.Web.Components.Grid
         {
             var columnBuilder = new ColumnBuilder<T>();
 
-            this.Cells.Add(columnBuilder.Cell);
+            var newCell = columnBuilder.Cell;
+
+            this.Cells.Add(newCell);
             this.Columns.Add(columnBuilder.Column);
 
-            CellRenderers.Add(new SingleCellRenderer<T>(columnBuilder.Cell));
+            CellRenderers.Add(new SingleCellRenderer<T>(newCell));
 
             return columnBuilder;
         }
@@ -71,7 +74,8 @@ namespace Incoding.Web.Components.Grid
             var columnIndex = 0;
             foreach (var cell in clb.Cells)
             {
-                cell.Field = $"{spreadField}[{columnIndex++}].{cell.Field}";
+                cell.SpreadField = spreadField;
+                cell.SpreadIndex = columnIndex++;
             }
 
             this.Columns.AddRange(clb.Columns);

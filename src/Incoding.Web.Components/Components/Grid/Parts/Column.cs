@@ -14,7 +14,7 @@ namespace Incoding.Web.Components.Grid
 
         public string Title { get; set; }
 
-        public string Css { get; set; }
+        public string Css { get; set; } = string.Empty;
 
         public List<Column> Columns { get; } = new();
     }

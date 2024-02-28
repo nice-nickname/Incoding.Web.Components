@@ -3,13 +3,16 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System.Collections.Generic;
-    using Newtonsoft.Json;
 
     #endregion
 
     public class Cell
     {
         public string Field { get; set; }
+
+        public string SpreadField { get; set; }
+
+        public int SpreadIndex { get; set; }
 
         public ColumnType Type { get; set; }
 
@@ -20,10 +23,8 @@ namespace Incoding.Web.Components.Grid
 
     public class Cell<T> : Cell
     {
-        [JsonIgnore]
         public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
 
-        [JsonIgnore]
         public TemplateContent<T> Content { get; set; }
     }
 }

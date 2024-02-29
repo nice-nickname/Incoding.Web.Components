@@ -5,8 +5,9 @@ namespace Incoding.Web.Components.Demo.Controllers
 
     using Bogus;
     using System.Runtime.CompilerServices;
-    using Incoding.Web.MvcContrib;
-    using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNetCore.SignalR;
+    using Incoding.Core.Extensions;
+    using Microsoft.AspNetCore.Mvc.Razor.Extensions;
 
     #endregion
 
@@ -19,7 +20,7 @@ namespace Incoding.Web.Components.Demo.Controllers
 
     public class SignalHub : Hub
     {
-        private List<SampleData> Data(int page)
+        private List<SampleData> Data(int page, int pageSize)
         {
             Randomizer.Seed = new Random(123 + page);
 
@@ -42,7 +43,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
                     ;
 
-            var data = fakerData.Generate(20);
+            var data = fakerData.Generate(pageSize);
 
             foreach (var item in data)
             {
@@ -60,17 +61,19 @@ namespace Incoding.Web.Components.Demo.Controllers
         public async IAsyncEnumerable<PaginatedResult> StreamData([EnumeratorCancellation] CancellationToken token)
         {
             var currentPage = 0;
-            var pageSize = 40;
+            var allPages = 10;
 
-            while (currentPage < pageSize && !token.IsCancellationRequested)
+            while (currentPage < allPages && !token.IsCancellationRequested)
             {
-                var items = Data(currentPage++);
+                var items = Data(currentPage++, 40);
 
                 yield return new PaginatedResult
                 {
                     Items = items,
-                    IsNext = currentPage == pageSize
+                    IsNext = currentPage != allPages
                 };
+
+                Thread.Sleep(5.Seconds());
             }
         }
     }

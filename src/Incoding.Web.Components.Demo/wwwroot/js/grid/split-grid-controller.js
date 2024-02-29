@@ -58,26 +58,25 @@ class SplitGridController {
         this.$tables.each((i, table) => {
             const controller = new TableController(table, this.schemas[i], this.data)
 
-            $(table).data('grid', controller)
-
             controller.disableSort()
             controller.disableFilter()
         })
     }
 
     initializeScroll() {
-        this.$scroller = this.$root.children().first();
+        this.$scroller = this.$root.children();
 
+        this.$scroller.connectScrolls()
         /** listen to scroll here... */
     }
 
     appendData(data) {
-        let lastIndex = this.data.length
-
         this.data.push(...data);
+    }
 
-        this.$tables.each((i, table) => {
-            $(table).data('grid').appendRows(lastIndex)
+    renderRows(start, end) {
+        this.$tables.each(function() {
+            $(this).data('grid').renderRows(start, end)
         })
     }
 

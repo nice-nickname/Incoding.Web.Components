@@ -9,7 +9,7 @@ namespace Incoding.Web.Components.Grid
     public record TableDto(
         List<ColumnDto> Columns,
         string RowTemplate,
-        string ContentHtml
+        string LayoutHtml
     )
     {
         public string NestedField { get; init; }

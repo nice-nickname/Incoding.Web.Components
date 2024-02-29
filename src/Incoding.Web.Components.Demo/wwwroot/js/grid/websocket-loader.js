@@ -1,4 +1,6 @@
-class PartialLoader {
+
+
+class WebsocketLoader {
     data = []
 
     chunkSize
@@ -17,15 +19,26 @@ class PartialLoader {
 
     hasMoreByChunk = []
 
-    constructor(chunkSize = 40) {
+    method = ''
+
+    scroller
+
+    constructor(method, options) {
+        const {
+            chunkSize,
+            scroller
+        } = options
+
         this.chunkSize = chunkSize
+        this.method = method
+        this.scroller = scroller
     }
 
     initialize(element) {
         this.cancelLoading()
 
         this.$element = $(element)
-        this.$scroll = this.$element.find(".table-scroller").first()
+        this.$scroll = this.$element.find(this.scroller).first()
 
         this.initilizeScroll()
     }
@@ -68,12 +81,12 @@ class PartialLoader {
         this.data = []
 
         this.signalrStream = signalrController.connection
-            .stream("StreamData")
+            .stream(this.method)
             .subscribe({
                 next: (data) => {
                     const items = data.Items
 
-                    this.triggerLoad(items)
+                    this.triggerLoad(data)
 
                     this.data.push(...items)
                     this.hasMoreByChunk[this.availableChunks] = data.IsNext
@@ -99,27 +112,16 @@ class PartialLoader {
         if (chunk >= this.availableChunks) return;
 
         const start = chunk * this.chunkSize
-        const dataChunk = this.data.slice(start, start + this.chunkSize)
+        const end = start + this.chunkSize
 
-        this.$element.trigger('render-chunk', {
-            data: dataChunk,
-            chunk: chunk,
+        this.$element.trigger('websocket-render-chunk', {
+            start,
+            end,
             hasMore: this.hasMoreByChunk[chunk]
         })
 
         this.nextChunkRequested = false
         this.currentChunk++
-    }
-
-    triggerRenderChildren(rowId) {
-        const item = this.data.find(s => s.RowId === rowId)
-
-        if (!item) return
-
-        this.$element.trigger('render-children', {
-            data: item.Children || [],
-            rowId
-        })
     }
 
     triggerRerender(newRowData) {
@@ -141,16 +143,16 @@ class PartialLoader {
     }
 
     triggerStart() {
-        this.$element.trigger('load-start')
+        this.$element.trigger('websocket-start')
     }
 
-    triggerLoad(chunkData) {
-        this.$element.trigger('load-chunk', {
-            data: chunkData
+    triggerLoad(data) {
+        this.$element.trigger('websocket-load-chunk', {
+            data: data.Items
         })
     }
 
     triggerComplete() {
-        this.$element.trigger('load-complete')
+        this.$element.trigger('websocket-complete')
     }
 }

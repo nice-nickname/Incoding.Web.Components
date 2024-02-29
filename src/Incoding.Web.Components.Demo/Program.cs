@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Demo
     using Incoding.Core;
     using Incoding.Core.Block.IoC;
     using Incoding.Core.Block.IoC.Provider;
+    using Incoding.Web.Components.Demo.Controllers;
 
     #endregion
 
@@ -17,6 +18,13 @@ namespace Incoding.Web.Components.Demo
             builder.Services
                    .AddControllersWithViews()
                    .AddRazorRuntimeCompilation();
+
+            builder.Services.AddSignalR()
+                            .AddJsonProtocol(options =>
+                                {
+                                    options.PayloadSerializerOptions.PropertyNameCaseInsensitive = false;
+                                    options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+                                });
 
             builder.Services.ConfigureIncodingWebServices();
             builder.Services.ConfigureIncodingCoreServices();
@@ -31,6 +39,8 @@ namespace Incoding.Web.Components.Demo
             app.UseAuthorization();
 
             app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapHub<SignalHub>("/signals");
 
             IoCFactory.Instance.Initialize(ioc => ioc.WithProvider(new MSDependencyInjectionIoCProvider(app.Services)));
 

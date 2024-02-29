@@ -25,9 +25,11 @@ class TableController {
         this.schema = schema;
         this.data = data;
         this.parent = parent
+
+        this.$table.data('grid', this)
     }
 
-    appendRows(start = 0, end = undefined) {
+    renderRows(start = 0, end = undefined) {
         if (!end) {
             end = this.data.length
         }
@@ -37,7 +39,13 @@ class TableController {
         this._renderRows(dataChunk)
     }
 
-    renderChildren(rowId) { }
+    renderChildren(rowId) {
+
+    }
+
+    rerenderRow(rowId) {
+
+    }
 
     expand(rowId) {
         console.log('expand', rowId)

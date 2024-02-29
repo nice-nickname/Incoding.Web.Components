@@ -1,6 +1,6 @@
 namespace Incoding.Web.Components.Grid
 {
-    public record ColumnDto(string Field, string Title)
+    public record ColumnDto(int Index, string Field, string Title)
     {
         public int SpreadIndex { get; init; }
 

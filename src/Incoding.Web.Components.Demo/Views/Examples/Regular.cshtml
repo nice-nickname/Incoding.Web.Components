@@ -11,14 +11,17 @@
                                                   });
                                  });
 
-    Action<ColumnListBuilder<SampleData>> regularCols = cols =>
+    Action<ColumnListBuilder<SampleData>, int> regularCols = (cols, i) =>
                      {
                         cols.Add().Content(
                         @<text>
-                            @Html.Components().GridUtils.ExpandButton(settings =>
+                            @using (item.Is(s => s.HasChildren))
                             {
-                                settings.Content = "";
-                            })
+                                @Html.Components().GridUtils.ExpandButton(settings =>
+                                {
+                                    settings.Content = i.ToString();
+                                })
+                            }
                         </text>).Width(40);
 
                         cols.Add().Field(s => s.Name).Width(70);
@@ -44,10 +47,10 @@
             {
                 table.Css("table table-bordered table-component")
                      .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(regularCols)
+                     .Columns(cols => regularCols(cols, 1))
                      .Nested(s => s.Children, nested =>
                      {
-                            nested.Columns(regularCols);
+                            nested.Columns(cols => regularCols(cols, 2));
                      });
             });
 

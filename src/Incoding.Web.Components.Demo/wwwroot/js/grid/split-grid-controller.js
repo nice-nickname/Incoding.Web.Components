@@ -24,11 +24,11 @@ class SplitGridController {
 
     /**
      * @type { {
-     *      Columns: any[],
-     *      RowTemplate: string,
-     *      ContentHtml: string,
-     *      NestedField: string,
-     *      NestedTable: any
+     *  Columns: any[],
+     *  RowTemplate: string,
+     *  LayoutHtml: string,
+     *  NestedField: string,
+     *  NestedTable: any
      * }[] }
      */
     schemas;

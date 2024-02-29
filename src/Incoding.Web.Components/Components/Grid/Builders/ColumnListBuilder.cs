@@ -17,16 +17,20 @@ namespace Incoding.Web.Components.Grid
 
         public List<Column> Columns { get; }
 
-        public ColumnListBuilder()
+        private int _currentIndex { get; set; }
+
+        public ColumnListBuilder(int startIndex = 0)
         {
             this.Columns = new List<Column>();
             this.Cells = new List<Cell>();
             this.CellRenderers = new List<ICellRenderer<T>>();
+
+            this._currentIndex = startIndex;
         }
 
         public ColumnBuilder<T> Add()
         {
-            var columnBuilder = new ColumnBuilder<T>();
+            var columnBuilder = new ColumnBuilder<T>(this._currentIndex++);
 
             var newCell = columnBuilder.Cell;
 
@@ -43,7 +47,7 @@ namespace Incoding.Web.Components.Grid
             var stackedColumn = new ColumnBuilder<T>();
             stackedBuilder(stackedColumn);
 
-            var columnsBuilder = new ColumnListBuilder<T>();
+            var columnsBuilder = new ColumnListBuilder<T>(this._currentIndex);
             builderAction(columnsBuilder);
 
             var column = stackedColumn.Column;
@@ -64,7 +68,7 @@ namespace Incoding.Web.Components.Grid
 
             var spreadField = ExpressionHelper.GetFieldName(field);
 
-            var clb = new ColumnListBuilder<TSpread>();
+            var clb = new ColumnListBuilder<TSpread>(this._currentIndex);
 
             for (var i = 0; i < spreadCount; i++)
             {

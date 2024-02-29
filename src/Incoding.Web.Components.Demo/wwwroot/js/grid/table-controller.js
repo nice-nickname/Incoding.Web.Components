@@ -16,7 +16,13 @@ class TableController {
     parent
 
     /**
-     * @type { any }
+     * @type { {
+     *  Columns: any[],
+     *  RowTemplate: string,
+     *  LayoutHtml: string,
+     *  NestedField: string,
+     *  NestedTable: any
+     * } }
      */
     schema;
 
@@ -40,7 +46,41 @@ class TableController {
     }
 
     renderChildren(rowId) {
+        const nestedTable = this.schema.NestedTable
 
+        const record = this.data.find(s => s.RowId == rowId)
+        const childData = record[this.schema.NestedField]
+
+        const tr = document.createElement('tr')
+        const td = document.createElement('td')
+
+        tr.setAttribute('data-nested', true)
+        tr.setAttribute('data-row-id', rowId)
+
+        td.colSpan = this.schema.Columns.length
+
+        td.classList.add('table-container')
+        tr.appendChild(td)
+
+        const html = ExecutableInsert.Template.render(nestedTable.LayoutHtml, { })
+
+        const template = document.createElement('template')
+        template.innerHTML = html
+
+        const $table = $(template.content.children)
+
+        td.appendChild(template.content)
+
+        IncodingEngine.Current.parse($table)
+
+        const $row = this.$table.find(`tr[data-row-id="${rowId}"]`)
+
+        $row[0].after(tr)
+
+        const nestedController = new TableController($table, nestedTable, childData, record)
+        $table.data('grid', nestedController)
+
+        nestedController.renderRows()
     }
 
     renderPlaceholderRows(amount = 3) {
@@ -52,7 +92,7 @@ class TableController {
     }
 
     expand(rowId) {
-        console.log('expand', rowId)
+        this.renderChildren(rowId)
     }
 
     totals() {

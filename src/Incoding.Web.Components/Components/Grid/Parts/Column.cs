@@ -16,6 +16,8 @@ namespace Incoding.Web.Components.Grid
 
         public string Css { get; set; } = string.Empty;
 
+        public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
+
         public List<Column> Columns { get; } = new();
     }
 }

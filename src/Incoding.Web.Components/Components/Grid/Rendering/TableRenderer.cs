@@ -89,6 +89,8 @@ namespace Incoding.Web.Components.Grid
 
                 var cell = new TagBuilder("th");
 
+                cell.MergeAttributes(column.Attr);
+
                 cell.InnerHtml.AppendHtml(column.Title);
 
                 if (hasStacked)
@@ -198,7 +200,7 @@ namespace Incoding.Web.Components.Grid
         {
             var columnDtos = Columns.Select(s =>
             {
-                return new ColumnDto(s.Field, s.Column.Title)
+                return new ColumnDto(s.Column.Index, s.Field, s.Column.Title)
                 {
                     Format = s.Format,
                     Type = s.Type,

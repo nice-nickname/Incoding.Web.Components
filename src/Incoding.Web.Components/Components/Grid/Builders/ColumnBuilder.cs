@@ -23,6 +23,14 @@ namespace Incoding.Web.Components.Grid
             this.Cell.Column = this.Column;
         }
 
+        public ColumnBuilder(int index) : this()
+        {
+            this.Column.Index = index;
+
+            this.HeaderAttr("data-index", index.ToString())
+                .Attr("data-index", index.ToString());
+        }
+
         public ColumnBuilder<T> Css(string css, bool replace = false)
         {
             if (replace)
@@ -57,6 +65,13 @@ namespace Incoding.Web.Components.Grid
         public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
         {
             this.Cell.Attrs[attr] = value;
+
+            return this;
+        }
+
+        public ColumnBuilder<T> HeaderAttr(string attr, string value)
+        {
+            this.Column.Attr[attr] = value;
 
             return this;
         }

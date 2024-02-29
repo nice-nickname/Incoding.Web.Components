@@ -169,6 +169,11 @@ namespace Incoding.Web.Components.Grid
             {
                 var cell = new TagBuilder("td");
 
+                var cellContent = new TagBuilder("span");
+                cellContent.InnerHtml.AppendHtml("&nbsp;");
+
+                cell.InnerHtml.AppendHtml(cellContent);
+
                 row.InnerHtml.AppendHtml(cell);
             }
 

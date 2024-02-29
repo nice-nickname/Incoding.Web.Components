@@ -13,7 +13,7 @@
 
         const splitGrid = new SplitGridController(this, schemas, options)
 
-        return this.data('splitGrid', splitGrid)
+        this.data('splitGrid', splitGrid)
     }
 
     function prepareSchema(schema) {
@@ -76,7 +76,6 @@
         const loader = new WebsocketLoader("StreamData", options)
 
         loader.initialize(this)
-        loader.startLoading()
 
         $(this).data('loader', loader)
     }

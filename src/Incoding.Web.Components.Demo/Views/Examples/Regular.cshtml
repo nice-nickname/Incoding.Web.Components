@@ -64,26 +64,10 @@
             });
       })
       .Bind(iml => iml.When(Bindings.Grid.Init)
-                      .OnSuccess(dsl =>
-                      {
-                          dsl.Self().JQuery.PlugIn("websocketLoader", new {
-                              chunkSize = 40,
-                              scroller = ".splitter-panel"
-                          });
-                      })
-                      .When(Bindings.Websocket.Start)
+                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('loader').startLoading"))
+                      .When(Bindings.Grid.InfiniteScroll.Start)
                       .OnSuccess(dsl => dsl.Self())
-                      .When(Bindings.Websocket.LoadChunk)
-                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Event.Data.For("data")))
-                      .When(Bindings.Websocket.RenderChunk)
-                      .OnSuccess(dsl =>
-                      {
-                          var start = Selector.Event.Data.For("start");
-                          var end = Selector.Event.Data.For("end");
-
-                          dsl.Self().JQuery.Call("data('splitGrid').renderRows", start, end);
-                      })
-                      .When(Bindings.Websocket.Complete)
+                      .When(Bindings.Grid.InfiniteScroll.Complete)
                       .OnSuccess(dsl => dsl.Self()))
       .Virtualize(v =>
       {

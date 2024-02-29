@@ -43,6 +43,10 @@ class TableController {
 
     }
 
+    renderPlaceholderRows(amount = 3) {
+
+    }
+
     rerenderRow(rowId) {
 
     }

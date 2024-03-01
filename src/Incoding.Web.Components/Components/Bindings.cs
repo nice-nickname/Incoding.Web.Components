@@ -22,5 +22,7 @@ namespace Incoding.Web.Components
         {
             public static readonly string Init = "table-init";
         }
+
+        public static readonly string LazyLoad = "lazy";
     }
 }

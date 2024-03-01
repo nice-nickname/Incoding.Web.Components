@@ -64,7 +64,7 @@
 (function($) {
 
     /**
-     * websocket partial loading & infinite scroll implementation
+     * Websocket partial loading & infinite scroll implementation
      */
 
     $.fn.websocketLoader = function(options) {

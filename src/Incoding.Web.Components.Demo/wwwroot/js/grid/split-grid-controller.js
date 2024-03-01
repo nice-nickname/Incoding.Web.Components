@@ -55,8 +55,12 @@ class SplitGridController {
     initializeTables() {
         this.$tables = this.$root.find('table');
 
+        const parentData = {
+            data: this.data
+        }
+
         this.$tables.each((i, table) => {
-            const controller = new TableController(table, this.schemas[i], this.data)
+            const controller = new TableController(table, this.schemas[i], this.data, parentData)
 
             controller.disableSort()
             controller.disableFilter()

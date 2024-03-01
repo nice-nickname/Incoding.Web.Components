@@ -42,18 +42,29 @@
     white-space: nowrap;
 }
 
-.table-component > thead {
+.table-component > thead,
+.table-component > tfoot {
+    position: sticky;
+}
 
+.table-component > thead {
+    inset-block-start: 0;
 }
 
 .table-component > tfoot {
-
+    inset-block-end: 0;
 }
 
 .table-component > thead > tr > th,
 .table-component > tbody > tr > td {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.table-component button {
+    all: unset;
+    background: gray;
+    width: 20px;
 }
 
 .nested {

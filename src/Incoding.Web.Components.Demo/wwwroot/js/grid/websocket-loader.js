@@ -46,7 +46,7 @@ class WebsocketLoader {
     initilizeScroll() {
         let prevScrollTop = 0
 
-        this.$element.on('mousewheel', () => {
+        this.$scroll.on('scroll', () => {
             const el = this.$scroll[0]
             const containerScroll = el.scrollHeight - el.clientHeight
 

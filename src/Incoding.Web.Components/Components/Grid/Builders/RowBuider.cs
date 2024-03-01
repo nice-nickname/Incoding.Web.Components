@@ -11,7 +11,6 @@ namespace Incoding.Web.Components.Grid
         public RowBuilder()
         {
             this.Row = new Row<T>();
-            this.Row.Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
         }
 
         public RowBuilder<T> Css(string css, bool replace = false)

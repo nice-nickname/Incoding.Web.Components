@@ -51,6 +51,11 @@
                      .Nested(s => s.Children, nested =>
                      {
                             nested.Columns(cols => regularCols(cols, 2));
+
+                            nested.Nested(s => s.Children, nested =>
+                            {
+                                nested.Columns(cols => regularCols(cols, 3));
+                            });
                      });
             });
 
@@ -63,6 +68,11 @@
                 table.Nested(s => s.Children, nested =>
                 {
                     nested.Columns(periodCols);
+
+                    nested.Nested(s => s.Children, nested =>
+                    {
+                        nested.Columns(periodCols);
+                    });
                 });
             });
       })
@@ -80,5 +90,6 @@
       .UI(ui =>
       {
           ui.HighlightRowsOnHover = true;
+          ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
       })
       .Render(useConcurrentRender: false))

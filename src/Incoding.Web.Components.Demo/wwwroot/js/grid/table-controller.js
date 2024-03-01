@@ -11,7 +11,9 @@ class TableController {
     data;
 
     /**
-     * @type { any }
+     * @type { {
+     *  siblings: TableController[]
+     * } }
      */
     parent
 
@@ -31,6 +33,12 @@ class TableController {
         this.schema = schema;
         this.data = data;
         this.parent = parent
+
+        if (!this.parent.siblings) {
+            this.parent.siblings = []
+        }
+
+        this.parent.siblings.push(this)
 
         this.$table.data('grid', this)
     }
@@ -54,6 +62,7 @@ class TableController {
         const tr = document.createElement('tr')
         const td = document.createElement('td')
 
+        tr.classList.add('hidden')
         tr.setAttribute('data-nested', true)
         tr.setAttribute('data-row-id', rowId)
 
@@ -83,16 +92,41 @@ class TableController {
         nestedController.renderRows()
     }
 
-    renderPlaceholderRows(amount = 3) {
+    renderPlaceholderRows(count = 3) {
+        const tr = document.createElement('tr')
+        tr.setAttribute('temp-row')
 
+        for (let i = 0; i < this.schema.Columns.length; i++) {
+            const td = document.createElement('td')
+            const span = document.createElement('span')
+            span.innerHTML = '&nbsp;'
+            span.classList.add('table-placeholder')
+            td.appendChild(span)
+            tr.appendChild(td)
+        }
+
+        return Array.from({ length: count }, () => tr.cloneNode(true))
     }
 
     rerenderRow(rowId) {
 
     }
 
+    removeRow(rowId) {
+
+    }
+
     expand(rowId) {
-        this.renderChildren(rowId)
+        this.parent.siblings.forEach(c => {
+            const $row = c._findRow(rowId)
+
+            if ($row.data('hasNested') !== true) {
+                $row.data('hasNested', true)
+                c.renderChildren(rowId)
+            }
+
+            $row.next().toggleClass('hidden')
+        })
     }
 
     totals() {
@@ -121,6 +155,11 @@ class TableController {
 
     disableFilter() {
 
+    }
+
+    _findRow(rowId) {
+        const $row = $(this.$table[0].tBodies[0]).find(`tr[data-row-id="${rowId}"]`)
+        return $row
     }
 
     _renderRows(data) {

@@ -30,11 +30,15 @@ namespace Incoding.Web.Components.Grid
             public bool InfinteScrolling { get; set; }
 
             public int ChunkSize { get; set; } = 40;
+
+            public int PlaceholderRows { get; set; } = 3;
         }
 
         public class UIOptions
         {
             public bool HighlightRowsOnHover { get; set; }
+
+            public bool CascadeEvents { get; set; }
         }
     }
 }

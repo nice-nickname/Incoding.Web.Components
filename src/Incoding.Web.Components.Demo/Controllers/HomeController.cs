@@ -17,6 +17,22 @@ namespace Incoding.Web.Components.Demo.Controllers
         [Route("/data")]
         public IActionResult Data()
         {
+            return IncodingResult.Success(GenerateData(20));
+        }
+
+        [Route("/recalculate")]
+        public IActionResult Recalculate()
+        {
+            return IncodingResult.Success(GenerateData(1)[0]);
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public static List<SampleData> GenerateData(int count)
+        {
             Randomizer.Seed = new Random(123);
 
             var fakerPeriod = new Faker<SamplePeriod>()
@@ -38,7 +54,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
                     ;
 
-            var data = fakerData.Generate(20);
+            var data = fakerData.Generate(count);
 
             foreach (var item in data)
             {
@@ -50,12 +66,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                 }
             }
 
-            return IncodingResult.Success(data);
-        }
-
-        public IActionResult Index()
-        {
-            return View();
+            return data;
         }
     }
 }

@@ -51,6 +51,8 @@ class TableController {
         const dataChunk = this.data.slice(start, end)
 
         this._renderRows(dataChunk)
+
+        this.format()
     }
 
     renderChildren(rowId, parentData, expanded = false) {
@@ -148,6 +150,13 @@ class TableController {
     filter(criteria) { }
 
     sort(criteria) { }
+
+    format() {
+        this.$table
+            .find('td[data-format]')
+            .format()
+            .removeAttr('data-format')
+    }
 
     enableSort() { }
 

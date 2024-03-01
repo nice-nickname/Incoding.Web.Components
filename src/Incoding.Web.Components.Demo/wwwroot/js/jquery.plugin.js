@@ -81,3 +81,86 @@
     }
 
 } (jQuery));
+
+(function() {
+
+    $.fn.format = function() {
+        return this.each(function() {
+            const format = this.dataset.format
+            const value = this.dataset.value
+
+            switch (format) {
+                case 'Numeric':
+                    formatNumber(this, value)
+                    break;
+                case 'Currency':
+                    formatCurrency(this, value)
+                    break;
+                case 'Percentage':
+                    formatPercentage(this, value)
+                    break;
+                case 'DateTime':
+                    formatDateTime(this, value)
+                    break;
+                default:
+                    break;
+            }
+        })
+    }
+
+    function formatCurrency(element, value) {
+        return formatNumber(element, value, {
+            prefix: '$',
+            postfix: '',
+            precision: 2
+        })
+    }
+
+    function formatPercentage(element, value) {
+        return formatNumber(element, value, {
+            prefix: '',
+            postfix: '%',
+            precision: 2
+        })
+    }
+
+    function formatNumber(element, value, options) {
+        options = $.extend(options, {
+            prefix: '',
+            postfix: '',
+            precision: 2
+        })
+
+        const {
+            prefix,
+            postfix,
+            precision
+        } = options
+
+        let number = Number(value) || 0
+
+        const isNegative = number < 0
+        number = Math.abs(number).toFixed(precision)
+        number = `${prefix}${number}${postfix}`
+
+        if (isNegative) {
+            element.classList.add('ci-text-danger')
+            number = `(${number})`
+        }
+        else {
+            element.classList.remove('ci-text-danger')
+        }
+
+        element.innerHTML = number
+    }
+
+    function formatDateTime(element, value) {
+        if (!value) {
+            return ''
+        }
+        const parsed = new Date(Date.parse(value)).toLocaleString('en-US', { month: 'numeric', year: 'numeric', day: 'numeric' })
+
+        element.innerHTML = parsed
+    }
+
+} (jQuery));

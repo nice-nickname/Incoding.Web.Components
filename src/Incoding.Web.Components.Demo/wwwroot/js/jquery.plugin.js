@@ -21,6 +21,7 @@
 
         schema.RowTemplate = ExecutableInsert.Template.compile(rowTmpl)
         schema.LayoutHtml = ExecutableInsert.Template.compile(schema.LayoutHtml)
+        schema.expands = { }
 
         if (schema.NestedTable) {
             prepareSchema(schema.NestedTable)

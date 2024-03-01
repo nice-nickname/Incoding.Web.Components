@@ -133,6 +133,12 @@ class TableController {
     expand(rowId) {
         const parentData = { }
 
+        if (_.isUndefined(this.schema.expands[rowId])) {
+            this.schema.expands[rowId] = false
+        }
+
+        let isExpanded = this.schema.expands[rowId]
+
         this.parent.siblings.forEach(c => {
             const $row = c._findRow(rowId)
 
@@ -143,6 +149,8 @@ class TableController {
 
             $row.next().toggleClass('hidden')
         })
+
+        this.schema.expands[rowId] = !isExpanded
     }
 
     totals() { }

@@ -71,7 +71,6 @@ class SplitGridController {
         this.$scroller = this.$root.children();
 
         this.$scroller.connectScrolls()
-        /** listen to scroll here... */
     }
 
     appendData(data) {
@@ -86,7 +85,14 @@ class SplitGridController {
 
     reload(data) {
         const rowId = data.RowId;
+        const rowIndex = this.data.findIndex(s => s.RowId == rowId)
 
-        const item = this.data.find(s => s.RowId == rowId);
+        if (rowIndex < 0) return
+
+        this.data[rowIndex] = { ...this.data[rowIndex], ...data }
+
+        this.$tables.each(function() {
+            $(this).data('grid').rerenderRow(rowId)
+        })
     }
 }

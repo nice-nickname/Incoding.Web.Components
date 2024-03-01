@@ -26,12 +26,18 @@ namespace Incoding.Web.Components.Demo.Controllers
             return IncodingResult.Success(GenerateData(1)[0]);
         }
 
+        [Route("/recalculate-without-children")]
+        public IActionResult RecalculateWithoutChildren()
+        {
+            return IncodingResult.Success(GenerateData(1, false)[0]);
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        public static List<SampleData> GenerateData(int count)
+        public static List<SampleData> GenerateData(int count, bool withChildren = true)
         {
             Randomizer.Seed = new Random(123);
 
@@ -56,13 +62,16 @@ namespace Incoding.Web.Components.Demo.Controllers
 
             var data = fakerData.Generate(count);
 
-            foreach (var item in data)
+            if (withChildren)
             {
-                item.Children = fakerData.Generate(5);
-
-                foreach (var iitem in item.Children)
+                foreach (var item in data)
                 {
-                    iitem.Children = fakerData.Generate(5);
+                    item.Children = fakerData.Generate(5);
+
+                    foreach (var iitem in item.Children)
+                    {
+                        iitem.Children = fakerData.Generate(5);
+                    }
                 }
             }
 

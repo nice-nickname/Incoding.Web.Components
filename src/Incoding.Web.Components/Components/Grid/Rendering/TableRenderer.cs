@@ -170,6 +170,7 @@ namespace Incoding.Web.Components.Grid
             foreach (var gridCell in this._table.Cells)
             {
                 var cell = new TagBuilder("td");
+                cell.MergeAttributes(gridCell.Column.Attr);
 
                 var cellContent = new TagBuilder("span");
                 cellContent.InnerHtml.AppendHtml("&nbsp;");

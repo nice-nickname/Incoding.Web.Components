@@ -53,7 +53,7 @@ class TableController {
         this._renderRows(dataChunk)
     }
 
-    renderChildren(rowId) {
+    renderChildren(rowId, parentData, expanded = false) {
         const nestedTable = this.schema.NestedTable
 
         const record = this.data.find(s => s.RowId == rowId)
@@ -62,7 +62,10 @@ class TableController {
         const tr = document.createElement('tr')
         const td = document.createElement('td')
 
-        tr.classList.add('hidden')
+        if (!expanded) {
+            tr.classList.add('hidden')
+        }
+
         tr.setAttribute('data-nested', true)
         tr.setAttribute('data-row-id', rowId)
 
@@ -86,7 +89,7 @@ class TableController {
 
         $row[0].after(tr)
 
-        const nestedController = new TableController($table, nestedTable, childData, record)
+        const nestedController = new TableController($table, nestedTable, childData, parentData)
         $table.data('grid', nestedController)
 
         nestedController.renderRows()
@@ -109,7 +112,16 @@ class TableController {
     }
 
     rerenderRow(rowId) {
+        const $row = this._findRow(rowId)
+        const rowData = this.data.find(s => s.RowId == rowId)
 
+        this._rerenderSelfRow($row, rowData)
+
+        if ($row.data('hasNested') === true) {
+            const nestedData = rowData[this.schema.NestedField]
+
+            this._rerenderNestedRow($row.next(), nestedData)
+        }
     }
 
     removeRow(rowId) {
@@ -117,44 +129,93 @@ class TableController {
     }
 
     expand(rowId) {
+        const parentData = { }
+
         this.parent.siblings.forEach(c => {
             const $row = c._findRow(rowId)
 
             if ($row.data('hasNested') !== true) {
                 $row.data('hasNested', true)
-                c.renderChildren(rowId)
+                c.renderChildren(rowId, parentData)
             }
 
             $row.next().toggleClass('hidden')
         })
     }
 
-    totals() {
+    totals() { }
 
+    filter(criteria) { }
+
+    sort(criteria) { }
+
+    enableSort() { }
+
+    disableSort() { }
+
+    enableFilter() { }
+
+    disableFilter() { }
+
+    _rerenderSelfRow(rowId) {
+        const $row = this._findRow(rowId)
+        const rowData = this.data.find(s => s.RowId == rowId)
+
+        const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data: [rowData] })
+
+        const template = document.createElement('template')
+        template.innerHTML = html
+
+        morphdom($row[0], template.content.children[0])
     }
 
-    filter(criteria) {
+    _rerenderSelfRows() {
+        const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data: this.data })
 
-    }
+        const template = document.createElement('template')
+        template.innerHTML = html
 
-    sort(criteria) {
+        const tbody = document.createElement('tbody')
+        tbody.appendChild(template.content)
 
-    }
+        // morphdom(this.$table[0].tBodies[0], tbody, {
 
-    enableSort() {
+        //     childrenOnly: true,
 
-    }
+        //     /**
+        //      * @param {Node} node
+        //      */
+        //     getNodeKey: function(node) {
+        //         let rowId
+        //         let nested
 
-    disableSort() {
+        //         if (node.nodeType === Node.ELEMENT_NODE && node.tagName == 'TR') {
+        //             rowId = node.dataset.rowId
+        //             nested = node.dataset.nested
+        //         }
 
-    }
+        //         if (!nested) {
+        //             return rowId || node.id
+        //         }
 
-    enableFilter() {
+        //         return node.id;
+        //     },
 
-    }
+        //     skipFromChildren: function(fromEl, toEl) {
+        //         if (fromEl.tagName == 'TR') {
+        //             console.log('aaa', fromEl);
+        //         }
+        //         if (fromEl.hasAttribute('data-nested')) {
+        //             console.log('from');
+        //         }
 
-    disableFilter() {
+        //         if (toEl.hasAttribute('data-nested')) {
+        //             console.log('to');
+        //         }
 
+        //         return false
+        //     }
+        // })
     }
 
     _findRow(rowId) {

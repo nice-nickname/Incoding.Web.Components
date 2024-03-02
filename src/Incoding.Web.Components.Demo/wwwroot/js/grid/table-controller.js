@@ -43,6 +43,38 @@ class TableController {
         this.$table.data('grid', this)
     }
 
+    expand(rowId) {
+        const parentData = { }
+
+        const isExpanded = this.schema.expands[rowId]
+        const requireInsert = isExpanded === undefined
+
+        this.parent.siblings.forEach(c => {
+            const $row = c._findRow(rowId)
+
+            if (requireInsert) {
+                c.renderChildren(rowId, parentData)
+            }
+
+            $row.next().toggleAttribute('data-expanded', 'true', 'false')
+        })
+
+        this.schema.expands[rowId] = !isExpanded
+    }
+
+    totals() { }
+
+    filter(criteria) { }
+
+    sort(criteria) { }
+
+    format() {
+        this.$table
+            .find('td[data-format]')
+            .format()
+            .removeAttr('data-format')
+    }
+
     renderRows(start = 0, end = undefined) {
         if (!end) {
             end = this.data.length
@@ -97,7 +129,7 @@ class TableController {
         nestedController.renderRows()
     }
 
-    renderPlaceholderRows(count = 3) {
+    renderPlaceholderRows(count) {
         const tr = document.createElement('tr')
         tr.setAttribute('temp-row')
 
@@ -130,42 +162,6 @@ class TableController {
 
     }
 
-    expand(rowId) {
-        const parentData = { }
-
-        if (_.isUndefined(this.schema.expands[rowId])) {
-            this.schema.expands[rowId] = false
-        }
-
-        let isExpanded = this.schema.expands[rowId]
-
-        this.parent.siblings.forEach(c => {
-            const $row = c._findRow(rowId)
-
-            if ($row.data('hasNested') !== true) {
-                $row.data('hasNested', true)
-                c.renderChildren(rowId, parentData)
-            }
-
-            $row.next().toggleClass('hidden')
-        })
-
-        this.schema.expands[rowId] = !isExpanded
-    }
-
-    totals() { }
-
-    filter(criteria) { }
-
-    sort(criteria) { }
-
-    format() {
-        this.$table
-            .find('td[data-format]')
-            .format()
-            .removeAttr('data-format')
-    }
-
     enableSort() { }
 
     disableSort() { }
@@ -174,70 +170,11 @@ class TableController {
 
     disableFilter() { }
 
-    _rerenderSelfRow(rowId) {
-        const $row = this._findRow(rowId)
-        const rowData = this.data.find(s => s.RowId == rowId)
-
-        const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data: [rowData] })
-
-        const template = document.createElement('template')
-        template.innerHTML = html
-
-        morphdom($row[0], template.content.children[0])
-    }
-
-    _rerenderSelfRows() {
-        const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data: this.data })
-
-        const template = document.createElement('template')
-        template.innerHTML = html
-
-        const tbody = document.createElement('tbody')
-        tbody.appendChild(template.content)
-
-        // morphdom(this.$table[0].tBodies[0], tbody, {
-
-        //     childrenOnly: true,
-
-        //     /**
-        //      * @param {Node} node
-        //      */
-        //     getNodeKey: function(node) {
-        //         let rowId
-        //         let nested
-
-        //         if (node.nodeType === Node.ELEMENT_NODE && node.tagName == 'TR') {
-        //             rowId = node.dataset.rowId
-        //             nested = node.dataset.nested
-        //         }
-
-        //         if (!nested) {
-        //             return rowId || node.id
-        //         }
-
-        //         return node.id;
-        //     },
-
-        //     skipFromChildren: function(fromEl, toEl) {
-        //         if (fromEl.tagName == 'TR') {
-        //             console.log('aaa', fromEl);
-        //         }
-        //         if (fromEl.hasAttribute('data-nested')) {
-        //             console.log('from');
-        //         }
-
-        //         if (toEl.hasAttribute('data-nested')) {
-        //             console.log('to');
-        //         }
-
-        //         return false
-        //     }
-        // })
-    }
-
     _findRow(rowId) {
-        const $row = $(this.$table[0].tBodies[0]).find(`tr[data-row-id="${rowId}"]`)
-        return $row
+        const bodyEl = this.$table[0].tBodies[0]
+        const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
+
+        return $(bodyEl).find(selector)
     }
 
     _renderRows(data) {

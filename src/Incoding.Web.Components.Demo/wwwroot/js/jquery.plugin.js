@@ -34,7 +34,7 @@
 
 } (jQuery));
 
-(function() {
+(function($) {
 
     /**
      * Connect two scrolls to scroll simultaneously
@@ -65,7 +65,7 @@
 (function($) {
 
     /**
-     * Websocket partial loading & infinite scroll implementation
+     * Websocket partial loading & infinite scroll initialization
      */
 
     $.fn.websocketLoader = function(options) {
@@ -83,7 +83,11 @@
 
 } (jQuery));
 
-(function() {
+(function($) {
+
+    /**
+     * Formatting table cells
+     */
 
     $.fn.format = function() {
         return this.each(function() {
@@ -165,3 +169,13 @@
     }
 
 } (jQuery));
+
+(function($) {
+
+    $.fn.toggleAttribute = function(attr, on, off) {
+        return this.each(function() {
+            $(this).attr(attr, (_, value) => value == on ? off : on)
+        })
+    }
+
+} (jQuery))

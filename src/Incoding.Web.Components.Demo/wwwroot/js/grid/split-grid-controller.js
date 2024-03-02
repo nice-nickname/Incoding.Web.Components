@@ -60,7 +60,7 @@ class SplitGridController {
         }
 
         this.$tables.each((i, table) => {
-            const controller = new TableController(table, this.schemas[i], this.data, parentData)
+            const controller = new TableController(table, this.schemas[i], this.data, parentData, 20)
 
             controller.disableSort()
             controller.disableFilter()
@@ -77,10 +77,20 @@ class SplitGridController {
         this.data.push(...data);
     }
 
-    renderRows(start, end) {
+    renderRows(start, end, hasMore = true) {
         this.$tables.each(function() {
-            $(this).data('grid').renderRows(start, end)
+            const controller = $(this).data('grid')
+
+            controller.renderRows(start, end)
+
+            if (hasMore) {
+                controller.renderPlaceholderRows(3)
+            }
         })
+    }
+
+    totals() {
+        this.$tables.first().data('grid').totals()
     }
 
     reload(data) {

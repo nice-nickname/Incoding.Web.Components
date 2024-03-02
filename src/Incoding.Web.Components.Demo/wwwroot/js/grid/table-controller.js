@@ -6,6 +6,21 @@ class TableController {
     $table;
 
     /**
+     * @type { JQuery<HTMLTableSectionElement> }
+     */
+    $thead
+
+    /**
+     * @type { JQuery<HTMLTableSectionElement> }
+     */
+    $tbody
+
+    /**
+     * @type { JQuery<HTMLTableSectionElement> }
+     */
+    $tfoot
+
+    /**
      * @type { any[] }
      */
     data;
@@ -28,14 +43,22 @@ class TableController {
      */
     schema;
 
-    constructor(element, schema, data, parent) {
+    constructor(element, schema, data, parent, placeholderCount = 0) {
         this.$table = $(element);
+        this.$thead = $(element).find('thead')
+        this.$tbody = $(element).find('tbody')
+        this.$tfoot = $(element).find('tfoot')
+
         this.schema = schema;
         this.data = data;
         this.parent = parent
 
         if (!this.parent.siblings) {
             this.parent.siblings = []
+        }
+
+        if (placeholderCount != 0) {
+            this.renderPlaceholderRows(placeholderCount)
         }
 
         this.parent.siblings.push(this)
@@ -47,22 +70,45 @@ class TableController {
         const parentData = { }
 
         const isExpanded = this.schema.expands[rowId]
-        const requireInsert = isExpanded === undefined
+        const childRendered = isExpanded !== undefined
+
+        this.schema.expands[rowId] = !isExpanded
 
         this.parent.siblings.forEach(c => {
             const $row = c._findRow(rowId)
 
-            if (requireInsert) {
+            if (!childRendered) {
                 c.renderChildren(rowId, parentData)
             }
 
             $row.next().toggleAttribute('data-expanded', 'true', 'false')
         })
-
-        this.schema.expands[rowId] = !isExpanded
     }
 
-    totals() { }
+    totals() {
+        this.parent.siblings.forEach(c => {
+            const totalableCols = c.schema.Columns.filter(s => s.Totalable)
+
+            totalableCols.forEach(col => {
+                const { Index } = col
+
+                let sum = 0
+
+                const $cells = c.$tbody.children(':not([data-nested])').find(`td[data-index="${Index}"]`)
+
+                $cells.each(function() {
+                    sum += $(this).data('value')
+                })
+
+                c.$tfoot.find(`td[data-index="${Index}"] span`).each(function() {
+                    $(this).attr('data-format', 'Numeric')
+                    $(this).attr('data-value', sum)
+                })
+            })
+
+            c.$tfoot.find('span[data-format]').format().removeAttr('data-format')
+        })
+    }
 
     filter(criteria) { }
 
@@ -81,6 +127,8 @@ class TableController {
         }
 
         const dataChunk = this.data.slice(start, end)
+
+        this.$table.find('[temp-row]').remove()
 
         this._renderRows(dataChunk)
 
@@ -123,15 +171,16 @@ class TableController {
 
         $row[0].after(tr)
 
-        const nestedController = new TableController($table, nestedTable, childData, parentData)
+        const nestedController = new TableController($table[0], nestedTable, childData, parentData)
         $table.data('grid', nestedController)
 
         nestedController.renderRows()
+        nestedController.totals()
     }
 
     renderPlaceholderRows(count) {
         const tr = document.createElement('tr')
-        tr.setAttribute('temp-row')
+        tr.setAttribute('temp-row', true)
 
         for (let i = 0; i < this.schema.Columns.length; i++) {
             const td = document.createElement('td')
@@ -142,7 +191,9 @@ class TableController {
             tr.appendChild(td)
         }
 
-        return Array.from({ length: count }, () => tr.cloneNode(true))
+        const rows = Array.from({ length: count }, () => tr.cloneNode(true))
+
+        this.$tbody[0].append(...rows)
     }
 
     rerenderRow(rowId) {

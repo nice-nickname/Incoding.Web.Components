@@ -6,6 +6,8 @@ namespace Incoding.Web.Components.Grid
 
         public string SpreadField { get; init; }
 
+        public bool Totalable { get; set; }
+
         public ColumnType Type { get; init; }
 
         public ColumnFormat Format { get; init; }

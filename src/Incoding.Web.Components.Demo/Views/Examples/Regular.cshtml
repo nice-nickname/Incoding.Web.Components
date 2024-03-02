@@ -6,8 +6,8 @@
                                      cols.Stacked(s => s.Title(DateTime.Now.AddDays(i).ToShortDateString()),
                                                   cols =>
                                                   {
-                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70);
-                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70);
+                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70).Totalable();
+                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70).Totalable();
                                                   });
                                  });
 
@@ -27,7 +27,7 @@
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
-                        cols.Add().Field(s => s.Amount).Width(70);
+                        cols.Add().Field(s => s.Amount).Width(70).Totalable();
                         cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
                         cols.Add().Field(s => s.Balance).Width(70);
 
@@ -47,14 +47,29 @@
             {
                 table.Css("table table-bordered table-component")
                      .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(cols => regularCols(cols, 1))
+                     .Columns(cols =>
+                     {
+                         regularCols(cols, 1);
+                         regularCols(cols, 1);
+                         regularCols(cols, 1);
+                     })
                      .Nested(s => s.Children, nested =>
                      {
-                            nested.Columns(cols => regularCols(cols, 2));
+                            nested.Columns(cols =>
+                            {
+                                regularCols(cols, 2);
+                                regularCols(cols, 2);
+                                regularCols(cols, 2);
+                            });
 
                             nested.Nested(s => s.Children, nested =>
                             {
-                                nested.Columns(cols => regularCols(cols, 3));
+                                nested.Columns(cols =>
+                                {
+                                    regularCols(cols, 3);
+                                    regularCols(cols, 3);
+                                    regularCols(cols, 3);
+                                });
                             });
                      });
             });
@@ -63,15 +78,24 @@
             {
                 table.Css("table table-bordered table-component")
                      .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(periodCols);
+                     .Columns(cols =>
+                     {
+                         periodCols(cols);
+                     });
 
                 table.Nested(s => s.Children, nested =>
                 {
-                    nested.Columns(periodCols);
+                    nested.Columns(cols =>
+                    {
+                        periodCols(cols);
+                    });
 
                     nested.Nested(s => s.Children, nested =>
                     {
-                        nested.Columns(periodCols);
+                        nested.Columns(cols =>
+                        {
+                            periodCols(cols);
+                        });
                     });
                 });
             });
@@ -81,7 +105,7 @@
                       .When(Bindings.Grid.InfiniteScroll.Start)
                       .OnSuccess(dsl => dsl.Self())
                       .When(Bindings.Grid.InfiniteScroll.Complete)
-                      .OnSuccess(dsl => dsl.Self()))
+                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
       .Virtualize(v =>
       {
           v.InfinteScrolling = true;

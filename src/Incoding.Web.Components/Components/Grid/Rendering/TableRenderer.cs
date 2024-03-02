@@ -206,7 +206,8 @@ namespace Incoding.Web.Components.Grid
                     Format = s.Format,
                     Type = s.Type,
                     SpreadField = s.SpreadField,
-                    SpreadIndex = s.SpreadIndex
+                    SpreadIndex = s.SpreadIndex,
+                    Totalable = s.Column.Totalable
                 };
             }).ToList();
 

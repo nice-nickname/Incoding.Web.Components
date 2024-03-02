@@ -134,7 +134,7 @@ namespace Incoding.Web.Components.Grid
                           var start = Selector.Event.Data.For("start");
                           var end = Selector.Event.Data.For("end");
 
-                          dsl.Self().JQuery.Call("data('splitGrid').renderRows", start, end);
+                          dsl.Self().JQuery.Call("data('splitGrid').renderRows", start, end, Selector.Event.Data.For("hasMore"));
                       });
             }
 

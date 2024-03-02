@@ -69,6 +69,13 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public ColumnBuilder<T> Totalable(bool value = true)
+        {
+            this.Column.Totalable = value;
+
+            return this;
+        }
+
         public ColumnBuilder<T> HeaderAttr(string attr, string value)
         {
             this.Column.Attr[attr] = value;

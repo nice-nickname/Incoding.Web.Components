@@ -52,7 +52,24 @@
     display: none;
 }
 
+.table-component .table-placeholder {
+    width: 100% !important;
+    display: block;
+    background: linear-gradient(-45deg, #ffffff, #e3e3e3, #ffffff, #e3e3e3);
+    background-size: 400% 400%;
+    animation: gradient 2s ease-in-out infinite;
+    border-radius: 3px;
+}
 
+@keyframes gradient {
+    0% {
+        background-position: 5% 0;
+    }
+
+    100% {
+        background-position: 100% 70%;
+    }
+}
 
 
 .table-component > thead > tr > th,

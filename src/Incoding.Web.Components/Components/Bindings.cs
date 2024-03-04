@@ -12,8 +12,6 @@ namespace Incoding.Web.Components
 
                 public static readonly string LoadChunk = "websocket-load-chunk";
 
-                public static readonly string RenderChunk = "websocket-render-chunk";
-
                 public static readonly string Complete = "websocket-complete";
             }
         }

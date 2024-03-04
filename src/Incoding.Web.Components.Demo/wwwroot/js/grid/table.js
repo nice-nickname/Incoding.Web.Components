@@ -43,7 +43,7 @@ class TableController {
      */
     schema;
 
-    constructor(element, schema, data, parent, placeholderCount = 0) {
+    constructor(element, schema, data, parent) {
         this.$table = $(element);
         this.$thead = $(element).find('thead')
         this.$tbody = $(element).find('tbody')
@@ -55,10 +55,6 @@ class TableController {
 
         if (!this.parent.siblings) {
             this.parent.siblings = []
-        }
-
-        if (placeholderCount != 0) {
-            this.renderPlaceholderRows(placeholderCount)
         }
 
         this.parent.siblings.push(this)
@@ -211,6 +207,10 @@ class TableController {
 
     removeRow(rowId) {
 
+    }
+
+    removeAllRows() {
+        this.$tbody.empty()
     }
 
     enableSort() { }

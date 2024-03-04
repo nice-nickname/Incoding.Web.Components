@@ -14,7 +14,9 @@ namespace Incoding.Web.Components.Grid
 
         public List<Table<T>> Tables { get; set; } = new();
 
-        public VirtualizationOptions Virtualization { get; set; } = new();
+        public InfiniteScrollOptions InfiniteScroll { get; set; } = new();
+
+        public WebsocketLoadingOptions Websocket { get; set; } = new();
 
         public UIOptions UI { get; set; } = new();
 
@@ -25,13 +27,22 @@ namespace Incoding.Web.Components.Grid
             Id = id;
         }
 
-        public class VirtualizationOptions
+        public class InfiniteScrollOptions
         {
-            public bool InfinteScrolling { get; set; }
+            public bool Enabled { get; set; }
+
+            public int ChunkSize { get; set; }
+
+            public int PlaceholderRows { get; set; } = 3;
+        }
+
+        public class WebsocketLoadingOptions
+        {
+            public bool Enabled { get; set; }
 
             public int ChunkSize { get; set; } = 40;
 
-            public int PlaceholderRows { get; set; } = 3;
+            public string Method { get; set; }
         }
 
         public class UIOptions

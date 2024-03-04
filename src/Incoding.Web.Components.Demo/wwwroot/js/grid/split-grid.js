@@ -40,6 +40,13 @@ class SplitGridController {
      */
     options;
 
+    /**
+     * @type { {
+     *  handleDataUpdated: () => void
+     * } }
+     */
+    renderer
+
     constructor(element, schemas, options) {
         this.$root = $(element);
 
@@ -50,6 +57,8 @@ class SplitGridController {
 
         this.initializeScroll();
         this.initializeTables();
+
+        this.initializeRenderer();
     }
 
     initializeTables() {
@@ -60,7 +69,11 @@ class SplitGridController {
         }
 
         this.$tables.each((i, table) => {
-            const controller = new TableController(table, this.schemas[i], this.data, parentData, 20)
+            const controller = new TableController(table, this.schemas[i], this.data, parentData)
+
+            controller.removeAllRows()
+
+            controller.renderPlaceholderRows(20)
 
             controller.disableSort()
             controller.disableFilter()
@@ -73,8 +86,14 @@ class SplitGridController {
         this.$scroller.connectScrolls()
     }
 
+    initializeRenderer() {
+        this.renderer = new InfiniteScrollRenderer(this, 20)
+    }
+
     appendData(data) {
         this.data.push(...data);
+
+        this.renderer.handleDataUpdated()
     }
 
     renderRows(start, end, hasMore = true) {

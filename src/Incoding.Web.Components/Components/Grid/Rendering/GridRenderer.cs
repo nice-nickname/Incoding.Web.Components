@@ -101,7 +101,7 @@ namespace Incoding.Web.Components.Grid
 
         private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableDto> tableDtos)
         {
-            bool infinteScrolling = this._grid.Virtualization.InfinteScrolling;
+            bool infinteScrolling = this._grid.Websocket.Enabled;
 
             var initBinding = this._html.When(JqueryBind.InitIncoding)
                                         .OnSuccess(dsl =>
@@ -110,33 +110,16 @@ namespace Incoding.Web.Components.Grid
 
                                             if (infinteScrolling)
                                             {
-                                                var chunkSize = this._grid.Virtualization.ChunkSize;
+                                                var chunkSize = this._grid.Websocket.ChunkSize;
 
                                                 dsl.Self().JQuery.PlugIn("websocketLoader", new
                                                 {
                                                     chunkSize = chunkSize,
-                                                    scroller = ".splitter-panel"
+                                                    method = this._grid.Websocket.Method
                                                 });
                                             }
                                         })
                                         .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
-
-
-
-            if (infinteScrolling)
-            {
-                initBinding = initBinding
-                      .When(Bindings.Grid.InfiniteScroll.LoadChunk)
-                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Event.Data.For("data")))
-                      .When(Bindings.Grid.InfiniteScroll.RenderChunk)
-                      .OnSuccess(dsl =>
-                      {
-                          var start = Selector.Event.Data.For("start");
-                          var end = Selector.Event.Data.For("end");
-
-                          dsl.Self().JQuery.Call("data('splitGrid').renderRows", start, end, Selector.Event.Data.For("hasMore"));
-                      });
-            }
 
             return initBinding;
         }

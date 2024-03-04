@@ -106,10 +106,11 @@
                       .OnSuccess(dsl => dsl.Self())
                       .When(Bindings.Grid.InfiniteScroll.Complete)
                       .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
-      .Virtualize(v =>
+      .InfiniteScrolling(chunkSize: 20)
+      .WebsocketLoader(o =>
       {
-          v.InfinteScrolling = true;
-          v.ChunkSize = 40;
+          o.ChunkSize = 40;
+          o.Method = "StreamData";
       })
       .UI(ui =>
       {

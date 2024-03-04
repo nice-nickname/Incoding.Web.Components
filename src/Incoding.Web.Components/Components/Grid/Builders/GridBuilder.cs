@@ -27,9 +27,19 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public GridBuilder<T> Virtualize(Action<Grid<T>.VirtualizationOptions> buildOptions)
+        public GridBuilder<T> InfiniteScrolling(int chunkSize)
         {
-            buildOptions(this.Grid.Virtualization);
+            this.Grid.InfiniteScroll.Enabled = true;
+            this.Grid.InfiniteScroll.ChunkSize = chunkSize;
+
+            return this;
+        }
+
+        public GridBuilder<T> WebsocketLoader(Action<Grid<T>.WebsocketLoadingOptions> buildOptions)
+        {
+            buildOptions(this.Grid.Websocket);
+
+            this.Grid.Websocket.Enabled = true;
 
             return this;
         }

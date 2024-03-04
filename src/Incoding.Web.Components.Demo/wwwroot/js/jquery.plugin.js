@@ -37,6 +37,26 @@
 (function($) {
 
     /**
+     * Websocket partial loading & infinite scroll initialization
+     */
+
+    $.fn.websocketLoader = function(options) {
+        options = $.extend(options, {
+            chunkSize: 40,
+        })
+
+        const loader = new WebsocketLoader(options.method, options)
+
+        loader.initialize(this)
+
+        $(this).data('loader', loader)
+    }
+
+} (jQuery));
+
+(function($) {
+
+    /**
      * Connect two scrolls to scroll simultaneously
      */
 
@@ -58,27 +78,6 @@
         }
 
         $(this).data('connected', true)
-    }
-
-} (jQuery));
-
-(function($) {
-
-    /**
-     * Websocket partial loading & infinite scroll initialization
-     */
-
-    $.fn.websocketLoader = function(options) {
-        options = $.extend(options, {
-            chunkSize: 40,
-            scroller: '.splitter-panel'
-        })
-
-        const loader = new WebsocketLoader("StreamData", options)
-
-        loader.initialize(this)
-
-        $(this).data('loader', loader)
     }
 
 } (jQuery));

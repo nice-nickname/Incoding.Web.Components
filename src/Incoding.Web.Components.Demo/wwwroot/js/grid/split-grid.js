@@ -50,6 +50,11 @@ class SplitGridController {
      */
     dataLoading
 
+    /**
+     * @type { boolean }
+     */
+    scrolledToEnd
+
     constructor(element, schemas, options) {
         this.$root = $(element).attr('data-empty', true);
 
@@ -93,7 +98,17 @@ class SplitGridController {
     }
 
     initializeRenderer() {
-        this.renderer = new InfiniteScrollRenderer(this, 20)
+        const { Scroll: scrollOptions } = this.options
+
+        let renderer = new AtOnceRenderer(this)
+
+        this.scrolledToEnd = !scrollOptions.Enabled
+
+        if (scrollOptions.Enabled) {
+            renderer = new InfiniteScrollRenderer(this, scrollOptions.ChunkSize)
+        }
+
+        this.renderer = renderer
     }
 
     appendData(data) {
@@ -108,6 +123,7 @@ class SplitGridController {
 
     renderRows(start, end) {
         const dataLoading = this.dataLoading
+        const scrolledToEnd = this.scrolledToEnd
         const websocketOptions = this.options.Websocket
 
         this.$tables.each(function() {
@@ -115,7 +131,7 @@ class SplitGridController {
 
             controller.renderRows(start, end)
 
-            if (dataLoading) {
+            if (dataLoading || !scrolledToEnd) {
                 controller.renderPlaceholderRows(websocketOptions.LoadingRows)
             }
         })

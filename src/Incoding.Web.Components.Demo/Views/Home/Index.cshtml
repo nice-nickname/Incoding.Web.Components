@@ -25,6 +25,17 @@
               .ToButton(@<text>
                              Spread
                          </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-success"
+                                })
+              .ToButton(@<text>
+                             Load
+                         </text>))
+
     </div>
 
     <div class="container flex-grow-1 overflow-auto" role="main"></div>

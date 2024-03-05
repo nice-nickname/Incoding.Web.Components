@@ -60,6 +60,10 @@ class WebsocketLoader {
             .stream(this.method, { ChunkSize: this.chunkSize, QueryParams: params })
             .subscribe({
                 next: (data) => {
+                    if (!data.IsNext) {
+                        this.triggerComplete()
+                    }
+
                     this.triggerLoad(data.Items)
                 },
                 error: (err) => {

@@ -64,6 +64,8 @@ class InfiniteScrollRenderer {
 
     requestRender() {
         if (this.nextChunkRequested) {
+            this.splitGrid.scrolledToEnd = (this.currentChunk + 1) >= this.availableChunks
+
             this.tryRenderNextChunk();
         }
     }

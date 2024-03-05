@@ -43,38 +43,38 @@
 @(Html.Components().Grid<SampleData>("grid")
     .Split(splitting =>
     {
-            splitting.Add("regular", table =>
-            {
-                table.Css("table table-bordered table-component")
-                    .Rows(row => row.Css("tr-item-calculate"))
-                    .Columns(regularCols)
-                    .Nested(s => s.Children, nested =>
-                    {
+        splitting.Add("regular", table =>
+        {
+            table.Css("table table-bordered table-component")
+                .Rows(row => row.Css("tr-item-calculate"))
+                .Columns(regularCols)
+                .Nested(s => s.Children, nested =>
+                {
+                        nested.Columns(regularCols);
+
+                        nested.Nested(s => s.Children, nested =>
+                        {
                             nested.Columns(regularCols);
+                        });
+                });
+        });
 
-                            nested.Nested(s => s.Children, nested =>
-                            {
-                                nested.Columns(regularCols);
-                            });
-                    });
-            });
+        splitting.Add("period", table =>
+        {
+            table.Css("table table-bordered table-component")
+                .Rows(row => row.Css("tr-item-calculate"))
+                .Columns(periodCols);
 
-            splitting.Add("period", table =>
+            table.Nested(s => s.Children, nested =>
             {
-                table.Css("table table-bordered table-component")
-                    .Rows(row => row.Css("tr-item-calculate"))
-                    .Columns(periodCols);
+                nested.Columns(periodCols);
 
-                table.Nested(s => s.Children, nested =>
+                nested.Nested(s => s.Children, nested =>
                 {
                     nested.Columns(periodCols);
-
-                    nested.Nested(s => s.Children, nested =>
-                    {
-                        nested.Columns(periodCols);
-                    });
                 });
             });
+        });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
                     .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
@@ -83,7 +83,6 @@
                     .OnSuccess(dsl => dsl.Self())
                     .When(Bindings.Grid.Websocket.Completed)
                     .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
-    .InfiniteScrolling(chunkSize: 20)
     .WebsocketLoader(o =>
     {
         o.ChunkSize = 40;

@@ -68,7 +68,7 @@ namespace Incoding.Web.Components.Demo.Controllers
         public async IAsyncEnumerable<StreamResult<SampleData>> StreamData(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
         {
             var currentPage = 0;
-            var allPages = 10;
+            var allPages = 3;
 
             while (currentPage < allPages && !token.IsCancellationRequested)
             {

@@ -83,6 +83,7 @@
                     .OnSuccess(dsl => dsl.Self())
                     .When(Bindings.Grid.Websocket.Completed)
                     .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
+    .InfiniteScrolling(chunkSize: 20)
     .WebsocketLoader(o =>
     {
         o.ChunkSize = 40;
@@ -95,8 +96,8 @@
         ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
     })
     .Empty(@<text>
-                <div>
-                    <img src="https://static.tildacdn.com/tild3965-6665-4366-b234-303630633965/99ac3f33649217cbaf8a.svg" style="width: 20px"/>
+                <div style="display: grid; place-items: center;">
+                    <img src="https://static.tildacdn.com/tild3965-6665-4366-b234-303630633965/99ac3f33649217cbaf8a.svg" style="width: 120px;"/>
                     <span>so empty here...</span>
                 </div>
             </text>)

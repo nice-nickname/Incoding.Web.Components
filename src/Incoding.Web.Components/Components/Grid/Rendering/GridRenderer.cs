@@ -29,22 +29,14 @@ namespace Incoding.Web.Components.Grid
         public IHtmlContent Render()
         {
             var tables = this._useConcurrentRender
-                    ? this._grid.Tables.AsParallel().Select(RenderTable).ToList()
-                    : this._grid.Tables.AsEnumerable().Select(RenderTable).ToList();
+                    ? this._grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
+                    : this._grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
 
 
             var root = Root(tables);
 
-            var index = 0;
-            foreach (var table in tables)
-            {
-                root.InnerHtml.AppendHtml(RenderSplitPanel(table));
-
-                if (++index < tables.Count)
-                {
-                    root.InnerHtml.AppendHtml(RenderDivider());
-                }
-            }
+            root.InnerHtml.AppendHtml(RenderEmpty());
+            root.InnerHtml.AppendHtml(RenderSplitPanels(tables));
 
             return root;
         }
@@ -58,7 +50,7 @@ namespace Incoding.Web.Components.Grid
             var incodingAttributes = this._grid.Binds(initBinding)
                                         .AsHtmlAttributes(new
                                         {
-                                            @class = "grid-splitter-container",
+                                            @class = "grid-component",
                                             id = this._grid.Id
                                         })
                                         .ToDictionary();
@@ -71,27 +63,56 @@ namespace Incoding.Web.Components.Grid
             return root;
         }
 
+        private TagBuilder RenderEmpty()
+        {
+            var empty = new TagBuilder("div");
+            empty.AddCssClass("grid-empty hidden");
+
+            empty.InnerHtml.AppendHtml(this._grid.EmptyContent);
+
+            return empty;
+        }
+
+        private TagBuilder RenderSplitPanels(List<TableComponent> tables)
+        {
+            var panel = new TagBuilder("div");
+            panel.AddCssClass("grid-splitter");
+
+            var index = 0;
+            foreach (var table in tables)
+            {
+                panel.InnerHtml.AppendHtml(RenderSplitPanel(table));
+
+                if (++index < tables.Count)
+                {
+                    panel.InnerHtml.AppendHtml(RenderDivider());
+                }
+            }
+
+            return panel;
+        }
+
+        private IHtmlContent RenderSplitPanel(TableComponent table)
+        {
+            var splitPanel = new TagBuilder("div");
+
+            splitPanel.InnerHtml.AppendHtml(table.LayoutHtml);
+            splitPanel.AddCssClass("splitter-pane");
+
+            return splitPanel;
+        }
+
         private IHtmlContent RenderDivider()
         {
             var div = new TagBuilder("div");
-            div.AddCssClass("splitter-divider");
+            div.AddCssClass("divider");
 
             div.InnerHtml.AppendHtml("&nbsp;");
 
             return div;
         }
 
-        private IHtmlContent RenderSplitPanel(TableComponent table)
-        {
-            var divContainer = new TagBuilder("div");
-
-            divContainer.InnerHtml.AppendHtml(table.LayoutHtml);
-            divContainer.AddCssClass("splitter-panel");
-
-            return divContainer;
-        }
-
-        private TableComponent RenderTable(Table<T> table)
+        private TableComponent RenderTableToComponent(Table<T> table)
         {
             var renderer = new TableRenderer<T>(this._html, table);
             return renderer.RenderComponent();

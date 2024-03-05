@@ -15,28 +15,51 @@
     background-clip: content-box;
 }
 
-
-
-.grid-splitter-container {
-    display: flex;
+.grid-component {
     height: 100%;
+    width: 100%;
 }
 
-.grid-splitter-container > .splitter-panel {
-    overflow-y: auto;
-    overflow-y: auto;
+.grid-component > .grid-empty {
+    height: 100%;
+    width: 100%;
 }
 
-.grid-splitter-container > .splitter-divider {
+.grid-component > .grid-splitter {
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-component > .grid-splitter > .splitter-pane {
+    flex: 1 1 auto;
+    flex-basis: 50%;
+    overflow: auto;
+}
+
+.grid-component > .grid-splitter > .splitter-pane table {
+    margin: 0;
+    padding: 0;
+}
+
+.grid-component > .grid-splitter > .splitter-pane::-webkit-scrollbar {
+    width: 0;
+}
+
+.grid-component > .grid-splitter > .splitter-pane:last-child::-webkit-scrollbar {
+    width: 8px;
+}
+
+.grid-component > .grid-splitter > .divider {
     width: 2px;
 
     background-color: rgb(216, 216, 216);
 
     cursor: col-resize;
-}
-
-.grid-splitter-container > .splitter-panel > table {
-    margin: 0;
 }
 
 .table-component {
@@ -84,14 +107,25 @@
     width: 20px;
 }
 
-.nested {
-
-}
-
 .hidden {
     display: none;
 }
 
 .negative-number {
     color: red !important;
+}
+
+
+@keyframes funny {
+    0% {
+        width: 20px;
+    }
+
+    50% {
+        width: 120px;
+    }
+
+    100% {
+        width: 20px;
+    }
 }

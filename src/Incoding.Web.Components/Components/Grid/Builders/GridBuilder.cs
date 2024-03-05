@@ -71,6 +71,8 @@ namespace Incoding.Web.Components.Grid
 
         public GridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
         {
+            this.Grid.EmptyContent = content(null);
+
             return this;
         }
 

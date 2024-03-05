@@ -10,6 +10,17 @@ class SplitGridController {
     /**
      * @type { JQuery<HTMLElement> }
      */
+    $empty;
+
+
+    /**
+     * @type  { JQuery<HTMLElement> }
+     */
+    $content;
+
+    /**
+     * @type { JQuery<HTMLElement> }
+     */
     $scroller;
 
     /**
@@ -56,7 +67,11 @@ class SplitGridController {
     scrolledToEnd
 
     constructor(element, schemas, options) {
-        this.$root = $(element).attr('data-empty', true);
+        this.$root = $(element)
+        this.$empty = this.$root.find('.grid-empty')
+        this.$content = this.$root.find('.grid-splitter')
+
+        this.hide()
 
         this.schemas = schemas;
         this.options = options
@@ -65,6 +80,8 @@ class SplitGridController {
     }
 
     initializeTables() {
+        this.show()
+
         this.$tables = this.$root.removeAttr('data-empty').find('table');
 
         this.data = []
@@ -92,7 +109,7 @@ class SplitGridController {
     }
 
     initializeScroll() {
-        this.$scroller = this.$root.children();
+        this.$scroller = this.$root.find('.splitter-pane');
 
         this.$scroller.connectScrolls()
     }
@@ -117,7 +134,7 @@ class SplitGridController {
         this.renderer.handleDataUpdated()
 
         if (this.data.length === 0) {
-            this.$root.attr('data-empty', true)
+            this.hide()
         }
     }
 
@@ -152,5 +169,15 @@ class SplitGridController {
         this.$tables.each(function() {
             $(this).data('grid').rerenderRow(rowId)
         })
+    }
+
+    hide() {
+        this.$empty.removeClass('hidden')
+        this.$content.addClass('hidden')
+    }
+
+    show() {
+        this.$empty.addClass('hidden')
+        this.$content.removeClass('hidden')
     }
 }

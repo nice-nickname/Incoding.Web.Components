@@ -34,9 +34,7 @@ class SplitGridController {
     schemas;
 
     /**
-     * @type { {
-     *  highlightRowsOnHover: boolean,
-     * } }
+     * @type { }
      */
     options;
 
@@ -47,37 +45,45 @@ class SplitGridController {
      */
     renderer
 
-    constructor(element, schemas, options) {
-        this.$root = $(element);
+    /**
+     * @type { boolean }
+     */
+    dataLoading
 
-        this.data = [];
+    constructor(element, schemas, options) {
+        this.$root = $(element).attr('data-empty', true);
 
         this.schemas = schemas;
         this.options = options
 
         this.initializeScroll();
-        this.initializeTables();
-
-        this.initializeRenderer();
     }
 
     initializeTables() {
-        this.$tables = this.$root.find('table');
+        this.$tables = this.$root.removeAttr('data-empty').find('table');
+
+        this.data = []
 
         const parentData = {
             data: this.data
         }
 
         this.$tables.each((i, table) => {
-            const controller = new TableController(table, this.schemas[i], this.data, parentData)
+            let controller = $(table).data('grid')
+
+            if (!controller) {
+                controller = new TableController(table, this.schemas[i], this.data, parentData)
+            }
+
+            controller.data = this.data
+            controller.parent = parentData
 
             controller.removeAllRows()
 
             controller.renderPlaceholderRows(20)
-
-            controller.disableSort()
-            controller.disableFilter()
         })
+
+        this.initializeRenderer();
     }
 
     initializeScroll() {
@@ -94,16 +100,23 @@ class SplitGridController {
         this.data.push(...data);
 
         this.renderer.handleDataUpdated()
+
+        if (this.data.length === 0) {
+            this.$root.attr('data-empty', true)
+        }
     }
 
-    renderRows(start, end, hasMore = true) {
+    renderRows(start, end) {
+        const dataLoading = this.dataLoading
+        const websocketOptions = this.options.Websocket
+
         this.$tables.each(function() {
             const controller = $(this).data('grid')
 
             controller.renderRows(start, end)
 
-            if (hasMore) {
-                controller.renderPlaceholderRows(3)
+            if (dataLoading) {
+                controller.renderPlaceholderRows(websocketOptions.LoadingRows)
             }
         })
     }

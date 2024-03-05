@@ -1,15 +1,23 @@
+using Newtonsoft.Json;
+
 namespace Incoding.Web.Components.Grid
 {
-    public record ColumnDto(int Index, string Field, string Title)
+    public record ColumnDto
     {
-        public int SpreadIndex { get; init; }
+        public int Index { get; set; }
 
-        public string SpreadField { get; init; }
+        public string Field { get; set; }
+
+        public string Title { get; set; }
+
+        public int SpreadIndex { get; set; }
+
+        public string SpreadField { get; set; }
 
         public bool Totalable { get; set; }
 
-        public ColumnType Type { get; init; }
+        public ColumnType Type { get; set; }
 
-        public ColumnFormat Format { get; init; }
+        public ColumnFormat Format { get; set; }
     }
 }

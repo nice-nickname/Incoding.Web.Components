@@ -1,54 +1,28 @@
-class SignalRController {
+(function ($) {
 
-    connection
+    $.fn.signalr = function (action) {
+        if (window.signalrConnection) return
 
-    projectsStream
 
-    constructor() {
-        let builder = new signalR.HubConnectionBuilder().withUrl("/signals")
+        let builder = new signalR.HubConnectionBuilder().withUrl(action)
 
         if (ExecutableBase.IsDebug) {
             builder.configureLogging(signalR.LogLevel.Information)
         }
 
-        this.connection = builder.build()
+        const connection = builder.build()
 
-        this.connection.on("signal", data => {
-            let eventType = data.EventType
-            $('[name=SignalHub]').trigger(eventType.toLowerCase(), data)
-        });
+
+        connection.on("signal", handleSignal);
+
+        connection.start().catch(console.error)
+
+        window.signalrConnection = connection
     }
 
-    start() {
-        this.connection.start();
+    function handleSignal(data) {
+        let eventType = data.EventType
+        $('[name=SignalHub]').trigger(eventType.toLowerCase(), data)
     }
 
-    startProjectsStream(queryJson) {
-        this.cancelProjectsStream()
-
-        let portionIndex = 0
-
-        this.projectsStream = this.connection
-            .stream("StreamProjectStaffing", queryJson)
-            .subscribe({
-                next: (data) => {
-                    $('#GetProjectStaffingWebQuery').trigger('load', { data, portionIndex })
-                    portionIndex++
-                },
-                complete: () => { },
-                error: (err) => {
-                    alert(err)
-                }
-            })
-    }
-
-    cancelProjectsStream() {
-        if (this.projectsStream) {
-            this.projectsStream.dispose()
-        }
-    }
-}
-
-const signalrController = new SignalRController();
-
-signalrController.start();
+}(jQuery));

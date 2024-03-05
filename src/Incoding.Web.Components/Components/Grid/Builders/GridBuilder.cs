@@ -35,7 +35,7 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public GridBuilder<T> WebsocketLoader(Action<Grid<T>.WebsocketLoadingOptions> buildOptions)
+        public GridBuilder<T> WebsocketLoader(Action<WebsocketLoadingOptions> buildOptions)
         {
             buildOptions(this.Grid.Websocket);
 
@@ -44,7 +44,7 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public GridBuilder<T> UI(Action<Grid<T>.UIOptions> buildOptions)
+        public GridBuilder<T> UI(Action<UIOptions> buildOptions)
         {
             buildOptions(this.Grid.UI);
 
@@ -66,6 +66,11 @@ namespace Incoding.Web.Components.Grid
         {
             this.Grid.Binds = binding;
 
+            return this;
+        }
+
+        public GridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
+        {
             return this;
         }
 

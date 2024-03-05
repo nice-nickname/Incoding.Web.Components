@@ -7,11 +7,6 @@ class WebsocketLoader {
     splitGrid
 
     /**
-     * @type { any[] }
-     */
-    data = []
-
-    /**
      * @type { number }
      */
     chunkSize
@@ -26,14 +21,18 @@ class WebsocketLoader {
      */
     method
 
+    signalrConnection
+
     signalrStream
 
     constructor(method, options) {
-        const {
-            chunkSize,
-        } = options
+        if (!window.signalrConnection) {
+            return console.error('SignalR connection not found')
+        }
 
-        this.chunkSize = chunkSize
+        this.signalrConnection = window.signalrConnection
+
+        this.chunkSize = options.chunkSize
         this.method = method
     }
 
@@ -52,30 +51,30 @@ class WebsocketLoader {
         }
     }
 
-    startLoading() {
+    startLoading(params) {
         this.cancelLoading()
 
         this.triggerStart()
 
-        this.signalrStream = signalrController.connection
-            .stream(this.method)
+        this.signalrStream = this.signalrConnection
+            .stream(this.method, { ChunkSize: this.chunkSize, QueryParams: params })
             .subscribe({
                 next: (data) => {
                     this.triggerLoad(data.Items)
                 },
+                error: (err) => {
+                    this.triggerError(err)
+                },
                 complete: () => {
                     this.triggerComplete()
-                },
-                error: (err) => {
-                    console.error('websocket-loader', err)
                 }
             })
-
-        this.$root.trigger('load-start')
     }
 
     triggerStart() {
-        this.$root.trigger('websocket-start')
+        this.splitGrid.dataLoading = true
+
+        this.$root.trigger('websocket-started')
     }
 
     triggerLoad(data) {
@@ -87,6 +86,13 @@ class WebsocketLoader {
     }
 
     triggerComplete() {
-        this.$root.trigger('websocket-complete')
+        this.splitGrid.dataLoading = false
+
+        this.$root.trigger('websocket-completed')
+    }
+
+    triggerError(err) {
+        this.$root.trigger('websocket-error')
+        console.error('websocket-loader', err)
     }
 }

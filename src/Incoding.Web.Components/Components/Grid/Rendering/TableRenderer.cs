@@ -201,8 +201,11 @@ namespace Incoding.Web.Components.Grid
         {
             var columnDtos = Columns.Select(s =>
             {
-                return new ColumnDto(s.Column.Index, s.Field, s.Column.Title)
+                return new ColumnDto
                 {
+                    Index = s.Column.Index,
+                    Field = s.Field,
+                    Title = s.Column.Title,
                     Format = s.Format,
                     Type = s.Type,
                     SpreadField = s.SpreadField,
@@ -211,8 +214,11 @@ namespace Incoding.Web.Components.Grid
                 };
             }).ToList();
 
-            var dto = new TableDto(columnDtos, RowTemplate, LayoutHtml.HtmlContentToString())
+            var dto = new TableDto
             {
+                Columns = columnDtos,
+                RowTemplate = RowTemplate,
+                LayoutHtml = LayoutHtml.HtmlContentToString(),
                 NestedField = NestedField,
                 NestedTable = Nested?.ToDto()
             };

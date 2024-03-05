@@ -13,8 +13,6 @@ class AtOnceRenderer {
     constructor(splitGrid) {
         this.splitGrid = splitGrid;
         this.dataLength = 0;
-
-        this.handleDataUpdated()
     }
 
     handleDataUpdated() {

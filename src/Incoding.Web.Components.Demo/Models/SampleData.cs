@@ -6,13 +6,6 @@ namespace Incoding.Web.Components.Demo
 
     #endregion
 
-    public record SamplePeriod
-    {
-        public decimal JTD { get; set; }
-
-        public decimal Hours { get; set; }
-    }
-
     public record SampleData : IRowData
     {
         public string Id { get; set; }

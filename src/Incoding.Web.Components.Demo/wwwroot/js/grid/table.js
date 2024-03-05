@@ -213,19 +213,10 @@ class TableController {
         this.$tbody.empty()
     }
 
-    enableSort() { }
-
-    disableSort() { }
-
-    enableFilter() { }
-
-    disableFilter() { }
-
     _findRow(rowId) {
-        const bodyEl = this.$table[0].tBodies[0]
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
 
-        return $(bodyEl).find(selector)
+        return this.$tbody.find(selector)
     }
 
     _renderRows(data) {

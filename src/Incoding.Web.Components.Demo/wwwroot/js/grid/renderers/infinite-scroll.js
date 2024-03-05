@@ -35,11 +35,11 @@ class InfiniteScrollRenderer {
         this.chunkSize = chunkSize;
         this.currentChunk = 0
 
+        this.nextChunkRequested = true
+
         const handleScroll = this.handleScroll.bind(this);
-        const handleDataUpdated = this.handleDataUpdated.bind(this);
 
         this.splitGrid.$scroller.first().on('scroll', handleScroll);
-        this.splitGrid.$root.on('websocket-data-load', handleDataUpdated);
     }
 
     handleDataUpdated() {

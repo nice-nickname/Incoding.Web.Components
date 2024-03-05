@@ -3,6 +3,8 @@ namespace Incoding.Web.Components
     #region << Using >>
 
     using Incoding.Web.Components.Grid;
+    using Incoding.Web.MvcContrib;
+    using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
@@ -25,9 +27,20 @@ namespace Incoding.Web.Components
             return new GridBuilder<T>(this._html, id);
         }
 
-        public void Splitter()
+        public IHtmlContent WebsocketStreamer(string id)
         {
+            return this._html.When(JqueryBind.InitIncoding)
+                        .OnSuccess(dsl => dsl.Self())
+                        .AsHtmlAttributes(new { id })
+                        .ToInput(HtmlInputType.Hidden, "");
+        }
 
+        public IHtmlContent SignalR(string action)
+        {
+            return this._html.When(JqueryBind.InitIncoding)
+                       .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalr", action))
+                       .AsHtmlAttributes()
+                       .ToInput(HtmlInputType.Hidden, string.Empty);
         }
     }
 }

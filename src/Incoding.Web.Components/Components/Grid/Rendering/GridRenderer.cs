@@ -53,9 +53,7 @@ namespace Incoding.Web.Components.Grid
         {
             var root = new TagBuilder("div");
 
-            var tableDtos = tables.Select(t => t.ToDto()).ToList();
-
-            var initBinding = Bind(tableDtos);
+            var initBinding = Bind(tables);
 
             var incodingAttributes = this._grid.Binds(initBinding)
                                         .AsHtmlAttributes(new
@@ -99,14 +97,23 @@ namespace Incoding.Web.Components.Grid
             return renderer.RenderComponent();
         }
 
-        private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableDto> tableDtos)
+        private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableComponent> tables)
         {
             bool infinteScrolling = this._grid.Websocket.Enabled;
+
+            var tableDtos = tables.Select(t => t.ToDto()).ToList();
+
+            var gridOptionsDto = new GridOptionsDto
+            {
+                Scroll = this._grid.InfiniteScroll,
+                Websocket = this._grid.Websocket,
+                UI=  this._grid.UI,
+            };
 
             var initBinding = this._html.When(JqueryBind.InitIncoding)
                                         .OnSuccess(dsl =>
                                         {
-                                            dsl.Self().JQuery.Call("splitGrid", tableDtos.ToJsonString());
+                                            dsl.Self().JQuery.Call("splitGrid", tableDtos.ToJsonString(), gridOptionsDto.ToJsonString());
 
                                             if (infinteScrolling)
                                             {

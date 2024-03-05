@@ -11,7 +11,7 @@
                                                   });
                                  });
 
-    Action<ColumnListBuilder<SampleData>, int> regularCols = (cols, i) =>
+    Action<ColumnListBuilder<SampleData>> regularCols = (cols) =>
                      {
                         cols.Add().Content(
                         @<text>
@@ -19,7 +19,7 @@
                             {
                                 @Html.Components().GridUtils.ExpandButton(settings =>
                                 {
-                                    settings.Content = i.ToString();
+                                    settings.Content = "+".ToString();
                                 })
                             }
                         </text>).Width(40);
@@ -41,80 +41,64 @@
 }
 
 @(Html.Components().Grid<SampleData>("grid")
-      .Split(splitting =>
-      {
+    .Split(splitting =>
+    {
             splitting.Add("regular", table =>
             {
                 table.Css("table table-bordered table-component")
-                     .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(cols =>
-                     {
-                         regularCols(cols, 1);
-                         regularCols(cols, 1);
-                         regularCols(cols, 1);
-                     })
-                     .Nested(s => s.Children, nested =>
-                     {
-                            nested.Columns(cols =>
-                            {
-                                regularCols(cols, 2);
-                                regularCols(cols, 2);
-                                regularCols(cols, 2);
-                            });
+                    .Rows(row => row.Css("tr-item-calculate"))
+                    .Columns(regularCols)
+                    .Nested(s => s.Children, nested =>
+                    {
+                            nested.Columns(regularCols);
 
                             nested.Nested(s => s.Children, nested =>
                             {
-                                nested.Columns(cols =>
-                                {
-                                    regularCols(cols, 3);
-                                    regularCols(cols, 3);
-                                    regularCols(cols, 3);
-                                });
+                                nested.Columns(regularCols);
                             });
-                     });
+                    });
             });
 
             splitting.Add("period", table =>
             {
                 table.Css("table table-bordered table-component")
-                     .Rows(row => row.Css("tr-item-calculate"))
-                     .Columns(cols =>
-                     {
-                         periodCols(cols);
-                     });
+                    .Rows(row => row.Css("tr-item-calculate"))
+                    .Columns(periodCols);
 
                 table.Nested(s => s.Children, nested =>
                 {
-                    nested.Columns(cols =>
-                    {
-                        periodCols(cols);
-                    });
+                    nested.Columns(periodCols);
 
                     nested.Nested(s => s.Children, nested =>
                     {
-                        nested.Columns(cols =>
-                        {
-                            periodCols(cols);
-                        });
+                        nested.Columns(periodCols);
                     });
                 });
             });
-      })
-      .Bind(iml => iml.When(Bindings.Grid.Init)
-                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('loader').startLoading"))
-                      .When(Bindings.Grid.InfiniteScroll.Start)
-                      .OnSuccess(dsl => dsl.Self())
-                      .When(Bindings.Grid.InfiniteScroll.Complete)
-                      .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
-      .InfiniteScrolling(chunkSize: 20)
-      .WebsocketLoader(o =>
-      {
-          o.ChunkSize = 40;
-          o.Method = "StreamData";
-      })
-      .UI(ui =>
-      {
-          ui.HighlightRowsOnHover = true;
-          ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
-      })
-      .Render(useConcurrentRender: false))
+    })
+    .Bind(iml => iml.When(JqueryBind.Load)
+                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
+                    .OnComplete(dsl => dsl.Self().JQuery.Call("data('loader').startLoading"))
+                    .When(Bindings.Grid.Websocket.Started)
+                    .OnSuccess(dsl => dsl.Self())
+                    .When(Bindings.Grid.Websocket.Completed)
+                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
+    .InfiniteScrolling(chunkSize: 20)
+    .WebsocketLoader(o =>
+    {
+        o.ChunkSize = 40;
+        o.Method = "StreamData";
+        o.LoadingRows = 3;
+    })
+    .UI(ui =>
+    {
+        ui.HighlightRowsOnHover = true;
+        ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
+    })
+    .Empty(@<text>
+                <div>
+                    <img src="https://static.tildacdn.com/tild3965-6665-4366-b234-303630633965/99ac3f33649217cbaf8a.svg" style="width: 20px"/>
+                    <span>so empty here...</span>
+                </div>
+            </text>)
+    .Render(useConcurrentRender: false))

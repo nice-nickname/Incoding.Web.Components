@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Html;
 
     #endregion
 
@@ -13,6 +14,8 @@ namespace Incoding.Web.Components.Grid
         public string Css { get; set; }
 
         public List<Table<T>> Tables { get; set; } = new();
+
+        public IHtmlContent EmptyContent { get; set; }
 
         public InfiniteScrollOptions InfiniteScroll { get; set; } = new();
 
@@ -25,31 +28,6 @@ namespace Incoding.Web.Components.Grid
         public Grid(string id)
         {
             Id = id;
-        }
-
-        public class InfiniteScrollOptions
-        {
-            public bool Enabled { get; set; }
-
-            public int ChunkSize { get; set; }
-
-            public int PlaceholderRows { get; set; } = 3;
-        }
-
-        public class WebsocketLoadingOptions
-        {
-            public bool Enabled { get; set; }
-
-            public int ChunkSize { get; set; } = 40;
-
-            public string Method { get; set; }
-        }
-
-        public class UIOptions
-        {
-            public bool HighlightRowsOnHover { get; set; }
-
-            public bool CascadeEvents { get; set; }
         }
     }
 }

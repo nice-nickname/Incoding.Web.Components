@@ -11,9 +11,16 @@ namespace Incoding.Web.Components.Demo.Controllers
 
     #endregion
 
-    public class PaginatedResult
+    public class StreamParam<T>
     {
-        public List<SampleData> Items { get; set; }
+        public int ChunkSize { get; set; }
+
+        public T QueryParams { get; set; }
+    }
+
+    public class StreamResult<T>
+    {
+        public IEnumerable<T> Items { get; set; }
 
         public bool IsNext { get; set; }
     }
@@ -58,16 +65,16 @@ namespace Incoding.Web.Components.Demo.Controllers
             return data;
         }
 
-        public async IAsyncEnumerable<PaginatedResult> StreamData([EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
         {
             var currentPage = 0;
             var allPages = 10;
 
             while (currentPage < allPages && !token.IsCancellationRequested)
             {
-                var items = Data(currentPage++, 40);
+                var items = Data(currentPage++, @params.ChunkSize);
 
-                yield return new PaginatedResult
+                yield return new StreamResult<SampleData>
                 {
                     Items = items,
                     IsNext = currentPage != allPages

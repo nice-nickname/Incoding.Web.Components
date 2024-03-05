@@ -34,17 +34,13 @@ namespace Incoding.Web.Components.Grid
 
             rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
 
-            // Должны передавать на js клиента следующие параметры:
-            // Колонки с именами, поля для этих колонок, тип и формат темплейст собственной строки
-            // Контент внутренней таблицы, темплейт внутренней строки колонки внутренней таблицы и тд рекурсивно от 2 до 4 уровней вложенности
-            var initBind = this._html.When(JqueryBind.InitIncoding)
-                                     .OnSuccess(dsl => dsl.Self().Trigger.Invoke(Bindings.Table.Init));
+            var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
-            var table = this._table.Binding(initBind)
+            var table = this._table.Binding(Bind())
                             .AsHtmlAttributes(new
                             {
                                 @class = this._table.Css,
-                                style = "table-layout: fixed",
+                                style = "table-layout: " + layout,
                                 id = this._table.Id
                             })
                             .ToTag(HtmlTag.Table, content);
@@ -182,6 +178,14 @@ namespace Incoding.Web.Components.Grid
 
             footer.InnerHtml.AppendHtml(row);
             return footer;
+        }
+
+        private IIncodingMetaLanguageEventBuilderDsl Bind()
+        {
+            var initBinding = this._html.When(JqueryBind.InitIncoding)
+                                        .OnSuccess(dsl => dsl.Self().Trigger.Invoke(Bindings.Table.Init));
+
+            return initBinding;
         }
     }
 

@@ -33,6 +33,13 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public TableBuilder<T> Layout(LayoutType layout)
+        {
+            this.Table.Layout = layout;
+
+            return this;
+        }
+
         public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
         {
             var clb = new ColumnListBuilder<T>();

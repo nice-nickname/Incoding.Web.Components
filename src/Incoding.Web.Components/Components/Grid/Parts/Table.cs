@@ -13,6 +13,8 @@ namespace Incoding.Web.Components.Grid
 
         public string Css { get; set; } = string.Empty;
 
+        public LayoutType Layout { get; set; } = LayoutType.Fixed;
+
         public Row<T> Row { get; set; } = new();
 
         public List<Column> Columns { get; set; } = new();
@@ -36,6 +38,7 @@ namespace Incoding.Web.Components.Grid
         {
             this.Css = other.Css;
             this.Row.Css = other.Row.Css;
+            this.Layout = other.Layout;
         }
     }
 }

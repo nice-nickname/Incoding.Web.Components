@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Components.Dem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Incoding.Web.Components", "Incoding.Web.Components\Incoding.Web.Components.csproj", "{14B77065-2DAD-435C-A504-F6271941CEED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Incoding.Web.Components.Benchmark", "Incoding.Web.Components.Benchmark\Incoding.Web.Components.Benchmark.csproj", "{BD5B948C-1554-4110-9293-48CB4341B24F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{14B77065-2DAD-435C-A504-F6271941CEED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14B77065-2DAD-435C-A504-F6271941CEED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14B77065-2DAD-435C-A504-F6271941CEED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD5B948C-1554-4110-9293-48CB4341B24F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD5B948C-1554-4110-9293-48CB4341B24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD5B948C-1554-4110-9293-48CB4341B24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD5B948C-1554-4110-9293-48CB4341B24F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

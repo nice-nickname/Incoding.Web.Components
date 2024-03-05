@@ -45,9 +45,7 @@ namespace Incoding.Web.Components.Grid
         {
             var root = new TagBuilder("div");
 
-            var initBinding = Bind(tables);
-
-            var incodingAttributes = this._grid.Binds(initBinding)
+            var incodingAttributes = this._grid.Binds(Bind(tables))
                                         .AsHtmlAttributes(new
                                         {
                                             @class = "grid-component",

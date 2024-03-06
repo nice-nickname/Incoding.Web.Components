@@ -15,6 +15,8 @@ namespace Incoding.Web.Components.Grid
 
         public List<Table<T>> Tables { get; set; } = new();
 
+        public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
+
         public IHtmlContent EmptyContent { get; set; }
 
         public InfiniteScrollOptions InfiniteScroll { get; set; } = new();

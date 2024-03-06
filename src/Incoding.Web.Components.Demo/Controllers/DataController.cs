@@ -1,34 +1,43 @@
 namespace Incoding.Web.Components.Demo.Controllers
 {
-
     #region << Using >>
 
     using Bogus;
-    using System.Runtime.CompilerServices;
-    using Microsoft.AspNetCore.SignalR;
-    using Incoding.Core.Extensions;
+    using Incoding.Web.MvcContrib;
+    using Microsoft.AspNetCore.Mvc;
 
     #endregion
 
-    public class StreamParam<T>
+
+    public class DataController : Controller
     {
-        public int ChunkSize { get; set; }
-
-        public T QueryParams { get; set; }
-    }
-
-    public class StreamResult<T>
-    {
-        public IEnumerable<T> Items { get; set; }
-
-        public bool IsNext { get; set; }
-    }
-
-    public class SignalHub : Hub
-    {
-        private List<SampleData> Data(int page, int pageSize)
+        [Route("/data-100")]
+        public IActionResult Data100()
         {
-            Randomizer.Seed = new Random(123 + page);
+            return IncodingResult.Success(GenerateData(100));
+        }
+
+        [Route("/large-1000")]
+        public IActionResult Data1000()
+        {
+            return IncodingResult.Success(GenerateData(1000));
+        }
+
+        [Route("/recalculate")]
+        public IActionResult Recalculate()
+        {
+            return IncodingResult.Success(GenerateData(1)[0]);
+        }
+
+        [Route("/recalculate-without-children")]
+        public IActionResult RecalculateWithoutChildren()
+        {
+            return IncodingResult.Success(GenerateData(1, false)[0]);
+        }
+
+        public static List<SampleData> GenerateData(int count, bool withChildren = true)
+        {
+            Randomizer.Seed = new Random(123);
 
             var fakerPeriod = new Faker<SamplePeriod>()
                               .RuleFor(s => s.Hours, f => f.Random.Decimal(0, 100))
@@ -49,38 +58,22 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
                     ;
 
-            var data = fakerData.Generate(pageSize);
+            var data = fakerData.Generate(count);
 
-            foreach (var item in data)
+            if (withChildren)
             {
-                item.Children = fakerData.Generate(5);
-
-                foreach (var iitem in item.Children)
+                foreach (var item in data)
                 {
-                    iitem.Children = fakerData.Generate(5);
+                    item.Children = fakerData.Generate(5);
+
+                    foreach (var iitem in item.Children)
+                    {
+                        iitem.Children = fakerData.Generate(5);
+                    }
                 }
             }
 
             return data;
-        }
-
-        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
-        {
-            var currentPage = 0;
-            var allPages = 3;
-
-            while (currentPage < allPages && !token.IsCancellationRequested)
-            {
-                var items = Data(currentPage++, @params.ChunkSize);
-
-                yield return new StreamResult<SampleData>
-                {
-                    Items = items,
-                    IsNext = currentPage != allPages
-                };
-
-                Thread.Sleep(5.Seconds());
-            }
         }
     }
 }

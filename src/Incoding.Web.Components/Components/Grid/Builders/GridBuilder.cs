@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
+    using Incoding.Web.Extensions;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -23,6 +24,23 @@ namespace Incoding.Web.Components.Grid
         public GridBuilder<T> Css(string css)
         {
             this.Grid.Css = css;
+
+            return this;
+        }
+
+        public GridBuilder<T> Attr(string attr, string value)
+        {
+            this.Grid.Attr[attr] = value;
+
+            return this;
+        }
+
+        public GridBuilder<T> Attr(object attrs)
+        {
+            foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
+            {
+                this.Attr(key, value.ToString());
+            }
 
             return this;
         }
@@ -65,6 +83,13 @@ namespace Incoding.Web.Components.Grid
         public GridBuilder<T> Bind(ImlBinding binding)
         {
             this.Grid.Binds = binding;
+
+            return this;
+        }
+
+        public GridBuilder<T> Empty(IHtmlContent content)
+        {
+            this.Grid.EmptyContent = content;
 
             return this;
         }

@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid
 
     using System.Collections.Generic;
     using System.Linq;
+    using Incoding.Core.Extensions;
 
     #endregion
 
@@ -14,6 +15,8 @@ namespace Incoding.Web.Components.Grid
         public string Css { get; set; } = string.Empty;
 
         public LayoutType Layout { get; set; } = LayoutType.Fixed;
+
+        public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 
         public Row<T> Row { get; set; } = new();
 
@@ -39,6 +42,8 @@ namespace Incoding.Web.Components.Grid
             this.Css = other.Css;
             this.Row.Css = other.Row.Css;
             this.Layout = other.Layout;
+
+            this.Attr.Merge(other.Attr);
         }
     }
 }

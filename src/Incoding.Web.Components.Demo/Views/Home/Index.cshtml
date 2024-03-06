@@ -7,6 +7,16 @@
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-primary"
+                                })
+              .ToButton(@<text>
+                            Partial
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
@@ -14,16 +24,6 @@
                                 })
               .ToButton(@<text>
                              Regular
-                         </text>))
-
-        @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Spread.cshtml").Html())
-              .AsHtmlAttributes(new
-                                {
-                                        @class = "btn btn-primary"
-                                })
-              .ToButton(@<text>
-                             Spread
                          </text>))
 
         @(Html.When(JqueryBind.Click)

@@ -41,9 +41,9 @@
      */
 
     $.fn.websocketLoader = function(options) {
-        options = $.extend(options, {
+        options = $.extend({
             chunkSize: 40,
-        })
+        }, options)
 
         const loader = new WebsocketLoader(options.method, options)
 
@@ -129,11 +129,11 @@
     }
 
     function formatNumber(element, value, options) {
-        options = $.extend(options, {
+        options = $.extend({
             prefix: '',
             postfix: '',
             precision: 2
-        })
+        }, options)
 
         const {
             prefix,

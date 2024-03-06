@@ -152,6 +152,10 @@ class SplitGridController {
                 controller.renderPlaceholderRows(websocketOptions.LoadingRows)
             }
         })
+
+        if (!this.dataLoading) {
+            this.totals()
+        }
     }
 
     totals() {

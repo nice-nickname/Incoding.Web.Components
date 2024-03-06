@@ -5,6 +5,8 @@ namespace Incoding.Web.Components.Grid
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
+    using Incoding.Core.Extensions;
+    using Incoding.Web.Extensions;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
@@ -29,6 +31,23 @@ namespace Incoding.Web.Components.Grid
             }
 
             this.Table.Css += " " + css;
+
+            return this;
+        }
+
+        public TableBuilder<T> Attr(string attr, string value)
+        {
+            this.Table.Attr[attr] = value;
+
+            return this;
+        }
+
+        public TableBuilder<T> Attr(object attrs)
+        {
+            foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
+            {
+                this.Attr(key, value.ToString());
+            }
 
             return this;
         }

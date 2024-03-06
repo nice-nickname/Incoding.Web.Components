@@ -58,6 +58,11 @@ namespace Incoding.Web.Components.Grid
                 root.Attributes.Add(key, value.ToString());
             }
 
+            foreach(var (key, value) in this._grid.Attr)
+            {
+                root.Attributes.Add(key, value);
+            }
+
             return root;
         }
 

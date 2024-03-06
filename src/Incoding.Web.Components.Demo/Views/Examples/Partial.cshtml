@@ -13,11 +13,22 @@
 
     Action<ColumnListBuilder<SampleData>> regularCols = (cols) =>
                      {
+                        cols.Add().Content(
+                        @<text>
+                            @using (item.Is(s => s.HasChildren))
+                            {
+                                @Html.Components().GridUtils.ExpandButton(settings =>
+                                {
+                                    settings.Content = "+".ToString();
+                                })
+                            }
+                        </text>).Width(40);
+
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes");
 
-                        cols.Add().Field(s => s.Amount).Width(70).Format(ColumnFormat.Currency).Totalable();
-                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Format(ColumnFormat.Percentage).Width(70);
+                        cols.Add().Field(s => s.Amount).Width(70).Totalable();
+                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
                         cols.Add().Field(s => s.Balance).Width(70);
 
                         cols.Stacked(s => s.Title("Dates"),
@@ -35,16 +46,50 @@
         splitting.Add("regular", table =>
         {
             table.Css("table table-bordered table-component")
-                 .Layout(LayoutType.Auto)
                  .Rows(row => row.Css("tr-item-calculate"))
-                 .Columns(regularCols);
+                 .Columns(regularCols)
+                 .Nested(s => s.Children, nested =>
+                 {
+                         nested.Columns(regularCols);
+
+                         nested.Nested(s => s.Children, nested =>
+                         {
+                             nested.Columns(regularCols);
+                         });
+                 });
+        });
+
+        splitting.Add("period", table =>
+        {
+            table.Css("table table-bordered table-component")
+                 .Rows(row => row.Css("tr-item-calculate"))
+                 .Columns(periodCols);
+
+            table.Nested(s => s.Children, nested =>
+            {
+                nested.Columns(periodCols);
+
+                nested.Nested(s => s.Children, nested =>
+                {
+                    nested.Columns(periodCols);
+                });
+            });
         });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-100")
-                    .OnBegin(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
-                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Result)))
+                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
+                    .OnComplete(dsl => dsl.Self().JQuery.Call("data('loader').startLoading"))
+                    .When(Bindings.Grid.Websocket.Started)
+                    .OnSuccess(dsl => dsl.Self())
+                    .When(Bindings.Grid.Websocket.Completed)
+                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
     .InfiniteScrolling(chunkSize: 20)
+    .WebsocketLoader(o =>
+    {
+        o.ChunkSize = 40;
+        o.Method = "StreamData";
+        o.LoadingRows = 3;
+    })
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;

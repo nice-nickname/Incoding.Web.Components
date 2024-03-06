@@ -28,22 +28,10 @@ namespace Incoding.Web.Components.Grid
         {
             var rowTemplate = RenderRowTemplate();
 
-            var content = RenderHeader().HtmlContentToString() +
-                          RenderBody(false).HtmlContentToString() +
-                          RenderFooter().HtmlContentToString();
-
             rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
 
-            var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
-            var table = this._table.Binding(Bind())
-                            .AsHtmlAttributes(new
-                            {
-                                @class = this._table.Css,
-                                style = "table-layout: " + layout,
-                                id = this._table.Id
-                            })
-                            .ToTag(HtmlTag.Table, content);
+            var table = RootTable();
 
             return new TableComponent
             {
@@ -53,6 +41,38 @@ namespace Incoding.Web.Components.Grid
                 Nested = this._table.NestedTable,
                 NestedField = this._table.NestedField
             };
+        }
+
+        private TagBuilder RootTable()
+        {
+            var table = new TagBuilder("table");
+
+            var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
+
+            var incodingAttrs = this._table.Binding(Bind())
+                            .AsHtmlAttributes(new
+                            {
+                                @class = this._table.Css,
+                                style = "table-layout: " + layout,
+                                id = this._table.Id
+                            })
+                            .ToDictionary();
+
+            foreach (var (key, value) in incodingAttrs)
+            {
+                table.Attributes.Add(key, value.ToString());
+            }
+
+            foreach (var (key, value) in this._table.Attr)
+            {
+                table.Attributes.Add(key, value);
+            }
+
+            table.InnerHtml.AppendHtml(RenderHeader());
+            table.InnerHtml.AppendHtml(RenderBody(false));
+            table.InnerHtml.AppendHtml(RenderFooter());
+
+            return table;
         }
 
         private IHtmlContent RenderHeader()

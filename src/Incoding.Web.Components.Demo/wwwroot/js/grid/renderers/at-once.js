@@ -12,7 +12,8 @@ class AtOnceRenderer {
 
     constructor(splitGrid) {
         this.splitGrid = splitGrid;
-        this.dataLength = 0;
+
+        this.restart()
     }
 
     handleDataUpdated() {
@@ -21,5 +22,9 @@ class AtOnceRenderer {
         this.splitGrid.renderRows(this.dataLength, newDataLength);
 
         this.dataLength = newDataLength;
+    }
+
+    restart() {
+        this.dataLength = 0
     }
 }

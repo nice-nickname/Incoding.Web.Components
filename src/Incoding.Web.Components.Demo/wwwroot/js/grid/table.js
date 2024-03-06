@@ -53,20 +53,12 @@ class TableController {
         this.data = data;
         this.parent = parent
 
-        if (!this.parent.siblings) {
-            this.parent.siblings = []
-        }
-
-        this.parent.siblings.push(this)
-
         this.$table.data('grid', this)
 
         this._hoverableRows()
     }
 
     expand(rowId) {
-        const parentData = { }
-
         const isExpanded = this.schema.expands[rowId]
         const childRendered = isExpanded !== undefined
 
@@ -76,6 +68,8 @@ class TableController {
             const $row = c._findRow(rowId)
 
             if (!childRendered) {
+                const parentData = { siblings: [] }
+
                 c.renderChildren(rowId, parentData)
             }
 
@@ -88,19 +82,24 @@ class TableController {
             const totalableCols = c.schema.Columns.filter(s => s.Totalable)
 
             totalableCols.forEach(col => {
-                const { Index } = col
+                const {
+                    Index,
+                    Field,
+                    SpreadIndex,
+                    SpreadField
+                } = col
 
-                let sum = 0
+                let fieldAccessor = data => data[Field]
 
-                const $cells = c.$tbody.children(':not([data-nested])').find(`td[data-index="${Index}"]`)
+                if (!ExecutableHelper.IsNullOrEmpty(SpreadField)) {
+                    fieldAccessor = data => data[SpreadField][SpreadIndex][Field]
+                }
 
-                $cells.each(function() {
-                    sum += $(this).data('value')
-                })
+                const total = this.data.reduce((sum, data) => sum += fieldAccessor(data), 0)
 
                 c.$tfoot.find(`td[data-index="${Index}"] span`).each(function() {
                     $(this).attr('data-format', 'Numeric')
-                    $(this).attr('data-value', sum)
+                    $(this).attr('data-value', total)
                 })
             })
 
@@ -171,6 +170,8 @@ class TableController {
 
         const nestedController = new TableController($table[0], nestedTable, childData, parentData)
         $table.data('grid', nestedController)
+
+        parentData.siblings.push(nestedController)
 
         nestedController.renderRows()
         nestedController.totals()

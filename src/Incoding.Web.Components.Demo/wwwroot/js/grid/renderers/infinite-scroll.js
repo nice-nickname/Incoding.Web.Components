@@ -33,19 +33,28 @@ class InfiniteScrollRenderer {
     constructor(splitGrid, chunkSize) {
         this.splitGrid = splitGrid;
         this.chunkSize = chunkSize;
-        this.currentChunk = 0
 
-        this.nextChunkRequested = true
+        this.restart()
 
         const handleScroll = this.handleScroll.bind(this);
 
         this.splitGrid.$scroller.first().on('scroll', handleScroll);
+
     }
 
     handleDataUpdated() {
         this.availableChunks = Math.floor(this.splitGrid.data.length / this.chunkSize);
 
         this.requestRender();
+    }
+
+    restart() {
+        this.splitGrid.disableScroll()
+
+        this.currentChunk = 0
+        this.availableChunks = 0
+
+        this.nextChunkRequested = true
     }
 
     handleScroll() {
@@ -63,10 +72,14 @@ class InfiniteScrollRenderer {
     }
 
     requestRender() {
-        if (this.nextChunkRequested) {
+        if (this.nextChunkRequested || this.currentChunk === 0) {
             this.splitGrid.scrolledToEnd = (this.currentChunk + 1) >= this.availableChunks
 
             this.tryRenderNextChunk();
+
+            if (this.currentChunk === 1) {
+                this.splitGrid.enableScroll()
+            }
         }
     }
 

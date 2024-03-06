@@ -66,6 +66,11 @@ class SplitGridController {
      */
     scrolledToEnd
 
+    /**
+     * @type  { boolean }
+     */
+    scrollEnabled
+
     constructor(element, schemas, options) {
         this.$root = $(element)
         this.$empty = this.$root.find('.grid-empty')
@@ -77,6 +82,8 @@ class SplitGridController {
         this.options = options
 
         this.initializeScroll();
+
+        this.scrollEnabled = true
     }
 
     initializeTables() {
@@ -87,7 +94,8 @@ class SplitGridController {
         this.data = []
 
         const parentData = {
-            data: this.data
+            data: this.data,
+            siblings: []
         }
 
         this.$tables.each((i, table) => {
@@ -100,10 +108,16 @@ class SplitGridController {
             controller.data = this.data
             controller.parent = parentData
 
+            parentData.siblings.push(controller)
+
             controller.removeAllRows()
 
             controller.renderPlaceholderRows(20)
         })
+
+        if (this.renderer) {
+            return this.renderer.restart()
+        }
 
         this.initializeRenderer();
     }
@@ -115,17 +129,13 @@ class SplitGridController {
     }
 
     initializeRenderer() {
-        const { Scroll: scrollOptions } = this.options
 
-        let renderer = new AtOnceRenderer(this)
+
+        const { Scroll: scrollOptions } = this.options
 
         this.scrolledToEnd = !scrollOptions.Enabled
 
-        if (scrollOptions.Enabled) {
-            renderer = new InfiniteScrollRenderer(this, scrollOptions.ChunkSize)
-        }
-
-        this.renderer = renderer
+        this.renderer = scrollOptions.Enabled ?  new InfiniteScrollRenderer(this, scrollOptions.ChunkSize) : new AtOnceRenderer(this)
     }
 
     appendData(data) {
@@ -183,5 +193,25 @@ class SplitGridController {
     show() {
         this.$empty.addClass('hidden')
         this.$content.removeClass('hidden')
+    }
+
+    disableScroll() {
+        if (!this.scrollEnabled) return
+
+        this.$scroller.each(function() {
+            this.style.overflowY = 'hidden'
+        })
+
+        this.scrollEnabled = false
+    }
+
+    enableScroll() {
+        if (this.scrollEnabled) return
+
+        this.$scroller.each(function() {
+            this.style.overflowY = 'auto'
+        })
+
+        this.scrollEnabled = true
     }
 }

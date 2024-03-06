@@ -64,12 +64,12 @@ class TableController {
 
         this.schema.expands[rowId] = !isExpanded
 
+        const parentData = { siblings: [] }
+
         this.parent.siblings.forEach(c => {
             const $row = c._findRow(rowId)
 
             if (!childRendered) {
-                const parentData = { siblings: [] }
-
                 c.renderChildren(rowId, parentData)
             }
 

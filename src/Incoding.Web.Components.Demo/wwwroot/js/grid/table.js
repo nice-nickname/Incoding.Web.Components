@@ -60,6 +60,8 @@ class TableController {
         this.parent.siblings.push(this)
 
         this.$table.data('grid', this)
+
+        this._hoverableRows()
     }
 
     expand(rowId) {
@@ -230,5 +232,28 @@ class TableController {
         this.$table[0].tBodies[0].appendChild(template.content)
 
         IncodingEngine.Current.parse($rows)
+    }
+
+    _hoverableRows() {
+        this.$tbody
+            .on('mouseover', (ev) => {
+                const $row = $(ev.target).closest('tr')
+                const rowId = $row.data('rowId')
+
+                this.parent.siblings.forEach(table => {
+                    const $candidate = table.$tbody.children(`[data-row-id="${rowId}"]:not([data-nested]):not(.highlight)`)
+                    $candidate.addClass('highlight')
+                    $candidate.siblings().removeClass('highlight')
+                })
+
+                return false
+            })
+            .on('mouseleave', (ev) => {
+
+                this.parent.siblings.forEach(table => {
+                    const $candidate = table.$tbody.children()
+                    $candidate.removeClass('highlight')
+                })
+            })
     }
 }

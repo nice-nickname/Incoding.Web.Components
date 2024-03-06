@@ -17,7 +17,7 @@ namespace Incoding.Web.Components.Demo.Controllers
             return IncodingResult.Success(GenerateData(100));
         }
 
-        [Route("/large-1000")]
+        [Route("/data-1000")]
         public IActionResult Data1000()
         {
             return IncodingResult.Success(GenerateData(1000));

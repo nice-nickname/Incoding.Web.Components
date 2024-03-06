@@ -41,7 +41,7 @@
         });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-100")
+                    .Ajax("/data-1000")
                     .OnBegin(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
                     .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Result)))
     .InfiniteScrolling(chunkSize: 20)

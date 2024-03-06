@@ -141,11 +141,7 @@ class TableController {
         const tr = document.createElement('tr')
         const td = document.createElement('td')
 
-        if (!expanded) {
-            tr.classList.add('hidden')
-        }
-
-        tr.setAttribute('data-nested', true)
+        tr.setAttribute('data-nested', !expanded)
         tr.setAttribute('data-row-id', rowId)
 
         td.colSpan = this.schema.Columns.length
@@ -238,6 +234,8 @@ class TableController {
     _hoverableRows() {
         this.$tbody
             .on('mouseover', (ev) => {
+                console.log(1);
+
                 const $row = $(ev.target).closest('tr')
                 const rowId = $row.data('rowId')
 

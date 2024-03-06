@@ -50,6 +50,8 @@ namespace Incoding.Web.Components.Grid
             var columnsBuilder = new ColumnListBuilder<T>(this._currentIndex);
             builderAction(columnsBuilder);
 
+            this._currentIndex = columnsBuilder._currentIndex;
+
             var column = stackedColumn.Column;
             column.Columns.AddRange(columnsBuilder.Columns);
 
@@ -75,11 +77,21 @@ namespace Incoding.Web.Components.Grid
                 buildAction(clb, i);
             }
 
-            var columnIndex = 0;
+            this._currentIndex = clb._currentIndex;
+
+            int columnIndex = 0;
+            int spreadIndex = 0;
+            int totalCellsPerSpread = clb.Cells.Count / spreadCount;
+
             foreach (var cell in clb.Cells)
             {
                 cell.SpreadField = spreadField;
-                cell.SpreadIndex = columnIndex++;
+                cell.SpreadIndex = spreadIndex;
+
+                if (++columnIndex % totalCellsPerSpread == 0)
+                {
+                    spreadIndex++;
+                }
             }
 
             this.Columns.AddRange(clb.Columns);

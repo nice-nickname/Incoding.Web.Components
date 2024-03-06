@@ -119,6 +119,7 @@ class SplitGridController {
             return this.renderer.restart()
         }
 
+        this.totals()
         this.initializeRenderer();
     }
 
@@ -129,8 +130,6 @@ class SplitGridController {
     }
 
     initializeRenderer() {
-
-
         const { Scroll: scrollOptions } = this.options
 
         this.scrolledToEnd = !scrollOptions.Enabled

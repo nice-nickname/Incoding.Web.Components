@@ -38,6 +38,7 @@ class InfiniteScrollRenderer {
 
         const handleScroll = this.handleScroll.bind(this);
 
+
         this.splitGrid.$scroller.first().on('scroll', handleScroll);
 
     }
@@ -50,6 +51,7 @@ class InfiniteScrollRenderer {
 
     restart() {
         this.splitGrid.disableScroll()
+        this.splitGrid.$scroller.scrollTop(0)
 
         this.currentChunk = 0
         this.availableChunks = 0

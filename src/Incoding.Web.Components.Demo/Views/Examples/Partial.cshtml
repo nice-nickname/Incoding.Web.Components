@@ -38,6 +38,8 @@
                                             cols.Add().Field(s => s.End).Width(70);
                                         });
                      };
+
+    var controller = new IMLGridController("grid");
 }
 
 @(Html.Components().Grid<SampleData>("grid")
@@ -94,12 +96,12 @@
         });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
-                    .OnComplete(dsl => dsl.Self().JQuery.Call("data('loader').startLoading"))
+                    .OnSuccess(dsl => controller.Init(dsl))
+                    .OnComplete(dsl => controller.StartWebsocket(dsl))
                     .When(Bindings.Grid.Websocket.Started)
                     .OnSuccess(dsl => dsl.Self())
                     .When(Bindings.Grid.Websocket.Completed)
-                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').totals")))
+                    .OnSuccess(dsl => controller.Totals(dsl)))
     .InfiniteScrolling(chunkSize: 20)
     .WebsocketLoader(o =>
     {

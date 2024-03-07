@@ -27,6 +27,8 @@
                                             cols.Add().Field(s => s.End).Width(70);
                                         });
                      };
+
+    var controller = new IMLGridController("grid");
 }
 
 @(Html.Components().Grid<SampleData>("grid")
@@ -42,8 +44,8 @@
     })
     .Bind(iml => iml.When(JqueryBind.Load)
                     .Ajax("/data-1000")
-                    .OnBegin(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))
-                    .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').appendData", Selector.Result)))
+                    .OnBegin(dsl => controller.Init(dsl))
+                    .OnSuccess(dsl => controller.AppendData(dsl, Selector.Result)))
     .InfiniteScrolling(chunkSize: 20)
     .UI(ui =>
     {

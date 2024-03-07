@@ -8,6 +8,7 @@ namespace Incoding.Web.Components.Grid
     using System.Linq.Expressions;
     using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
+    using Microsoft.AspNetCore.Html;
 
     #endregion
 
@@ -114,6 +115,11 @@ namespace Incoding.Web.Components.Grid
             this.Cell.Format = format;
 
             return this.Attr("data-format", this.Cell.Format.ToString());
+        }
+
+        public ColumnBuilder<T> Content(IHtmlContent content)
+        {
+            return this.Content(_ => content);
         }
 
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)

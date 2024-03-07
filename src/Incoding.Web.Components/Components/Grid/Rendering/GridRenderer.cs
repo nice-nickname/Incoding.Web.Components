@@ -122,7 +122,7 @@ namespace Incoding.Web.Components.Grid
         private IHtmlContent RenderDivider()
         {
             var div = new TagBuilder("div");
-            div.AddCssClass("divider");
+            div.AddCssClass("splitter-divider");
 
             div.Attributes.Add("data-divider", "true");
 

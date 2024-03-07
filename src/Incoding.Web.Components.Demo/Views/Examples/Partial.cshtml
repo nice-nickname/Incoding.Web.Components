@@ -75,6 +75,23 @@
                 });
             });
         });
+
+        splitting.Add("bebius", table =>
+        {
+            table.Css("table table-bordered table-component")
+                 .Rows(row => row.Css("tr-item-calculate"))
+                 .Columns(periodCols);
+
+            table.Nested(s => s.Children, nested =>
+            {
+                nested.Columns(periodCols);
+
+                nested.Nested(s => s.Children, nested =>
+                {
+                    nested.Columns(periodCols);
+                });
+            });
+        });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
                     .OnSuccess(dsl => dsl.Self().JQuery.Call("data('splitGrid').initializeTables"))

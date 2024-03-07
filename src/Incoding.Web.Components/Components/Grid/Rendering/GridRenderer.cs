@@ -81,10 +81,22 @@ namespace Incoding.Web.Components.Grid
             var panel = new TagBuilder("div");
             panel.AddCssClass("grid-splitter");
 
-            var index = 0;
-            foreach (var table in tables)
+            var splitDto = this._grid.Splits.ToJsonString();
+
+            var incodingAttrs = this._html.When(JqueryBind.InitIncoding)
+                                          .OnSuccess(dsl => dsl.Self().JQuery.Call("splitter", splitDto))
+                                          .AsHtmlAttributes()
+                                          .ToDictionary();
+
+            foreach (var (attr, value) in incodingAttrs)
             {
-                panel.InnerHtml.AppendHtml(RenderSplitPanel(table));
+                panel.Attributes.Add(attr, value.ToString());
+            }
+
+            var index = 0;
+            foreach (var (table, splitter) in tables.Zip(this._grid.Splits))
+            {
+                panel.InnerHtml.AppendHtml(RenderSplitPanel(table, splitter));
 
                 if (++index < tables.Count)
                 {
@@ -95,12 +107,14 @@ namespace Incoding.Web.Components.Grid
             return panel;
         }
 
-        private IHtmlContent RenderSplitPanel(TableComponent table)
+        private IHtmlContent RenderSplitPanel(TableComponent table, Splitter splitter)
         {
             var splitPanel = new TagBuilder("div");
 
             splitPanel.InnerHtml.AppendHtml(table.LayoutHtml);
             splitPanel.AddCssClass("splitter-pane");
+
+            splitPanel.Attributes.Add("data-split-panel", "true");
 
             return splitPanel;
         }
@@ -109,6 +123,8 @@ namespace Incoding.Web.Components.Grid
         {
             var div = new TagBuilder("div");
             div.AddCssClass("divider");
+
+            div.Attributes.Add("data-divider", "true");
 
             div.InnerHtml.AppendHtml("&nbsp;");
 

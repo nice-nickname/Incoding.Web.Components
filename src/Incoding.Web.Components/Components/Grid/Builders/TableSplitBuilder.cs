@@ -12,21 +12,29 @@ namespace Incoding.Web.Components.Grid
     {
         public List<Table<T>> Tables { get; }
 
+        public List<Splitter> Splits { get; }
+
         private readonly IHtmlHelper _html;
 
         public TableSplitBuilder(IHtmlHelper html)
         {
             this._html = html;
+
             this.Tables = new List<Table<T>>();
+            this.Splits = new List<Splitter>();
         }
 
-        public void Add(string splitId, Action<TableBuilder<T>> buildAction)
+        public SplitBuilder Add(string splitId, Action<TableBuilder<T>> buildAction)
         {
-            var builder = new TableBuilder<T>(this._html, splitId);
+            var tableBuilder = new TableBuilder<T>(this._html, splitId);
+            var splitBuilder = new SplitBuilder();
 
-            buildAction(builder);
+            buildAction(tableBuilder);
 
-            this.Tables.Add(builder.Table);
+            this.Tables.Add(tableBuilder.Table);
+            this.Splits.Add(splitBuilder.Splitter);
+
+            return splitBuilder;
         }
     }
 }

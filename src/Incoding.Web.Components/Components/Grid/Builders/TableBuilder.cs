@@ -5,15 +5,45 @@ namespace Incoding.Web.Components.Grid
     using System;
     using System.Collections.Generic;
     using System.Linq.Expressions;
-    using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
 
+    public class SplitBuilder
+    {
+        public Splitter Splitter { get; }
+
+        public SplitBuilder()
+        {
+            Splitter = new Splitter();
+        }
+
+        public SplitBuilder Min(string width)
+        {
+            this.Splitter.MinWidth = width;
+
+            return this;
+        }
+
+        public SplitBuilder Max(string width)
+        {
+            this.Splitter.MaxWidth = width;
+
+            return this;
+        }
+
+        public SplitBuilder Width(string width)
+        {
+            this.Splitter.Width = width;
+
+            return this;
+        }
+    }
+
     public class TableBuilder<T> where T : IRowData
     {
-        public Table<T> Table;
+        public Table<T> Table { get; }
 
         private readonly IHtmlHelper _html;
 

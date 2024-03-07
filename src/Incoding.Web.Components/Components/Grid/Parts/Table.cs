@@ -3,10 +3,18 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System.Collections.Generic;
-    using System.Linq;
     using Incoding.Core.Extensions;
 
     #endregion
+
+    public class Splitter
+    {
+        public string MinWidth { get; set; }
+
+        public string MaxWidth { get; set; }
+
+        public string Width { get; set; }
+    }
 
     public class Table<T> where T : IRowData
     {

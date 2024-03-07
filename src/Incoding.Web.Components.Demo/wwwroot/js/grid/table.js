@@ -234,7 +234,6 @@ class TableController {
     _hoverableRows() {
         this.$tbody
             .on('mouseover', (ev) => {
-                console.log(1);
 
                 const $row = $(ev.target).closest('tr')
                 const rowId = $row.data('rowId')

@@ -41,6 +41,11 @@
     overflow: auto;
 }
 
+.grid-component > .grid-splitter > .splitter-pane.resizing {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .grid-component > .grid-splitter > .splitter-pane table {
     margin: 0;
     padding: 0;
@@ -111,7 +116,7 @@ tr.highlight {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .negative-number {

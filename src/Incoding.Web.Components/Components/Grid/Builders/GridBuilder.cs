@@ -76,6 +76,7 @@ namespace Incoding.Web.Components.Grid
             buildAction(splitter);
 
             this.Grid.Tables.AddRange(splitter.Tables);
+            this.Grid.Splits.AddRange(splitter.Splits);
 
             return this;
         }

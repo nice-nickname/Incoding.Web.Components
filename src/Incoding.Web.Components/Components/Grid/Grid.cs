@@ -13,6 +13,10 @@ namespace Incoding.Web.Components.Grid
 
         public string Css { get; set; }
 
+        public string Width { get; set; }
+
+        public string Height { get; set; }
+
         public List<Table<T>> Tables { get; set; } = new();
 
         public List<Splitter> Splits { get; set; } = new();

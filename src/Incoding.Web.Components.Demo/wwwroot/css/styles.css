@@ -15,11 +15,6 @@
     background-clip: content-box;
 }
 
-.grid-component {
-    height: 100%;
-    width: 100%;
-}
-
 .grid-component > .grid-empty {
     height: 100%;
     width: 100%;

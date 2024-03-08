@@ -45,6 +45,8 @@ namespace Incoding.Web.Components.Grid
         {
             var root = new TagBuilder("div");
 
+            root.Attributes.Add("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
+
             var incodingAttributes = this._grid.Binds(Bind(tables))
                                         .AsHtmlAttributes(new
                                         {

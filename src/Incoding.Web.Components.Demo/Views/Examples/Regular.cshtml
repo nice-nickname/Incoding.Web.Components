@@ -32,6 +32,8 @@
 }
 
 @(Html.Components().Grid<SampleData>("grid")
+    .Width("100%")
+    .Height("100%")
     .Split(splitting =>
     {
         splitting.Add("regular", table =>

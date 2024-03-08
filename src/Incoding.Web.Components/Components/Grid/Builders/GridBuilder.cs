@@ -3,7 +3,9 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
+    using System.Dynamic;
     using Incoding.Web.Extensions;
+    using JetBrains.Annotations;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -19,6 +21,20 @@ namespace Incoding.Web.Components.Grid
         {
             this._html = html;
             this.Grid = new Grid<T>(id);
+        }
+
+        public GridBuilder<T> Width(string width)
+        {
+            this.Grid.Width = width;
+
+            return this;
+        }
+
+        public GridBuilder<T> Height(string height)
+        {
+            this.Grid.Height = height;
+
+            return this;
         }
 
         public GridBuilder<T> Css(string css)

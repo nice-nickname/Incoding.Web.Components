@@ -11,6 +11,8 @@ namespace Incoding.Web.Components.Grid
     {
         public string Css { get; set; } = string.Empty;
 
+        public ImlTemplateBinding<T> Binding { get; set; } = null;
+
         public IDictionary<string, TemplateContent<T>> Attr { get; } = new Dictionary<string, TemplateContent<T>>();
 
         public Row()

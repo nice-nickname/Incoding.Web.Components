@@ -26,5 +26,7 @@ namespace Incoding.Web.Components.Grid
         public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
 
         public TemplateContent<T> Content { get; set; }
+
+        public ImlTemplateBinding<T> Binding { get; internal set; }
     }
 }

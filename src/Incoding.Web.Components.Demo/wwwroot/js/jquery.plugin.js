@@ -5,26 +5,25 @@
      * called once on component first render
      */
 
-    $.fn.splitGrid = function(schemas, options = "{}") {
-        schemas = JSON.parse(schemas)
+    $.fn.splitGrid = function(options = "{}") {
         options = JSON.parse(options)
 
-        schemas.forEach(prepareSchema);
+        options.structure.forEach(prepareSchema);
 
-        const splitGrid = new SplitGridController(this, schemas, options)
+        const splitGrid = new SplitGridController(this, options)
 
         this.data('splitGrid', splitGrid)
     }
 
     function prepareSchema(schema) {
-        const rowTmpl = decodeRowTemplate(schema.RowTemplate)
+        const rowTmpl = decodeRowTemplate(schema.rowTmpl)
 
-        schema.RowTemplate = ExecutableInsert.Template.compile(rowTmpl)
-        schema.LayoutHtml = ExecutableInsert.Template.compile(schema.LayoutHtml)
+        schema.rowTmpl = ExecutableInsert.Template.compile(rowTmpl)
+        schema.layoutTmpl = ExecutableInsert.Template.compile(schema.layoutTmpl)
         schema.expands = { }
 
-        if (schema.NestedTable) {
-            prepareSchema(schema.NestedTable)
+        if (schema.nested) {
+            prepareSchema(schema.nested)
         }
     }
 

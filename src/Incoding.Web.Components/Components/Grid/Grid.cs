@@ -31,7 +31,7 @@ namespace Incoding.Web.Components.Grid
 
         public UIOptions UI { get; set; } = new();
 
-        public ImlBinding Binds { get; set; } = dsl => dsl.When("_").OnSuccess(dsl => dsl.Self());
+        public ImlBinding Binds { get; set; } = null;
 
         public Grid(string id)
         {

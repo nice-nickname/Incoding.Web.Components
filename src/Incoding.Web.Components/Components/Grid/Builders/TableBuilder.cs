@@ -60,7 +60,7 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
         {
-            var clb = new ColumnListBuilder<T>();
+            var clb = new ColumnListBuilder<T>(this._html);
             buildAction(clb);
 
             this.Table.Columns = clb.Columns;
@@ -72,7 +72,7 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
         {
-            var rb = new RowBuilder<T>();
+            var rb = new RowBuilder<T>(this._html);
             buildAction(rb);
 
             this.Table.Row = rb.Row;
@@ -80,7 +80,7 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public TableBuilder<T> Binding(ImlBinding bindings)
+        public TableBuilder<T> Bind(ImlBinding bindings)
         {
             this.Table.Binding = bindings;
 
@@ -89,7 +89,7 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
             where U : IRowData
-        {
+    {
             var tableBuilder = new TableBuilder<U>(this._html, "");
             tableBuilder.Table.InheritStyles(this.Table);
 

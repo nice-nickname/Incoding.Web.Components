@@ -68,7 +68,7 @@
                                 void buildTable(TableBuilder<SampleData> table, int nestedIndex)
                                 {
                                     table.Attr(attr)
-                                         .Binding(binding)
+                                         .Bind(binding)
                                          .Css(css)
                                          .Layout(LayoutType.Fixed)
                                          .Rows(r => r.Css(css))

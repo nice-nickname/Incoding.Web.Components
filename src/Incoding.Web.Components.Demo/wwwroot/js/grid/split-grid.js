@@ -42,7 +42,7 @@ class SplitGridController {
      *  NestedTable: any
      * }[] }
      */
-    schemas;
+    structure;
 
     /**
      * @type { }
@@ -71,14 +71,14 @@ class SplitGridController {
      */
     scrollEnabled
 
-    constructor(element, schemas, options) {
+    constructor(element, options) {
         this.$root = $(element)
         this.$empty = this.$root.find('.grid-empty')
         this.$content = this.$root.find('.grid-splitter')
 
         this.hide()
 
-        this.schemas = schemas;
+        this.structure = options.structure;
         this.options = options
 
         this.initializeScroll();
@@ -102,7 +102,7 @@ class SplitGridController {
             let controller = $(table).data('grid')
 
             if (!controller) {
-                controller = new TableController(table, this.schemas[i], this.data, parentData)
+                controller = new TableController(table, this.structure[i], this.data, parentData)
             }
 
             controller.data = this.data
@@ -130,11 +130,14 @@ class SplitGridController {
     }
 
     initializeRenderer() {
-        const { Scroll: scrollOptions } = this.options
+        const {
+            infiniteScroll,
+            scrollChunkSize
+        } = this.options
 
-        this.scrolledToEnd = !scrollOptions.Enabled
+        this.scrolledToEnd = !infiniteScroll
 
-        this.renderer = scrollOptions.Enabled ?  new InfiniteScrollRenderer(this, scrollOptions.ChunkSize) : new AtOnceRenderer(this)
+        this.renderer = infiniteScroll ?  new InfiniteScrollRenderer(this, scrollChunkSize) : new AtOnceRenderer(this)
     }
 
     appendData(data) {
@@ -150,7 +153,11 @@ class SplitGridController {
     renderRows(start, end) {
         const dataLoading = this.dataLoading
         const scrolledToEnd = this.scrolledToEnd
-        const websocketOptions = this.options.Websocket
+
+        const {
+            loadingRowCount,
+            partialLoading
+        } = this.options
 
         this.$tables.each(function() {
             const controller = $(this).data('grid')
@@ -158,7 +165,7 @@ class SplitGridController {
             controller.renderRows(start, end)
 
             if (dataLoading || !scrolledToEnd) {
-                controller.renderPlaceholderRows(websocketOptions.LoadingRows)
+                controller.renderPlaceholderRows(loadingRowCount)
             }
         })
 

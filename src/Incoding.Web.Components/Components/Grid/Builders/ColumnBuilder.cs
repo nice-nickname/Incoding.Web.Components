@@ -3,10 +3,7 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Linq.Expressions;
-    using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Microsoft.AspNetCore.Html;
 
@@ -125,6 +122,13 @@ namespace Incoding.Web.Components.Grid
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
         {
             this.Cell.Content = contentLambda;
+
+            return this;
+        }
+
+        public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)
+        {
+            this.Cell.Binding = binding;
 
             return this;
         }

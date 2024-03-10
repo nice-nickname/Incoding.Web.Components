@@ -34,22 +34,22 @@ class TableController {
 
     /**
      * @type { {
-     *  Columns: any[],
-     *  RowTemplate: string,
-     *  LayoutHtml: string,
-     *  NestedField: string,
-     *  NestedTable: any
+     *  columns: any[],
+     *  rowTmpl: string,
+     *  layoutHtml: string,
+     *  nestedField: string,
+     *  nested: any
      * } }
      */
-    schema;
+    structure;
 
-    constructor(element, schema, data, parent) {
+    constructor(element, structure, data, parent) {
         this.$table = $(element);
         this.$thead = $(element).find('thead')
         this.$tbody = $(element).find('tbody')
         this.$tfoot = $(element).find('tfoot')
 
-        this.schema = schema;
+        this.structure = structure;
         this.data = data;
         this.parent = parent
 
@@ -59,10 +59,10 @@ class TableController {
     }
 
     expand(rowId) {
-        const isExpanded = this.schema.expands[rowId]
+        const isExpanded = this.structure.expands[rowId]
         const childRendered = isExpanded !== undefined
 
-        this.schema.expands[rowId] = !isExpanded
+        this.structure.expands[rowId] = !isExpanded
 
         const parentData = { siblings: [] }
 
@@ -78,32 +78,32 @@ class TableController {
     }
 
     totals() {
-        this.parent.siblings.forEach(c => {
-            const totalableCols = c.schema.Columns.filter(s => s.Totalable)
+        this.parent.siblings.forEach(table => {
+            const totalableCols = table.structure.columns.filter(s => s.totalable)
 
             totalableCols.forEach(col => {
                 const {
-                    Index,
-                    Field,
-                    SpreadIndex,
-                    SpreadField
+                    index,
+                    field,
+                    spreadIndex,
+                    spreadField
                 } = col
 
-                let fieldAccessor = data => data[Field]
+                let fieldAccessor = data => data[field]
 
-                if (!ExecutableHelper.IsNullOrEmpty(SpreadField)) {
-                    fieldAccessor = data => data[SpreadField][SpreadIndex][Field]
+                if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
+                    fieldAccessor = data => data[spreadField][spreadIndex][field]
                 }
 
                 const total = this.data.reduce((sum, data) => sum += fieldAccessor(data), 0)
 
-                c.$tfoot.find(`td[data-index="${Index}"] span`).each(function() {
+                table.$tfoot.find(`td[data-index="${index}"] span`).each(function() {
                     $(this).attr('data-format', 'Numeric')
                     $(this).attr('data-value', total)
                 })
             })
 
-            c.$tfoot.find('span[data-format]').format().removeAttr('data-format')
+            table.$tfoot.find('span[data-format]').format().removeAttr('data-format')
         })
     }
 
@@ -133,10 +133,10 @@ class TableController {
     }
 
     renderChildren(rowId, parentData, expanded = false) {
-        const nestedTable = this.schema.NestedTable
+        const nestedTable = this.structure.nested
 
         const record = this.data.find(s => s.RowId == rowId)
-        const childData = record[this.schema.NestedField]
+        const childData = record[this.structure.nestedField]
 
         const tr = document.createElement('tr')
         const td = document.createElement('td')
@@ -144,12 +144,12 @@ class TableController {
         tr.setAttribute('data-nested', !expanded)
         tr.setAttribute('data-row-id', rowId)
 
-        td.colSpan = this.schema.Columns.length
+        td.colSpan = this.structure.columns.length
 
         td.classList.add('table-container')
         tr.appendChild(td)
 
-        const html = ExecutableInsert.Template.render(nestedTable.LayoutHtml, { })
+        const html = ExecutableInsert.Template.render(nestedTable.layoutTmpl, { })
 
         const template = document.createElement('template')
         template.innerHTML = html
@@ -177,7 +177,7 @@ class TableController {
         const tr = document.createElement('tr')
         tr.setAttribute('temp-row', true)
 
-        for (let i = 0; i < this.schema.Columns.length; i++) {
+        for (let i = 0; i < this.structure.columns.length; i++) {
             const td = document.createElement('td')
             const span = document.createElement('span')
             span.innerHTML = '&nbsp;'
@@ -198,7 +198,7 @@ class TableController {
         this._rerenderSelfRow($row, rowData)
 
         if ($row.data('hasNested') === true) {
-            const nestedData = rowData[this.schema.NestedField]
+            const nestedData = rowData[this.structure.nestedField]
 
             this._rerenderNestedRow($row.next(), nestedData)
         }
@@ -219,7 +219,7 @@ class TableController {
     }
 
     _renderRows(data) {
-        const html = ExecutableInsert.Template.render(this.schema.RowTemplate, { data })
+        const html = ExecutableInsert.Template.render(this.structure.rowTmpl, { data })
 
         const template = document.createElement('template')
         template.innerHTML = html

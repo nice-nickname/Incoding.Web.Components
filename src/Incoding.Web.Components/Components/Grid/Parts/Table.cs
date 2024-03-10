@@ -34,7 +34,7 @@ namespace Incoding.Web.Components.Grid
 
         public List<ICellRenderer<T>> CellRenderers { get; set; } = new();
 
-        public ImlBinding Binding { get; set; } = iml => iml.When("_").OnSuccess(dsl => dsl.Self());
+        public ImlBinding Binding { get; set; } = null;
 
         public string NestedField { get; set; }
 

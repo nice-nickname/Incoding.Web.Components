@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Incoding.Core.Extensions;
     using Incoding.Web.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
@@ -49,18 +50,13 @@ namespace Incoding.Web.Components.Grid
 
             var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
-            var incodingAttrs = this._table.Binding(Bind())
-                            .AsHtmlAttributes(new
-                            {
-                                @class = this._table.Css,
-                                style = "table-layout: " + layout,
-                                id = this._table.Id
-                            })
-                            .ToDictionary();
+            table.AddCssClass(this._table.Css);
+            table.Attributes.Add("style", $"table-layout: {layout};");
+            table.Attributes.Add("id", this._table.Id);
 
-            foreach (var (key, value) in incodingAttrs)
+            if (this._table.Binding != null)
             {
-                table.Attributes.Add(key, value.ToString());
+                ImlBindingHelper.BindToTag(this._html, table, this._table.Binding);
             }
 
             foreach (var (key, value) in this._table.Attr)
@@ -162,6 +158,11 @@ namespace Incoding.Web.Components.Grid
             var row = new TagBuilder("tr");
             row.AddCssClass(this._table.Row.Css);
 
+            if (this._table.Row.Binding != null)
+            {
+                ImlBindingHelper.BindToTag(this._html, row, this._table.Row.Binding, tmpl);
+            }
+
             foreach (var (attr, tmplValue) in this._table.Row.Attr)
             {
                 row.Attributes.Add(attr, tmplValue(tmpl).HtmlContentToString());
@@ -199,14 +200,6 @@ namespace Incoding.Web.Components.Grid
             footer.InnerHtml.AppendHtml(row);
             return footer;
         }
-
-        private IIncodingMetaLanguageEventBuilderDsl Bind()
-        {
-            var initBinding = this._html.When(JqueryBind.InitIncoding)
-                                        .OnSuccess(dsl => dsl.Self().Trigger.Invoke(Bindings.Table.Init));
-
-            return initBinding;
-        }
     }
 
     public class TableComponent
@@ -221,7 +214,7 @@ namespace Incoding.Web.Components.Grid
 
         public string NestedField { get; set; }
 
-        public TableDto ToDto()
+        public GridStructureDto ToDto()
         {
             var columnDtos = Columns.Select(s =>
             {
@@ -236,15 +229,15 @@ namespace Incoding.Web.Components.Grid
                     SpreadIndex = s.SpreadIndex,
                     Totalable = s.Column.Totalable
                 };
-            }).ToList();
+            }).ToArray();
 
-            var dto = new TableDto
+            var dto = new GridStructureDto
             {
                 Columns = columnDtos,
-                RowTemplate = RowTemplate,
-                LayoutHtml = LayoutHtml.HtmlContentToString(),
+                RowTmpl = RowTemplate,
+                LayoutTmpl = LayoutHtml.HtmlContentToString(),
                 NestedField = NestedField,
-                NestedTable = Nested?.ToDto()
+                Nested = Nested?.ToDto()
             };
 
             return dto;

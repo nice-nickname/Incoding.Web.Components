@@ -10,4 +10,6 @@ namespace Incoding.Web.Components
     public delegate IHtmlContent TemplateContent<T>(ITemplateSyntax<T> tmpl);
 
     public delegate IIncodingMetaLanguageEventBuilderDsl ImlBinding(IIncodingMetaLanguageEventBuilderDsl dsl);
+
+    public delegate IIncodingMetaLanguageEventBuilderDsl ImlTemplateBinding<T>(IIncodingMetaLanguageEventBuilderDsl dsl, ITemplateSyntax<T> tmpl);
 }

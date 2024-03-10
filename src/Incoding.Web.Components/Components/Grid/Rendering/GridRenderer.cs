@@ -8,6 +8,8 @@ namespace Incoding.Web.Components.Grid
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     #endregion
 
@@ -45,22 +47,16 @@ namespace Incoding.Web.Components.Grid
         {
             var root = new TagBuilder("div");
 
+            root.AddCssClass("grid-component");
+            root.Attributes.Add("id", this._grid.Id);
             root.Attributes.Add("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
 
-            var incodingAttributes = this._grid.Binds(Bind(tables))
-                                        .AsHtmlAttributes(new
-                                        {
-                                            @class = "grid-component",
-                                            id = this._grid.Id
-                                        })
-                                        .ToDictionary();
-
-            foreach (var (key, value) in incodingAttributes)
+            if (this._grid.Binds != null)
             {
-                root.Attributes.Add(key, value.ToString());
+                ImlBindingHelper.BindToTag(this._html, root, iml => this._grid.Binds(Bind(tables)));
             }
 
-            foreach(var (key, value) in this._grid.Attr)
+            foreach (var (key, value) in this._grid.Attr)
             {
                 root.Attributes.Add(key, value);
             }
@@ -143,19 +139,38 @@ namespace Incoding.Web.Components.Grid
         {
             bool infinteScrolling = this._grid.Websocket.Enabled;
 
-            var tableDtos = tables.Select(t => t.ToDto()).ToList();
+            var tableDtos = tables.Select(t => t.ToDto()).ToArray();
 
-            var gridOptionsDto = new GridOptionsDto
+            var gridOptionsDto = new GridDto
             {
-                Scroll = this._grid.InfiniteScroll,
-                Websocket = this._grid.Websocket,
-                UI=  this._grid.UI,
+                CascadeEvents = this._grid.UI.CascadeEvents,
+                HighlightRows = this._grid.UI.HighlightRowsOnHover,
+
+                InfiniteScroll = this._grid.InfiniteScroll.Enabled,
+                ScrollChunkSize = this._grid.InfiniteScroll.ChunkSize,
+
+                PartialLoad = this._grid.Websocket.Enabled,
+                LoadingRowCount = this._grid.Websocket.LoadingRows,
+
+                Splitter = this._grid.Splits.Select(s => new SplitterDto
+                {
+                    Min = s.MinWidth,
+                    Max = s.MaxWidth
+                }).ToArray(),
+
+                Structure = tableDtos
             };
 
             var initBinding = this._html.When(JqueryBind.InitIncoding)
                                         .OnSuccess(dsl =>
                                         {
-                                            dsl.Self().JQuery.Call("splitGrid", tableDtos.ToJsonString(), gridOptionsDto.ToJsonString());
+                                            var options = JsonConvert.SerializeObject(gridOptionsDto, new JsonSerializerSettings
+                                            {
+                                                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                                                DefaultValueHandling = DefaultValueHandling.Include
+                                            });
+
+                                            dsl.Self().JQuery.Call("splitGrid", options);
 
                                             if (infinteScrolling)
                                             {

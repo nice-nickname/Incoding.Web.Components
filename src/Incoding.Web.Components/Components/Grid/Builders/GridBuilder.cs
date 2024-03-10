@@ -11,7 +11,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class GridBuilder<T> where T : IRowData
+    public class GridBuilder<T>
     {
         public Grid<T> Grid { get; }
 

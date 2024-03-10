@@ -16,7 +16,7 @@ namespace Incoding.Web.Components.Grid
         public string Width { get; set; }
     }
 
-    public class Table<T> where T : IRowData
+    public class Table<T>
     {
         public string Id { get; }
 
@@ -45,7 +45,7 @@ namespace Incoding.Web.Components.Grid
             this.Id = id;
         }
 
-        public void InheritStyles<U>(Table<U> other) where U : IRowData
+        public void InheritStyles<U>(Table<U> other)
         {
             this.Css = other.Css;
             this.Row.Css = other.Row.Css;

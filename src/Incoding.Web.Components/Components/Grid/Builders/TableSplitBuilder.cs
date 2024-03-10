@@ -8,7 +8,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class TableSplitBuilder<T> where T : IRowData
+    public class TableSplitBuilder<T>
     {
         public List<Table<T>> Tables { get; }
 

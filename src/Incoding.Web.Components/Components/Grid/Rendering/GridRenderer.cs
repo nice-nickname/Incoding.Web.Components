@@ -13,7 +13,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class GridComponentRenderer<T> where T : IRowData
+    public class GridComponentRenderer<T>
     {
         private readonly Grid<T> _grid;
 

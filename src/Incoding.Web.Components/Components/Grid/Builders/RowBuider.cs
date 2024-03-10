@@ -6,7 +6,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class RowBuilder<T> where T : IRowData
+    public class RowBuilder<T>
     {
         private readonly IHtmlHelper _html;
 

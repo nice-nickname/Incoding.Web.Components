@@ -22,7 +22,7 @@ namespace Incoding.Web.Components
 
         public GridUtilsHtmlHelper GridUtils => new GridUtilsHtmlHelper(this._html);
 
-        public GridBuilder<T> Grid<T>(string id) where T : IRowData
+        public GridBuilder<T> Grid<T>(string id)
         {
             return new GridBuilder<T>(this._html, id);
         }

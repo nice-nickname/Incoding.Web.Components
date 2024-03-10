@@ -6,7 +6,7 @@ namespace Incoding.Web.Components.Demo
 
     #endregion
 
-    public record SampleData : IRowData
+    public record SampleData
     {
         public string Id { get; set; }
 

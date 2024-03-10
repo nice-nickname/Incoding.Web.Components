@@ -7,7 +7,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class Row<T> where T : IRowData
+    public class Row<T>
     {
         public string Css { get; set; } = string.Empty;
 
@@ -17,7 +17,7 @@ namespace Incoding.Web.Components.Grid
 
         public Row()
         {
-            this.Attr.Add("data-row-id", tmpl => tmpl.For(s => s.RowId).ToHtmlString());
+            this.Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
         }
     }
 }

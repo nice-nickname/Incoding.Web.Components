@@ -13,7 +13,7 @@ namespace Incoding.Web.Components.Grid
 
     #endregion
 
-    public class TableRenderer<T> where T : IRowData
+    public class TableRenderer<T>
     {
         private readonly Table<T> _table;
 

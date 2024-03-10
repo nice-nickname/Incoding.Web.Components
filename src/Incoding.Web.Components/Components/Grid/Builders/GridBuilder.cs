@@ -97,6 +97,14 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public GridBuilder<T> Table(Action<TableBuilder<T>> buildAction)
+        {
+            return Split(splits =>
+            {
+                splits.Add(this.Grid.Id + "-table", buildAction);
+            });
+        }
+
         public GridBuilder<T> Bind(ImlBinding binding)
         {
             this.Grid.Binds = binding;

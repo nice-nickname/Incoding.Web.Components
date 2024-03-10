@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace Incoding.Web.Components.Grid
 {
     public record ColumnDto
@@ -14,8 +17,10 @@ namespace Incoding.Web.Components.Grid
 
         public bool Totalable { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ColumnType Type { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ColumnFormat Format { get; set; }
     }
 }

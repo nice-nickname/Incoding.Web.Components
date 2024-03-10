@@ -86,7 +86,8 @@ class TableController {
                     index,
                     field,
                     spreadIndex,
-                    spreadField
+                    spreadField,
+                    format
                 } = col
 
                 let fieldAccessor = data => data[field]
@@ -98,7 +99,7 @@ class TableController {
                 const total = this.data.reduce((sum, data) => sum += fieldAccessor(data), 0)
 
                 table.$tfoot.find(`td[data-index="${index}"] span`).each(function() {
-                    $(this).attr('data-format', 'Numeric')
+                    $(this).attr('data-format', format)
                     $(this).attr('data-value', total)
                 })
             })

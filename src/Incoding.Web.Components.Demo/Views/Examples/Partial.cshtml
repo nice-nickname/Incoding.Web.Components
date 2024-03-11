@@ -42,6 +42,12 @@
     var controller = new IMLGridController("grid");
 }
 
+@{
+    var sampleQueryData = "{ \"Id\": 1 }";
+}
+
+<input name="aboba" value="@sampleQueryData" type="hidden" />
+
 @(Html.Components().Grid<SampleData>("grid")
     .Width("100%").Height("100%")
     .Split(splitting =>
@@ -98,7 +104,7 @@
     })
     .Bind(iml => iml.When(JqueryBind.Load)
                     .OnSuccess(dsl => controller.Init(dsl))
-                    .OnComplete(dsl => controller.StartWebsocket(dsl))
+                    .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba")))
                     .When(Bindings.Grid.Websocket.Started)
                     .OnSuccess(dsl => dsl.Self())
                     .When(Bindings.Grid.Websocket.Completed)

@@ -16,9 +16,9 @@ namespace Incoding.Web.Components.Grid
             return dsl.WithId(this.Id).JQuery.Call("data('splitGrid').initializeTables");
         }
 
-        public IExecutableSetting StartWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl)
+        public IExecutableSetting StartWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector @params = null)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('loader').startLoading");
+            return dsl.WithId(this.Id).JQuery.Call("data('loader').startLoading", @params);
         }
 
         public IExecutableSetting CancelWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl)

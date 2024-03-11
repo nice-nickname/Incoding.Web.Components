@@ -56,6 +56,8 @@ class WebsocketLoader {
 
         this.triggerStart()
 
+        params = _.isString(params || {}) ? JSON.parse(params) : params
+
         this.signalrStream = this.signalrConnection
             .stream(this.method, { ChunkSize: this.chunkSize, QueryParams: params })
             .subscribe({

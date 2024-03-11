@@ -87,7 +87,12 @@
      * Formatting table cells
      */
 
-    $.fn.format = function() {
+    $.fn.format = function(action, precision) {
+        if (action === 'precision') {
+            $.fn.format.defaults.precision = Number(precision)
+            return
+        }
+
         return this.each(function() {
             const format = this.dataset.format
             const value = this.dataset.value
@@ -111,19 +116,21 @@
         })
     }
 
+    $.fn.format.defaults = {
+        precision: 2
+    };
+
     function formatCurrency(element, value) {
         return formatNumber(element, value, {
             prefix: '$',
-            postfix: '',
-            precision: 2
+            postfix: ''
         })
     }
 
     function formatPercentage(element, value) {
         return formatNumber(element, value, {
             prefix: '',
-            postfix: '%',
-            precision: 2
+            postfix: '%'
         })
     }
 
@@ -131,7 +138,7 @@
         options = $.extend({
             prefix: '',
             postfix: '',
-            precision: 2
+            precision: $.fn.format.defaults.precision
         }, options)
 
         const {

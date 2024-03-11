@@ -42,5 +42,13 @@ namespace Incoding.Web.Components
                        .AsHtmlAttributes()
                        .ToInput(HtmlInputType.Hidden, string.Empty);
         }
+
+        public IHtmlContent DefaultDecimalPrecision(int precision)
+        {
+            return this._html.When(JqueryBind.InitIncoding)
+                             .OnSuccess(dsl => dsl.Self().JQuery.Call("format", "precision", precision))
+                             .AsHtmlAttributes()
+                             .ToDiv();
+        }
     }
 }

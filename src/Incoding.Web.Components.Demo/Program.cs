@@ -15,6 +15,10 @@ namespace Incoding.Web.Components.Demo
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddHostedService<WarmUpHostedService>();
+
             builder.Services
                    .AddControllersWithViews()
                    .AddRazorRuntimeCompilation();

@@ -76,6 +76,8 @@ class SplitGridController {
         this.$empty = this.$root.find('.grid-empty')
         this.$content = this.$root.find('.grid-splitter')
 
+        this.$tables = this.$content.find('table');
+
         this.hide()
 
         this.structure = options.structure;
@@ -88,8 +90,6 @@ class SplitGridController {
 
     initializeTables() {
         this.show()
-
-        this.$tables = this.$root.removeAttr('data-empty').find('table');
 
         this.data = []
 

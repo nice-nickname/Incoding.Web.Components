@@ -51,18 +51,16 @@ namespace Incoding.Web.Components.Grid
             var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
             table.AddCssClass(this._table.Css);
-            table.Attributes.Add("style", $"table-layout: {layout};");
-            table.Attributes.Add("id", this._table.Id);
+
+            table.Attributes["id"] = this._table.Id;
+            table.Attributes.AddOrAppend("style", $"table-layout: {layout};");
 
             if (this._table.Binding != null)
             {
                 ImlBindingHelper.BindToTag(this._html, table, this._table.Binding);
             }
 
-            foreach (var (key, value) in this._table.Attr)
-            {
-                table.Attributes.Add(key, value);
-            }
+            table.Attributes.Merge(this._table.Attr);
 
             table.InnerHtml.AppendHtml(RenderHeader());
             table.InnerHtml.AppendHtml(RenderBody(false));
@@ -107,17 +105,17 @@ namespace Incoding.Web.Components.Grid
 
                 if (hasStacked)
                 {
-                    cell.Attributes.Add("rowspan", isStacked ? "1" : "2");
-                    cell.Attributes.Add("colspan", isStacked ? "2" : "1");
+                    cell.Attributes["rowspan"] = isStacked ? "1" : "2";
+                    cell.Attributes["colspan"] = isStacked ? "2" : "1";
                 }
 
                 if (!isStacked && column.Width.HasValue)
                 {
-                    cell.Attributes.Add("style", $"width: {column.Width}px;");
+                    cell.Attributes.AddOrAppend("style", $"width: {column.Width}px;");
                 }
                 else if (isStacked)
                 {
-                    cell.Attributes.Add("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
+                    cell.Attributes.AddOrAppend("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
                 }
 
                 row.InnerHtml.AppendHtml(cell);
@@ -187,7 +185,6 @@ namespace Incoding.Web.Components.Grid
             foreach (var gridCell in this._table.Cells)
             {
                 var cell = new TagBuilder("td");
-                cell.MergeAttributes(gridCell.Column.Attr);
 
                 var cellContent = new TagBuilder("span");
                 cellContent.InnerHtml.AppendHtml("&nbsp;");

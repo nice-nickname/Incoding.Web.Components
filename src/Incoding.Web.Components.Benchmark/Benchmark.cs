@@ -68,16 +68,14 @@
         private GridBuilder<SampleData> Setup()
         {
             var id = "grid-component-benchmark";
-            var css = "lorem ipsum dolor sit amet";
+            var css = "Lorem ipsum dolor sit amet.";
 
-            var empty = "lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet";
+            var empty = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sint ipsam? Ut sapiente laborum ducimus tempore deleniti quia voluptates veritatis odio illum alias! Aliquam, impedit at voluptatem necessitatibus neque ex?";
 
-            var attr = new { name = "lorem" };
+            var attr = new { name = "viva vidi vici" };
 
             ImlBinding binding = iml => iml.When(Bindings.Grid.Init)
                                                     .OnSuccess(dsl => dsl.Self());
-
-
 
             return new GridBuilder<SampleData>(MockIHtmlHelper(), id)
                         .Css(css)
@@ -140,7 +138,7 @@
                         {
                             ws.ChunkSize = 40;
                             ws.LoadingRows = 3;
-                            ws.Method = "ipsum";
+                            ws.Method = "SPQR";
                         });
         }
     }

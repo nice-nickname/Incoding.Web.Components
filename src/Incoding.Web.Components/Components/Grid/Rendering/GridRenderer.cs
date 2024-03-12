@@ -48,18 +48,17 @@ namespace Incoding.Web.Components.Grid
             var root = new TagBuilder("div");
 
             root.AddCssClass("grid-component " + this._grid.Css);
-            root.Attributes.Add("id", this._grid.Id);
-            root.Attributes.Add("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
+
+            root.Attributes["id"] = this._grid.Id;
+            root.Attributes.AddOrAppend("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
 
             if (this._grid.Binds != null)
             {
                 ImlBindingHelper.BindToTag(this._html, root, iml => this._grid.Binds(Bind(tables)));
             }
 
-            foreach (var (key, value) in this._grid.Attr)
-            {
-                root.Attributes.Add(key, value);
-            }
+
+            root.Attributes.Merge(this._grid.Attr);
 
             return root;
         }
@@ -88,7 +87,7 @@ namespace Incoding.Web.Components.Grid
 
             foreach (var (attr, value) in incodingAttrs)
             {
-                panel.Attributes.Add(attr, value.ToString());
+                panel.Attributes[attr] = value.ToString();
             }
 
             var index = 0;
@@ -112,7 +111,7 @@ namespace Incoding.Web.Components.Grid
             splitPanel.InnerHtml.AppendHtml(table.LayoutHtml);
             splitPanel.AddCssClass("splitter-pane");
 
-            splitPanel.Attributes.Add("data-split-panel", "true");
+            splitPanel.Attributes["data-split-panel"] = "true";
 
             return splitPanel;
         }
@@ -122,7 +121,7 @@ namespace Incoding.Web.Components.Grid
             var div = new TagBuilder("div");
             div.AddCssClass("splitter-divider");
 
-            div.Attributes.Add("data-divider", "true");
+            div.Attributes["data-divider"] = "true";
 
             div.InnerHtml.AppendHtml("&nbsp;");
 

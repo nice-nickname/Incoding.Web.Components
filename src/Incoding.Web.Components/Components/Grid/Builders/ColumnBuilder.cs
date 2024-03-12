@@ -83,6 +83,24 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public ColumnBuilder<T> Field(string field)
+        {
+            this.Cell.Field = field;
+
+            if (string.IsNullOrWhiteSpace(this.Column.Title))
+            {
+                this.Column.Title = field;
+            }
+
+            if (this.Cell.Content == null)
+            {
+                Content(tmpl => tmpl.For(field));
+            }
+
+            return this.Attr("data-value", tmpl => tmpl.For(field))
+                       .Attr("data-title", tmpl => tmpl.For(field));
+        }
+
         public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
         {
             var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);

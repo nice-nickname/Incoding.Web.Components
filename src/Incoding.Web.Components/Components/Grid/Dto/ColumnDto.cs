@@ -11,7 +11,7 @@ namespace Incoding.Web.Components.Grid
 
         public string Title { get; set; }
 
-        public int SpreadIndex { get; set; }
+        public int? SpreadIndex { get; set; }
 
         public string SpreadField { get; set; }
 

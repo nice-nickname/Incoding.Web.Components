@@ -42,9 +42,10 @@
                          .Rows(row => row.Css("tr-item-calculate"))
                          .Columns(regularCols))
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-100")
+                    .Ajax("/data-1000")
                     .OnBegin(dsl => controller.Init(dsl))
                     .OnSuccess(dsl => controller.AppendData(dsl, Selector.Result)))
+    .InfiniteScrolling(chunkSize: 20)
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;

@@ -73,6 +73,11 @@ namespace Incoding.Web.Components.Demo.Controllers
                 }
             }
 
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].Index = i;
+            }
+
             return data;
         }
     }

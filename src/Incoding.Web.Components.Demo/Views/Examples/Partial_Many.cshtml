@@ -1,0 +1,133 @@
+@using Incoding.Web.Components.Grid;
+@{
+    Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
+                                 (cols, i) =>
+                                 {
+                                     cols.Stacked(s => s.Title(DateTime.Now.AddDays(i).ToShortDateString()),
+                                                  cols =>
+                                                  {
+                                                      cols.Add().Field(s => s.Hours).Title("Hrs").Width(70).Totalable();
+                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70).Format(ColumnFormat.Currency).Totalable();
+                                                  });
+                                 });
+
+    Action<ColumnListBuilder<SampleData>> regularCols = (cols) =>
+                     {
+                        cols.Add().Content(
+                        @<text>
+                            @using (item.Is(s => s.HasChildren))
+                            {
+                                @Html.Components().GridUtils.ExpandButton(settings =>
+                                {
+                                    settings.Content = "+".ToString();
+                                })
+                            }
+                        </text>).Width(40);
+
+                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty);
+
+                        cols.Add().Field(s => s.Name).Width(70);
+                        cols.Add().Field(s => s.Description).Title("Notes").Width(200);
+
+                        cols.Add().Field(s => s.Amount).Width(70).Totalable();
+                        cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
+                        cols.Add().Field(s => s.Balance).Width(70);
+
+                        cols.Stacked(s => s.Title("Dates"),
+                                        cols =>
+                                        {
+                                            cols.Add().Field(s => s.Start).Width(70);
+                                            cols.Add().Field(s => s.End).Width(70);
+                                        });
+                     };
+
+    var controller = new IMLGridController("grid");
+}
+
+@{
+    var sampleQueryData = "{ \"Id\": 1 }";
+}
+
+<input name="aboba" value="@sampleQueryData" type="hidden" />
+
+@(Html.Components().Grid<SampleData>("grid")
+    .Width("100%").Height("100%")
+    .Css("bg-white")
+    .Split(splitting =>
+    {
+        splitting.Add("regular", table =>
+        {
+            table.Css("table table-bordered table-component")
+                 .Rows(row => row.Css("tr-item-calculate"))
+                 .Columns(regularCols)
+                 .Nested(s => s.Children, nested =>
+                 {
+                         nested.Columns(regularCols);
+
+                         nested.Nested(s => s.Children, nested =>
+                         {
+                             nested.Columns(regularCols);
+                         });
+                 });
+        });
+
+        splitting.Add("period", table =>
+        {
+            table.Css("table table-bordered table-component")
+                 .Rows(row => row.Css("tr-item-calculate"))
+                 .Columns(periodCols);
+
+            table.Nested(s => s.Children, nested =>
+            {
+                nested.Columns(periodCols);
+
+                nested.Nested(s => s.Children, nested =>
+                {
+                    nested.Columns(periodCols);
+                });
+            });
+        });
+
+        splitting.Add("bebius", table =>
+        {
+            table.Css("table table-bordered table-component")
+                 .Rows(row => row.Css("tr-item-calculate"))
+                 .Columns(periodCols);
+
+            table.Nested(s => s.Children, nested =>
+            {
+                nested.Columns(periodCols);
+
+                nested.Nested(s => s.Children, nested =>
+                {
+                    nested.Columns(periodCols);
+                });
+            });
+        });
+    })
+    .Bind(iml => iml.When(JqueryBind.Load)
+                    .OnSuccess(dsl => controller.Init(dsl))
+                    .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba")))
+                    .When(Bindings.Grid.Websocket.Started)
+                    .OnSuccess(dsl => dsl.Self())
+                    .When(Bindings.Grid.Websocket.Completed)
+                    .OnSuccess(dsl => controller.Totals(dsl)))
+    .InfiniteScrolling(chunkSize: 20)
+    .WebsocketLoader(o =>
+    {
+        o.ChunkSize = 40;
+        o.Method = "StreamData_Many";
+        o.LoadingRows = 3;
+    })
+    .UI(ui =>
+    {
+        ui.HighlightRowsOnHover = true;
+        ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
+    })
+    .Empty(@<text>
+                <div style="display: grid; place-items: center;">
+                    <img src="https://static.tildacdn.com/tild3965-6665-4366-b234-303630633965/99ac3f33649217cbaf8a.svg" style="width: 120px;"/>
+                    <span>so empty here...</span>
+                </div>
+            </text>)
+    .Render(useConcurrentRender: false))

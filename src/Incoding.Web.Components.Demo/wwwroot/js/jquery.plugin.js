@@ -154,11 +154,11 @@
         number = `${prefix}${number}${postfix}`
 
         if (isNegative) {
-            element.classList.add('ci-text-danger')
+            element.classList.add('negative')
             number = `(${number})`
         }
         else {
-            element.classList.remove('ci-text-danger')
+            element.classList.remove('negative')
         }
 
         element.innerHTML = number

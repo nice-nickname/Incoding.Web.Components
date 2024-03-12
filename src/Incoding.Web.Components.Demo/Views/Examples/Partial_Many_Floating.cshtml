@@ -7,7 +7,7 @@
                                                   cols =>
                                                   {
                                                       cols.Add().Field(s => s.Hours).Title("Hrs").Width(70).Totalable();
-                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70).Totalable();
+                                                      cols.Add().Field(s => s.JTD).Title("$").Width(70).Format(ColumnFormat.Currency).Totalable();
                                                   });
                                  });
 
@@ -23,6 +23,8 @@
                                 })
                             }
                         </text>).Width(40);
+
+                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty);
 
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);
@@ -50,6 +52,7 @@
 
 @(Html.Components().Grid<SampleData>("grid")
     .Width("100%").Height("100%")
+    .Css("bg-white")
     .Split(splitting =>
     {
         splitting.Add("regular", table =>
@@ -113,7 +116,7 @@
     .WebsocketLoader(o =>
     {
         o.ChunkSize = 40;
-        o.Method = "StreamData";
+        o.Method = "StreamData_Many_Floating";
         o.LoadingRows = 3;
     })
     .UI(ui =>

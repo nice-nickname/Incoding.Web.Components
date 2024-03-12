@@ -95,7 +95,8 @@
 }
 
 .table-component > thead > tr > th,
-.table-component > tbody > tr > td {
+.table-component > tbody > tr > td,
+.table-component > tfoot > tr > td {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -114,21 +115,6 @@ tr.highlight {
     display: none !important;
 }
 
-.negative-number {
+.negative {
     color: red !important;
-}
-
-
-@keyframes funny {
-    0% {
-        width: 20px;
-    }
-
-    50% {
-        width: 120px;
-    }
-
-    100% {
-        width: 20px;
-    }
 }

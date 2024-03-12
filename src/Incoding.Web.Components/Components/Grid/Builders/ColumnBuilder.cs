@@ -21,6 +21,7 @@ namespace Incoding.Web.Components.Grid
             this.Column = new Column();
 
             this.Cell.Column = this.Column;
+            this.Column.Cell = this.Cell;
         }
 
         public ColumnBuilder(int index) : this()

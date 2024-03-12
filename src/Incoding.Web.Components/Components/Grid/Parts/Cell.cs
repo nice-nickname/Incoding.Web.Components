@@ -12,7 +12,7 @@ namespace Incoding.Web.Components.Grid
 
         public string SpreadField { get; set; }
 
-        public int SpreadIndex { get; set; }
+        public int? SpreadIndex { get; set; }
 
         public ColumnType Type { get; set; }
 

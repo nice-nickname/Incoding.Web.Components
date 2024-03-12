@@ -44,7 +44,8 @@ class InfiniteScrollRenderer {
     }
 
     handleDataUpdated() {
-        this.availableChunks = Math.floor(this.splitGrid.data.length / this.chunkSize);
+        const availableChunks = this.splitGrid.data.length / this.chunkSize
+        this.availableChunks = this.splitGrid.dataLoading ? Math.floor(availableChunks) : Math.ceil(availableChunks);
 
         this.requestRender();
     }

@@ -1,14 +1,10 @@
 namespace Incoding.Web.Components.Demo
 {
-    #region << Using >>
-
-    using Incoding.Web.Components.Grid;
-
-    #endregion
-
     public record SampleData
     {
         public string Id { get; set; }
+
+        public int Index { get; set; }
 
         public string Name { get; set; }
 

@@ -9,20 +9,50 @@
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial.cshtml").Html())
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Small.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
-                                        @class = "btn btn-primary"
+                                        @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
-                            Partial
+                            Partial (0.5 of chunk)
                         </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many_Floating.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                            Partial (2.5 chunks)
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                            Partial (3 chunck)
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/InfiniteScroll_Ajax.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                             Infinite scroll & Ajax data
+                         </text>))
 
         @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
-                                        @class = "btn btn-primary"
+                                        @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
                              Regular

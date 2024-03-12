@@ -12,9 +12,6 @@
 
         const connection = builder.build()
 
-
-        connection.on("signal", handleSignal);
-
         connection.start().catch(console.error)
 
         window.signalrConnection = connection

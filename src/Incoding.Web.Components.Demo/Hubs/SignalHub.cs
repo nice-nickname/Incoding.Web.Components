@@ -7,6 +7,7 @@ namespace Incoding.Web.Components.Demo.Controllers
     using System.Runtime.CompilerServices;
     using Microsoft.AspNetCore.SignalR;
     using Incoding.Core.Extensions;
+    using JetBrains.Annotations;
 
     #endregion
 
@@ -61,10 +62,15 @@ namespace Incoding.Web.Components.Demo.Controllers
                 }
             }
 
+            for (int i = 0; i < data.Count; i++)
+            {
+                data[i].Index = i;
+            }
+
             return data;
         }
 
-        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData_Many_Floating(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
         {
             var currentPage = 0;
             var allPages = 3;
@@ -72,6 +78,49 @@ namespace Incoding.Web.Components.Demo.Controllers
             while (currentPage < allPages && !token.IsCancellationRequested)
             {
                 var items = Data(currentPage++, @params.ChunkSize);
+
+                if (currentPage == allPages)
+                {
+                    items = items.Slice(0, @params.ChunkSize / 3);
+                }
+
+                yield return new StreamResult<SampleData>
+                {
+                    Items = items,
+                    IsNext = currentPage != allPages
+                };
+
+                Thread.Sleep(5.Seconds());
+            }
+        }
+
+        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData_Many(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
+        {
+            var currentPage = 0;
+            var allPages = 3;
+
+            while (currentPage < allPages && !token.IsCancellationRequested)
+            {
+                var items = Data(currentPage++, @params.ChunkSize);
+
+                yield return new StreamResult<SampleData>
+                {
+                    Items = items,
+                    IsNext = currentPage != allPages
+                };
+
+                Thread.Sleep(5.Seconds());
+            }
+        }
+
+        public async IAsyncEnumerable<StreamResult<SampleData>> StreamData_Small(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
+        {
+            var currentPage = 0;
+            var allPages = 1;
+
+            while (currentPage < allPages && !token.IsCancellationRequested)
+            {
+                var items = Data(currentPage++, 5);
 
                 yield return new StreamResult<SampleData>
                 {

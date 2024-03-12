@@ -21,5 +21,7 @@ namespace Incoding.Web.Components.Grid
         public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 
         public List<Column> Columns { get; } = new();
+
+        public Cell Cell { get; set; }
     }
 }

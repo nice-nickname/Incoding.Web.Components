@@ -3,31 +3,54 @@
     #region << Using >>
 
     using BenchmarkDotNet.Attributes;
+    using Incoding.Core.Block.IoC;
+    using Incoding.Core.Block.IoC.Provider;
     using Incoding.Web.Components;
     using Incoding.Web.Components.Grid;
     using Incoding.Web.Extensions;
+    using Incoding.Web.MvcContrib;
+    using JetBrains.Annotations;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.DependencyInjection;
     using Moq;
 
     #endregion
 
+    public static class BenchmarkBootstrapper
+    {
+        public static void Start()
+        {
+            var services = new ServiceCollection();
+
+            services.AddTransient<ITemplateFactory, TemplateHandlebarsFactory>();
+
+            var provider = services.BuildServiceProvider();
+
+            IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(provider)));
+        }
+    }
+
     public class GridRenderBenchmark
     {
-        [Params(1, 2, 3, 4)]
+        [Params(4)]
         public int SplitCount { get; set; }
 
-        [Params(1, 2, 3, 4)]
+        [Params(4)]
         public int MaxNested { get; set; }
 
         [Benchmark]
         public void Concurrent()
         {
+            BenchmarkBootstrapper.Start();
+
             Setup().Render(useConcurrentRender: true);
         }
 
         [Benchmark]
         public void Synchronous()
         {
+            BenchmarkBootstrapper.Start();
+
             Setup().Render(useConcurrentRender: false);
         }
 

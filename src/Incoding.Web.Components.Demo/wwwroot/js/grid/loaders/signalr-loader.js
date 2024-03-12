@@ -20,9 +20,4 @@
         window.signalrConnection = connection
     }
 
-    function handleSignal(data) {
-        let eventType = data.EventType
-        $('[name=SignalHub]').trigger(eventType.toLowerCase(), data)
-    }
-
 }(jQuery));

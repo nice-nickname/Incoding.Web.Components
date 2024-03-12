@@ -47,7 +47,7 @@ namespace Incoding.Web.Components.Grid
         {
             var root = new TagBuilder("div");
 
-            root.AddCssClass("grid-component");
+            root.AddCssClass("grid-component " + this._grid.Css);
             root.Attributes.Add("id", this._grid.Id);
             root.Attributes.Add("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
 

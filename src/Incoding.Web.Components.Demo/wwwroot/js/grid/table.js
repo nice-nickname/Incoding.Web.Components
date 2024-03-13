@@ -236,26 +236,38 @@ class TableController {
     }
 
     _hoverableRows() {
-        this.$tbody
-            .on('mouseover', (ev) => {
+        let prevRowIndex = -1
 
-                const $row = $(ev.target).closest('tr')
-                const rowId = $row.data('rowId')
+        this.$tbody[0].addEventListener('mouseover', (ev) => {
+            ev.stopPropagation()
 
-                this.parent.siblings.forEach(table => {
-                    const $candidate = table.$tbody.children(`[data-row-id="${rowId}"]:not([data-nested]):not(.highlight)`)
+            const $row = $(ev.target).closest('tr')
+            const rowIndex = $row.index()
+
+            const isNeedHighlight = $row.is('[body-row]')
+
+
+            this.parent.siblings.forEach(table => {
+                const $candidate = table.$tbody.children().eq(rowIndex)
+                const $prev = table.$tbody.children().eq(prevRowIndex)
+
+                $prev.removeClass('highlight')
+
+                if (isNeedHighlight) {
                     $candidate.addClass('highlight')
-                    $candidate.siblings().removeClass('highlight')
-                })
-
-                return false
+                }
             })
-            .on('mouseleave', (ev) => {
 
-                this.parent.siblings.forEach(table => {
-                    const $candidate = table.$tbody.children()
-                    $candidate.removeClass('highlight')
-                })
+            prevRowIndex = rowIndex
+        })
+
+        this.$tbody[0].addEventListener('mouseleave', (ev) => {
+            ev.stopPropagation()
+
+            this.parent.siblings.forEach(table => {
+                const $candidate = table.$tbody.children()
+                $candidate.removeClass('highlight')
             })
+        })
     }
 }

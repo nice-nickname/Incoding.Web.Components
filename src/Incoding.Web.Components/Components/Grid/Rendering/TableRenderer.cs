@@ -93,6 +93,8 @@ namespace Incoding.Web.Components.Grid
         {
             var row = new TagBuilder("tr");
 
+            row.Attributes["header-row"] = "true";
+
             foreach (var column in columns)
             {
                 var isStacked = column.Columns.Any();
@@ -156,6 +158,8 @@ namespace Incoding.Web.Components.Grid
             var row = new TagBuilder("tr");
             row.AddCssClass(this._table.Row.Css);
 
+            row.Attributes["body-row"] = "true";
+
             if (this._table.Row.Binding != null)
             {
                 ImlBindingHelper.BindToTag(this._html, row, this._table.Row.Binding, tmpl);
@@ -181,6 +185,8 @@ namespace Incoding.Web.Components.Grid
             var footer = new TagBuilder("tfoot");
 
             var row = new TagBuilder("tr");
+
+            row.Attributes["footer-row"] = "true";
 
             foreach (var gridCell in this._table.Cells)
             {

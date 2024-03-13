@@ -29,7 +29,8 @@ namespace Incoding.Web.Components.Grid
             this.Column.Index = index;
 
             this.HeaderAttr("data-index", index.ToString())
-                .Attr("data-index", index.ToString());
+                .Attr("data-index", index.ToString())
+                .FooterAttr("data-index", index.ToString());
         }
 
         public ColumnBuilder<T> Css(string css, bool replace = false)
@@ -80,6 +81,13 @@ namespace Incoding.Web.Components.Grid
         public ColumnBuilder<T> HeaderAttr(string attr, string value)
         {
             this.Column.Attr[attr] = value;
+
+            return this;
+        }
+
+        public ColumnBuilder<T> FooterAttr(string attr, string value)
+        {
+            this.Column.FooterAttr[attr] = value;
 
             return this;
         }

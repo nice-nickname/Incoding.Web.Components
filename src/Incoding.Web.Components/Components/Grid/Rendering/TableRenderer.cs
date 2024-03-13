@@ -189,6 +189,8 @@ namespace Incoding.Web.Components.Grid
                 var cellContent = new TagBuilder("span");
                 cellContent.InnerHtml.AppendHtml("&nbsp;");
 
+                cell.MergeAttributes(gridCell.Column.FooterAttr);
+
                 cell.InnerHtml.AppendHtml(cellContent);
 
                 row.InnerHtml.AppendHtml(cell);

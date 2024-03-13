@@ -119,7 +119,6 @@ class SplitGridController {
             return this.renderer.restart()
         }
 
-        this.totals()
         this.initializeRenderer();
     }
 

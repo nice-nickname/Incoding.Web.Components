@@ -55,7 +55,8 @@ class TableController {
 
         this.$table.data('grid', this)
 
-        this._hoverableRows()
+        this.#hoverableRows()
+        this.#hideTotals()
     }
 
     expand(rowId) {
@@ -67,7 +68,7 @@ class TableController {
         const parentData = { siblings: [] }
 
         this.parent.siblings.forEach(c => {
-            const $row = c._findRow(rowId)
+            const $row = c.#findRow(rowId)
 
             if (!childRendered) {
                 c.renderChildren(rowId, parentData)
@@ -105,9 +106,13 @@ class TableController {
                     $(this).attr('data-format', format)
                     $(this).attr('data-value', total)
                 })
+
+                table.#showTotals()
             })
 
-            table.$tfoot.find('span[data-format]').format().removeAttr('data-format')
+            var cells = table.$tfoot.find('span[data-format]').format()
+
+            cells.removeAttr('data-format')
         })
     }
 
@@ -131,7 +136,7 @@ class TableController {
 
         this.$table.find('[temp-row]').remove()
 
-        this._renderRows(dataChunk)
+        this.#renderRows(dataChunk)
 
         this.format()
     }
@@ -196,7 +201,7 @@ class TableController {
     }
 
     rerenderRow(rowId) {
-        const $row = this._findRow(rowId)
+        const $row = this.#findRow(rowId)
         const rowData = this.data.find(s => s.RowId == rowId)
 
         this._rerenderSelfRow($row, rowData)
@@ -216,13 +221,13 @@ class TableController {
         this.$tbody.empty()
     }
 
-    _findRow(rowId) {
+    #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
 
         return this.$tbody.find(selector)
     }
 
-    _renderRows(data) {
+    #renderRows(data) {
         const html = ExecutableInsert.Template.render(this.structure.rowTmpl, { data })
 
         const template = document.createElement('template')
@@ -235,7 +240,7 @@ class TableController {
         IncodingEngine.Current.parse($rows)
     }
 
-    _hoverableRows() {
+    #hoverableRows() {
         let prevRowIndex = -1
 
         this.$tbody[0].addEventListener('mouseover', (ev) => {
@@ -269,5 +274,13 @@ class TableController {
                 $candidate.removeClass('highlight')
             })
         })
+    }
+
+    #hideTotals() {
+        this.$tfoot.find('span').addClass('table-placeholder')
+    }
+
+    #showTotals() {
+        this.$tfoot.find('span').removeClass('table-placeholder')
     }
 }

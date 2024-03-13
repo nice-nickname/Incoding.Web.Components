@@ -50,7 +50,7 @@ namespace Incoding.Web.Components.Grid
             root.AddCssClass("grid-component " + this._grid.Css);
 
             root.Attributes["id"] = this._grid.Id;
-            root.Attributes.AddOrAppend("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
+            root.MergeAttribute("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
 
             if (this._grid.Binds != null)
             {

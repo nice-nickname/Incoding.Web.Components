@@ -53,7 +53,7 @@ namespace Incoding.Web.Components.Grid
             table.AddCssClass(this._table.Css);
 
             table.Attributes["id"] = this._table.Id;
-            table.Attributes.AddOrAppend("style", $"table-layout: {layout};");
+            table.MergeAttribute("style", $"table-layout: {layout};");
 
             if (this._table.Binding != null)
             {
@@ -111,11 +111,11 @@ namespace Incoding.Web.Components.Grid
 
                 if (!isStacked && column.Width.HasValue)
                 {
-                    cell.Attributes.AddOrAppend("style", $"width: {column.Width}px;");
+                    cell.MergeAttribute("style", $"width: {column.Width}px;");
                 }
                 else if (isStacked)
                 {
-                    cell.Attributes.AddOrAppend("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
+                    cell.MergeAttribute("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
                 }
 
                 row.InnerHtml.AppendHtml(cell);

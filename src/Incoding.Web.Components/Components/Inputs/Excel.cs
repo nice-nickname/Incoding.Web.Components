@@ -3,9 +3,12 @@ namespace Incoding.Web.Components
     #region << Using >>
 
     using System;
+    using System.Linq.Expressions;
+    using Incoding.Core;
     using Incoding.Core.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Routing;
 
     #endregion
 
@@ -57,6 +60,12 @@ namespace Incoding.Web.Components
         public InputOptions Input = new();
     }
 
+    public record ExcelFieldOptions
+    {
+        public string Value { get; internal set; }
+    }
+
+
     public partial class InputHtmlHelper
     {
         public IHtmlContent Text(Action<InputOptions> buildAction)
@@ -71,17 +80,28 @@ namespace Incoding.Web.Components
                 placeholder = options.Placeholder
             };
 
-            var inputBinds = this._html
-                                 .When(JqueryBind.Change)
-                                 .OnSuccess(dsl => options.OnChange?.Invoke(dsl))
-                                 .When(JqueryBind.FocusIn)
-                                 .OnSuccess(dsl => dsl.Self().JQuery.SetSelection());
+            Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
 
-            if (options.OnInit != null)
-            {
-                inputBinds = inputBinds.When(JqueryBind.InitIncoding)
-                                       .OnSuccess(options.OnInit);
-            }
+            var inputBinds = this._html
+                                 .When(JqueryBind.InitIncoding)
+                                 .OnSuccess(dsl =>
+                                 {
+                                     dsl.Self().JQuery.Attr.Set("data-value", Selector.Jquery.Self());
+
+                                     options.OnInit?.Invoke(dsl);
+                                 })
+                                 .When(JqueryBind.Change)
+                                 .OnSuccess(dsl =>
+                                 {
+                                     dsl.Self().JQuery.Attr.Set("data-value", Selector.Jquery.Self());
+
+                                     options.OnChange?.Invoke(dsl);
+                                 })
+                                 .When(JqueryBind.KeyUp)
+                                 .OnSuccess(dsl =>
+                                 {
+                                     dsl.Self().JQuery.Attr.Val(Selector.Jquery.Self().Attr("data-value")).If(isEscape);
+                                 });
 
             return inputBinds.AsHtmlAttributes(AttributesHelper.Merge(defaultAttrs, options.Attrs))
                              .ToInput(HtmlInputType.Text, options.Value);
@@ -99,27 +119,64 @@ namespace Incoding.Web.Components
                 placeholder = options.Input.Placeholder
             };
 
+            Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
+
             return this._html
                        .When(JqueryBind.InitIncoding)
                        .StopPropagation()
                        .OnSuccess(dsl =>
                                   {
-                                      options.Input.OnInit?.Invoke(dsl);
-
                                       dsl.Self().JQuery.PlugIn("maskedInput",
                                                                new
                                                                {
                                                                    type = options.Type.ToJqueryString(),
                                                                    decimalScale = options.DecimalScale,
                                                                    nullable = options.AllowNullable,
-                                                                   negative = options.AllowNegative,
-                                                                   selectOnFocus = true
+                                                                   negative = options.AllowNegative
                                                                });
+
+                                      dsl.Self().JQuery.Attr.Set("data-value", Selector.Jquery.Self());
+
+                                      options.Input.OnInit?.Invoke(dsl);
                                   })
                        .When(JqueryBind.Change)
-                       .OnSuccess(dsl => options.Input.OnChange?.Invoke(dsl))
+                       .OnSuccess(dsl =>
+                       {
+                           dsl.Self().JQuery.Attr.Set("data-value", Selector.Jquery.Self());
+
+                           options.Input.OnChange?.Invoke(dsl);
+
+                       })
+                       .When(JqueryBind.KeyUp)
+                       .OnSuccess(dsl =>
+                       {
+                           dsl.Self().JQuery.Attr.Val(Selector.Jquery.Self().Attr("data-value")).If(isEscape);
+                       })
                        .AsHtmlAttributes(AttributesHelper.Merge(defaultAttrs, options.Input.Attrs))
                        .ToInput(HtmlInputType.Text, options.Input.Value);
+        }
+
+        public IHtmlContent Excel(Action<ExcelFieldOptions> buildAction)
+        {
+            var options = new ExcelFieldOptions();
+            buildAction(options);
+
+            return this._html.When(JqueryBind.InitIncoding)
+                             .OnSuccess(dsl => dsl.Self())
+                             .When(JqueryBind.DblClick)
+                             .OnSuccess(dsl => dsl.Self().JQuery.SetSelection())
+                             .When(JqueryBind.Focus)
+                             .OnSuccess(dsl => dsl.Self().JQuery.Attr.Set("data-changed"))
+                             .When(JqueryBind.KeyUp)
+                             .OnSuccess(dsl =>
+                             {
+
+                             })
+                             .AsHtmlAttributes(new RouteValueDictionary
+                             {
+                                 ["data-value"] = options.Value
+                             })
+                             .ToInput(HtmlInputType.Text, options.Value);
         }
     }
 }

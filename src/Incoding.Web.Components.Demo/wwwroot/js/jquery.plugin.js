@@ -191,24 +191,6 @@
     *	Masked inputs
     */
 
-    function prepareMasks(options) {
-        let positiveFormat, negativeFormat
-        if (options.type === 'currency') {
-            positiveFormat = { prefix: '$', suffix: '' }
-            negativeFormat = { prefix: '$(', suffix: ')' }
-        }
-        else if (options.type === 'decimal') {
-            positiveFormat = { prefix: '', suffix: '' }
-            negativeFormat = { prefix: '(', suffix: ')' }
-        }
-        else if (options.type === 'percentage') {
-            positiveFormat = { prefix: '', suffix: '%' }
-            negativeFormat = { prefix: '(', suffix: ')%' }
-        }
-
-        return [positiveFormat, negativeFormat]
-    }
-
     $.fn.maskedInput = function (options) {
         options = $.extend({
             nullable: false,
@@ -254,6 +236,24 @@
         return applyMask(this, masks, currentMaskIndex, options)
     }
 
+    function prepareMasks(options) {
+        let positiveFormat, negativeFormat
+        if (options.type === 'currency') {
+            positiveFormat = { prefix: '$', suffix: '' }
+            negativeFormat = { prefix: '$(', suffix: ')' }
+        }
+        else if (options.type === 'decimal') {
+            positiveFormat = { prefix: '', suffix: '' }
+            negativeFormat = { prefix: '(', suffix: ')' }
+        }
+        else if (options.type === 'percentage') {
+            positiveFormat = { prefix: '', suffix: '%' }
+            negativeFormat = { prefix: '(', suffix: ')%' }
+        }
+
+        return [positiveFormat, negativeFormat]
+    }
+
     function applyMask(input, masks, maskIndex, options) {
         input.maskMoney('destroy')
         input.maskMoney({
@@ -286,3 +286,13 @@
     }
 
 }(jQuery));
+
+(function($) {
+
+    const selectedClass = "selected"
+
+    $.fn.excelField = function() {
+
+    }
+
+} (jQuery))

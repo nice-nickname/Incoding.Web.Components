@@ -113,6 +113,8 @@ class SplitGridController {
             controller.removeAllRows()
 
             controller.renderPlaceholderRows(20)
+
+            controller.hideTotals()
         })
 
         if (this.renderer) {
@@ -174,7 +176,12 @@ class SplitGridController {
     }
 
     totals() {
-        this.$tables.first().data('grid').totals()
+        this.$tables.each((i, table) => {
+            let controller = $(table).data('grid')
+
+            controller.totals()
+            controller.showTotals()
+        })
     }
 
     reload(data) {

@@ -113,25 +113,33 @@ namespace Incoding.Web.Components.Grid
         public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
         {
             var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);
+            var colType = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
+            var colFormat = colType.ToColumnFormat();
 
             this.Cell.Field = fieldName;
-            this.Cell.Type = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
-            this.Cell.Format = this.Cell.Type.ToColumnFormat();
 
             if (string.IsNullOrWhiteSpace(this.Column.Title))
             {
-                this.Column.Title = fieldName;
+                Title(fieldName);
             }
 
             if (this.Cell.Content == null)
             {
-                Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
+                ContentTemplate(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString(), false);
             }
 
             return this.Attr("data-value", tmpl => tmpl.For(fieldName))
                        .Attr("data-title", tmpl => tmpl.For(fieldName))
-                       .Attr("data-type", this.Cell.Type.ToString())
-                       .Attr("data-format", this.Cell.Format.ToString());
+                       .Type(colType)
+                       .Format(colFormat);
+
+        }
+
+        public ColumnBuilder<T> Type(ColumnType type)
+        {
+            this.Cell.Type = type;
+
+            return this.Attr("data-type", this.Cell.Type.ToString());
         }
 
         public ColumnBuilder<T> Format(ColumnFormat format)
@@ -143,14 +151,20 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnBuilder<T> Content(IHtmlContent content)
         {
-            return this.Content(_ => content);
+            return this.ContentTemplate(_ => content, true);
         }
 
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
         {
-            this.Cell.Content = contentLambda;
+            return ContentTemplate(contentLambda, true);
+        }
 
-            return this;
+        private ColumnBuilder<T> ContentTemplate(TemplateContent<T> contentLambda, bool hasCustomContent)
+        {
+            this.Cell.Content = contentLambda;
+            this.Cell.HasCustomContent = hasCustomContent;
+
+            return this.Attr("data-custom-template", hasCustomContent.ToString());
         }
 
         public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)

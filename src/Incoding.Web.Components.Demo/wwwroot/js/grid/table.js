@@ -56,7 +56,6 @@ class TableController {
         this.$table.data('grid', this)
 
         this.#hoverableRows()
-        this.#hideTotals()
     }
 
     expand(rowId) {
@@ -79,41 +78,37 @@ class TableController {
     }
 
     totals() {
-        this.parent.siblings.forEach(table => {
-            const totalableCols = table.structure.columns.filter(s => s.totalable)
+        const totalableCols = this.structure.columns.filter(s => s.totalable)
 
-            totalableCols.forEach(col => {
-                const {
-                    index,
-                    field,
-                    spreadIndex,
-                    spreadField,
-                    format
-                } = col
+        totalableCols.forEach(col => {
+            const {
+                index,
+                field,
+                spreadIndex,
+                spreadField,
+                format
+            } = col
 
-                let fieldAccessor = data => data[field]
+            let fieldAccessor = data => data[field]
 
-                if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
-                    fieldAccessor = data => data[spreadField][spreadIndex][field]
-                }
+            if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
+                fieldAccessor = data => data[spreadField][spreadIndex][field]
+            }
 
-                const total = this.data.reduce((sum, data) => {
-                    const value = Number(fieldAccessor(data)) || 0
-                    return sum += value
-                }, 0)
+            const total = this.data.reduce((sum, data) => {
+                const value = Number(fieldAccessor(data)) || 0
+                return sum += value
+            }, 0)
 
-                table.$tfoot.find(`td[data-index="${index}"] span`).each(function() {
-                    $(this).attr('data-format', format)
-                    $(this).attr('data-value', total)
-                })
-
-                table.#showTotals()
+            this.$tfoot.find(`td[data-index="${index}"] span`).each(function () {
+                $(this).attr('data-format', format)
+                $(this).attr('data-value', total)
             })
-
-            var cells = table.$tfoot.find('span[data-format]').format()
-
-            cells.removeAttr('data-format')
         })
+
+        var cells = this.$tfoot.find('span[data-format]').format()
+
+        cells.removeAttr('data-format')
     }
 
     filter(criteria) { }
@@ -158,7 +153,7 @@ class TableController {
         td.classList.add('table-container')
         tr.appendChild(td)
 
-        const html = ExecutableInsert.Template.render(nestedTable.layoutTmpl, { })
+        const html = ExecutableInsert.Template.render(nestedTable.layoutTmpl, {})
 
         const template = document.createElement('template')
         template.innerHTML = html
@@ -221,6 +216,14 @@ class TableController {
         this.$tbody.empty()
     }
 
+    hideTotals() {
+        this.$tfoot.find('span').addClass('table-placeholder')
+    }
+
+    showTotals() {
+        this.$tfoot.find('span').removeClass('table-placeholder')
+    }
+
     #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
 
@@ -274,13 +277,5 @@ class TableController {
                 $candidate.removeClass('highlight')
             })
         })
-    }
-
-    #hideTotals() {
-        this.$tfoot.find('span').addClass('table-placeholder')
-    }
-
-    #showTotals() {
-        this.$tfoot.find('span').removeClass('table-placeholder')
     }
 }

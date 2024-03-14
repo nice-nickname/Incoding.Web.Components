@@ -1,7 +1,7 @@
-namespace Incoding.Web.Components.Components
+namespace Incoding.Web.Components
 {
     public static class ComponentsDefaults
     {
-        public static int DecimalPrecision = 2;
+        public static int DecimalScale = 2;
     }
 }

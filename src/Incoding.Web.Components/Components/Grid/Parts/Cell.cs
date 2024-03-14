@@ -10,6 +10,8 @@ namespace Incoding.Web.Components.Grid
     {
         public string Field { get; set; }
 
+        public bool HasCustomContent { get; set; }
+
         public string SpreadField { get; set; }
 
         public int? SpreadIndex { get; set; }

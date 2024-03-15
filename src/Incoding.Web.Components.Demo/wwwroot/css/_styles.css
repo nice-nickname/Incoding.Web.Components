@@ -13,3 +13,9 @@
     border: 2px solid transparent;
     background-clip: content-box;
 }
+
+
+.table-component input {
+    all: unset;
+    width: 100%;
+}

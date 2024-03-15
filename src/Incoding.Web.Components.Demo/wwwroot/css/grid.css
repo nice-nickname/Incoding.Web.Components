@@ -57,6 +57,8 @@ tr.highlight {
 }
 
 
-.selected {
-    background-color: #e9e9f5 !important;
+
+
+.disabled {
+    pointer-events: none !important;
 }

@@ -1,0 +1,21 @@
+.excel-field {
+
+}
+
+.excel-field input {
+    pointer-events: none !important;
+}
+
+.excel-field.active input {
+    pointer-events: unset;
+}
+
+.excel-field:focus,
+.excel-field:focus-visible {
+    outline: #8383d7 solid 1px;
+    background-color: #e9e9f5 !important;
+}
+
+.excel-field.selected {
+    background-color: #e9e9f5 !important;
+}

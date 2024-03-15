@@ -1,6 +1,11 @@
 class InfiniteScrollRenderer {
 
     /**
+     * @type { JQuery<HTMLElement> }
+     */
+    $scroller
+
+    /**
      * @type { SplitGridController }
      */
     splitGrid;
@@ -34,13 +39,10 @@ class InfiniteScrollRenderer {
         this.splitGrid = splitGrid;
         this.chunkSize = chunkSize;
 
+        this.$scroller = this.splitGrid.$scroller.first()
+        this.$scroller.on('scroll', this.handleScroll.bind(this))
+
         this.restart()
-
-        const handleScroll = this.handleScroll.bind(this);
-
-
-        this.splitGrid.$scroller.first().on('scroll', handleScroll);
-
     }
 
     handleDataUpdated() {
@@ -52,7 +54,8 @@ class InfiniteScrollRenderer {
 
     restart() {
         this.splitGrid.disableScroll()
-        this.splitGrid.$scroller.scrollTop(0)
+
+        this.$scroller.scrollTop(0)
 
         this.currentChunk = 0
         this.availableChunks = 0
@@ -61,7 +64,7 @@ class InfiniteScrollRenderer {
     }
 
     handleScroll() {
-        const el = this.splitGrid.$scroller[0];
+        const el = this.$scroller[0];
         const containerScroll = el.scrollHeight - el.clientHeight;
 
         const hasScrolledDown = el.scrollTop >= this.prevScrollTop;
@@ -75,21 +78,31 @@ class InfiniteScrollRenderer {
     }
 
     requestRender() {
-        if (this.nextChunkRequested || this.currentChunk === 0) {
-            this.splitGrid.scrolledToEnd = (this.currentChunk + 1) >= this.availableChunks
+        if (!this.nextChunkRequested && this.currentChunk !== 0) {
+            return
+        }
 
-            this.tryRenderNextChunk();
+        this.splitGrid.scrolledToEnd = (this.currentChunk + 1) >= this.availableChunks
 
-            if (this.currentChunk === 1) {
-                this.splitGrid.enableScroll()
-            }
+        this.tryRenderNextChunk();
+
+        if (this.currentChunk === 1) {
+            this.splitGrid.enableScroll()
+        }
+
+        if (!this.$scroller.isScrollable()) {
+            this.nextChunkRequested = true
+
+            this.requestRender()
         }
     }
 
     tryRenderNextChunk() {
         const chunk = this.currentChunk;
 
-        if (chunk >= this.availableChunks) return;
+        if (chunk >= this.availableChunks) {
+            return
+        }
 
         const start = chunk * this.chunkSize;
         const end = start + this.chunkSize;

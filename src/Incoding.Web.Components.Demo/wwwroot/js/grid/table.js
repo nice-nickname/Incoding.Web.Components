@@ -224,6 +224,10 @@ class TableController {
         this.$tfoot.find('span').removeClass('table-placeholder')
     }
 
+    #triggerRowsRendered() {
+        this.$table.trigger('table-rows-rendered')
+    }
+
     #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
 

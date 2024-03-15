@@ -187,6 +187,7 @@
 }(jQuery));
 
 (function ($) {
+
     /*
     *	Masked inputs
     */
@@ -310,14 +311,40 @@
 
 (function($) {
 
+    // Maybe ComponentsHelper here ??
+
+    $.fn.isScrollable = function(axis = 'vertical') {
+        const {
+            scroll,
+            client
+        } = axis === 'vertical' ?
+            { scroll: this[0].scrollHeight, client: this[0].clientHeight } :
+            { scroll: this[0].scrollWidth, client: this[0].clientWidth }
+
+        return scroll > client
+    }
+
+} (jQuery));
+
+(function($) {
+
     const selectedClass = "selected"
 
     $.fn.excelField = function() {
         return $(this).find('[excel-field]').each(function() {
             const $cell = $(this)
+            const $input = $cell.find('input')
+
+            // prevent focus on click
+            $input.addClass('disabled')
 
             $cell.on('click', function() {
                 $cell.addClass('selected')
+                $input.addClass('disabled')
+            })
+
+            $cell.on('dblclick', function() {
+                $input.removeClass('disabled')[0].focus()
             })
         })
     }

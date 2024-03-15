@@ -55,3 +55,8 @@ tr.highlight {
 .negative {
     color: red !important;
 }
+
+
+.selected {
+    background-color: #e9e9f5 !important;
+}

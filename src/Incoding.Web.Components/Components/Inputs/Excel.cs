@@ -63,7 +63,9 @@ namespace Incoding.Web.Components
 
     public record ExcelFieldOptions
     {
-        public string Value { get; internal set; }
+        public string Value { get; set; }
+
+        public InputOptions Input { get; set; }
     }
 
 
@@ -202,10 +204,19 @@ namespace Incoding.Web.Components
             var options = new ExcelFieldOptions();
             buildAction(options);
 
+            var attrs = AttributesHelper.Merge(new
+            {
+                name = options.Input.Name,
+                @class = options.Input.Css,
+                title = options.Input.Placeholder
+            }, options.Input.Attrs);
+
+            attrs["cell-field"] = string.Empty;
+
             this._html.When(JqueryBind.Click)
                       .OnSuccess(dsl => dsl.Self().JQuery.Attr.AddClass("selected"))
                       .When(JqueryBind.DblClick)
-
+                      .OnSuccess(dsl => dsl.WithSelf(s => s.Find(HtmlTag.Input)).Trigger.Focus())
                       .AsHtmlAttributes(new
                       {
 

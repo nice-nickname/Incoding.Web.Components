@@ -112,7 +112,7 @@
                     .OnSuccess(dsl => dsl.Self())
                     .When(Bindings.Grid.Websocket.Completed)
                     .OnSuccess(dsl => controller.Totals(dsl)))
-    .InfiniteScrolling(chunkSize: 20)
+    .InfiniteScrolling(chunkSize: 10)
     .WebsocketLoader(o =>
     {
         o.ChunkSize = 40;

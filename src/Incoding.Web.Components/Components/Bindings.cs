@@ -24,6 +24,8 @@ namespace Incoding.Web.Components
         public static class Table
         {
             public static readonly string Init = "table-init";
+
+            public static readonly string Rendered = "table-rows-rendered";
         }
 
         public static readonly string LazyLoad = "lazy";

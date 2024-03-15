@@ -12,5 +12,10 @@ namespace Incoding.Web.Components
         {
             return dsl.Call("setSelection", start, end);
         }
+
+        public static IExecutableSetting ToggleAttrbite(this IncodingMetaCallbackJqueryDsl dsl, string attr, object on, object off)
+        {
+            return dsl.Call("toggleAttribute", attr, on.ToString(), off.ToString());
+        }
     }
 }

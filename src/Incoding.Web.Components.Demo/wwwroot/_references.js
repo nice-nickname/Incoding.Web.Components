@@ -3,4 +3,3 @@
 /// <reference path="lib/underscore.js" />
 /// <reference path="lib/handlebars.min.js" />
 /// <reference path="lib/morphdom.js" />
-

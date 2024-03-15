@@ -4,7 +4,6 @@ namespace Incoding.Web.Components
 
     using System;
     using System.Linq.Expressions;
-    using Incoding.Core;
     using Incoding.Core.Extensions;
     using Incoding.Web.MvcContrib;
     using Microsoft.AspNetCore.Html;
@@ -57,6 +56,8 @@ namespace Incoding.Web.Components
 
         public Action<IIncodingMetaLanguageCallbackBodyDsl> OnChecked { get; set; }
 
+        public bool IsChecked { get; set; }
+
         public InputOptions Input = new();
     }
 
@@ -73,12 +74,14 @@ namespace Incoding.Web.Components
             var options = new InputOptions();
             buildAction(options);
 
-            var defaultAttrs = new
+            var attrs = AttributesHelper.Merge(new
             {
                 name = options.Name,
                 @class = options.Css,
                 placeholder = options.Placeholder
-            };
+            }, options.Attrs);
+
+            attrs["data-value"] = options.Value;
 
             Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
 
@@ -103,7 +106,7 @@ namespace Incoding.Web.Components
                                      dsl.Self().JQuery.Attr.Val(Selector.Jquery.Self().Attr("data-value")).If(isEscape);
                                  });
 
-            return inputBinds.AsHtmlAttributes(AttributesHelper.Merge(defaultAttrs, options.Attrs))
+            return inputBinds.AsHtmlAttributes(attrs)
                              .ToInput(HtmlInputType.Text, options.Value);
         }
 
@@ -112,12 +115,12 @@ namespace Incoding.Web.Components
             var options = new NumericOptions();
             buildAction(options);
 
-            var defaultAttrs = new
+            var attrs = AttributesHelper.Merge(new
             {
                 name = options.Input.Name,
                 @class = options.Input.Css,
                 placeholder = options.Input.Placeholder
-            };
+            }, options.Input.Attrs);
 
             Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
 
@@ -152,14 +155,62 @@ namespace Incoding.Web.Components
                        {
                            dsl.Self().JQuery.Attr.Val(Selector.Jquery.Self().Attr("data-value")).If(isEscape);
                        })
-                       .AsHtmlAttributes(AttributesHelper.Merge(defaultAttrs, options.Input.Attrs))
+                       .AsHtmlAttributes(attrs)
                        .ToInput(HtmlInputType.Text, options.Input.Value);
+        }
+
+        public IHtmlContent Checkbox(Action<CheckboxOptions> buildAction)
+        {
+            var options = new CheckboxOptions();
+            buildAction(options);
+
+            var attrs = AttributesHelper.Merge(new
+            {
+                name = options.Input.Name,
+                @class = options.Input.Css,
+                title = options.Input.Placeholder
+            }, options.Input.Attrs);
+
+            if (options.IsChecked)
+            {
+                attrs["checked"] = "checked";
+            }
+
+            return this._html.When(JqueryBind.InitIncoding)
+                             .OnSuccess(dsl => options.Input.OnInit?.Invoke(dsl))
+                             .When(JqueryBind.Change)
+                             .OnSuccess(dsl =>
+                             {
+
+                                 dsl.Self().Trigger.Invoke("checked").If(() => Selector.Jquery.Self().Property("prop('checked')"));
+                                 dsl.Self().Trigger.Invoke("unchecked").If(() => !Selector.Jquery.Self().Property("prop('checked')"));
+
+                                 options.Input.OnChange?.Invoke(dsl);
+                             })
+                             .When("checked")
+                             .StopPropagation()
+                             .OnSuccess(dsl => options.OnChecked?.Invoke(dsl))
+                             .When("unchecked")
+                             .StopPropagation()
+                             .OnSuccess(dsl => options.OnUnchecked?.Invoke(dsl))
+                             .AsHtmlAttributes(attrs)
+                             .ToInput(HtmlInputType.CheckBox, options.Input.Value);
         }
 
         public IHtmlContent Excel(Action<ExcelFieldOptions> buildAction)
         {
             var options = new ExcelFieldOptions();
             buildAction(options);
+
+            this._html.When(JqueryBind.Click)
+                      .OnSuccess(dsl => dsl.Self().JQuery.Attr.AddClass("selected"))
+                      .When(JqueryBind.DblClick)
+
+                      .AsHtmlAttributes(new
+                      {
+
+                      })
+                      .ToDiv();
 
             return this._html.When(JqueryBind.InitIncoding)
                              .OnSuccess(dsl => dsl.Self())

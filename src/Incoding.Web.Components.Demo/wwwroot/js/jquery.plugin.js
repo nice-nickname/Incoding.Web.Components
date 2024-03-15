@@ -190,18 +190,19 @@
     /*
     *	Masked inputs
     */
+   const defaultOptions = {
+        nullable: false,
+        decimalScale: 2,
+        negative: false,
+        selectOnFocus: false,
+        type: 'currency'
+   }
 
     $.fn.maskedInput = function (options) {
-        options = $.extend({
-            nullable: false,
-            decimalScale: 2,
-            negative: false,
-            selectOnFocus: false,
-            type: 'currency'
-        }, options)
+        options = $.extend(defaultOptions, options)
 
-        let currentMaskIndex = 0
-        const masks = prepareMasks(options)
+        let maskIndex = 0
+        const masks = prepareMasksPair(options)
 
         if (this.val() !== '') {
             this.val(parseFloat(this.val()).toFixed(options.decimalScale))
@@ -210,11 +211,11 @@
         this.on('keydown', (event) => {
             if (options.negative) {
                 if (event.keyCode === 189) {
-                    currentMaskIndex = (currentMaskIndex + 1) % 2
+                    maskIndex = (maskIndex + 1) % 2
 
                     this.toggleClass('ci-text-danger')
 
-                    applyMask(this, masks, currentMaskIndex, options)
+                    applyMask(this, masks[maskIndex], options)
                 }
             }
 
@@ -233,10 +234,10 @@
             })
         }
 
-        return applyMask(this, masks, currentMaskIndex, options)
+        return applyMask(this, masks[maskIndex], options)
     }
 
-    function prepareMasks(options) {
+    function prepareMasksPair(options) {
         let positiveFormat, negativeFormat
         if (options.type === 'currency') {
             positiveFormat = { prefix: '$', suffix: '' }
@@ -254,11 +255,11 @@
         return [positiveFormat, negativeFormat]
     }
 
-    function applyMask(input, masks, maskIndex, options) {
+    function applyMask(input, mask, options) {
         input.maskMoney('destroy')
         input.maskMoney({
-            prefix: masks[maskIndex].prefix,
-            suffix: masks[maskIndex].suffix,
+            prefix: mask.prefix,
+            suffix: mask.suffix,
             allowZero: true,
             allowNegative: false,
             allowEmpty: options.nullable,
@@ -289,10 +290,36 @@
 
 (function($) {
 
+    $.fn.toggleAttribute = function(attr, onValue, offValue) {
+        onValue = onValue.toString().toLowerCase()
+        offValue = offValue.toString().toLowerCase()
+
+        if (this.attr(attr) == null) {
+            return this.attr(attr, onValue)
+        }
+
+        let newValue = offValue
+        if (this.attr(attr).localeCompare(offValue, undefined, { sensitivity: 'base' }) === 0) {
+            newValue = onValue
+        }
+
+        return this.attr(attr, newValue)
+    }
+
+}(jQuery));
+
+(function($) {
+
     const selectedClass = "selected"
 
     $.fn.excelField = function() {
+        return $(this).find('[excel-field]').each(function() {
+            const $cell = $(this)
 
+            $cell.on('click', function() {
+                $cell.addClass('selected')
+            })
+        })
     }
 
 } (jQuery))

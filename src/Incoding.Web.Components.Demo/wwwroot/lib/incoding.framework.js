@@ -352,6 +352,8 @@ function ExecutableHelper() {
                     .replaceAll("42CE7EF2-7812-4E6D-8071-676DA8CA7ED7", "*");
             }
             else if (isType('javascript')) {
+                let imlSelector = /\|\|.*\|\|/gm
+                valueSelector = valueSelector.replace(imlSelector, match => "'{0}'".f(this.TryGetVal(match)))
                 res = eval(valueSelector);
             }
             else if (isType('jquery')) {
@@ -550,6 +552,28 @@ ExecutableHelper.RedirectTo = function (destentationUrl) {
     }
 
     window.location = destentationUrl;
+};
+
+var virtualDirectory = null;
+ExecutableHelper.PushState = function(view, url) {
+
+    if (ExecutableHelper.IsNullOrEmpty(virtualDirectory)) {
+        virtualDirectory = localStorage.getItem('__virtual') ?? ''
+    }
+
+    var path = location.pathname
+    var currentPath = path.slice(1, path.length)
+
+    if (currentPath != url) {
+        var path = location.origin + virtualDirectory + '/' + url
+
+        if (ExecutableHelper.IsNullOrEmpty(url))
+            path = location.href
+
+        history.pushState({ view: view }, '', path)
+    }
+
+    $(document).trigger(jQuery.Event(IncSpecialBinds.IncChangeUrl));
 };
 
 ExecutableHelper.UrlDecode = function (value) {
@@ -775,7 +799,7 @@ function purl(existsUrl) {
                 uri.param['query'] = {};
             }
 
-            // compile a 'base' domain attribute            
+            // compile a 'base' domain attribute
             uri.attr['base'] = url.split("#")[0].split('?')[0];
             uri.attr['isWasHash'] = url.contains("#");
             uri.attr['fullBase'] = url.contains("#") ? url.split("#")[0] : url;
@@ -1003,7 +1027,7 @@ function purl(existsUrl) {
  * Copyright 2013, 2013 Incoding software
  * Apache License
  * Version 2.0, January 2004
- * http://www.apache.org/licenses/ 
+ * http://www.apache.org/licenses/
  */
 
 "use strict";
@@ -1040,9 +1064,6 @@ $.extend(String.prototype, {
     },
     endWith: function (suffix) {
         return (this.substr(this.length - suffix.length) === suffix);
-    },
-    length: function () {
-        return this.length;
     },
     toSelectorAsName: function () {
         var name = this;
@@ -1178,7 +1199,21 @@ $.fn.extend({
     isFormElement: function () {
         return $(this).is('select,textarea,input');
     },
-
+    sum: function () {
+        var res = 0;
+        $(this).filter(':checked').each(function () {
+            res += parseFloat($(this).attr('value'));
+        })
+        return res;
+    },
+    attrs: function (attr) {
+        var res = '';
+        var len = $(this).length;
+        $(this).each(function (index) {
+            res += $(this).attr(attr) + (index === len - 1 ? '' : ',');
+        });
+        return res;
+    }
 });
 
 $.extend({
@@ -1311,7 +1346,12 @@ function IncodingMetaElement(element) {
     this.attr = $(element).attr('incoding');
     this.runner = $.data(element, keyIncodingRunner);
     this.getExecutables = function () {
-        return JSON.parse(this.attr);
+        try {
+            return JSON.parse(this.attr);
+        }
+        catch (ex) {
+            throw ex;
+        }
     };
     this.bind = function (eventName, status) {
 
@@ -1323,14 +1363,14 @@ function IncodingMetaElement(element) {
                 if (!eventName.contains(docBind)) {
                     continue;
                 }
-                eventName = eventName.replaceAll(docBind, ''); //remove document bind from element bind           
+                eventName = eventName.replaceAll(docBind, ''); //remove document bind from element bind
                 $(document)
                     .bind(docBind.toString(),
-                    function (e, result) { //docBind.toString() fixed for ie <10
-                        new IncodingMetaElement(currentElement)
-                            .invoke(e, result);
-                        return false;
-                    });
+                        function (e, result) { //docBind.toString() fixed for ie <10
+                            new IncodingMetaElement(currentElement)
+                                .invoke(e, result);
+                            return false;
+                        });
             }
         }
 
@@ -1340,25 +1380,25 @@ function IncodingMetaElement(element) {
 
         $(currentElement)
             .bind(eventName.toString(),
-            function (e, result) {
+                function (e, result) {
 
-                if (strStatus === '4' || eventName === IncSpecialBinds.Incoding) {
-                    e.stopPropagation(); // if native js trigger
-                    e.preventDefault(); // if native js trigger                
-                }
+                    if (strStatus === '4' || eventName === IncSpecialBinds.Incoding) {
+                        e.stopPropagation(); // if native js trigger
+                        e.preventDefault(); // if native js trigger
+                    }
 
-                if (strStatus === '2') {
-                    e.preventDefault();
-                }
-                if (strStatus === '3') {
-                    e.stopPropagation();
-                }
+                    if (strStatus === '2') {
+                        e.preventDefault();
+                    }
+                    if (strStatus === '3') {
+                        e.stopPropagation();
+                    }
 
-                new IncodingMetaElement(this)
-                    .invoke(e, result);
+                    new IncodingMetaElement(this)
+                        .invoke(e, result);
 
-                return !(strStatus === '4' || eventName === IncSpecialBinds.Incoding);
-            });
+                    return !(strStatus === '4' || eventName === IncSpecialBinds.Incoding);
+                });
     };
 
     this.invoke = function (e, result) {
@@ -1480,11 +1520,15 @@ function IncodingResult(result) {
     var parse = function (json) {
         try {
             var res = _.isObject(json) ? json : $.parseJSON(json);
-            var isSchemaValid = _.has(res, 'success') && _.has(res, 'data');
-            if (!isSchemaValid) {
-                throw new 'Not valid json result';
-            }
+
+            if (!_.has(res, 'success'))
+                res.success = false;
+
+            if (!_.has(res, 'data'))
+                res.data = [];
+
             return res;
+
         }
         catch (e) {
             console.log('fail parse result:{0}'.f(json));
@@ -1525,7 +1569,7 @@ function IncodingEngine() {
         var incSelector = '[incoding]';
         var defferedInit = [];
         $(incSelector, context)
-            .add($(context).is(incSelector) ? context : '')
+            .add($(context).filter(incSelector))
             .each(function () {
                 var incodingMetaElement = new IncodingMetaElement(this);
 
@@ -1574,23 +1618,19 @@ function IncodingEngine() {
 
 IncodingEngine.Current = new IncodingEngine();
 
-var initializedHistoryPlugin = false;
 $(document).ready(function () {
 
     LocalStorageFactory.Clear();
-    if ($.history) {
-        $.history.init(function () {
-            if (initializedHistoryPlugin) {
-                $(document).trigger(jQuery.Event(IncSpecialBinds.IncChangeUrl));
-            }
 
-            initializedHistoryPlugin = true;
-        });
-    }
+    window.addEventListener('popstate', function() {
+        if (location.hash == '') {
+            location.reload()
+        }
+    })
 
-    window.addEventListener('popstate', function (e) {
-        $(document).trigger(IncSpecialBinds.IncChangeUrl);
-    });
+    window.addEventListener('hashchange', function() {
+        $(document).trigger(jQuery.Event(IncSpecialBinds.IncChangeUrl));
+    })
 
     IncodingEngine.Current.parse(document);
 });
@@ -1626,6 +1666,23 @@ ExecutableFactory.Create = function (type, data, self) {
                 return this.self;
             }
 
+            if (data.target.includes("[[call")) {
+                let callSelector = /\[\[call\*.*?\]\]/gm
+                let calledTarget = data.target.replace(callSelector, match => {
+                    match = match.substring(2, match.length - 2).replace('call*', '')
+                    let callTarget = this.tryGetVal(match)
+
+                    return "{0}".f(callTarget)
+                })
+                if (calledTarget.startsWith("||") && calledTarget.endWith("||")) {
+                    let selector = calledTarget.substring(2, calledTarget.length - 2).substring(calledTarget.indexOf('*') - 1, calledTarget.length);
+                    return $(selector);
+                }
+                else {
+                    return eval(calledTarget)
+                }
+            }
+
             if (data.target.startsWith("||") && data.target.endWith("||")) {
                 var selector = data.target.substring(2, data.target.length - 2).substring(data.target.indexOf('*') - 1, data.target.length);
                 return $(selector);
@@ -1646,10 +1703,10 @@ ExecutableFactory.Create = function (type, data, self) {
 
 function ExecutableBase() {
     this.name = '';
+    this.event = '';
     this.jsonData = '';
     this.onBind = '';
     this.self = '';
-    this.event = '';
     this.timeOut = 0;
     this.interval = 0;
     this.intervalId = '';
@@ -1659,6 +1716,8 @@ function ExecutableBase() {
     this.resultOfEvent = '';
 
 }
+
+
 
 ExecutableBase.prototype = {
     // ReSharper disable UnusedParameter
@@ -1684,7 +1743,16 @@ ExecutableBase.prototype = {
             return;
         }
 
-        this.internalExecute(state);
+        if (ExecutableBase.IsDebug) {
+            var startDt = new Date();
+            this.internalExecute(state);
+
+            //if (this.name != 'Direct' && this.name != 'Event')
+                //console.log(this, Math.abs(new Date() - startDt) + ' milliseconds');
+        }
+        else {
+            this.internalExecute(state);
+        }
     },
     internalExecute: function (state) {
     },
@@ -1730,6 +1798,8 @@ ExecutableBase.prototype = {
 };
 
 ExecutableBase.IntervalIds = {};
+
+ExecutableBase.IsDebug = false;
 
 //#endregion
 
@@ -1833,12 +1903,24 @@ function ExecutableAjaxAction() {
 }
 
 ExecutableAjaxAction.prototype.name = "Ajax";
+ExecutableAjaxAction.VirtualDirectory = '';
 ExecutableAjaxAction.prototype.internalExecute = function (state) {
 
     var current = this;
 
+    var isHash = current.jsonData.hash
+
+    if (isHash && history.state != null && ExecutableHelper.IsNullOrEmpty(history.state.view)) {
+        current.complete(new IncodingResult.Success(), state)
+        return
+    }
+
+    var isSettings = location.pathname.contains('settings')
+
     var ajaxOptions = $.extend(true, { data: [] }, current.jsonData.ajax);
     var url = ajaxOptions.url;
+    if (isHash && !isSettings)
+        url = history.state.view
     var isEmptyUrl = ExecutableHelper.IsNullOrEmpty(url);
     if (!isEmptyUrl) {
         var queryFromString = $.url(url).param();
@@ -1847,7 +1929,7 @@ ExecutableAjaxAction.prototype.internalExecute = function (state) {
         });
         ajaxOptions.url = url.split('?')[0];
     }
-    if (current.jsonData.hash) {
+    if (isHash && isSettings) {
         var href = $.url(document.location.href);
         if (isEmptyUrl || ExecutableHelper.IsNullOrEmpty(url.split('?')[0])) {
             ajaxOptions.url = href.furl(current.jsonData.prefix);
@@ -1885,6 +1967,10 @@ ExecutableSubmitAction.prototype.internalExecute = function (state) {
     var formSelector = eval(this.jsonData.formSelector);
     var form = $(formSelector).is('form') ? formSelector : $(formSelector).closest('form').first();
 
+    if (this.jsonData.options.submitSelf) {
+        form = $('<form>')
+    }
+
     var ajaxOptions = $.extend(true,
         {
             data: [],
@@ -1906,10 +1992,10 @@ ExecutableSubmitAction.prototype.internalExecute = function (state) {
             success: function (responseText, statusText, xhr, $form) {
                 $(document)
                     .trigger(jQuery.Event(IncSpecialBinds.IncAjaxSuccess),
-                    IncodingResult.Success(IncAjaxEvent.Create(xhr)));
+                        IncodingResult.Success(IncAjaxEvent.Create(xhr)));
                 $(document)
                     .trigger(jQuery.Event(IncSpecialBinds.IncAjaxComplete),
-                    IncodingResult.Success(IncAjaxEvent.Create(xhr)));
+                        IncodingResult.Success(IncAjaxEvent.Create(xhr)));
                 current.complete(new IncodingResult(responseText), state);
             },
             beforeSubmit: function (formData, jqForm, options) {
@@ -1954,6 +2040,7 @@ function ExecutableInsert() {
 // ReSharper disable UnusedLocals
 // ReSharper disable AssignedValueIsNeverUsed
 ExecutableInsert.prototype.name = "Insert";
+
 ExecutableInsert.prototype.internalExecute = function () {
 
     var current = this;
@@ -1987,43 +2074,62 @@ ExecutableInsert.prototype.internalExecute = function () {
                 .substring(templateId.indexOf('*') - 1, templateId.length);
             templateId = current.tryGetVal('||buildurl*{0}||'.f($.parseJSON(json).url));
         }
+
+        var startToHtml = new Date();
         insertContent = TemplateFactory.ToHtml(ExecutableInsert.Template, templateId, function () {
             return current.tryGetVal(current.jsonData.template);
         }, insertContent);
+        current.timeToHtml = Math.abs(new Date() - startToHtml) + ' milliseconds';
     }
 
-    if (ExecutableHelper.IsNullOrEmpty(insertContent)) {
-        insertContent = '';
-    }
+    let context = $(current.target)
 
-    // temporary fix for IE9 (random rows in table having td offset)
-    // https://issues.jboss.org/browse/JBPM-4396
-    if (jQuery.browser.msie && jQuery.browser.version === '9.0') {
-        if (typeof insertContent === 'string' || insertContent instanceof String) {
-            insertContent = insertContent.replace(/>\s+(?=<\/?(t|c)[hardfob])/gm, '>');
-        }
-    }
-
+    var startToInsert = new Date();
     switch (current.jsonData.insertType) {
-        case 'html':
-            current.target.html(insertContent.toString());
+        case 'before':
+        case 'prepend':
+        case 'append':
+        case 'after':
+            context = this.insertAdjacentHtml(insertContent.toString(), current.jsonData.insertType)
             break;
+
+        case 'html':
+            current.target.html(insertContent.toString())
+            break;
+
         default:
             eval("$(current.target).{0}(insertContent.toString())".f(current.jsonData.insertType));
     }
-    var target = current.target;
-    if (current.jsonData.insertType.toLowerCase() === 'after') {
-        IncodingEngine.Current.parse(current.target.nextAll());
-    }
-    else if (current.jsonData.insertType.toLowerCase() === 'before') {
-        IncodingEngine.Current.parse(current.target.prevAll());
-    }
-    else {
-        IncodingEngine.Current.parse(current.target);
-    }
-    $(self).trigger(jQuery.Event(IncSpecialBinds.IncInsert));
+    current.timeToInsert = Math.abs(new Date() - startToInsert) + ' milliseconds';
 
+    var startParse = new Date();
+
+    IncodingEngine.Current.parse(context);
+
+    current.timeToParse = Math.abs(new Date() - startParse) + ' milliseconds';
+
+    $(document).trigger(jQuery.Event(IncSpecialBinds.IncInsert));
 };
+
+ExecutableInsert.prototype.insertAdjacentHtml = function(html, insertType) {
+    const current = this
+
+    if (current.target.length === 0) {
+        return;
+    }
+
+    const target = current.target[0]
+
+    const template = document.createElement('template')
+    template.innerHTML = html
+
+    const nodes = template.content.childNodes
+    const context = $(nodes)
+
+    target[insertType](...nodes)
+
+    return context
+}
 
 ExecutableInsert.Template = new IncHandlerbarsTemplate();
 // ReSharper restore AssignedValueIsNeverUsed
@@ -2093,7 +2199,10 @@ ExecutableValidationRefresh.prototype.internalExecute = function () {
     var isWasRefresh = false;
     for (var i = 0; i < result.length; i++) {
         var item = result[i];
-        if (!item.hasOwnProperty('name') || !item.hasOwnProperty('isValid') || !item.hasOwnProperty('errorMessage')) {
+        if (!item.hasOwnProperty('isValid'))
+            item.isValid = false;
+
+        if (!item.hasOwnProperty('name') || !item.hasOwnProperty('errorMessage')) {
             break;
         }
         if (!ExecutableHelper.IsNullOrEmpty(this.jsonData.prefix)) {
@@ -2408,21 +2517,21 @@ function ConditionalBase() {
 }
 
 ConditionalBase.prototype =
-    {
-        isSatisfied: function (data) {
-            this.self = this.executable.self;
-            this.target = this.executable.getTarget();
-            var isSatisfied = this.isInternalSatisfied(data);
-            return ExecutableHelper.ToBool(this.jsonData.inverse) ? !isSatisfied : isSatisfied;
-        },
-        // ReSharper disable UnusedParameter
-        isInternalSatisfied: function (data) {
-            // ReSharper restore UnusedParameter            
-        },
-        tryGetVal: function (variable) {
-            return this.executable.tryGetVal(variable);
-        }
-    };
+{
+    isSatisfied: function (data) {
+        this.self = this.executable.self;
+        this.target = this.executable.getTarget();
+        var isSatisfied = this.isInternalSatisfied(data);
+        return ExecutableHelper.ToBool(this.jsonData.inverse) ? !isSatisfied : isSatisfied;
+    },
+    // ReSharper disable UnusedParameter
+    isInternalSatisfied: function (data) {
+        // ReSharper restore UnusedParameter
+    },
+    tryGetVal: function (variable) {
+        return this.executable.tryGetVal(variable);
+    }
+};
 
 //#endregion
 

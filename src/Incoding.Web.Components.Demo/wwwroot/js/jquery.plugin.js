@@ -96,7 +96,6 @@
         return this.filter('[data-custom-template!="True"]').each(function () {
             const format = this.dataset.format
             const value = this.dataset.value
-            const index = this.dataset.index
 
             switch (format) {
                 case 'Numeric':

@@ -90,7 +90,7 @@ class InfiniteScrollRenderer {
             this.splitGrid.enableScroll()
         }
 
-        if (!this.$scroller.isScrollable()) {
+        if (!this.$scroller.isScrollable() && this.splitGrid.dataLoading) {
             this.nextChunkRequested = true
 
             this.requestRender()

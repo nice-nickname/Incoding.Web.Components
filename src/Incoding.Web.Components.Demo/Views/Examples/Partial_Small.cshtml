@@ -118,7 +118,7 @@
 
                                                                 options.Type = NumericOptions.OfType.Decimal;
                                                             })
-                                                      </text>).Totalable().Attr("excel-field", "");
+                                                      </text>).Totalable().Attr("excel-field");
 
                                                       cols.Add().Field(s => s.JTD).Title("$").Width(120).Format(ColumnFormat.Currency).Totalable();
                                                   });
@@ -127,7 +127,7 @@
             });
         });
     })
-    .Bind(iml => iml.When(JqueryBind.Load)
+    .Bind(iml => iml.When(Bindings.Grid.Init)
                     .OnSuccess(dsl => controller.Init(dsl))
                     .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba")))
                     .When(Bindings.Grid.Websocket.Started)

@@ -59,6 +59,11 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public ColumnBuilder<T> Attr(string attr)
+        {
+            return Attr(attr, _ => string.Empty.ToHtmlString());
+        }
+
         public ColumnBuilder<T> Attr(string attr, string value)
         {
             return Attr(attr, _ => value.ToHtmlString());

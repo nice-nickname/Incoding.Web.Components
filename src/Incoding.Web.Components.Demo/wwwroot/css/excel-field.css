@@ -11,7 +11,9 @@
 }
 
 .excel-field:focus,
-.excel-field:focus-visible {
+.excel-field:focus-visible
+.excel-field:has(input:focus),
+.excel-field:has(input:focus-visible) {
     outline: #8383d7 solid 1px;
     background-color: #e9e9f5 !important;
 }

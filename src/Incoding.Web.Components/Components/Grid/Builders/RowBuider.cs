@@ -42,6 +42,13 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public RowBuilder<T> Bind(ImlBinding binding)
+        {
+            this.Row.Binding = (iml, tmpl) => binding(iml);
+
+            return this;
+        }
+
         public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
         {
             this.Row.Binding = binding;

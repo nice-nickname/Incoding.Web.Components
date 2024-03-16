@@ -326,133 +326,154 @@
 
 } (jQuery));
 
-(function($) {
-
-    const selectedClass = "selected"
+(function() {
 
     const current = {
-        $active: null,
-        $input: null,
-        $selection: $()
+        $selection: $(),
+        $active: $(),
+
+        inputInFocus: false,
     }
 
-    function activateInput() {
+    $.fn.excelField = function() {
+        return this.find('[excel-field]').each(function() {
+            const $cell = $(this).addClass('excel-field').prop('tabindex', 0)
+            const $input = $cell.find('input').prop('tabindex', -1)
 
+            $cell.on('mousedown', function(event) {
+                event.preventDefault()
+
+                if (current.inputInFocus && current.$active[0].isSameNode(event.target)) {
+                    return
+                }
+
+                if (current.inputInFocus) {
+                    applyChanges()
+                }
+
+                if (event.ctrlKey) {
+                    addSelection($cell)
+                }
+
+                if (event.shiftKey) {
+                    addRangeSelection($cell)
+                }
+
+                if (!event.ctrlKey && !event.shiftKey) {
+                    resetSelection($cell)
+                }
+
+                current.$selection.addClass('selected')
+                $cell.trigger('focus')
+
+                current.$active = $cell
+
+                deactivateInput($cell)
+            })
+            .on('dblclick', function() {
+                if (current.inputInFocus) {
+                    return
+                }
+
+                activateInput($cell, false)
+            })
+            .on('keydown', function(event) {
+                if (current.inputInFocus) {
+                    return
+                }
+
+                if (event.key.length  === 1) {
+                    activateInput($cell, true)
+                }
+            })
+            .on('keyup', function(event) {
+                if (event.which === keyCodes.TAB) {
+                    applyChanges($cell)
+                    resetSelection($cell)
+                }
+
+                if (!current.inputInFocus) {
+                    return
+                }
+
+                if (event.which === keyCodes.ESCAPE) {
+                    deactivateInput($cell)
+                }
+
+                if (event.which === keyCodes.ENTER) {
+                    applyChanges()
+                    deactivateInput($cell)
+                }
+            })
+            .on('change', function() {
+
+            })
+            .on('focus', function() {
+
+            })
+            .on('focusout', function() {
+
+            })
+        })
     }
 
-    function deactivateInput() {
+    function applyChanges() {
+        const value = current.$active.find('input').val()
 
-    }
-
-    function resetSelection() {
-        current.$selection = $(current.$active)
-    }
-
-    function addSelection($current) {
-        current.$selection = current.$selection.add($current)
+        current.$selection.each(function() {
+            $(this).find('input').val(value)
+        })
     }
 
     function addRangeSelection($current) {
-        const {
-            $active,
-            $input,
-            $selection
-        } = current
+        const { $active } = current;
 
-        const cells = [$current[0].cellIndex, $active[0].cellIndex].sort((a, b) => a - b)
-        const rows = [$current[0].parentElement.rowIndex, $active[0].parentElement.rowIndex].sort((a, b) => a - b)
+        const $table = $active.closest('table')
 
-        const $trs = $active.closest('table').find('tr')
+        const columns = [$active[0].cellIndex, $current[0].cellIndex].sort((x, y) => x - y)
+        const rows = [$active[0].parentElement.rowIndex, $current[0].parentElement.rowIndex].sort((x, y) => x - y)
 
-        for (let rowIndex = rows[0]; rowIndex < rows[1]; rowIndex++) {
-            const allCells = $trs.eq(rowIndex).find('[excel-field]')
+        const $rows = $table.find('tr')
 
-            for (let columnIndex = cells[0]; columnIndex < cells[1]; columnIndex++) {
-                const cell = allCells.eq(columnIndex)
+        for (let r = rows[0]; r <= rows[1]; r++) {
+            const $cells = $rows.eq(r).find('td')
 
-                cell.addClass('selected')
+            for (let c = columns[0]; c <= columns[1]; c++) {
+                const $cell = $cells.eq(c)
+
+                addSelection($cell)
             }
         }
     }
 
-    function applyChange() {
-        const {
-            $active,
-            $input,
-            $selection
-        } = current
-
-        console.log($selection, $active, $input.val())
-        $selection.each(function() {
-            $selection.find('input').val($input.val())
-        })
+    function addSelection($cell) {
+        current.$selection = current.$selection.add($cell)
     }
 
-    $.fn.excelField = function() {
-
-
-        return $(this).find('[excel-field]').each(function() {
-            const $cell = $(this).addClass('excel-field').prop('tabindex', 0)
-            const $input = $cell.find('input').prop('tabindex', -1)
-
-            $cell.on('click', function(event) {
-                if (event.shiftKey) {
-                    return addRangeSelection($cell)
-                }
-
-                current.$active = $cell
-                current.$input = $input
-
-                if (event.ctrlKey) {
-                    console.log('ctrl');
-                    addSelection($cell)
-                }
-                else {
-                    resetSelection()
-                }
-
-                console.log(current.$selection);
-            })
-
-            $cell.on('focus', function() {
-                inputActive = false
-            })
-
-            $cell.on('change', function() {
-                applyChange()
-            })
-
-            $cell.on('focusout', function() {
-
-            })
-
-            $cell.on('keydown', function(event) {
-                if (inputActive)
-                    return
-
-                if (event.which === keyCodes.TAB) {
-
-                } else if (event.which === keyCodes.ESCAPE) {
-
-                } else if (event.key.length === 1) {
-                    $input.val('').focus()
-                    activateInput()
-                }
-            })
-
-            $cell.on('dblclick', function() {
-                activateInput()
-            })
-
-            function activateInput() {
-                $input.removeClass('disabled')[0].focus()
-                inputActive = true
-            }
-        })
+    function resetSelection($cell) {
+        current.$selection.removeClass('selected')
+        current.$selection = $cell
     }
 
-} (jQuery))
+    function activateInput($cell, resetValue = false) {
+        const $input = $cell.find('input')
 
+        if (resetValue) {
+            $input.val('')
+        }
+
+        $input.focus()
+
+        current.inputInFocus = true
+    }
+
+    function deactivateInput($cell) {
+        current.inputInFocus = false
+        $cell.trigger('focus')
+    }
+
+
+} (jQuery));
 
 const keyCodes = {
     BACKSPACE: 8,

@@ -388,14 +388,11 @@
                 }
             })
             .on('keyup', function(event) {
-                if (event.which === ExecutableHelper.KeyCodes.TAB && current.inputInFocus) {
+                if (event.which === ExecutableHelper.KeyCodes.TAB) {
                     applyChanges($cell)
-                    resetSelection($cell)
 
-                    $cell.trigger('focus')
-                }
+                    current.$active = $cell.trigger('focus')
 
-                if (event.which === ExecutableHelper.KeyCodes.TAB && !current.inputInFocus) {
                     resetSelection($cell)
                 }
 

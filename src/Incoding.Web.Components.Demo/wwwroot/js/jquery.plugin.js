@@ -210,7 +210,7 @@
 
         this.on('keydown', (event) => {
             if (options.negative) {
-                if (event.keyCode === 189) {
+                if (event.which === ExecutableHelper.KeyCodes.DASH) {
                     maskIndex = (maskIndex + 1) % 2
 
                     this.toggleClass('ci-text-danger')
@@ -220,7 +220,7 @@
             }
 
             const value = this.maskMoney('unmasked')[0]
-            if (event.keyCode === 8 && value === 0) {
+            if (event.which === ExecutableHelper.KeyCodes.BACKSPACE && value === 0) {
                 this.val("")
             }
         })
@@ -383,27 +383,31 @@
                     return
                 }
 
-                if (event.key.length  === 1) {
+                if (event.key.length  === 1 || event.which === ExecutableHelper.KeyCodes.BACKSPACE) {
                     activateInput($cell, true)
                 }
             })
             .on('keyup', function(event) {
-                if (event.which === keyCodes.TAB && current.inputInFocus) {
+                if (event.which === ExecutableHelper.KeyCodes.TAB && current.inputInFocus) {
                     applyChanges($cell)
                     resetSelection($cell)
 
                     $cell.trigger('focus')
                 }
 
+                if (event.which === ExecutableHelper.KeyCodes.TAB && !current.inputInFocus) {
+                    resetSelection($cell)
+                }
+
                 if (!current.inputInFocus) {
                     return
                 }
 
-                if (event.which === keyCodes.ESCAPE) {
+                if (event.which === ExecutableHelper.KeyCodes.ESCAPE) {
                     deactivateInput($cell)
                 }
 
-                if (event.which === keyCodes.ENTER) {
+                if (event.which === ExecutableHelper.KeyCodes.ENTER) {
                     applyChanges()
                     deactivateInput($cell)
                 }
@@ -478,30 +482,4 @@
         $cell.trigger('focus')
     }
 
-
 } (jQuery));
-
-const keyCodes = {
-    BACKSPACE: 8,
-    COMMA: 188,
-    DELETE: 46,
-    DOWN: 40,
-    END: 35,
-    ENTER: 13,
-    ESCAPE: 27,
-    HOME: 36,
-    LEFT: 37,
-    NUMPAD_ADD: 107,
-    NUMPAD_DECIMAL: 110,
-    NUMPAD_DIVIDE: 111,
-    NUMPAD_ENTER: 108,
-    NUMPAD_MULTIPLY: 106,
-    NUMPAD_SUBTRACT: 109,
-    PAGE_DOWN: 34,
-    PAGE_UP: 33,
-    PERIOD: 190,
-    RIGHT: 39,
-    SPACE: 32,
-    TAB: 9,
-    UP: 38
-}

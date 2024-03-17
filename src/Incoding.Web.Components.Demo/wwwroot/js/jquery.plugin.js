@@ -404,23 +404,24 @@
                     deactivateInput($cell)
                 }
             })
-            .on('change', function() {
-
-            })
-            .on('focus', function() {
-
-            })
-            .on('focusout', function() {
-
-            })
         })
     }
 
     function applyChanges() {
-        const value = current.$active.find('input').val()
+        const {
+            $active,
+            $selection
+        } = current
+        const value = $active.find('input').val()
 
-        current.$selection.each(function() {
-            $(this).find('input').val(value)
+        $selection.each(function() {
+            const $input = $(this).find('input')
+
+            $input.val(value)
+
+            if (!$(this).is($active)) {
+                $input.trigger('change')
+            }
         })
     }
 

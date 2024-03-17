@@ -59,7 +59,7 @@ class WebsocketLoader {
         params = _.isString(params || {}) ? JSON.parse(params) : params
 
         this.signalrStream = this.signalrConnection
-            .stream(this.method, { ChunkSize: this.chunkSize, QueryParams: params })
+            .stream(this.method, { ChunkSize: this.chunkSize, Query: params })
             .subscribe({
                 next: (data) => {
                     if (!data.IsNext) {

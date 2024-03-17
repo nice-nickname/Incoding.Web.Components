@@ -108,7 +108,7 @@ namespace Incoding.Web.Components.Grid
                 if (hasStacked)
                 {
                     cell.Attributes["rowspan"] = isStacked ? "1" : "2";
-                    cell.Attributes["colspan"] = isStacked ? "2" : "1";
+                    cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
                 }
 
                 if (!isStacked && column.Width.HasValue)

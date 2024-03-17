@@ -365,6 +365,8 @@
                 current.$selection.addClass('selected')
                 $cell.trigger('focus')
 
+                console.log('asd', $cell);
+
                 current.$active = $cell
 
                 deactivateInput($cell)
@@ -386,9 +388,11 @@
                 }
             })
             .on('keyup', function(event) {
-                if (event.which === keyCodes.TAB) {
+                if (event.which === keyCodes.TAB && current.inputInFocus) {
                     applyChanges($cell)
                     resetSelection($cell)
+
+                    $cell.trigger('focus')
                 }
 
                 if (!current.inputInFocus) {
@@ -423,6 +427,8 @@
                 $input.trigger('change')
             }
         })
+
+        deactivateInput($active)
     }
 
     function addRangeSelection($current) {

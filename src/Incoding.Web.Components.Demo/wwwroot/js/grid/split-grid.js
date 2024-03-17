@@ -83,7 +83,7 @@ class SplitGridController {
         this.structure = options.structure;
         this.options = options
 
-        this.initializeScroll();
+        this.#initializeScroll();
 
         this.scrollEnabled = true
     }
@@ -121,24 +121,7 @@ class SplitGridController {
             return this.renderer.restart()
         }
 
-        this.initializeRenderer();
-    }
-
-    initializeScroll() {
-        this.$scroller = this.$root.find('.splitter-pane');
-
-        this.$scroller.connectScrolls()
-    }
-
-    initializeRenderer() {
-        const {
-            infiniteScroll,
-            scrollChunkSize
-        } = this.options
-
-        this.scrolledToEnd = !infiniteScroll
-
-        this.renderer = infiniteScroll ?  new InfiniteScrollRenderer(this, scrollChunkSize) : new AtOnceRenderer(this)
+        this.#initializeRenderer();
     }
 
     appendData(data) {
@@ -184,19 +167,6 @@ class SplitGridController {
         })
     }
 
-    reload(data) {
-        const rowId = data.RowId;
-        const rowIndex = this.data.findIndex(s => s.RowId == rowId)
-
-        if (rowIndex < 0) return
-
-        this.data[rowIndex] = { ...this.data[rowIndex], ...data }
-
-        this.$tables.each(function() {
-            $(this).data('grid').rerenderRow(rowId)
-        })
-    }
-
     hide() {
         this.$empty.removeClass('hidden')
         this.$content.addClass('hidden')
@@ -210,9 +180,7 @@ class SplitGridController {
     disableScroll() {
         if (!this.scrollEnabled) return
 
-        this.$scroller.each(function() {
-            this.style.overflowY = 'hidden'
-        })
+        this.$scroller.scrollTop
 
         this.scrollEnabled = false
     }
@@ -225,5 +193,32 @@ class SplitGridController {
         })
 
         this.scrollEnabled = true
+    }
+
+    resetScroll() {
+        if (this.scrollEnabled) return
+
+        this.$scroller.scrollTop(0)
+    }
+
+    isScrollable() {
+        return this.$scroller.isScrollable()
+    }
+
+    #initializeScroll() {
+        this.$scroller = this.$root.find('.splitter-pane');
+
+        this.$scroller.connectScrolls()
+    }
+
+    #initializeRenderer() {
+        const {
+            infiniteScroll,
+            scrollChunkSize
+        } = this.options
+
+        this.scrolledToEnd = !infiniteScroll
+
+        this.renderer = infiniteScroll ?  new InfiniteScrollRenderer(this, scrollChunkSize) : new AtOnceRenderer(this)
     }
 }

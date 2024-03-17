@@ -195,23 +195,6 @@ class TableController {
         this.$tbody[0].append(...rows)
     }
 
-    rerenderRow(rowId) {
-        const $row = this.#findRow(rowId)
-        const rowData = this.data.find(s => s.RowId == rowId)
-
-        this._rerenderSelfRow($row, rowData)
-
-        if ($row.data('hasNested') === true) {
-            const nestedData = rowData[this.structure.nestedField]
-
-            this._rerenderNestedRow($row.next(), nestedData)
-        }
-    }
-
-    removeRow(rowId) {
-
-    }
-
     removeAllRows() {
         this.$tbody.empty()
     }
@@ -224,9 +207,6 @@ class TableController {
         this.$tfoot.find('span').removeClass('table-placeholder')
     }
 
-    #triggerRowsRendered() {
-        this.$table.trigger('table-rows-rendered')
-    }
 
     #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`

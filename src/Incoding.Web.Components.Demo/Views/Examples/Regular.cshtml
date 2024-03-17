@@ -37,12 +37,25 @@
     .Width("100%")
     .Height("100%")
     .Css("bg-white")
-    .Table(table => table.Css("table table-bordered table-component")
-                         .Layout(LayoutType.Auto)
-                         .Rows(row => row.Css("tr-item-calculate"))
-                         .Columns(regularCols))
+    .Split(splits =>
+    {
+        splits.Add("regular", table => table.Css("table table-bordered table-component")
+                                            .Layout(LayoutType.Auto)
+                                            .Rows(row => row.Css("tr-item-calculate"))
+                                            .Columns(regularCols));
+
+        splits.Add("ahahaha", table => table.Css("table table-bordered table-component")
+                                            .Layout(LayoutType.Auto)
+                                            .Rows(row => row.Css("tr-item-calculate"))
+                                            .Columns(periodCols));
+
+        splits.Add("ehehehe", table => table.Css("table table-bordered table-component")
+                                            .Layout(LayoutType.Auto)
+                                            .Rows(row => row.Css("tr-item-calculate"))
+                                            .Columns(periodCols));
+    })
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-100")
+                    .Ajax("/data-1000")
                     .OnBegin(dsl => controller.Init(dsl))
                     .OnSuccess(dsl => controller.AppendData(dsl, Selector.Result)))
     .UI(ui =>

@@ -45,6 +45,13 @@ class TableController {
      */
     structure;
 
+    /**
+     * @type { {
+     *  [key: string]: boolean
+     * } }
+     */
+    nested
+
     constructor(element, structure, data, parent) {
         this.$table = $(element);
         this.$thead = $(element).find('thead')
@@ -57,22 +64,25 @@ class TableController {
 
         this.$table.data('grid', this)
 
+        this.nested = { }
+
         this.#hoverableRows()
     }
 
     expand(rowId) {
         const isExpanded = this.structure.expands[rowId]
-        const childRendered = isExpanded !== undefined
 
         this.structure.expands[rowId] = !isExpanded
 
         const parentData = { siblings: [] }
 
-        this.parent.siblings.forEach(c => {
-            const $row = c.#findRow(rowId)
+        this.parent.siblings.forEach(table => {
+            const $row = table.#findRow(rowId)
 
-            if (!childRendered) {
-                c.renderChildren(rowId, parentData)
+            if (!table.nested[rowId]) {
+                table.renderChildren(rowId, parentData)
+
+                table.nested[rowId] = true
             }
 
             $row.next().toggleAttribute('data-expanded', 'true', 'false')
@@ -199,6 +209,8 @@ class TableController {
 
     removeAllRows() {
         this.$tbody.empty()
+
+        this.nested = { }
     }
 
     hideTotals() {

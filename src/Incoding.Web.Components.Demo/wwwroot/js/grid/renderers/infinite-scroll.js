@@ -41,7 +41,7 @@ class InfiniteScrollRenderer {
 
         const $scroller = this.splitGrid.$scroller.first()
 
-        $scroller.on('scroll', this.handleScroll.bind(this.$scroller))
+        $scroller.on('scroll', () => this.handleScroll($scroller))
 
         this.restart()
     }
@@ -63,8 +63,8 @@ class InfiniteScrollRenderer {
         this.nextChunkRequested = true
     }
 
-    handleScroll() {
-        const el = this[0];
+    handleScroll($scroller) {
+        const el = $scroller[0];
         const containerScroll = el.scrollHeight - el.clientHeight;
 
         const hasScrolledDown = el.scrollTop >= this.prevScrollTop;

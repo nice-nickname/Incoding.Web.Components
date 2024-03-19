@@ -45,7 +45,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                     ;
 
             var fakerData = new Faker<SampleData>()
-                            .RuleFor(s => s.Id, s => Guid.NewGuid().ToString())
+                            .RuleFor(s => s.Id, s => s.Random.Guid().ToString())
                             .RuleFor(s => s.Name, s => s.Name.FirstName())
                             .RuleFor(s => s.Description, s => s.Hacker.Phrase())
                             .RuleFor(s => s.Amount, s => s.Random.Int(0, 100))

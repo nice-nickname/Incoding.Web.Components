@@ -9,6 +9,11 @@ namespace Incoding.Web.Components.Grid
         public string RowTmpl { get; set; }
 
 
+        public bool HasDropdown { get; set; }
+
+        public string DropdownTmpl { get; set; }
+
+
         public string NestedField { get; set; }
 
         public GridStructureDto Nested { get; set; }

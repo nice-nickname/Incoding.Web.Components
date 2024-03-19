@@ -37,6 +37,8 @@ class TableController {
      *  columns: any[],
      *  rowTmpl: string,
      *  layoutHtml: string,
+     *  dropdownTmpl: string,
+     *  hasDropdown: boolean,
      *  nestedField: string,
      *  nested: any
      * } }
@@ -207,6 +209,52 @@ class TableController {
         this.$tfoot.find('span').removeClass('table-placeholder')
     }
 
+    showDropdown(rowId, dropdownSelector) {
+        if (!this.structure.hasDropdown) {
+            return
+        }
+
+        const $row = this.#findRow(rowId)
+        const $invoker = $row.find('[data-dropdown-invoker]')
+
+        if ($(document.body).find(`[data-dropdown-id="${rowId}"]`).length !== 0) {
+            return
+        }
+
+        const $dropdown = this.#renderDropdown($invoker, rowId)
+
+        $dropdown
+            .appendTo(document.body)
+            .find(dropdownSelector).trigger('click')
+
+    }
+
+    #renderDropdown($invoker, rowId) {
+        const record = this.data.find(s => s.RowId === rowId)
+        const $dropdown = $(ExecutableInsert.Template.render(this.structure.dropdownTmpl, {
+            data: [record]
+        }))
+
+        IncodingEngine.Current.parse($dropdown)
+
+        const bounds = $invoker[0].getBoundingClientRect()
+
+        return $dropdown
+            .attr('data-dropdown-id', rowId)
+            .css({
+                top: bounds.top + bounds.height,
+                left: bounds.left,
+                position: 'absolute'
+            })
+            .on('hidden.bs.dropdown', () => {
+                $dropdown.remove()
+            })
+            .on('shown.bs.dropdown', () => {
+                requestAnimationFrame(() => {
+                    $dropdown.find('ul').css('transform', '')
+                })
+            })
+    }
 
     #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`

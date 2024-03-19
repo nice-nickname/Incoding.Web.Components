@@ -1,18 +1,18 @@
 
-.table-component {
+table.table-component {
     table-layout: fixed;
     white-space: nowrap;
 }
 
-.table-component [data-expanded="true"] {
+table.table-component [data-expanded="true"] {
     display: block;
 }
 
-.table-component [data-expanded="false"] {
+table.table-component [data-expanded="false"] {
     display: none;
 }
 
-.table-component .table-placeholder {
+table.table-component .table-placeholder {
     width: 100% !important;
     display: block;
     background: linear-gradient(-45deg, #ffffff, #e3e3e3, #ffffff, #e3e3e3);
@@ -31,14 +31,27 @@
     }
 }
 
-.table-component > thead > tr > th,
-.table-component > tbody > tr > td,
-.table-component > tfoot > tr > td {
+table.table-component > thead > tr > th,
+table.table-component > tbody > tr > td,
+table.table-component > tfoot > tr > td {
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.table-component button {
+table.table-component tbody tr {
+    position: relative;
+}
+
+.table-dropdown {
+    position: absolute;
+}
+
+.table-dropdown [data-bs-toggle="dropdown"],
+.table-dropdown [data-toggle="dropdown"] {
+    display: none;
+}
+
+table.table-component button {
     all: unset;
     background: gray;
     width: 20px;

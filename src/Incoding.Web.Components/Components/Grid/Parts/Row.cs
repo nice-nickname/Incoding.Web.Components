@@ -13,6 +13,8 @@ namespace Incoding.Web.Components.Grid
 
         public ImlTemplateBinding<T> Binding { get; set; } = null;
 
+        public TemplateContent<T> DropdownContent { get; set; } = null;
+
         public IDictionary<string, TemplateContent<T>> Attr { get; } = new Dictionary<string, TemplateContent<T>>();
 
         public Row()

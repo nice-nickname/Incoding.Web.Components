@@ -1,5 +1,6 @@
 namespace Incoding.Web.Components.Grid
 {
+    using System;
     #region << Using >>
 
     using System.Collections.Generic;
@@ -28,9 +29,10 @@ namespace Incoding.Web.Components.Grid
         public TableComponent RenderComponent()
         {
             var rowTemplate = RenderRowTemplate();
+            var dropdownTempalte = RenderDropdownTemplate();
 
             rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
-
+            dropdownTempalte = dropdownTempalte.Replace("{{", "!-").Replace("}}", "-!");
 
             var table = RootTable();
 
@@ -40,7 +42,8 @@ namespace Incoding.Web.Components.Grid
                 LayoutHtml = table,
                 RowTemplate = rowTemplate,
                 Nested = this._table.NestedTable,
-                NestedField = this._table.NestedField
+                NestedField = this._table.NestedField,
+                DropdownTemplate = dropdownTempalte
             };
         }
 
@@ -180,6 +183,29 @@ namespace Incoding.Web.Components.Grid
             contentWriter.Write(row.RenderEndTag().ToHtmlString());
         }
 
+        private string RenderDropdownTemplate()
+        {
+            if (this._table.Row.DropdownContent == null)
+                return string.Empty;
+
+            var content = StringBuilderHelper.Default;
+
+            using (var _ = new StringifiedHtmlHelper(this._html, content))
+            {
+                using var template = this._html.Incoding().Template<T>();
+                using var each = template.ForEach();
+
+                AppendDropdownTemplate(each, _.CurrentWriter);
+            }
+
+            return content.ToString();
+        }
+
+        private void AppendDropdownTemplate(ITemplateSyntax<T> each, TextWriter contentWriter)
+        {
+            contentWriter.Write(this._table.Row.DropdownContent(each).HtmlContentToString());
+        }
+
         private IHtmlContent RenderFooter()
         {
             var footer = new TagBuilder("tfoot");
@@ -213,6 +239,8 @@ namespace Incoding.Web.Components.Grid
 
         public string RowTemplate { get; set; }
 
+        public string DropdownTemplate { get; set; }
+
         public List<Cell> Columns { get; set; }
 
         public TableComponent Nested { get; set; }
@@ -240,6 +268,8 @@ namespace Incoding.Web.Components.Grid
             {
                 Columns = columnDtos,
                 RowTmpl = RowTemplate,
+                DropdownTmpl = DropdownTemplate,
+                HasDropdown = !string.IsNullOrWhiteSpace(DropdownTemplate),
                 LayoutTmpl = LayoutHtml.HtmlContentToString(),
                 NestedField = NestedField,
                 Nested = Nested?.ToDto()

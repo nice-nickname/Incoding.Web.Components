@@ -17,8 +17,10 @@
 
     function prepareSchema(schema) {
         const rowTmpl = decodeRowTemplate(schema.rowTmpl)
+        const dropdownTmpl = decodeRowTemplate(schema.dropdownTmpl)
 
         schema.rowTmpl = ExecutableInsert.Template.compile(rowTmpl)
+        schema.dropdownTmpl = ExecutableInsert.Template.compile(dropdownTmpl)
         schema.layoutTmpl = ExecutableInsert.Template.compile(schema.layoutTmpl)
         schema.expands = {}
 

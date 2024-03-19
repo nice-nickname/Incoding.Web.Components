@@ -23,6 +23,16 @@
 
     Action<ColumnListBuilder<SampleData>> regularCols = (cols) =>
                      {
+                        cols.Add().Content(
+                            @<text>
+                                @Html.Components().GridUtils.DropdownInvoker(settings =>
+                                {
+                                    settings.Content = "...";
+
+                                    settings.Button = s => s.Id("regular-dropdown");
+                                })
+                            </text>).Width(40);
+
                         cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).HeaderAttr("style", "height: 54px;");
 
                         cols.Add().Field(s => s.Name).Width(70);
@@ -58,7 +68,20 @@
         {
             table.Css("table table-bordered table-component")
                  .Rows(row => row.Css("tr-item-calculate"))
-                 .Columns(regularCols);
+                 .Columns(regularCols)
+                 .DropdownTmpl(
+                    @<text>
+                        <div class="dropdown">
+                            <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu">
+                                @(Html.When(JqueryBind.Click)
+                                      .StopPropagation()
+                                      .OnSuccess(dsl => dsl.Window.Alert(item.For(s => s.AmountPercentage)))
+                                      .AsHtmlAttributes()
+                                      .ToTag(HtmlTag.Li, "<a class='dropdown-item' href='javascript:void(0)'>Monkey type</a>"))
+                            </ul>
+                        </div>
+                    </text>);
         });
 
         splitting.Add("bebius", table =>

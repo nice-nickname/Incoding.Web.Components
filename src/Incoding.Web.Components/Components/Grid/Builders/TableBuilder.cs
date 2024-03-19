@@ -87,9 +87,16 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public TableBuilder<T> DropdownTmpl(TemplateContent<T> contentAction)
+        {
+            this.Table.Row.DropdownContent = contentAction;
+
+            return this;
+        }
+
         public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
 
-    {
+        {
             var tableBuilder = new TableBuilder<U>(this._html, "");
             tableBuilder.Table.InheritStyles(this.Table);
 

@@ -1,39 +1,45 @@
+using System;
 using Incoding.Web.MvcContrib;
 
 namespace Incoding.Web.Components.Grid
 {
     public class IMLGridController
     {
-        public string Id { get; }
+        private readonly JquerySelectorExtend _selector;
 
         public IMLGridController(string id)
         {
-            Id = id;
+            this._selector = id.ToId();
+        }
+
+        public IMLGridController(Func<JquerySelector, JquerySelectorExtend> selector)
+        {
+            this._selector = selector(Selector.Jquery);
         }
 
         public IExecutableSetting Init(IIncodingMetaLanguageCallbackBodyDsl dsl)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('splitGrid').initializeTables");
+            return dsl.With(this._selector).JQuery.Call("data('splitGrid').initializeTables");
         }
 
         public IExecutableSetting StartWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector @params = null)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('loader').startLoading", @params);
+            return dsl.With(this._selector).JQuery.Call("data('loader').startLoading", @params);
         }
 
         public IExecutableSetting CancelWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('loader').cancelLoading");
+            return dsl.With(this._selector).JQuery.Call("data('loader').cancelLoading");
         }
 
         public IExecutableSetting AppendData(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector dataSelector)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('splitGrid').appendData", dataSelector);
+            return dsl.With(this._selector).JQuery.Call("data('splitGrid').appendData", dataSelector);
         }
 
         public IExecutableSetting Totals(IIncodingMetaLanguageCallbackBodyDsl dsl)
         {
-            return dsl.WithId(this.Id).JQuery.Call("data('splitGrid').totals");
+            return dsl.With(this._selector).JQuery.Call("data('splitGrid').totals");
         }
     }
 }

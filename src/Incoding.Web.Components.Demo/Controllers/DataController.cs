@@ -11,6 +11,12 @@ namespace Incoding.Web.Components.Demo.Controllers
 
     public class DataController : Controller
     {
+        [Route("/data-1")]
+        public IActionResult Data1()
+        {
+            return IncodingResult.Success(GenerateData(1, childCount: 1));
+        }
+
         [Route("/data-100")]
         public IActionResult Data100()
         {
@@ -35,7 +41,7 @@ namespace Incoding.Web.Components.Demo.Controllers
             return IncodingResult.Success(GenerateData(1, false)[0]);
         }
 
-        public static List<SampleData> GenerateData(int count, bool withChildren = true)
+        public static List<SampleData> GenerateData(int count, bool withChildren = true, int childCount = 5)
         {
             Randomizer.Seed = new Random(123);
 
@@ -64,11 +70,11 @@ namespace Incoding.Web.Components.Demo.Controllers
             {
                 foreach (var item in data)
                 {
-                    item.Children = fakerData.Generate(5);
+                    item.Children = fakerData.Generate(childCount);
 
                     foreach (var iitem in item.Children)
                     {
-                        iitem.Children = fakerData.Generate(5);
+                        iitem.Children = fakerData.Generate(childCount);
                     }
                 }
             }

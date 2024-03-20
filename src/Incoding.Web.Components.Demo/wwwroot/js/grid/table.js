@@ -221,7 +221,7 @@ class TableController {
         this.$tfoot.find('span').removeClass('table-placeholder')
     }
 
-    showDropdown(rowId, dropdownSelector) {
+    showDropdown(rowId) {
         if (!this.structure.hasDropdown) {
             return
         }
@@ -237,12 +237,12 @@ class TableController {
 
         $dropdown
             .appendTo(document.body)
-            .find(dropdownSelector).trigger('click')
+            .find('> button').trigger('click')
 
     }
 
     #renderDropdown($invoker, rowId) {
-        const record = this.data.find(s => s.RowId === rowId)
+        const record = this.data.find(s => s.RowId == rowId)
         const $dropdown = $(ExecutableInsert.Template.render(this.structure.dropdownTmpl, {
             data: [record]
         }))

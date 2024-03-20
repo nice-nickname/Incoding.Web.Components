@@ -45,13 +45,13 @@ namespace Incoding.Web.Components.Grid
             this.Id = id;
         }
 
-        public void InheritStyles<U>(Table<U> other)
+        public void InheritStyles<U>(Table<U> parent)
         {
-            this.Css = other.Css;
-            this.Row.Css = other.Row.Css;
-            this.Layout = other.Layout;
+            this.Css = parent.Css;
+            this.Row.Css = parent.Row.Css;
+            this.Layout = parent.Layout;
 
-            this.Attr.Merge(other.Attr);
+            this.Attr.Merge(parent.Attr);
         }
     }
 }

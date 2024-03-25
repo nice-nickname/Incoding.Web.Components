@@ -207,6 +207,24 @@ class TableController {
         this.$tbody[0].append(...rows)
     }
 
+    removeRow(rowId) {
+        const rowIndex = this.data.findIndex(s => s.RowId == rowId)
+
+        if (rowIndex > -1) {
+            this.data.splice(rowIndex, 1)
+        }
+
+        this.parent.siblings.forEach(table => {
+            table.$tbody.find(`tr[data-row-id="${rowId}"]`).remove()
+
+            if (table.$tbody.children().length === 0) {
+                table.$table.remove()
+            }
+
+            this.parent = null
+        })
+    }
+
     removeAllRows() {
         this.$tbody.empty()
 

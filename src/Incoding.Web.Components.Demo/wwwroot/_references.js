@@ -4,4 +4,14 @@
 /// <reference path="lib/handlebars.min.js" />
 /// <reference path="lib/morphdom.js" />
 
+/// <reference path="js/jquery.plugin.js" />
+/// <reference path="js/grid/table.js" />
+/// <reference path="js/grid/split-grid.js" />
+/// <reference path="js/grid/handlebars.helpers.js" />
+/// <reference path="js/grid/loaders/signalr-loader.js" />
+/// <reference path="js/grid/loaders/websocket-loader.js" />
+/// <reference path="js/grid/renderers/at-once.js" />
+/// <reference path="js/grid/renderers/infinite-scroll.js" />
+/// <reference path="js/inputs/excel.js" />
+/// <reference path="js/splitter/splitter.js" />
 /// <reference path="js/helpers.js" />

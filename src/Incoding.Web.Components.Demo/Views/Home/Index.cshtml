@@ -75,6 +75,16 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Submit.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                             Regular submit
+                         </text>))
+
+        @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
               .AsHtmlAttributes(new
                                 {

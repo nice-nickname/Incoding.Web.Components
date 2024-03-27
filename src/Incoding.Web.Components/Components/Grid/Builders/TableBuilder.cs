@@ -14,11 +14,11 @@ namespace Incoding.Web.Components.Grid
     {
         public Table<T> Table { get; }
 
-        private readonly IHtmlHelper _html;
+        public IHtmlHelper Html { get; }
 
         public TableBuilder(IHtmlHelper html, string id)
         {
-            this._html = html;
+            this.Html = html;
             Table = new Table<T>(id);
         }
 
@@ -60,7 +60,7 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
         {
-            var clb = new ColumnListBuilder<T>(this._html);
+            var clb = new ColumnListBuilder<T>(this.Html);
             buildAction(clb);
 
             this.Table.Columns = clb.Columns;
@@ -72,7 +72,7 @@ namespace Incoding.Web.Components.Grid
 
         public TableBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
         {
-            var rb = new RowBuilder<T>(this._html);
+            var rb = new RowBuilder<T>(this.Html);
             buildAction(rb);
 
             this.Table.Row = rb.Row;
@@ -97,14 +97,14 @@ namespace Incoding.Web.Components.Grid
         public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
 
         {
-            var tableBuilder = new TableBuilder<U>(this._html, "");
+            var tableBuilder = new TableBuilder<U>(this.Html, "");
             tableBuilder.Table.InheritStyles(this.Table);
 
             buildAction(tableBuilder);
 
             var fieldName = ExpressionHelper.GetFieldName(nestedField);
             this.Table.NestedField = fieldName;
-            this.Table.NestedTable = new TableRenderer<U>(this._html, tableBuilder.Table).RenderComponent();
+            this.Table.NestedTable = new TableRenderer<U>(this.Html, tableBuilder.Table).RenderComponent();
 
             return this;
         }

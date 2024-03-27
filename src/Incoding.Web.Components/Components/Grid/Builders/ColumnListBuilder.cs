@@ -17,9 +17,10 @@ namespace Incoding.Web.Components.Grid
 
         public List<Column> Columns { get; }
 
+        public IHtmlHelper Html { get; }
+
         private int _currentIndex { get; set; }
 
-        private readonly IHtmlHelper _html;
 
         public ColumnListBuilder(IHtmlHelper html, int startIndex = 0)
         {
@@ -28,29 +29,29 @@ namespace Incoding.Web.Components.Grid
             this.CellRenderers = new List<ICellRenderer<T>>();
 
             this._currentIndex = startIndex;
-            this._html = html;
+            this.Html = html;
         }
 
         public ColumnBuilder<T> Add()
         {
-            var columnBuilder = new ColumnBuilder<T>(this._currentIndex++);
+            var columnBuilder = new ColumnBuilder<T>(this.Html, this._currentIndex++);
 
             var newCell = columnBuilder.Cell;
 
             this.Cells.Add(newCell);
             this.Columns.Add(columnBuilder.Column);
 
-            CellRenderers.Add(new SingleCellRenderer<T>(newCell, this._html));
+            CellRenderers.Add(new SingleCellRenderer<T>(newCell, this.Html));
 
             return columnBuilder;
         }
 
         public void Stacked(Action<ColumnBuilder<T>> stackedBuilder, Action<ColumnListBuilder<T>> builderAction)
         {
-            var stackedColumn = new ColumnBuilder<T>();
+            var stackedColumn = new ColumnBuilder<T>(this.Html);
             stackedBuilder(stackedColumn);
 
-            var columnsBuilder = new ColumnListBuilder<T>(this._html, this._currentIndex);
+            var columnsBuilder = new ColumnListBuilder<T>(this.Html, this._currentIndex);
             builderAction(columnsBuilder);
 
             this._currentIndex = columnsBuilder._currentIndex;
@@ -73,7 +74,7 @@ namespace Incoding.Web.Components.Grid
 
             var spreadField = ExpressionHelper.GetFieldName(field);
 
-            var clb = new ColumnListBuilder<TSpread>(this._html, this._currentIndex);
+            var clb = new ColumnListBuilder<TSpread>(this.Html, this._currentIndex);
 
             for (var i = 0; i < spreadCount; i++)
             {
@@ -100,7 +101,7 @@ namespace Incoding.Web.Components.Grid
             this.Columns.AddRange(clb.Columns);
             this.Cells.AddRange(clb.Cells);
 
-            clb = new ColumnListBuilder<TSpread>(this._html);
+            clb = new ColumnListBuilder<TSpread>(this.Html);
 
             buildAction(clb, 0);
             this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(field, clb.CellRenderers));

@@ -15,11 +15,11 @@ namespace Incoding.Web.Components.Grid
     {
         public Grid<T> Grid { get; }
 
-        private readonly IHtmlHelper _html;
+        public IHtmlHelper Html { get; }
 
         public GridBuilder(IHtmlHelper html, string id)
         {
-            this._html = html;
+            this.Html = html;
             this.Grid = new Grid<T>(id);
         }
 
@@ -87,7 +87,7 @@ namespace Incoding.Web.Components.Grid
 
         public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
         {
-            var splitter = new TableSplitBuilder<T>(this._html);
+            var splitter = new TableSplitBuilder<T>(this.Html);
 
             buildAction(splitter);
 
@@ -128,7 +128,7 @@ namespace Incoding.Web.Components.Grid
 
         public IHtmlContent Render(bool useConcurrentRender = false)
         {
-            return new GridComponentRenderer<T>(this._html, this.Grid).Render(useConcurrentRender);
+            return new GridComponentRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
         }
     }
 }

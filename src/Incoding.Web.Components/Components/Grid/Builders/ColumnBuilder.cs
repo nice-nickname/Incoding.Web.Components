@@ -6,25 +6,29 @@ namespace Incoding.Web.Components.Grid
     using System.Linq.Expressions;
     using Incoding.Web.Extensions;
     using Microsoft.AspNetCore.Html;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     #endregion
 
     public class ColumnBuilder<T>
     {
+        public IHtmlHelper Html { get; }
+
         public Cell<T> Cell { get; }
 
         public Column Column { get; }
 
-        public ColumnBuilder()
+        public ColumnBuilder(IHtmlHelper html)
         {
             this.Cell = new Cell<T>();
             this.Column = new Column();
 
             this.Cell.Column = this.Column;
             this.Column.Cell = this.Cell;
+            this.Html = html;
         }
 
-        public ColumnBuilder(int index) : this()
+        public ColumnBuilder(IHtmlHelper html, int index) : this(html)
         {
             this.Column.Index = index;
 

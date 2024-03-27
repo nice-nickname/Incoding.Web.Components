@@ -8,14 +8,14 @@ namespace Incoding.Web.Components.Grid
 
     public class RowBuilder<T>
     {
-        private readonly IHtmlHelper _html;
+        public IHtmlHelper Html { get; }
 
         public Row<T> Row { get; }
 
         public RowBuilder(IHtmlHelper html)
         {
             this.Row = new Row<T>();
-            this._html = html;
+            this.Html = html;
         }
 
         public RowBuilder<T> Css(string css, bool replace = false)

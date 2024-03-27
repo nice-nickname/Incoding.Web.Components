@@ -14,11 +14,11 @@ namespace Incoding.Web.Components.Grid
 
         public List<Splitter> Splits { get; }
 
-        private readonly IHtmlHelper _html;
+        public IHtmlHelper Html { get; }
 
         public TableSplitBuilder(IHtmlHelper html)
         {
-            this._html = html;
+            this.Html = html;
 
             this.Tables = new List<Table<T>>();
             this.Splits = new List<Splitter>();
@@ -26,8 +26,8 @@ namespace Incoding.Web.Components.Grid
 
         public SplitBuilder Add(string splitId, Action<TableBuilder<T>> buildAction)
         {
-            var tableBuilder = new TableBuilder<T>(this._html, splitId);
-            var splitBuilder = new SplitBuilder();
+            var tableBuilder = new TableBuilder<T>(this.Html, splitId);
+            var splitBuilder = new SplitBuilder(this.Html);
 
             buildAction(tableBuilder);
 

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace Incoding.Web.Components.Grid
 {
     #region << Using >>
@@ -8,9 +10,12 @@ namespace Incoding.Web.Components.Grid
     {
         public Splitter Splitter { get; }
 
-        public SplitBuilder()
+        public IHtmlHelper Html { get; }
+
+        public SplitBuilder(IHtmlHelper html)
         {
-            Splitter = new Splitter();
+            this.Html = html;
+            this.Splitter = new Splitter();
         }
 
         public SplitBuilder Min(string width)

@@ -9,5 +9,7 @@ namespace Incoding.Web.Components.Grid
         public bool HighlightRowsOnHover { get; set; }
 
         public bool CascadeEvents { get; set; }
+
+        public int LoadingRowsCount { get; set; }
     }
 }

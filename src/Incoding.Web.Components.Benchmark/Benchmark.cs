@@ -16,20 +16,6 @@
 
     #endregion
 
-    public static class BenchmarkBootstrapper
-    {
-        public static void Start()
-        {
-            var services = new ServiceCollection();
-
-            services.AddTransient<ITemplateFactory, TemplateHandlebarsFactory>();
-
-            var provider = services.BuildServiceProvider();
-
-            IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(provider)));
-        }
-    }
-
     public class GridRenderBenchmark
     {
         [Params(4)]
@@ -41,28 +27,13 @@
         [Benchmark]
         public void Concurrent()
         {
-            BenchmarkBootstrapper.Start();
-
             Setup().Render(useConcurrentRender: true);
         }
 
         [Benchmark]
         public void Synchronous()
         {
-            BenchmarkBootstrapper.Start();
-
             Setup().Render(useConcurrentRender: false);
-        }
-
-        private IHtmlHelper MockIHtmlHelper()
-        {
-            var mock = new Mock<IHtmlHelper>();
-
-            var fakeWriter = new StringWriter(StringBuilderHelper.Default);
-
-            mock.Setup(html => html.ViewContext).Returns(new ViewContext { Writer = fakeWriter });
-
-            return mock.Object;
         }
 
         private GridBuilder<SampleData> Setup()
@@ -128,18 +99,41 @@
                                 splittings.Add("split-" + splitIndex, t => buildTable(t, 1));
                             }
                         })
-                        .InfiniteScrolling(chunkSize: 40)
+                        .InfiniteScrolling(scroll =>
+                        {
+                            scroll.ChunkSize = 40;
+                            scroll.LoadingRowsCount = 3;
+                            scroll.Enabled = false; // wtf?? :^(
+                        })
                         .UI(ui =>
                         {
                             ui.CascadeEvents = true;
                             ui.HighlightRowsOnHover = true;
                         })
-                        .WebsocketLoader(ws =>
-                        {
-                            ws.ChunkSize = 40;
-                            ws.LoadingRows = 3;
-                            ws.Method = "SPQR";
-                        });
+                        ;
+        }
+
+        [GlobalSetup]
+        private void Bootstrap()
+        {
+            var services = new ServiceCollection();
+
+            services.AddTransient<ITemplateFactory, TemplateHandlebarsFactory>();
+
+            var provider = services.BuildServiceProvider();
+
+            IoCFactory.Instance.Initialize(init => init.WithProvider(new MSDependencyInjectionIoCProvider(provider)));
+        }
+
+        private IHtmlHelper MockIHtmlHelper()
+        {
+            var mock = new Mock<IHtmlHelper>();
+
+            var fakeWriter = new StringWriter(StringBuilderHelper.Default);
+
+            mock.Setup(html => html.ViewContext).Returns(new ViewContext { Writer = fakeWriter });
+
+            return mock.Object;
         }
     }
 }

@@ -107,17 +107,11 @@
     })
     .Bind(iml => iml.When(JqueryBind.Load)
                     .OnSuccess(dsl => controller.Init(dsl))
-                    .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba")))
-                    .When(Bindings.Grid.Websocket.Started)
-                    .OnSuccess(dsl => dsl.Self())
-                    .When(Bindings.Grid.Websocket.Completed)
-                    .OnSuccess(dsl => controller.Totals(dsl)))
-    .InfiniteScrolling(chunkSize: 20)
-    .WebsocketLoader(o =>
+                    .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba"))))
+    .InfiniteScrolling(scroll =>
     {
-        o.ChunkSize = 40;
-        o.Method = "StreamData_Many_Floating";
-        o.LoadingRows = 3;
+        scroll.ChunkSize = 20;
+        scroll.LoadingRowsCount = 3;
     })
     .UI(ui =>
     {
@@ -130,4 +124,9 @@
                     <span>so empty here...</span>
                 </div>
             </text>)
+    .DataSource(new DataSource.Websocket
+    {
+        ChunkSize = 40,
+        Method = "StreamData_Many_Floating"
+    })
     .Render(useConcurrentRender: false))

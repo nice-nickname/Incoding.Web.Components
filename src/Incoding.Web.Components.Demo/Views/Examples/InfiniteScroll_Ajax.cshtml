@@ -41,11 +41,11 @@
                          .Layout(LayoutType.Auto)
                          .Rows(row => row.Css("tr-item-calculate"))
                          .Columns(regularCols))
-    .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-1000")
-                    .OnBegin(dsl => controller.Init(dsl))
-                    .OnSuccess(dsl => controller.AppendData(dsl, Selector.Result)))
-    .InfiniteScrolling(chunkSize: 20)
+    .InfiniteScrolling(scroll =>
+    {
+        scroll.ChunkSize = 20;
+        scroll.LoadingRowsCount = 3;
+    })
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;
@@ -57,4 +57,9 @@
                     <span>so empty here...</span>
                 </div>
             </text>)
+    .DataSource(new DataSource.Ajax
+    {
+        Event = JqueryBind.Load,
+        Url = "/data-100"
+    })
     .Render(useConcurrentRender: false))

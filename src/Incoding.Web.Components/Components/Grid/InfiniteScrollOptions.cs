@@ -10,6 +10,6 @@ namespace Incoding.Web.Components.Grid
 
         public int ChunkSize { get; set; }
 
-        public int PlaceholderRows { get; set; } = 3;
+        public int LoadingRowsCount { get; set; } = 3;
     }
 }

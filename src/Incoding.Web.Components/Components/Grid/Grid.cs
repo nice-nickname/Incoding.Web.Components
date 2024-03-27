@@ -27,11 +27,11 @@ namespace Incoding.Web.Components.Grid
 
         public InfiniteScrollOptions InfiniteScroll { get; set; } = new();
 
-        public WebsocketLoadingOptions Websocket { get; set; } = new();
-
         public UIOptions UI { get; set; } = new();
 
         public ImlBinding Binds { get; set; } = null;
+
+        public IGridDataSource DataSource { get; set; } = null;
 
         public Grid(string id)
         {

@@ -5,7 +5,6 @@ table.table-component td input {
     box-sizing: border-box;
 
     width: 100%;
-    padding: 2px;
     border-radius: 2px;
     box-shadow: rgba(0, 0, 0, .2) 0px 1px 1px;
 }

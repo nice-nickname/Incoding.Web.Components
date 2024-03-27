@@ -54,14 +54,15 @@
                                             .Rows(row => row.Css("tr-item-calculate"))
                                             .Columns(periodCols));
     })
-    .Bind(iml => iml.When(JqueryBind.Load)
-                    .Ajax("/data-1000")
-                    .OnBegin(dsl => controller.Init(dsl))
-                    .OnSuccess(dsl => controller.AppendData(dsl, Selector.Result)))
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;
         ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
+    })
+    .DataSource(new DataSource.Ajax
+    {
+        Event = JqueryBind.Load,
+        Url = "/data-1000"
     })
     .Empty(@<text>
                 <div style="display: grid; place-items: center;">

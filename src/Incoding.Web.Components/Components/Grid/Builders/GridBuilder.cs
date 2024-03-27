@@ -3,9 +3,7 @@ namespace Incoding.Web.Components.Grid
     #region << Using >>
 
     using System;
-    using System.Dynamic;
     using Incoding.Web.Extensions;
-    using JetBrains.Annotations;
     using Microsoft.AspNetCore.Html;
     using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -61,26 +59,17 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public GridBuilder<T> InfiniteScrolling(int chunkSize)
+        public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> buildAction)
         {
+            buildAction(this.Grid.InfiniteScroll);
             this.Grid.InfiniteScroll.Enabled = true;
-            this.Grid.InfiniteScroll.ChunkSize = chunkSize;
 
             return this;
         }
 
-        public GridBuilder<T> WebsocketLoader(Action<WebsocketLoadingOptions> buildOptions)
+        public GridBuilder<T> UI(Action<UIOptions> buildAction)
         {
-            buildOptions(this.Grid.Websocket);
-
-            this.Grid.Websocket.Enabled = true;
-
-            return this;
-        }
-
-        public GridBuilder<T> UI(Action<UIOptions> buildOptions)
-        {
-            buildOptions(this.Grid.UI);
+            buildAction(this.Grid.UI);
 
             return this;
         }
@@ -122,6 +111,13 @@ namespace Incoding.Web.Components.Grid
         public GridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
         {
             this.Grid.EmptyContent = content(null);
+
+            return this;
+        }
+
+        public GridBuilder<T> DataSource(IGridDataSource dataSource)
+        {
+            this.Grid.DataSource = dataSource;
 
             return this;
         }

@@ -43,6 +43,8 @@ class WebsocketLoader {
         this.$scroll = this.$root.find(this.scroller).first()
 
         this.splitGrid = this.$root.data('splitGrid')
+
+        this.splitGrid.dataLoading = false
     }
 
     cancelLoading() {
@@ -93,6 +95,7 @@ class WebsocketLoader {
 
     triggerComplete() {
         this.splitGrid.dataLoading = false
+        this.splitGrid.totals()
 
         this.$root.trigger('websocket-completed')
     }

@@ -37,8 +37,6 @@
 {
     @using (var each = template.ForEach())
     {
-        @Html.Hidden("a", each.For("json Children"))
-
         @(Html.Components().Grid<SampleData>("grid")
               .Width("100%")
               .Height("100%")
@@ -60,9 +58,6 @@
                                                       .Rows(row => row.Css("tr-item-calculate"))
                                                       .Columns(periodCols));
               })
-              .Bind(iml => iml.When(Bindings.Grid.Init)
-                              .OnBegin(dsl => controller.Init(dsl))
-                              .OnComplete(dsl => controller.AppendData(dsl, Selector.Jquery.Name("a"))))
               .UI(ui =>
               {
                   ui.HighlightRowsOnHover = true;
@@ -74,6 +69,11 @@
                               <span>so empty here...</span>
                           </div>
                       </text>)
+              .DataSource(new DataSource.TemplateSyntax<SampleData>
+              {
+                  Field = s => s.Children,
+                  Template = each
+              })
               .Render(useConcurrentRender: false))
     }
 }

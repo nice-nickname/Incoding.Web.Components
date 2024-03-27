@@ -126,6 +126,8 @@ class SplitGridController {
 
     appendData(data) {
         if (_.isString(data)) {
+            data = _.unescape(data)
+
             data = JSON.parse(data || "[]")
         }
 
@@ -147,8 +149,7 @@ class SplitGridController {
         const scrolledToEnd = this.scrolledToEnd
 
         const {
-            loadingRowCount,
-            partialLoading
+            loadingRowCount
         } = this.options
 
         this.$tables.each(function() {

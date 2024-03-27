@@ -129,8 +129,6 @@ namespace Incoding.Web.Components.Grid
 
         private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableComponent> tables, ImlBinding bindings)
         {
-            bool infinteScrolling = this._grid.Websocket.Enabled;
-
             var tableDtos = tables.Select(t => t.ToDto()).ToArray();
 
             var gridOptionsDto = new GridDto
@@ -140,9 +138,7 @@ namespace Incoding.Web.Components.Grid
 
                 InfiniteScroll = this._grid.InfiniteScroll.Enabled,
                 ScrollChunkSize = this._grid.InfiniteScroll.ChunkSize,
-
-                PartialLoad = this._grid.Websocket.Enabled,
-                LoadingRowCount = this._grid.Websocket.LoadingRows,
+                LoadingRowCount = this._grid.InfiniteScroll.LoadingRowsCount,
 
                 Splitter = this._grid.Splits.Select(s => new SplitterDto
                 {
@@ -163,23 +159,17 @@ namespace Incoding.Web.Components.Grid
                                             });
 
                                             dsl.Self().JQuery.Call("splitGrid", options);
-
-                                            if (infinteScrolling)
-                                            {
-                                                var chunkSize = this._grid.Websocket.ChunkSize;
-
-                                                dsl.Self().JQuery.PlugIn("websocketLoader", new
-                                                {
-                                                    chunkSize = chunkSize,
-                                                    method = this._grid.Websocket.Method
-                                                });
-                                            }
                                         })
                                         .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
 
             if (bindings != null)
             {
                 initBinding = bindings(initBinding);
+            }
+
+            if (this._grid.DataSource != null)
+            {
+                initBinding = this._grid.DataSource.Bind(initBinding);
             }
 
             return initBinding;

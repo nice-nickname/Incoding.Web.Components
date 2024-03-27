@@ -44,6 +44,11 @@ namespace Incoding.Web.Components.Grid
                 cellTag.Attributes.Add(key, templateValue(template).HtmlContentToString());
             }
 
+            foreach (var tmplAttr in this._cell.IsAttrs)
+            {
+                cellTag.Attributes.Add(tmplAttr(template).HtmlContentToString(), "");
+            }
+
             cellTag.InnerHtml.AppendHtml(this._cell.Content(template));
 
             return cellTag;

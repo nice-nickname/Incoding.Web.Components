@@ -16,8 +16,7 @@
 
                                                                     options.Type = NumericOptions.OfType.Decimal;
                                                                 })
-                                                            </text>)
-                                                        .Attr("excel-field");
+                                                            </text>);
                                                   });
                                  });
 
@@ -40,7 +39,7 @@
 
                         cols.Add().Field(s => s.Amount).Width(70).Totalable();
                         cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
-                        cols.Add().Field(s => s.Balance).Width(70);
+                        cols.Add().Field(s => s.Balance).Width(70).IsAttr(s => s.HasChildren, "disabled");
 
                         cols.Stacked(s => s.Title("Dates"),
                                         cols =>
@@ -89,8 +88,7 @@
             table.Css("table table-bordered table-component")
                  .Rows(row => row.Css("tr-item-calculate")
                                  .Bind(iml => iml.When(JqueryBind.InitIncoding)
-                                                 .OnSuccess(dsl => dsl.Self().JQuery.Call("excelField"))
-                                                 ))
+                                                 .OnSuccess(dsl => dsl.Self().JQuery.Call("excelField"))))
                  .Columns(periodCols);
         });
     })

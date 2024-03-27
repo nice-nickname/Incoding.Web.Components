@@ -76,6 +76,12 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
+        public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
+        {
+            this.Cell.IsAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
+            return this;
+        }
+
         public ColumnBuilder<T> Totalable(bool value = true)
         {
             this.Column.Totalable = value;

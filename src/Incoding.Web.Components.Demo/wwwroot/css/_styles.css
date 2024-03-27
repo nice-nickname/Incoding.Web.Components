@@ -14,8 +14,17 @@
     background-clip: content-box;
 }
 
+.hidden {
+    display: none !important;
+}
 
-.table-component input {
+tr.highlight {
+    background-color: rgb(222, 242, 250) !important;
+
+}
+
+table.table-component button {
     all: unset;
-    width: 100%;
+    background: gray;
+    width: 20px;
 }

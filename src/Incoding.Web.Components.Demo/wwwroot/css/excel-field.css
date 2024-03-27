@@ -1,5 +1,17 @@
-.excel-field {
+/* table inputs */
 
+table.table-component td input {
+    all: unset;
+    box-sizing: border-box;
+
+    width: 100%;
+    padding: 2px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, .2) 0px 1px 1px;
+}
+
+table.table-component td input:focus {
+    background-color: white;
 }
 
 .excel-field input {
@@ -11,13 +23,14 @@
 }
 
 .excel-field:focus,
-.excel-field:focus-visible
+.excel-field:focus-visible,
 .excel-field:has(input:focus),
 .excel-field:has(input:focus-visible) {
-    outline: #8383d7 solid 1px;
-    background-color: #e9e9f5 !important;
+    outline: rgba(0, 171, 218, 0.596) solid 1px;
+    background-color: rgba(0, 169, 218, .16) !important;
+
 }
 
 .excel-field.selected {
-    background-color: #e9e9f5 !important;
+    background-color: rgba(0, 169, 218, .16) !important;
 }

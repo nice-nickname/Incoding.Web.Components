@@ -126,9 +126,9 @@ namespace Incoding.Web.Components.Grid
             return this;
         }
 
-        public IHtmlContent Render(bool useConcurrentRender = false)
+        public IHtmlContent Render(bool concurrentRender = false)
         {
-            return new GridComponentRenderer<T>(this._html, this.Grid, useConcurrentRender).Render();
+            return new GridComponentRenderer<T>(this._html, this.Grid).Render(concurrentRender);
         }
     }
 }

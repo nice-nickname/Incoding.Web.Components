@@ -19,18 +19,15 @@ namespace Incoding.Web.Components.Grid
 
         private readonly IHtmlHelper _html;
 
-        private readonly bool _useConcurrentRender;
-
-        public GridComponentRenderer(IHtmlHelper html, Grid<T> grid, bool useConcurrentRender)
+        public GridComponentRenderer(IHtmlHelper html, Grid<T> grid)
         {
             this._grid = grid;
             this._html = html;
-            this._useConcurrentRender = useConcurrentRender;
         }
 
-        public IHtmlContent Render()
+        public IHtmlContent Render(bool concurrent = false)
         {
-            var tables = this._useConcurrentRender
+            var tables = concurrent
                     ? this._grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
                     : this._grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
 
@@ -52,11 +49,7 @@ namespace Incoding.Web.Components.Grid
             root.Attributes["id"] = this._grid.Id;
             root.AppendAttribute("style", $"width: {this._grid.Width}; height: {this._grid.Height}");
 
-            if (this._grid.Binds != null)
-            {
-                ImlBindingHelper.BindToTag(this._html, root, iml => this._grid.Binds(Bind(tables)));
-            }
-
+            ImlBindingHelper.BindToTag(this._html, root, iml => Bind(tables, this._grid.Binds));
 
             root.Attributes.Merge(this._grid.Attr);
 
@@ -134,7 +127,7 @@ namespace Incoding.Web.Components.Grid
             return renderer.RenderComponent();
         }
 
-        private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableComponent> tables)
+        private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableComponent> tables, ImlBinding bindings)
         {
             bool infinteScrolling = this._grid.Websocket.Enabled;
 
@@ -183,6 +176,11 @@ namespace Incoding.Web.Components.Grid
                                             }
                                         })
                                         .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
+
+            if (bindings != null)
+            {
+                initBinding = bindings(initBinding);
+            }
 
             return initBinding;
         }

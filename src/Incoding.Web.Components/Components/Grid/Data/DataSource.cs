@@ -63,7 +63,6 @@ namespace Incoding.Web.Components.Grid
 
             public Action<IIncodingMetaLanguageCallbackBodyDsl> OnError { get; set; }
 
-
             public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
             {
                 var controller = new IMLGridController(s => s.Self());
@@ -113,6 +112,12 @@ namespace Incoding.Web.Components.Grid
 
             public int ChunkSize { get; set; }
 
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnStart { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnComplete { get; set; }
+
+            public Action<IIncodingMetaLanguageCallbackBodyDsl> OnError { get; set; }
+
             public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
             {
                 var controller = new IMLGridController(s => s.Self());
@@ -122,7 +127,22 @@ namespace Incoding.Web.Components.Grid
                         {
                             chunkSize = ChunkSize,
                             method = Method
-                        }));
+                        }))
+                        .When(Bindings.Grid.Websocket.Start)
+                        .OnSuccess(dsl =>
+                        {
+                            OnStart?.Invoke(dsl);
+                        })
+                        .When(Bindings.Grid.Websocket.Complete)
+                        .OnSuccess(dsl =>
+                        {
+                            OnComplete?.Invoke(dsl);
+                        })
+                        .When(Bindings.Grid.Websocket.Error)
+                        .OnSuccess(dsl =>
+                        {
+                            OnError?.Invoke(dsl);
+                        });
             }
         }
     }

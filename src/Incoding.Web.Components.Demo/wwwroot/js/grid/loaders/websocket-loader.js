@@ -82,26 +82,23 @@ class WebsocketLoader {
     triggerStart() {
         this.splitGrid.dataLoading = true
 
-        this.$root.trigger('websocket-started')
+        this.$root.trigger('websocket-start')
     }
 
     triggerLoad(data) {
         this.splitGrid.appendData(data)
-
-        this.$root.trigger('websocket-load-chunk', {
-            data: data.Items
-        })
     }
 
     triggerComplete() {
         this.splitGrid.dataLoading = false
         this.splitGrid.totals()
 
-        this.$root.trigger('websocket-completed')
+        this.$root.trigger('websocket-complete')
     }
 
     triggerError(err) {
         this.$root.trigger('websocket-error')
+
         console.error('websocket-loader', err)
     }
 }

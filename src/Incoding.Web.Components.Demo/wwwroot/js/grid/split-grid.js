@@ -126,7 +126,11 @@ class SplitGridController {
 
     appendData(data) {
         if (_.isString(data)) {
-            data = JSON.parse(data)
+            data = JSON.parse(data || "[]")
+        }
+
+        if (!data) {
+            data = []
         }
 
         this.data.push(...data);

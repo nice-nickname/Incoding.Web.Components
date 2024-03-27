@@ -10,8 +10,6 @@ namespace Incoding.Web.Components.Grid
     {
         public string Field { get; set; }
 
-        public bool HasCustomContent { get; set; }
-
         public string SpreadField { get; set; }
 
         public int? SpreadIndex { get; set; }
@@ -21,6 +19,12 @@ namespace Incoding.Web.Components.Grid
         public ColumnFormat Format { get; set; }
 
         public Column Column { get; set; }
+
+        /// <summary>
+        /// When `true` indicates that this column is attached to field from data
+        /// or it is custom column (like button, icon, expander)
+        /// </summary>
+        public bool IsValueColumn { get; set; }
     }
 
     public class Cell<T> : Cell

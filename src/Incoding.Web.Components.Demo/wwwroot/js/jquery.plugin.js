@@ -95,7 +95,7 @@
             return
         }
 
-        return this.filter('[data-custom-template!="True"]').each(function () {
+        return this.filter('[data-value-column!="False"]').each(function () {
             const format = this.dataset.format
             const value = this.dataset.value
 

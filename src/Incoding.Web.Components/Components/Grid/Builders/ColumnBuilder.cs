@@ -108,7 +108,7 @@ namespace Incoding.Web.Components.Grid
 
             if (this.Cell.Content == null)
             {
-                Content(tmpl => tmpl.For(field));
+                SetContent(tmpl => tmpl.For(field), isValue: true);
             }
 
             return this.Attr("data-value", tmpl => tmpl.For(field))
@@ -130,7 +130,7 @@ namespace Incoding.Web.Components.Grid
 
             if (this.Cell.Content == null)
             {
-                ContentTemplate(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString(), false);
+                SetContent(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString(), isValue: true);
             }
 
             return this.Attr("data-value", tmpl => tmpl.For(fieldName))
@@ -156,20 +156,20 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnBuilder<T> Content(IHtmlContent content)
         {
-            return this.ContentTemplate(_ => content, true);
+            return this.SetContent(_ => content, isValue: false);
         }
 
         public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
         {
-            return ContentTemplate(contentLambda, true);
+            return SetContent(contentLambda, isValue: false);
         }
 
-        private ColumnBuilder<T> ContentTemplate(TemplateContent<T> contentLambda, bool hasCustomContent)
+        private ColumnBuilder<T> SetContent(TemplateContent<T> contentLambda, bool isValue)
         {
             this.Cell.Content = contentLambda;
-            this.Cell.HasCustomContent = hasCustomContent;
+            this.Cell.IsValueColumn = isValue;
 
-            return this.Attr("data-custom-template", hasCustomContent.ToString());
+            return this.Attr("data-value-column", isValue.ToString());
         }
 
         public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)

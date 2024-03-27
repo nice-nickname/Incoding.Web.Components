@@ -122,7 +122,7 @@ namespace Incoding.Web.Components.Grid
             }
 
             return this.Attr("data-value", tmpl => tmpl.For(field))
-                       .Attr("data-title", tmpl => tmpl.For(field));
+                       .Attr("title", tmpl => tmpl.For(field));
         }
 
         public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
@@ -144,7 +144,7 @@ namespace Incoding.Web.Components.Grid
             }
 
             return this.Attr("data-value", tmpl => tmpl.For(fieldName))
-                       .Attr("data-title", tmpl => tmpl.For(fieldName))
+                       .Attr("title", tmpl => tmpl.For(fieldName))
                        .Type(colType)
                        .Format(colFormat);
 

@@ -82,6 +82,8 @@ class WebsocketLoader {
     triggerStart() {
         this.splitGrid.dataLoading = true
 
+        this.splitGrid.initializeTables()
+
         this.$root.trigger('websocket-start')
     }
 

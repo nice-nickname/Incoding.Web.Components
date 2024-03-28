@@ -123,9 +123,13 @@ class TableController {
         cells.removeAttr('data-format')
     }
 
-    filter(criteria) { }
+    filter(criteria) {
 
-    sort(criteria) { }
+    }
+
+    sort(criteria) {
+
+    }
 
     format() {
         this.$table

@@ -82,7 +82,13 @@ namespace Incoding.Web.Components.Grid
 
         public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
         {
-            this.Cell.IsAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
+            this.Cell.TempalteAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
+            return this;
+        }
+
+        public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> isField, string attr)
+        {
+            this.Cell.TempalteAttrs.Add(tmpl => tmpl.NotInline(isField, $"{attr}"));
             return this;
         }
 

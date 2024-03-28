@@ -29,7 +29,7 @@ namespace Incoding.Web.Components.Grid
 
     public class Cell<T> : Cell
     {
-        public List<TemplateContent<T>> IsAttrs { get; } = new List<TemplateContent<T>>();
+        public List<TemplateContent<T>> TempalteAttrs { get; } = new List<TemplateContent<T>>();
 
         public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
 

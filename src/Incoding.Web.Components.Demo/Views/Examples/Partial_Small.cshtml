@@ -93,8 +93,7 @@
         });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
-                    .OnSuccess(dsl => controller.Init(dsl))
-                    .OnComplete(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba"))))
+                    .OnSuccess(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba"))))
     .InfiniteScrolling(scroll =>
     {
         scroll.ChunkSize = 20;

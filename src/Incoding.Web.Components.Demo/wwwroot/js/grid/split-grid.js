@@ -35,11 +35,13 @@ class SplitGridController {
 
     /**
      * @type { {
-     *  Columns: any[],
-     *  RowTemplate: string,
-     *  LayoutHtml: string,
-     *  NestedField: string,
-     *  NestedTable: any
+     *  columns: any[],
+     *  rowTmpl: string,
+     *  layoutHtml: string,
+     *  dropdownTmpl: string,
+     *  hasDropdown: boolean,
+     *  nestedField: string,
+     *  nested: any
      * }[] }
      */
     structure;
@@ -167,6 +169,10 @@ class SplitGridController {
         }
     }
 
+    rerenderRow(data) {
+
+    }
+
     totals() {
         this.$tables.each((i, table) => {
             let controller = $(table).data('grid')
@@ -208,6 +214,14 @@ class SplitGridController {
         if (this.scrollEnabled) return
 
         this.$scroller.scrollTop(0)
+    }
+
+    collapseAll() {
+
+    }
+
+    expandAll() {
+
     }
 
     isScrollable() {

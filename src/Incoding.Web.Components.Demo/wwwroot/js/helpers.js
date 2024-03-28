@@ -23,4 +23,4 @@ ExecutableHelper.KeyCodes = {
     TAB: 9,
     UP: 38,
     DASH: 189
-}
+};

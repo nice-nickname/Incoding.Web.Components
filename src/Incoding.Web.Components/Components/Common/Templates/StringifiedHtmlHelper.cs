@@ -1,37 +1,36 @@
-namespace Incoding.Web.Components
+namespace Incoding.Web.Components;
+
+#region << Using >>
+
+using System;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public sealed class StringifiedHtmlHelper : IDisposable
 {
-    #region << Using >>
+    private readonly IHtmlHelper _html;
 
-    using System;
-    using System.IO;
-    using System.Text;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    private readonly TextWriter _originWriter;
 
-    #endregion
+    private readonly TextWriter _newWriter;
 
-    public sealed class StringifiedHtmlHelper : IDisposable
+    public TextWriter CurrentWriter => this._newWriter;
+
+    public StringifiedHtmlHelper(IHtmlHelper html, StringBuilder sb)
     {
-        private readonly IHtmlHelper _html;
+        this._html = html;
+        this._originWriter = html.ViewContext.Writer;
 
-        private readonly TextWriter _originWriter;
+        this._newWriter = new StringWriter(sb);
 
-        private readonly TextWriter _newWriter;
+        this._html.ViewContext.Writer = _newWriter;
+    }
 
-        public TextWriter CurrentWriter => this._newWriter;
-
-        public StringifiedHtmlHelper(IHtmlHelper html, StringBuilder sb)
-        {
-            this._html = html;
-            this._originWriter = html.ViewContext.Writer;
-
-            this._newWriter = new StringWriter(sb);
-
-            this._html.ViewContext.Writer = _newWriter;
-        }
-
-        public void Dispose()
-        {
-            this._html.ViewContext.Writer = this._originWriter;
-        }
+    public void Dispose()
+    {
+        this._html.ViewContext.Writer = this._originWriter;
     }
 }

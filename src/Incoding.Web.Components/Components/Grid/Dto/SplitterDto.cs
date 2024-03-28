@@ -1,9 +1,8 @@
-namespace Incoding.Web.Components.Grid
-{
-    public record SplitterDto
-    {
-        public string Min { get; set; }
+namespace Incoding.Web.Components.Grid;
 
-        public string Max { get; set; }
-    }
+public record SplitterDto
+{
+    public string Min { get; set; }
+
+    public string Max { get; set; }
 }

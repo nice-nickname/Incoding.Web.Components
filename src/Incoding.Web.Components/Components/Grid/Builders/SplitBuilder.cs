@@ -1,42 +1,41 @@
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Incoding.Web.Components.Grid
+#endregion
+
+public class SplitBuilder
 {
-    #region << Using >>
+    public Splitter Splitter { get; }
 
-    #endregion
+    public IHtmlHelper Html { get; }
 
-    public class SplitBuilder
+    public SplitBuilder(IHtmlHelper html)
     {
-        public Splitter Splitter { get; }
+        this.Html = html;
+        this.Splitter = new Splitter();
+    }
 
-        public IHtmlHelper Html { get; }
+    public SplitBuilder Min(string width)
+    {
+        this.Splitter.MinWidth = width;
 
-        public SplitBuilder(IHtmlHelper html)
-        {
-            this.Html = html;
-            this.Splitter = new Splitter();
-        }
+        return this;
+    }
 
-        public SplitBuilder Min(string width)
-        {
-            this.Splitter.MinWidth = width;
+    public SplitBuilder Max(string width)
+    {
+        this.Splitter.MaxWidth = width;
 
-            return this;
-        }
+        return this;
+    }
 
-        public SplitBuilder Max(string width)
-        {
-            this.Splitter.MaxWidth = width;
+    public SplitBuilder Width(string width)
+    {
+        this.Splitter.Width = width;
 
-            return this;
-        }
-
-        public SplitBuilder Width(string width)
-        {
-            this.Splitter.Width = width;
-
-            return this;
-        }
+        return this;
     }
 }

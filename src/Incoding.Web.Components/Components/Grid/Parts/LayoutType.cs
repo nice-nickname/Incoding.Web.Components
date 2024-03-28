@@ -1,9 +1,8 @@
-namespace Incoding.Web.Components.Grid
-{
-    public enum LayoutType
-    {
-        Fixed,
+namespace Incoding.Web.Components.Grid;
 
-        Auto
-    }
+public enum LayoutType
+{
+    Fixed,
+
+    Auto
 }

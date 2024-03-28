@@ -1,40 +1,39 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public class TableSplitBuilder<T>
 {
-    #region << Using >>
+    public List<Table<T>> Tables { get; }
 
-    using System;
-    using System.Collections.Generic;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    public List<Splitter> Splits { get; }
 
-    #endregion
+    public IHtmlHelper Html { get; }
 
-    public class TableSplitBuilder<T>
+    public TableSplitBuilder(IHtmlHelper html)
     {
-        public List<Table<T>> Tables { get; }
+        this.Html = html;
 
-        public List<Splitter> Splits { get; }
+        this.Tables = new List<Table<T>>();
+        this.Splits = new List<Splitter>();
+    }
 
-        public IHtmlHelper Html { get; }
+    public SplitBuilder Add(string splitId, Action<TableBuilder<T>> buildAction)
+    {
+        var tableBuilder = new TableBuilder<T>(this.Html, splitId);
+        var splitBuilder = new SplitBuilder(this.Html);
 
-        public TableSplitBuilder(IHtmlHelper html)
-        {
-            this.Html = html;
+        buildAction(tableBuilder);
 
-            this.Tables = new List<Table<T>>();
-            this.Splits = new List<Splitter>();
-        }
+        this.Tables.Add(tableBuilder.Table);
+        this.Splits.Add(splitBuilder.Splitter);
 
-        public SplitBuilder Add(string splitId, Action<TableBuilder<T>> buildAction)
-        {
-            var tableBuilder = new TableBuilder<T>(this.Html, splitId);
-            var splitBuilder = new SplitBuilder(this.Html);
-
-            buildAction(tableBuilder);
-
-            this.Tables.Add(tableBuilder.Table);
-            this.Splits.Add(splitBuilder.Splitter);
-
-            return splitBuilder;
-        }
+        return splitBuilder;
     }
 }

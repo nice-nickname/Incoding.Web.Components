@@ -1,15 +1,14 @@
-namespace Incoding.Web.Components
-{
-    #region << Using >>
+namespace Incoding.Web.Components;
 
-    using Incoding.Web.MvcContrib;
-    using Microsoft.AspNetCore.Html;
+#region << Using >>
 
-    #endregion
+using Incoding.Web.MvcContrib;
+using Microsoft.AspNetCore.Html;
 
-    public delegate IHtmlContent TemplateContent<T>(ITemplateSyntax<T> tmpl);
+#endregion
 
-    public delegate IIncodingMetaLanguageEventBuilderDsl ImlBinding(IIncodingMetaLanguageEventBuilderDsl dsl);
+public delegate IHtmlContent TemplateContent<T>(ITemplateSyntax<T> tmpl);
 
-    public delegate IIncodingMetaLanguageEventBuilderDsl ImlTemplateBinding<T>(IIncodingMetaLanguageEventBuilderDsl dsl, ITemplateSyntax<T> tmpl);
-}
+public delegate IIncodingMetaLanguageEventBuilderDsl ImlBinding(IIncodingMetaLanguageEventBuilderDsl dsl);
+
+public delegate IIncodingMetaLanguageEventBuilderDsl ImlTemplateBinding<T>(IIncodingMetaLanguageEventBuilderDsl dsl, ITemplateSyntax<T> tmpl);

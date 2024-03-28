@@ -1,59 +1,58 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public class RowBuilder<T>
 {
-    #region << Using >>
+    public IHtmlHelper Html { get; }
 
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    public Row<T> Row { get; }
 
-    #endregion
-
-    public class RowBuilder<T>
+    public RowBuilder(IHtmlHelper html)
     {
-        public IHtmlHelper Html { get; }
+        this.Row = new Row<T>();
+        this.Html = html;
+    }
 
-        public Row<T> Row { get; }
-
-        public RowBuilder(IHtmlHelper html)
+    public RowBuilder<T> Css(string css, bool replace = false)
+    {
+        if (replace)
         {
-            this.Row = new Row<T>();
-            this.Html = html;
+            this.Row.Css = string.Empty;
         }
 
-        public RowBuilder<T> Css(string css, bool replace = false)
-        {
-            if (replace)
-            {
-                this.Row.Css = string.Empty;
-            }
+        this.Row.Css += " " + css;
 
-            this.Row.Css += " " + css;
+        return this;
+    }
 
-            return this;
-        }
+    public RowBuilder<T> Attr(string attr, string value)
+    {
+        return Attr(attr, _ => value.ToHtmlString());
+    }
 
-        public RowBuilder<T> Attr(string attr, string value)
-        {
-            return Attr(attr, _ => value.ToHtmlString());
-        }
+    public RowBuilder<T> Attr(string attr, TemplateContent<T> value)
+    {
+        this.Row.Attr[attr] = value;
 
-        public RowBuilder<T> Attr(string attr, TemplateContent<T> value)
-        {
-            this.Row.Attr[attr] = value;
+        return this;
+    }
 
-            return this;
-        }
+    public RowBuilder<T> Bind(ImlBinding binding)
+    {
+        this.Row.Binding = (iml, tmpl) => binding(iml);
 
-        public RowBuilder<T> Bind(ImlBinding binding)
-        {
-            this.Row.Binding = (iml, tmpl) => binding(iml);
+        return this;
+    }
 
-            return this;
-        }
+    public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
+    {
+        this.Row.Binding = binding;
 
-        public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
-        {
-            this.Row.Binding = binding;
-
-            return this;
-        }
+        return this;
     }
 }

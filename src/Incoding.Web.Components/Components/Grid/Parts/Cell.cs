@@ -1,40 +1,39 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System.Collections.Generic;
+
+#endregion
+
+public class Cell
 {
-    #region << Using >>
+    public string Field { get; set; }
 
-    using System.Collections.Generic;
+    public string SpreadField { get; set; }
 
-    #endregion
+    public int? SpreadIndex { get; set; }
 
-    public class Cell
-    {
-        public string Field { get; set; }
+    public ColumnType Type { get; set; }
 
-        public string SpreadField { get; set; }
+    public ColumnFormat Format { get; set; }
 
-        public int? SpreadIndex { get; set; }
+    public Column Column { get; set; }
 
-        public ColumnType Type { get; set; }
+    /// <summary>
+    /// When `true` indicates that this column is attached to field from data
+    /// or it is custom column (like button, icon, expander)
+    /// </summary>
+    public bool IsValueColumn { get; set; }
+}
 
-        public ColumnFormat Format { get; set; }
+public class Cell<T> : Cell
+{
+    public List<TemplateContent<T>> TempalteAttrs { get; } = new List<TemplateContent<T>>();
 
-        public Column Column { get; set; }
+    public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
 
-        /// <summary>
-        /// When `true` indicates that this column is attached to field from data
-        /// or it is custom column (like button, icon, expander)
-        /// </summary>
-        public bool IsValueColumn { get; set; }
-    }
+    public TemplateContent<T> Content { get; set; }
 
-    public class Cell<T> : Cell
-    {
-        public List<TemplateContent<T>> TempalteAttrs { get; } = new List<TemplateContent<T>>();
-
-        public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
-
-        public TemplateContent<T> Content { get; set; }
-
-        public ImlTemplateBinding<T> Binding { get; internal set; }
-    }
+    public ImlTemplateBinding<T> Binding { get; internal set; }
 }

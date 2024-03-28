@@ -1,25 +1,23 @@
+namespace Incoding.Web.Components.Grid;
 
-namespace Incoding.Web.Components.Grid
+#region << Using >>
+
+using System.Collections.Generic;
+
+#endregion
+
+public class Row<T>
 {
-    #region << Using >>
+    public string Css { get; set; } = string.Empty;
 
-    using System.Collections.Generic;
+    public ImlTemplateBinding<T> Binding { get; set; } = null;
 
-    #endregion
+    public TemplateContent<T> DropdownContent { get; set; } = null;
 
-    public class Row<T>
+    public IDictionary<string, TemplateContent<T>> Attr { get; } = new Dictionary<string, TemplateContent<T>>();
+
+    public Row()
     {
-        public string Css { get; set; } = string.Empty;
-
-        public ImlTemplateBinding<T> Binding { get; set; } = null;
-
-        public TemplateContent<T> DropdownContent { get; set; } = null;
-
-        public IDictionary<string, TemplateContent<T>> Attr { get; } = new Dictionary<string, TemplateContent<T>>();
-
-        public Row()
-        {
-            this.Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
-        }
+        this.Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
     }
 }

@@ -1,130 +1,129 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System;
+using Incoding.Web.Extensions;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public class GridBuilder<T>
 {
-    #region << Using >>
+    public Grid<T> Grid { get; }
 
-    using System;
-    using Incoding.Web.Extensions;
-    using Microsoft.AspNetCore.Html;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    public IHtmlHelper Html { get; }
 
-    #endregion
-
-    public class GridBuilder<T>
+    public GridBuilder(IHtmlHelper html, string id)
     {
-        public Grid<T> Grid { get; }
+        this.Html = html;
+        this.Grid = new Grid<T>(id);
+    }
 
-        public IHtmlHelper Html { get; }
+    public GridBuilder<T> Width(string width)
+    {
+        this.Grid.Width = width;
 
-        public GridBuilder(IHtmlHelper html, string id)
+        return this;
+    }
+
+    public GridBuilder<T> Height(string height)
+    {
+        this.Grid.Height = height;
+
+        return this;
+    }
+
+    public GridBuilder<T> Css(string css)
+    {
+        this.Grid.Css = css;
+
+        return this;
+    }
+
+    public GridBuilder<T> Attr(string attr, string value)
+    {
+        this.Grid.Attr[attr] = value;
+
+        return this;
+    }
+
+    public GridBuilder<T> Attr(object attrs)
+    {
+        foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
         {
-            this.Html = html;
-            this.Grid = new Grid<T>(id);
+            this.Attr(key, value.ToString());
         }
 
-        public GridBuilder<T> Width(string width)
+        return this;
+    }
+
+    public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> buildAction)
+    {
+        buildAction(this.Grid.InfiniteScroll);
+        this.Grid.InfiniteScroll.Enabled = true;
+
+        return this;
+    }
+
+    public GridBuilder<T> UI(Action<UIOptions> buildAction)
+    {
+        buildAction(this.Grid.UI);
+
+        return this;
+    }
+
+    public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
+    {
+        var splitter = new TableSplitBuilder<T>(this.Html);
+
+        buildAction(splitter);
+
+        this.Grid.Tables.AddRange(splitter.Tables);
+        this.Grid.Splits.AddRange(splitter.Splits);
+
+        return this;
+    }
+
+    public GridBuilder<T> Table(Action<TableBuilder<T>> buildAction)
+    {
+        return Split(splits =>
         {
-            this.Grid.Width = width;
+            splits.Add(this.Grid.Id + "-table", buildAction);
+        });
+    }
 
-            return this;
-        }
+    public GridBuilder<T> Bind(ImlBinding binding)
+    {
+        this.Grid.Binds = binding;
 
-        public GridBuilder<T> Height(string height)
-        {
-            this.Grid.Height = height;
+        return this;
+    }
 
-            return this;
-        }
+    public GridBuilder<T> Empty(IHtmlContent content)
+    {
+        this.Grid.EmptyContent = content;
 
-        public GridBuilder<T> Css(string css)
-        {
-            this.Grid.Css = css;
+        return this;
+    }
 
-            return this;
-        }
+    public GridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
+    {
+        this.Grid.EmptyContent = content(null);
 
-        public GridBuilder<T> Attr(string attr, string value)
-        {
-            this.Grid.Attr[attr] = value;
+        return this;
+    }
 
-            return this;
-        }
+    public GridBuilder<T> DataSource(IGridDataSource dataSource)
+    {
+        this.Grid.DataSource = dataSource;
 
-        public GridBuilder<T> Attr(object attrs)
-        {
-            foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
-            {
-                this.Attr(key, value.ToString());
-            }
+        return this;
+    }
 
-            return this;
-        }
-
-        public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> buildAction)
-        {
-            buildAction(this.Grid.InfiniteScroll);
-            this.Grid.InfiniteScroll.Enabled = true;
-
-            return this;
-        }
-
-        public GridBuilder<T> UI(Action<UIOptions> buildAction)
-        {
-            buildAction(this.Grid.UI);
-
-            return this;
-        }
-
-        public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
-        {
-            var splitter = new TableSplitBuilder<T>(this.Html);
-
-            buildAction(splitter);
-
-            this.Grid.Tables.AddRange(splitter.Tables);
-            this.Grid.Splits.AddRange(splitter.Splits);
-
-            return this;
-        }
-
-        public GridBuilder<T> Table(Action<TableBuilder<T>> buildAction)
-        {
-            return Split(splits =>
-            {
-                splits.Add(this.Grid.Id + "-table", buildAction);
-            });
-        }
-
-        public GridBuilder<T> Bind(ImlBinding binding)
-        {
-            this.Grid.Binds = binding;
-
-            return this;
-        }
-
-        public GridBuilder<T> Empty(IHtmlContent content)
-        {
-            this.Grid.EmptyContent = content;
-
-            return this;
-        }
-
-        public GridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
-        {
-            this.Grid.EmptyContent = content(null);
-
-            return this;
-        }
-
-        public GridBuilder<T> DataSource(IGridDataSource dataSource)
-        {
-            this.Grid.DataSource = dataSource;
-
-            return this;
-        }
-
-        public IHtmlContent Render(bool useConcurrentRender = false)
-        {
-            return new GridComponentRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
-        }
+    public IHtmlContent Render(bool useConcurrentRender = false)
+    {
+        return new GridComponentRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
     }
 }

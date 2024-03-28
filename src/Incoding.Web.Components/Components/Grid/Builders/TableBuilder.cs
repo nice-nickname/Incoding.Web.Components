@@ -1,112 +1,111 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using Incoding.Web.Extensions;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public class TableBuilder<T>
 {
-    #region << Using >>
+    public Table<T> Table { get; }
 
-    using System;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
-    using Incoding.Web.Extensions;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    public IHtmlHelper Html { get; }
 
-    #endregion
-
-    public class TableBuilder<T>
+    public TableBuilder(IHtmlHelper html, string id)
     {
-        public Table<T> Table { get; }
+        this.Html = html;
+        Table = new Table<T>(id);
+    }
 
-        public IHtmlHelper Html { get; }
-
-        public TableBuilder(IHtmlHelper html, string id)
+    public TableBuilder<T> Css(string css, bool replace = false)
+    {
+        if (replace)
         {
-            this.Html = html;
-            Table = new Table<T>(id);
+            this.Table.Css = string.Empty;
         }
 
-        public TableBuilder<T> Css(string css, bool replace = false)
+        this.Table.Css += " " + css;
+
+        return this;
+    }
+
+    public TableBuilder<T> Attr(string attr, string value)
+    {
+        this.Table.Attr[attr] = value;
+
+        return this;
+    }
+
+    public TableBuilder<T> Attr(object attrs)
+    {
+        foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
         {
-            if (replace)
-            {
-                this.Table.Css = string.Empty;
-            }
-
-            this.Table.Css += " " + css;
-
-            return this;
+            this.Attr(key, value.ToString());
         }
 
-        public TableBuilder<T> Attr(string attr, string value)
-        {
-            this.Table.Attr[attr] = value;
+        return this;
+    }
 
-            return this;
-        }
+    public TableBuilder<T> Layout(LayoutType layout)
+    {
+        this.Table.Layout = layout;
 
-        public TableBuilder<T> Attr(object attrs)
-        {
-            foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
-            {
-                this.Attr(key, value.ToString());
-            }
+        return this;
+    }
 
-            return this;
-        }
+    public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
+    {
+        var clb = new ColumnListBuilder<T>(this.Html);
+        buildAction(clb);
 
-        public TableBuilder<T> Layout(LayoutType layout)
-        {
-            this.Table.Layout = layout;
+        this.Table.Columns = clb.Columns;
+        this.Table.Cells = clb.Cells;
+        this.Table.CellRenderers = clb.CellRenderers;
 
-            return this;
-        }
+        return this;
+    }
 
-        public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
-        {
-            var clb = new ColumnListBuilder<T>(this.Html);
-            buildAction(clb);
+    public TableBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
+    {
+        var rb = new RowBuilder<T>(this.Html);
+        buildAction(rb);
 
-            this.Table.Columns = clb.Columns;
-            this.Table.Cells = clb.Cells;
-            this.Table.CellRenderers = clb.CellRenderers;
+        this.Table.Row = rb.Row;
 
-            return this;
-        }
+        return this;
+    }
 
-        public TableBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
-        {
-            var rb = new RowBuilder<T>(this.Html);
-            buildAction(rb);
+    public TableBuilder<T> Bind(ImlBinding bindings)
+    {
+        this.Table.Binding = bindings;
 
-            this.Table.Row = rb.Row;
+        return this;
+    }
 
-            return this;
-        }
+    public TableBuilder<T> DropdownTmpl(TemplateContent<T> contentAction)
+    {
+        this.Table.Row.DropdownContent = contentAction;
 
-        public TableBuilder<T> Bind(ImlBinding bindings)
-        {
-            this.Table.Binding = bindings;
+        return this;
+    }
 
-            return this;
-        }
+    public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
 
-        public TableBuilder<T> DropdownTmpl(TemplateContent<T> contentAction)
-        {
-            this.Table.Row.DropdownContent = contentAction;
+    {
+        var tableBuilder = new TableBuilder<U>(this.Html, "");
+        tableBuilder.Table.InheritStyles(this.Table);
 
-            return this;
-        }
+        buildAction(tableBuilder);
 
-        public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
+        var fieldName = ExpressionHelper.GetFieldName(nestedField);
+        this.Table.NestedField = fieldName;
+        this.Table.NestedTable = new TableRenderer<U>(this.Html, tableBuilder.Table).RenderComponent();
 
-        {
-            var tableBuilder = new TableBuilder<U>(this.Html, "");
-            tableBuilder.Table.InheritStyles(this.Table);
-
-            buildAction(tableBuilder);
-
-            var fieldName = ExpressionHelper.GetFieldName(nestedField);
-            this.Table.NestedField = fieldName;
-            this.Table.NestedTable = new TableRenderer<U>(this.Html, tableBuilder.Table).RenderComponent();
-
-            return this;
-        }
+        return this;
     }
 }

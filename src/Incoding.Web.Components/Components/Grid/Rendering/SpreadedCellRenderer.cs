@@ -1,39 +1,37 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
+using Incoding.Web.MvcContrib;
+
+#endregion
+
+public class SpreadedCellRenderer<T, TSpread> : ICellRenderer<T>
 {
-    #region << Using >>
+    private readonly List<ICellRenderer<TSpread>> _renderers;
 
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq.Expressions;
-    using Incoding.Web.MvcContrib;
+    private readonly Expression<Func<T, IEnumerable<TSpread>>> _spreadedField;
 
-    #endregion
-
-    public class SpreadedCellRenderer<T, TSpread> : ICellRenderer<T>
+    public SpreadedCellRenderer(
+            Expression<Func<T, IEnumerable<TSpread>>> spreadedField,
+            List<ICellRenderer<TSpread>> renderers)
     {
-        private readonly List<ICellRenderer<TSpread>> _renderers;
+        this._renderers = renderers;
+        this._spreadedField = spreadedField;
+    }
 
-        private readonly Expression<Func<T, IEnumerable<TSpread>>> _spreadedField;
-
-        public SpreadedCellRenderer(
-                Expression<Func<T, IEnumerable<TSpread>>> spreadedField,
-                List<ICellRenderer<TSpread>> renderers)
+    public void Render(ITemplateSyntax<T> template, TextWriter content)
+    {
+        using (var spreadEach = template.ForEach(this._spreadedField))
         {
-            this._renderers = renderers;
-            this._spreadedField = spreadedField;
-        }
-
-        public void Render(ITemplateSyntax<T> template, TextWriter content)
-        {
-            using (var spreadEach = template.ForEach(this._spreadedField))
+            foreach (var cellRenderer in this._renderers)
             {
-                foreach (var cellRenderer in this._renderers)
-                {
-                    cellRenderer.Render(spreadEach, content);
-                }
+                cellRenderer.Render(spreadEach, content);
             }
         }
     }
-
 }

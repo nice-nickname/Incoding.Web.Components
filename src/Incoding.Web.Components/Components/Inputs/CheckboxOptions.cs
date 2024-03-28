@@ -1,19 +1,19 @@
-namespace Incoding.Web.Components
+namespace Incoding.Web.Components;
+
+#region << Using >>
+
+using System;
+using Incoding.Web.MvcContrib;
+
+#endregion
+
+public record CheckboxOptions
 {
-    #region << Using >>
+    public Action<IIncodingMetaLanguageCallbackBodyDsl> OnUnchecked { get; set; }
 
-    using System;
-    using Incoding.Web.MvcContrib;
-    #endregion
+    public Action<IIncodingMetaLanguageCallbackBodyDsl> OnChecked { get; set; }
 
-    public record CheckboxOptions
-    {
-        public Action<IIncodingMetaLanguageCallbackBodyDsl> OnUnchecked { get; set; }
+    public bool IsChecked { get; set; }
 
-        public Action<IIncodingMetaLanguageCallbackBodyDsl> OnChecked { get; set; }
-
-        public bool IsChecked { get; set; }
-
-        public InputOptions Input = new();
-    }
+    public InputOptions Input = new();
 }

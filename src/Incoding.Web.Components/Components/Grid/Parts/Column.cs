@@ -1,29 +1,28 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using System.Collections.Generic;
+
+#endregion
+
+public class Column
 {
-    #region << Using >>
+    public int Index { get; set; }
 
-    using System.Collections.Generic;
+    public int? Width { get; set; }
 
-    #endregion
+    public string Title { get; set; }
 
-    public class Column
-    {
-        public int Index { get; set; }
+    public string Css { get; set; } = string.Empty;
 
-        public int? Width { get; set; }
+    public bool Totalable { get; set; }
 
-        public string Title { get; set; }
+    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 
-        public string Css { get; set; } = string.Empty;
+    public IDictionary<string, string> FooterAttr { get; } = new Dictionary<string, string>();
 
-        public bool Totalable { get; set; }
+    public List<Column> Columns { get; } = new();
 
-        public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
-
-        public IDictionary<string, string> FooterAttr { get; } = new Dictionary<string, string>();
-
-        public List<Column> Columns { get; } = new();
-
-        public Cell Cell { get; set; }
-    }
+    public Cell Cell { get; set; }
 }

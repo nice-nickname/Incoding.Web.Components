@@ -1,39 +1,38 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+public enum ColumnType
 {
-    public enum ColumnType
-    {
-        String,
+    String,
 
-        Numeric,
+    Numeric,
 
-        Datetime,
+    Datetime,
 
-        Boolean,
-    }
+    Boolean,
+}
 
-    public enum ColumnFormat
-    {
-        Empty,
+public enum ColumnFormat
+{
+    Empty,
 
-        Currency,
+    Currency,
 
-        Percentage,
+    Percentage,
 
-        Numeric,
+    Numeric,
 
-        DateTime
-    }
+    DateTime
+}
 
-    public static class ColumnTypeExtension
-    {
-        public static ColumnFormat ToColumnFormat(this ColumnType type) =>
-                type switch
-                {
-                        ColumnType.Numeric => ColumnFormat.Numeric,
-                        ColumnType.Datetime => ColumnFormat.DateTime,
-                        ColumnType.String => ColumnFormat.Empty,
-                        ColumnType.Boolean => ColumnFormat.Empty,
-                        _ => ColumnFormat.Empty
-                };
-    }
+public static class ColumnTypeExtension
+{
+    public static ColumnFormat ToColumnFormat(this ColumnType type) =>
+            type switch
+            {
+                    ColumnType.Numeric => ColumnFormat.Numeric,
+                    ColumnType.Datetime => ColumnFormat.DateTime,
+                    ColumnType.String => ColumnFormat.Empty,
+                    ColumnType.Boolean => ColumnFormat.Empty,
+                    _ => ColumnFormat.Empty
+            };
 }

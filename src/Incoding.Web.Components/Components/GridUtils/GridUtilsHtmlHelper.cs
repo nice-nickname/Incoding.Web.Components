@@ -1,18 +1,17 @@
-namespace Incoding.Web.Components.Grid
+namespace Incoding.Web.Components.Grid;
+
+#region << Using >>
+
+using Microsoft.AspNetCore.Mvc.Rendering;
+
+#endregion
+
+public partial class GridUtilsHtmlHelper
 {
-    #region << Using >>
+    private readonly IHtmlHelper _html;
 
-    using Microsoft.AspNetCore.Mvc.Rendering;
-
-    #endregion
-
-    public partial class GridUtilsHtmlHelper
+    public GridUtilsHtmlHelper(IHtmlHelper html)
     {
-        private readonly IHtmlHelper _html;
-
-        public GridUtilsHtmlHelper(IHtmlHelper html)
-        {
-            this._html = html;
-        }
+        this._html = html;
     }
 }

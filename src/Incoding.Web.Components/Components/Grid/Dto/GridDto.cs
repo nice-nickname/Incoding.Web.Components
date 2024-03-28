@@ -2,10 +2,6 @@ namespace Incoding.Web.Components.Grid;
 
 public record GridDto
 {
-    public bool HighlightRows { get; set; }
-
-    public bool CascadeEvents { get; set; }
-
     public bool InfiniteScroll { get; set; }
 
     public int ScrollChunkSize { get; set; }
@@ -15,6 +11,8 @@ public record GridDto
 
     public int LoadingRowCount { get; set; }
 
+
+    public TableOptionsDto Table { get; set; }
 
     public GridStructureDto[] Structure { get; set; }
 

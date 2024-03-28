@@ -133,8 +133,12 @@ public class GridComponentRenderer<T>
 
         var gridOptionsDto = new GridDto
         {
-            CascadeEvents = this._grid.UI.CascadeEvents,
-            HighlightRows = this._grid.UI.HighlightRowsOnHover,
+            Table = new TableOptionsDto
+            {
+                CascadeEvents = this._grid.UI.CascadeEvents,
+                HighlightRows = this._grid.UI.HighlightRowsOnHover,
+                PlaceholderRows = this._grid.UI.PlaceholderRows
+            },
 
             InfiniteScroll = this._grid.InfiniteScroll.Enabled,
             ScrollChunkSize = this._grid.InfiniteScroll.ChunkSize,

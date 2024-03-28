@@ -10,5 +10,5 @@ public class UIOptions
 
     public bool CascadeEvents { get; set; }
 
-    public int LoadingRowsCount { get; set; }
+    public int PlaceholderRows { get; set; } = 20;
 }

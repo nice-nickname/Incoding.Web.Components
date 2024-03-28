@@ -47,18 +47,28 @@ class TableController {
 
     /**
      * @type { {
+     *  cascadeEvents: boolean
+     *  highlightRows: boolean
+     *  placeholderRows: number
+     * } }
+     */
+    options;
+
+    /**
+     * @type { {
      *  [key: string]: boolean
      * } }
      */
     nested
 
-    constructor(element, structure, data, parent) {
+    constructor(element, structure, options, data, parent) {
         this.$table = $(element);
         this.$thead = $(element).find('thead')
         this.$tbody = $(element).find('tbody')
         this.$tfoot = $(element).find('tfoot')
 
         this.structure = structure;
+        this.options = options
         this.data = data;
         this.parent = parent
 
@@ -66,7 +76,9 @@ class TableController {
 
         this.nested = { }
 
-        this.#hoverableRows()
+        if (this.options.highlightRows) {
+            this.#hoverableRows()
+        }
     }
 
     expand(rowId) {
@@ -184,7 +196,7 @@ class TableController {
 
         $row[0].after(tr)
 
-        const nestedController = new TableController($table[0], nestedTable, childData, parentData)
+        const nestedController = new TableController($table[0], nestedTable, this.options, childData, parentData)
         $table.data('grid', nestedController)
 
         parentData.siblings.push(nestedController)

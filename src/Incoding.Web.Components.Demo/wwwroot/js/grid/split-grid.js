@@ -47,7 +47,11 @@ class SplitGridController {
     structure;
 
     /**
-     * @type { }
+     * @type { {
+     *  infiniteScroll: boolean
+     *  loadingRowCount: number
+     *  scrollChunkSize: number
+     * } }
      */
     options;
 
@@ -104,7 +108,7 @@ class SplitGridController {
             let controller = $(table).data('grid')
 
             if (!controller) {
-                controller = new TableController(table, this.structure[i], this.data, parentData)
+                controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
             }
 
             controller.data = this.data
@@ -114,7 +118,7 @@ class SplitGridController {
 
             controller.removeAllRows()
 
-            controller.renderPlaceholderRows(20)
+            controller.renderPlaceholderRows(this.options.table.placeholderRows)
 
             controller.hideTotals()
         })

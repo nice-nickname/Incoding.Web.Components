@@ -106,7 +106,7 @@ public static class DataSource
         }
     }
 
-    public class Websocket : IGridDataSource
+    public class SignalR : IGridDataSource
     {
         public string Method { get; set; }
 

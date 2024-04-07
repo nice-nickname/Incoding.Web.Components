@@ -33,9 +33,16 @@ public static class TagBuilderExtension
 {
     public static void AppendStyle(this TagBuilder tag, CssStyling style, string value)
     {
-        var styleKey = style.GetAttribute<DescriptionAttribute>().Description;
+        var styleKey = style.GetAttribute<DescriptionAttribute>()?.Description;
 
-        var styleAttr = $"{styleKey}: {value};";
+        styleKey ??= style.ToStringLower();
+
+        tag.AppendStyle(styleKey, value);
+    }
+
+    public static void AppendStyle(this TagBuilder tag, string style, string value)
+    {
+        var styleAttr = $"{style}: {value};";
 
         tag.AppendAttribute(HtmlAttribute.Style.ToStringLower(), styleAttr);
     }

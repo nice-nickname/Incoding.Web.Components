@@ -95,7 +95,7 @@
             return
         }
 
-        return this.filter('[data-value-column!="False"]').each(function () {
+        return this.filter(':not(:has(button))').filter(':not(:has(input))').each(function () {
             const format = this.dataset.format
             const value = this.dataset.value
 

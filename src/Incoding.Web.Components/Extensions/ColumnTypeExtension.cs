@@ -11,4 +11,16 @@ public static class ColumnTypeExtension
                     ColumnType.Boolean => ColumnFormat.Empty,
                     _ => ColumnFormat.Empty
             };
+
+    public static ColumnType ToColumnType(this ColumnFormat format) =>
+            format switch
+            {
+                    ColumnFormat.Currency => ColumnType.Numeric,
+                    ColumnFormat.Percentage => ColumnType.Numeric,
+                    ColumnFormat.Numeric => ColumnType.Numeric,
+
+                    ColumnFormat.DateTime => ColumnType.Datetime,
+
+                    _ => ColumnType.String
+            };
 }

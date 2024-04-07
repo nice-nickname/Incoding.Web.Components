@@ -4,7 +4,6 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Linq.Expressions;
-using FluentValidation.Validators;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -38,13 +37,8 @@ public class ColumnBuilder<T>
             .FooterAttr("data-index", index.ToString());
     }
 
-    public ColumnBuilder<T> Css(string css, bool replace = false)
+    public ColumnBuilder<T> Css(string css)
     {
-        if (replace)
-        {
-            this.Column.Css = string.Empty;
-        }
-
         this.Column.Css += " " + css;
 
         return this;
@@ -83,13 +77,13 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TempalteAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
+        this.Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
         return this;
     }
 
     public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TempalteAttrs.Add(tmpl => tmpl.NotInline(isField, $"{attr}"));
+        this.Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, $"{attr}"));
         return this;
     }
 
@@ -125,7 +119,7 @@ public class ColumnBuilder<T>
 
         if (this.Cell.Content == null)
         {
-            SetContent(tmpl => tmpl.For(field), isValue: true);
+            Content(tmpl => tmpl.For(field));
         }
 
         return this.Attr("data-value", tmpl => tmpl.For(field))
@@ -147,7 +141,7 @@ public class ColumnBuilder<T>
 
         if (this.Cell.Content == null)
         {
-            SetContent(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString(), isValue: true);
+            Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
         }
 
         return this.Attr("data-value", tmpl => tmpl.For(fieldName))
@@ -180,20 +174,14 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Content(IHtmlContent content)
     {
-        return this.SetContent(_ => content, isValue: false);
+        return this.Content(_ => content);
     }
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        return SetContent(contentLambda, isValue: false);
-    }
-
-    private ColumnBuilder<T> SetContent(TemplateContent<T> contentLambda, bool isValue)
-    {
         this.Cell.Content = contentLambda;
-        this.Cell.IsValueColumn = isValue;
 
-        return this.Attr("data-value-column", isValue.ToString());
+        return this;
     }
 
     public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)

@@ -18,20 +18,14 @@ public class Cell
 
     public ColumnFormat Format { get; set; }
 
-    public ColumnAlignment Alignment { get; set; } = ColumnAlignment.Center;
+    public ColumnAlignment Alignment { get; set; } = ColumnAlignment.Left;
 
     public Column Column { get; set; }
-
-    /// <summary>
-    /// When `true` indicates that this column is attached to field from data
-    /// or it is custom column (like button, icon, expander)
-    /// </summary>
-    public bool IsValueColumn { get; set; }
 }
 
 public class Cell<T> : Cell
 {
-    public List<TemplateContent<T>> TempalteAttrs { get; } = new List<TemplateContent<T>>();
+    public List<TemplateContent<T>> TemplateAttrs { get; } = new List<TemplateContent<T>>();
 
     public IDictionary<string, TemplateContent<T>> Attrs { get; } = new Dictionary<string, TemplateContent<T>>();
 

@@ -22,13 +22,8 @@ public class TableBuilder<T>
         Table = new Table<T>(id);
     }
 
-    public TableBuilder<T> Css(string css, bool replace = false)
+    public TableBuilder<T> Css(string css)
     {
-        if (replace)
-        {
-            this.Table.Css = string.Empty;
-        }
-
         this.Table.Css += " " + css;
 
         return this;

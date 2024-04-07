@@ -11,7 +11,7 @@ public class Grid<T>
 {
     public string Id { get; }
 
-    public string Css { get; set; }
+    public string Css { get; set; } = string.Empty;
 
     public string Width { get; set; } = "100%";
 
@@ -25,7 +25,7 @@ public class Grid<T>
 
     public IHtmlContent EmptyContent { get; set; }
 
-    public InfiniteScrollOptions InfiniteScroll { get; set; } = new();
+    public InfiniteScrollOptions InfiniteScroll { get; set; }
 
     public UIOptions UI { get; set; } = new();
 

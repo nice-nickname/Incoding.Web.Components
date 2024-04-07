@@ -36,7 +36,7 @@ public class SingleCellRenderer<T> : ICellRenderer<T>
 
     private TagBuilder RenderCell(ITemplateSyntax<T> template)
     {
-        var cellTag = new TagBuilder("td");
+        var cellTag = TagsFactory.Td();
         cellTag.AddCssClass(this._cell.Column.Css);
 
         cellTag.AppendStyle(CssStyling.TextAlign, this._cell.Alignment.ToStringLower());
@@ -46,7 +46,7 @@ public class SingleCellRenderer<T> : ICellRenderer<T>
             cellTag.Attributes.Add(key, templateValue(template).HtmlContentToString());
         }
 
-        foreach (var tmplAttr in this._cell.TempalteAttrs)
+        foreach (var tmplAttr in this._cell.TemplateAttrs)
         {
             cellTag.Attributes.Add(tmplAttr(template).HtmlContentToString(), "");
         }

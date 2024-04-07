@@ -18,13 +18,8 @@ public class RowBuilder<T>
         this.Html = html;
     }
 
-    public RowBuilder<T> Css(string css, bool replace = false)
+    public RowBuilder<T> Css(string css)
     {
-        if (replace)
-        {
-            this.Row.Css = string.Empty;
-        }
-
         this.Row.Css += " " + css;
 
         return this;

@@ -1,5 +1,7 @@
 namespace Incoding.Web.Components.Grid;
 
+using System;
+
 #region << Using >>
 
 using System.Collections.Generic;
@@ -28,10 +30,10 @@ public class TableRenderer<T>
     public TableComponent RenderComponent()
     {
         var rowTemplate = RenderRowTemplate();
-        var dropdownTempalte = RenderDropdownTemplate();
+        var dropdownTemplate = RenderDropdownTemplate();
 
         rowTemplate = rowTemplate.Replace("{{", "!-").Replace("}}", "-!");
-        dropdownTempalte = dropdownTempalte.Replace("{{", "!-").Replace("}}", "-!");
+        dropdownTemplate = dropdownTemplate.Replace("{{", "!-").Replace("}}", "-!");
 
         var table = RootTable();
 
@@ -42,20 +44,20 @@ public class TableRenderer<T>
             RowTemplate = rowTemplate,
             Nested = this._table.NestedTable,
             NestedField = this._table.NestedField,
-            DropdownTemplate = dropdownTempalte
+            DropdownTemplate = dropdownTemplate
         };
     }
 
     private TagBuilder RootTable()
     {
-        var table = new TagBuilder("table");
+        var table = TagsFactory.Table();
 
         var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
         table.AddCssClass(this._table.Css);
 
         table.Attributes["id"] = this._table.Id;
-        table.AppendAttribute("style", $"table-layout: {layout};");
+        table.AppendStyle("table-layout", this._table.Layout.ToStringLower());
 
         if (this._table.Binding != null)
         {
@@ -73,7 +75,7 @@ public class TableRenderer<T>
 
     private IHtmlContent RenderHeader()
     {
-        var header = new TagBuilder("thead");
+        var header = TagsFactory.THead();
 
         var hasStacked = this._table.Columns.Any(s => s.Columns.Any());
 
@@ -93,7 +95,7 @@ public class TableRenderer<T>
 
     private IHtmlContent RenderHeaderRow(List<Column> columns, bool hasStacked)
     {
-        var row = new TagBuilder("tr");
+        var row = TagsFactory.Tr();
 
         row.Attributes["header-row"] = "true";
 
@@ -101,7 +103,7 @@ public class TableRenderer<T>
         {
             var isStacked = column.Columns.Any();
 
-            var cell = new TagBuilder("th");
+            var cell = TagsFactory.Th();
 
             cell.MergeAttributes(column.Attr);
 
@@ -113,14 +115,11 @@ public class TableRenderer<T>
                 cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
             }
 
-            if (!isStacked && column.Width.HasValue)
-            {
-                cell.AppendAttribute("style", $"width: {column.Width}px;");
-            }
-            else if (isStacked)
-            {
-                cell.AppendAttribute("style", $"width: {column.Columns.Sum(s => s.Width)}px;");
-            }
+            var width = isStacked
+                ? column.Columns.Sum(s => s.Width)
+                : column.Width.GetValueOrDefault(0);
+
+            cell.AppendStyle(CssStyling.Width, width + "px");
 
             row.InnerHtml.AppendHtml(cell);
         }
@@ -130,7 +129,7 @@ public class TableRenderer<T>
 
     private IHtmlContent RenderBody(bool includeTemplate)
     {
-        var body = new TagBuilder("tbody");
+        var body = TagsFactory.TBody();
 
         if (includeTemplate)
         {
@@ -157,7 +156,7 @@ public class TableRenderer<T>
 
     private void AppendRowWithContent(ITemplateSyntax<T> tmpl, TextWriter contentWriter)
     {
-        var row = new TagBuilder("tr");
+        var row = TagsFactory.Tr();
         row.AddCssClass(this._table.Row.Css);
 
         row.Attributes["body-row"] = "true";
@@ -207,17 +206,17 @@ public class TableRenderer<T>
 
     private IHtmlContent RenderFooter()
     {
-        var footer = new TagBuilder("tfoot");
+        var footer = TagsFactory.TFooter();
 
-        var row = new TagBuilder("tr");
+        var row = TagsFactory.Tr();
 
         row.Attributes["footer-row"] = "true";
 
         foreach (var gridCell in this._table.Cells)
         {
-            var cell = new TagBuilder("td");
+            var cell = TagsFactory.Td();
 
-            var cellContent = new TagBuilder("span");
+            var cellContent = TagsFactory.Span();
             cellContent.InnerHtml.AppendHtml("&nbsp;");
 
             cell.MergeAttributes(gridCell.Column.FooterAttr);

@@ -8,11 +8,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 #endregion
 
-public static class HtmlContent
-{
-    public static readonly IHtmlContent Empty = new StringHtmlContent(string.Empty);
-}
-
 public static class StringHtmlContentExtension
 {
     public static IHtmlContent ToHtmlString(this string @string) => new StringHtmlContent(@string);

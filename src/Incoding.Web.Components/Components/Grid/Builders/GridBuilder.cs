@@ -37,7 +37,7 @@ public class GridBuilder<T>
 
     public GridBuilder<T> Css(string css)
     {
-        this.Grid.Css = css;
+        this.Grid.Css += " " + css;
 
         return this;
     }
@@ -61,14 +61,15 @@ public class GridBuilder<T>
 
     public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> buildAction)
     {
+        this.Grid.InfiniteScroll = new InfiniteScrollOptions();
         buildAction(this.Grid.InfiniteScroll);
-        this.Grid.InfiniteScroll.Enabled = true;
 
         return this;
     }
 
     public GridBuilder<T> UI(Action<UIOptions> buildAction)
     {
+        this.Grid.UI = new UIOptions();
         buildAction(this.Grid.UI);
 
         return this;
@@ -124,6 +125,6 @@ public class GridBuilder<T>
 
     public IHtmlContent Render(bool useConcurrentRender = false)
     {
-        return new GridComponentRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
+        return new SplitGridRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
     }
 }

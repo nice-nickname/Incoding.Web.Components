@@ -3,56 +3,15 @@ namespace Incoding.Web.Components;
 #region << Using >>
 
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Incoding.Web.Components.Grid;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Routing;
 
 #endregion
 
-public static class AttributesHelper
-{
-    public static RouteValueDictionary Merge(object dest, object source)
-    {
-        var merged = new RouteValueDictionary(dest);
-
-        if (dest == null || source == null)
-        {
-            return merged;
-        }
-
-        foreach (var propertyInfo in source.GetType().GetProperties())
-        {
-            merged[propertyInfo.Name] = propertyInfo.GetValue(source);
-        }
-
-        return merged;
-    }
-
-    public static void AppendAttribute(this TagBuilder tag, string attr, string value)
-    {
-        if (!tag.Attributes.ContainsKey(attr))
-        {
-            tag.Attributes[attr] = string.Empty;
-        }
-
-        tag.Attributes[attr] += " " + value;
-    }
-
-    public static void AppendAttributes<TKey, TVal>(this TagBuilder tag, IDictionary<TKey, TVal> attrs)
-    {
-        foreach (var (key, value) in attrs)
-        {
-            tag.AppendAttribute(key.ToString(), value.ToString());
-        }
-    }
-}
-
 public static class ExpressionHelper
 {
-    public static ColumnType GetColumnTypeFromField<T, U>(Expression<Func<T, U>> field)
+    public static ColumnType GetColumnTypeFromField<T, TField>(Expression<Func<T, TField>> field)
     {
         var propInfo = GetPropertyInfoFromAccessor(field);
         var actualType = Nullable.GetUnderlyingType(propInfo.PropertyType) ?? propInfo.PropertyType;
@@ -86,7 +45,7 @@ public static class ExpressionHelper
         }
     }
 
-    public static string GetFieldName<T, U>(Expression<Func<T, U>> field)
+    public static string GetFieldName<T, TField>(Expression<Func<T, TField>> field)
     {
         var propInfo = GetPropertyInfoFromAccessor(field);
 
@@ -99,7 +58,7 @@ public static class ExpressionHelper
         return propInfo.Name;
     }
 
-    private static PropertyInfo GetPropertyInfoFromAccessor<T, U>(Expression<Func<T, U>> field)
+    private static PropertyInfo GetPropertyInfoFromAccessor<T, TField>(Expression<Func<T, TField>> field)
     {
         var member = field.Body as MemberExpression;
 

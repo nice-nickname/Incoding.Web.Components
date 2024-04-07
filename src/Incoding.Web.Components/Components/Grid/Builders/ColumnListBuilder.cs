@@ -5,6 +5,8 @@ namespace Incoding.Web.Components.Grid;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
+using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
@@ -65,20 +67,27 @@ public class ColumnListBuilder<T>
     }
 
     public void Spreaded<TSpread>(
-            Expression<Func<T, IEnumerable<TSpread>>> field,
+            Expression<Func<T, IEnumerable<TSpread>>> spreadField,
             int spreadCount,
             Action<ColumnListBuilder<TSpread>, int> buildAction)
     {
         if (spreadCount <= 0)
             throw new ArgumentException("count should be positive number", nameof(spreadCount));
 
-        var spreadField = ExpressionHelper.GetFieldName(field);
+        var spreadFieldName = ExpressionHelper.GetFieldName(spreadField);
 
         var clb = new ColumnListBuilder<TSpread>(this.Html, this._currentIndex);
+
+        var spreadedCells = new List<ICellRenderer<TSpread>>();
 
         for (var i = 0; i < spreadCount; i++)
         {
             buildAction(clb, i);
+
+            if (i == 0)
+            {
+                spreadedCells.AddRange(clb.CellRenderers);
+            }
         }
 
         this._currentIndex = clb._currentIndex;
@@ -89,7 +98,7 @@ public class ColumnListBuilder<T>
 
         foreach (var cell in clb.Cells)
         {
-            cell.SpreadField = spreadField;
+            cell.SpreadField = spreadFieldName;
             cell.SpreadIndex = spreadIndex;
 
             if (++columnIndex % totalCellsPerSpread == 0)
@@ -100,10 +109,6 @@ public class ColumnListBuilder<T>
 
         this.Columns.AddRange(clb.Columns);
         this.Cells.AddRange(clb.Cells);
-
-        clb = new ColumnListBuilder<TSpread>(this.Html);
-
-        buildAction(clb, 0);
-        this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(field, clb.CellRenderers));
+        this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(spreadField, spreadedCells));
     }
 }

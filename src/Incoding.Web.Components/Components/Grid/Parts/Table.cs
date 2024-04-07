@@ -7,16 +7,7 @@ using Incoding.Core.Extensions;
 
 #endregion
 
-public class Splitter
-{
-    public string MinWidth { get; set; }
-
-    public string MaxWidth { get; set; }
-
-    public string Width { get; set; }
-}
-
-public class Table<T>
+public class Table<T> 
 {
     public string Id { get; }
 

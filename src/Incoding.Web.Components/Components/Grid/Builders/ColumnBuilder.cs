@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Linq.Expressions;
+using FluentValidation.Validators;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -168,6 +169,13 @@ public class ColumnBuilder<T>
         this.Cell.Format = format;
 
         return this.Attr("data-format", this.Cell.Format.ToString());
+    }
+
+    public ColumnBuilder<T> Align(ColumnAlignment alignment)
+    {
+        this.Cell.Alignment = alignment;
+
+        return this;
     }
 
     public ColumnBuilder<T> Content(IHtmlContent content)

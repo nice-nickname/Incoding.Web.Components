@@ -39,7 +39,7 @@
 
                         cols.Add().Field(s => s.Amount).Width(70).Totalable();
                         cols.Add().Field(s => s.AmountPercentage).Title("Amount %").Width(70);
-                        cols.Add().Field(s => s.Balance).Width(70).IsAttr(s => s.HasChildren, "disabled");
+                        cols.Add().Field(s => s.Balance).Width(70).IsAttr(s => s.HasChildren, "disabled").Align(ColumnAlignment.Right);
 
                         cols.Stacked(s => s.Title("Dates"),
                                         cols =>

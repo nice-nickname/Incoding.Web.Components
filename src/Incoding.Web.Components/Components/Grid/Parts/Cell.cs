@@ -18,6 +18,8 @@ public class Cell
 
     public ColumnFormat Format { get; set; }
 
+    public ColumnAlignment Alignment { get; set; } = ColumnAlignment.Center;
+
     public Column Column { get; set; }
 
     /// <summary>

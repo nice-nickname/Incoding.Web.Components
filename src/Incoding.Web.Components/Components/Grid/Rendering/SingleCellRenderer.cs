@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System.IO;
+using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -37,6 +38,8 @@ public class SingleCellRenderer<T> : ICellRenderer<T>
     {
         var cellTag = new TagBuilder("td");
         cellTag.AddCssClass(this._cell.Column.Css);
+
+        cellTag.AppendStyle(CssStyling.TextAlign, this._cell.Alignment.ToStringLower());
 
         foreach (var (key, templateValue) in this._cell.Attrs)
         {

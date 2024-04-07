@@ -40,6 +40,7 @@ class TableController {
      *  dropdownTmpl: string,
      *  hasDropdown: boolean,
      *  nestedField: string,
+     *  expands: any,
      *  nested: any
      * } }
      */
@@ -84,11 +85,10 @@ class TableController {
     expand(rowId) {
         const isExpanded = this.structure.expands[rowId]
 
-        this.structure.expands[rowId] = !isExpanded
-
         const parentData = { siblings: [] }
 
         this.parent.siblings.forEach(table => {
+            table.structure.expands[rowId] = !isExpanded
             const $row = table.#findRow(rowId)
 
             if (!table.nested[rowId]) {
@@ -245,6 +245,7 @@ class TableController {
         this.$tbody.empty()
 
         this.nested = { }
+        this.structure.expands = { }
     }
 
     hideTotals() {

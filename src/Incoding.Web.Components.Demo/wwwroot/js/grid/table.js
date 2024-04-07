@@ -248,7 +248,10 @@ class TableController {
     }
 
     hideTotals() {
-        this.$tfoot.find('span').addClass('table-placeholder')
+        const $totals = this.$tfoot.find('span')
+
+        $totals.addClass('table-placeholder')
+            .html('&nbsp;')
     }
 
     showTotals() {

@@ -101,6 +101,21 @@ public class GridBuilder<T>
 
     public GridBuilder<T> Bind(ImlBinding binding)
     {
+        if (this.Grid.Binds != null)
+        {
+            var origin = this.Grid.Binds;
+
+            this.Grid.Binds = iml =>
+            {
+                origin(iml);
+                binding(iml);
+
+                return iml;
+            };
+
+            return this;
+        }
+
         this.Grid.Binds = binding;
 
         return this;

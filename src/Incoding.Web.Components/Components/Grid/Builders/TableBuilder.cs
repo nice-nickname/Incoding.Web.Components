@@ -53,10 +53,10 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> buildAction)
+    public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> columns)
     {
         var clb = new ColumnListBuilder<T>(this.Html);
-        buildAction(clb);
+        columns(clb);
 
         this.Table.Columns = clb.Columns;
         this.Table.Cells = clb.Cells;
@@ -65,10 +65,10 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Rows(Action<RowBuilder<T>> buildAction)
+    public TableBuilder<T> Rows(Action<RowBuilder<T>> rows)
     {
         var rb = new RowBuilder<T>(this.Html);
-        buildAction(rb);
+        rows(rb);
 
         this.Table.Row = rb.Row;
 
@@ -89,13 +89,13 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> buildAction)
+    public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> nestedTable)
 
     {
         var tableBuilder = new TableBuilder<U>(this.Html, "");
         tableBuilder.Table.InheritStyles(this.Table);
 
-        buildAction(tableBuilder);
+        nestedTable(tableBuilder);
 
         var fieldName = ExpressionHelper.GetFieldName(nestedField);
         this.Table.NestedField = fieldName;

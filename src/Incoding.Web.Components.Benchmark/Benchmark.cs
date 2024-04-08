@@ -27,13 +27,13 @@
         [Benchmark]
         public void Concurrent()
         {
-            Setup().Render(useConcurrentRender: true);
+            Setup().Render();
         }
 
         [Benchmark]
         public void Synchronous()
         {
-            Setup().Render(useConcurrentRender: false);
+            Setup().Render();
         }
 
         private GridBuilder<SampleData> Setup()

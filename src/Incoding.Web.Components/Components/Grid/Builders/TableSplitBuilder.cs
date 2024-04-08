@@ -24,12 +24,12 @@ public class TableSplitBuilder<T>
         this.Splits = new List<Splitter>();
     }
 
-    public SplitBuilder Add(string splitId, Action<TableBuilder<T>> buildAction)
+    public SplitBuilder Add(string splitId, Action<TableBuilder<T>> splitter)
     {
         var tableBuilder = new TableBuilder<T>(this.Html, splitId);
         var splitBuilder = new SplitBuilder(this.Html);
 
-        buildAction(tableBuilder);
+        splitter(tableBuilder);
 
         this.Tables.Add(tableBuilder.Table);
         this.Splits.Add(splitBuilder.Splitter);

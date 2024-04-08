@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -46,28 +47,27 @@ public class ColumnListBuilder<T>
         return columnBuilder;
     }
 
-    public void Stacked(Action<ColumnBuilder<T>> stackedBuilder, Action<ColumnListBuilder<T>> builderAction)
+    public void Stacked(Action<ColumnBuilder<T>> stackedHeader, Action<ColumnListBuilder<T>> stackedColumns)
     {
-        var stackedColumn = new ColumnBuilder<T>(this.Html);
-        stackedBuilder(stackedColumn);
+        var header = new ColumnBuilder<T>(this.Html);
+        stackedHeader(header);
 
-        var columnsBuilder = new ColumnListBuilder<T>(this.Html, this._currentIndex);
-        builderAction(columnsBuilder);
+        var columns = new ColumnListBuilder<T>(this.Html, this._currentIndex);
+        stackedColumns(columns);
 
-        this._currentIndex = columnsBuilder._currentIndex;
+        this._currentIndex = columns._currentIndex;
 
-        var column = stackedColumn.Column;
-        column.Columns.AddRange(columnsBuilder.Columns);
+        header.Column.Columns.AddRange(columns.Columns);
 
-        this.Columns.Add(column);
-        this.Cells.AddRange(columnsBuilder.Cells);
-        this.CellRenderers.AddRange(columnsBuilder.CellRenderers);
+        this.Columns.Add(header.Column);
+        this.Cells.AddRange(columns.Cells);
+        this.CellRenderers.AddRange(columns.CellRenderers);
     }
 
     public void Spreaded<TSpread>(
             Expression<Func<T, IEnumerable<TSpread>>> spreadField,
             int spreadCount,
-            Action<ColumnListBuilder<TSpread>, int> buildAction)
+            Action<ColumnListBuilder<TSpread>, int> spreadColumns)
     {
         if (spreadCount <= 0)
             throw new ArgumentException("count should be positive number", nameof(spreadCount));
@@ -76,34 +76,26 @@ public class ColumnListBuilder<T>
 
         var clb = new ColumnListBuilder<TSpread>(this.Html, this._currentIndex);
 
+        var currentColumn = 0;
         var spreadedCells = new List<ICellRenderer<TSpread>>();
 
         for (var i = 0; i < spreadCount; i++)
         {
-            buildAction(clb, i);
+            spreadColumns(clb, i);
+
+            foreach (var cell in clb.Cells.Skip(currentColumn))
+            {
+                cell.SpreadField = spreadFieldName;
+                cell.SpreadIndex = i;
+            }
 
             if (i == 0)
-            {
                 spreadedCells.AddRange(clb.CellRenderers);
-            }
+
+            currentColumn++;
         }
 
         this._currentIndex = clb._currentIndex;
-
-        int columnIndex = 0;
-        int spreadIndex = 0;
-        int totalCellsPerSpread = clb.Cells.Count / spreadCount;
-
-        foreach (var cell in clb.Cells)
-        {
-            cell.SpreadField = spreadFieldName;
-            cell.SpreadIndex = spreadIndex;
-
-            if (++columnIndex % totalCellsPerSpread == 0)
-            {
-                spreadIndex++;
-            }
-        }
 
         this.Columns.AddRange(clb.Columns);
         this.Cells.AddRange(clb.Cells);

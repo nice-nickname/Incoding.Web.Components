@@ -4,9 +4,13 @@ namespace Incoding.Web.Components.Grid;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel;
+using JetBrains.Annotations;
 
 #endregion
 
+[UsedImplicitly]
+[Description("JS params")]
 public record ColumnDto
 {
     public int Index { get; set; }

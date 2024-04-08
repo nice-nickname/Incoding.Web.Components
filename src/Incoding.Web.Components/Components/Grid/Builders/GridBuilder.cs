@@ -59,27 +59,27 @@ public class GridBuilder<T>
         return this;
     }
 
-    public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> buildAction)
+    public GridBuilder<T> InfiniteScrolling(Action<InfiniteScrollOptions> scrollOptions)
     {
         this.Grid.InfiniteScroll = new InfiniteScrollOptions();
-        buildAction(this.Grid.InfiniteScroll);
+        scrollOptions(this.Grid.InfiniteScroll);
 
         return this;
     }
 
-    public GridBuilder<T> UI(Action<UIOptions> buildAction)
+    public GridBuilder<T> UI(Action<UIOptions> uiOptions)
     {
         this.Grid.UI = new UIOptions();
-        buildAction(this.Grid.UI);
+        uiOptions(this.Grid.UI);
 
         return this;
     }
 
-    public GridBuilder<T> Split(Action<TableSplitBuilder<T>> buildAction)
+    public GridBuilder<T> Split(Action<TableSplitBuilder<T>> splits)
     {
         var splitter = new TableSplitBuilder<T>(this.Html);
 
-        buildAction(splitter);
+        splits(splitter);
 
         this.Grid.Tables.AddRange(splitter.Tables);
         this.Grid.Splits.AddRange(splitter.Splits);
@@ -87,11 +87,11 @@ public class GridBuilder<T>
         return this;
     }
 
-    public GridBuilder<T> Table(Action<TableBuilder<T>> buildAction)
+    public GridBuilder<T> Table(Action<TableBuilder<T>> table)
     {
         return Split(splits =>
         {
-            splits.Add(this.Grid.Id + "-table", buildAction);
+            splits.Add(this.Grid.Id + "-table", table);
         });
     }
 
@@ -123,8 +123,8 @@ public class GridBuilder<T>
         return this;
     }
 
-    public IHtmlContent Render(bool useConcurrentRender = false)
+    public IHtmlContent Render()
     {
-        return new SplitGridRenderer<T>(this.Html, this.Grid).Render(useConcurrentRender);
+        return new SplitGridRenderer<T>(this.Html, this.Grid).Render(concurrent: false);
     }
 }

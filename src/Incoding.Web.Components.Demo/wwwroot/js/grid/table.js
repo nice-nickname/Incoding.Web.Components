@@ -139,10 +139,6 @@ class TableController {
 
     }
 
-    sort(criteria) {
-
-    }
-
     format() {
         this.$table
             .find('td[data-format]')
@@ -259,6 +255,25 @@ class TableController {
         this.$tfoot.find('span').removeClass('table-placeholder')
     }
 
+    sort(columnIndex, order) {
+        const column = this.structure.columns[columnIndex]
+
+        const getField = this.#getFieldAccessorByColumn(column)
+
+        this.data.sort((l, r) => {
+            return getField(l) > getField(r) ? 1 : -1
+        })
+
+        if (order === 'desc') {
+            this.data.reverse()
+        }
+
+        this.parent.siblings.forEach(table => {
+            table.removeAllRows()
+            table.renderRows()
+        })
+    }
+
     showDropdown(rowId) {
         if (!this.structure.hasDropdown) {
             return
@@ -359,5 +374,17 @@ class TableController {
                 $candidate.removeClass('highlight')
             })
         })
+    }
+
+    #getFieldAccessorByColumn(column) {
+        const { field, spreadField, spreadIndex } = column
+
+        let fieldAccessor = data => data[field]
+
+        if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
+            fieldAccessor = data => data[spreadField][spreadIndex][field]
+        }
+
+        return fieldAccessor
     }
 }

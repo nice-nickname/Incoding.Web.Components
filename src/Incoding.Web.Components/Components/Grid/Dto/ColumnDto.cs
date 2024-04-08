@@ -25,6 +25,8 @@ public record ColumnDto
 
     public bool Totalable { get; set; }
 
+    public bool Sortable { get; set; }
+
     [JsonConverter(typeof(StringEnumConverter))]
     public ColumnType Type { get; set; }
 

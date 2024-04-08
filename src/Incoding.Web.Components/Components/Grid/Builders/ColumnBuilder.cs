@@ -94,6 +94,20 @@ public class ColumnBuilder<T>
         return this;
     }
 
+    public ColumnBuilder<T> Sortable(bool value = true)
+    {
+        this.Column.Sortable = value;
+
+        return this;
+    }
+
+    public ColumnBuilder<T> Sort(SortType sort)
+    {
+        this.Column.Sort = sort;
+
+        return this;
+    }
+
     public ColumnBuilder<T> HeaderAttr(string attr, string value)
     {
         this.Column.Attr[attr] = value;

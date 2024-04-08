@@ -109,6 +109,11 @@ public class TableRenderer<T>
 
             cell.MergeAttributes(column.Attr);
 
+            if (!isStacked && column.Sortable)
+            {
+                cell.InnerHtml.AppendHtml(RenderSortButton(column));
+            }
+
             cell.InnerHtml.AppendHtml(column.Title);
 
             if (hasStacked)
@@ -127,6 +132,28 @@ public class TableRenderer<T>
         }
 
         return row;
+    }
+
+    private TagBuilder RenderSortButton(Column column)
+    {
+        var sortButton = TagsFactory.Button();
+        sortButton.Attributes["role"] = "sort";
+
+        if (column.Sort.HasValue)
+        {
+            sortButton.Attributes["data-sort"] = column.Sort.ToStringLower();
+        }
+
+        ImlBindingHelper.BindToTag(Html, sortButton, iml => iml.When(JqueryBind.Click)
+                                                               .StopPropagation()
+                                                               .OnSuccess(dsl => dsl.Self().JQuery.ToggleAttribute("data-sort", "asc", "desc"))
+                                                               .OnComplete(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                                                     .JQuery.Call("data('grid').sort",
+                                                                                        Selector.Jquery.Self().Closest(HtmlTag.Th).Attr("data-index"),
+                                                                                        Selector.Jquery.Self().Attr("data-sort")))
+                                    );
+
+        return sortButton;
     }
 
     private IHtmlContent RenderBody(bool includeTemplate)
@@ -262,7 +289,8 @@ public class TableComponent
                 Type = s.Type,
                 SpreadField = s.SpreadField,
                 SpreadIndex = s.SpreadIndex,
-                Totalable = s.Column.Totalable
+                Totalable = s.Column.Totalable,
+                Sortable = s.Column.Sortable
             };
         }).ToArray();
 

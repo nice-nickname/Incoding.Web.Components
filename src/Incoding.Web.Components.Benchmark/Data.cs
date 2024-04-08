@@ -1,11 +1,5 @@
 namespace Incoding.Web.Components.Benchmark
 {
-    #region << Using >>
-
-    using Incoding.Web.Components.Grid;
-
-    #endregion
-
     public record SampleData
     {
         public string Id { get; set; }

@@ -12,6 +12,11 @@ public static class TagsFactory
 {
     public static TagBuilder Div() => new TagBuilder(HtmlTag.Div.ToStringLower());
 
+    public static TagBuilder Span() => new TagBuilder(HtmlTag.Span.ToStringLower());
+
+    public static TagBuilder Button() => new TagBuilder(HtmlTag.Button.ToStringLower());
+
+
     public static TagBuilder Table() => new TagBuilder(HtmlTag.Table.ToStringLower());
 
     public static TagBuilder Tr() => new TagBuilder(HtmlTag.Tr.ToStringLower());
@@ -25,6 +30,4 @@ public static class TagsFactory
     public static TagBuilder TBody() => new TagBuilder(HtmlTag.TBody.ToStringLower());
 
     public static TagBuilder TFooter() => new TagBuilder("tfoot"); // HtmlTag.TFooter has wrong name
-
-    public static TagBuilder Span() => new TagBuilder(HtmlTag.Span.ToStringLower());
 }

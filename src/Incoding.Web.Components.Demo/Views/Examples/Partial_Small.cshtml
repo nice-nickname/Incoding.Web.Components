@@ -32,7 +32,7 @@
                                 })
                             </text>).Width(40);
 
-                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).HeaderAttr("style", "height: 54px;");
+                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).HeaderAttr("style", "height: 54px;").Sort(SortType.Asc).Sortable();
 
                         cols.Add().Field(s => s.Name).Width(70);
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);

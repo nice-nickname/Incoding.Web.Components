@@ -75,34 +75,32 @@
         {
             table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
-                 .Columns(periodCols);
+                 .Columns(periodCols)
+                 .Nested(s => s.Children, nested =>
+                 {
+                     nested.Columns(periodCols);
 
-            table.Nested(s => s.Children, nested =>
-            {
-                nested.Columns(periodCols);
-
-                nested.Nested(s => s.Children, nested =>
-                {
-                    nested.Columns(periodCols);
-                });
-            });
+                     nested.Nested(s => s.Children, nested =>
+                     {
+                         nested.Columns(periodCols);
+                     });
+                 });
         });
 
         splitting.Add("bebius", table =>
         {
             table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
-                 .Columns(periodCols);
+                 .Columns(periodCols)
+                 .Nested(s => s.Children, nested =>
+                 {
+                     nested.Columns(periodCols);
 
-            table.Nested(s => s.Children, nested =>
-            {
-                nested.Columns(periodCols);
-
-                nested.Nested(s => s.Children, nested =>
-                {
-                    nested.Columns(periodCols);
-                });
-            });
+                     nested.Nested(s => s.Children, nested =>
+                     {
+                         nested.Columns(periodCols);
+                     });
+                 });
         });
     })
     .Bind(iml => iml.When(JqueryBind.Load)
@@ -116,12 +114,7 @@
     {
         ui.HighlightRowsOnHover = true;
     })
-    .Empty(@<text>
-                <div style="display: grid; place-items: center;">
-                    <img src="https://static.tildacdn.com/tild3965-6665-4366-b234-303630633965/99ac3f33649217cbaf8a.svg" style="width: 120px;"/>
-                    <span>so empty here...</span>
-                </div>
-            </text>)
+    .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
     .DataSource(new DataSource.SignalR
     {
         ChunkSize = 40,

@@ -5,13 +5,13 @@ table.table-component {
     white-space: nowrap;
 }
 
-table.table-component [data-expanded="true"] {
-    display: block;
-}
+    table.table-component [data-expanded="true"] {
+        display: block;
+    }
 
-table.table-component [data-expanded="false"] {
-    display: none;
-}
+    table.table-component [data-expanded="false"] {
+        display: none;
+    }
 
 table.table-component .table-placeholder {
     width: 100% !important;
@@ -41,6 +41,10 @@ table.table-component > tfoot > tr > td {
 
 table.table-component tbody tr {
     position: relative;
+}
+
+table.table-component tbody tr.odd {
+    background: rgba(0, 0, 0, .05);
 }
 
 .table-dropdown {

@@ -15,6 +15,8 @@ public record TableOptionsDto
 {
     public bool HighlightRows { get; set; }
 
+    public bool Zebra { get; set; }
+
     public int PlaceholderRows { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]

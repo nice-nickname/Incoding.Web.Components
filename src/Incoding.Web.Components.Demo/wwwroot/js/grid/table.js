@@ -51,6 +51,7 @@ class TableController {
      *  highlightRows: boolean
      *  placeholderRows: number
      *  mode: 'stacked' | 'simple'
+     *  zebra: boolean
      * } }
      */
     options;
@@ -336,6 +337,12 @@ class TableController {
         const $rows = $(template.content.children)
 
         this.$table[0].tBodies[0].appendChild(template.content)
+
+        if (this.options.zebra) {
+            $rows.each(function(index) {
+                $(this).addClass(index % 2 === 0 ? 'even' : 'odd')
+            })
+        }
 
         IncodingEngine.Current.parse($rows)
     }

@@ -144,7 +144,8 @@ public class SplitGridRenderer<T>
             {
                 HighlightRows = this.Grid.UI.HighlightRowsOnHover,
                 PlaceholderRows = this.Grid.UI.PlaceholderRows,
-                Mode = this.Grid.Mode
+                Mode = this.Grid.Mode,
+                Zebra = this.Grid.UI.Zebra
             },
 
             Splitter = this.Grid.Splits.Select(s => new SplitterDto

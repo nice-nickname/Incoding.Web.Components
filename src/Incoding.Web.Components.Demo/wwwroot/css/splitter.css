@@ -38,15 +38,13 @@
 }
 
 .grid-component > .grid-splitter > .splitter-divider {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 2px;
 
     background-color: rgb(216, 216, 216);
 
     cursor: col-resize;
-
-
-}
-
-.grid-component > .grid-splitter > .splitter-divider > .buttons.resize::after {
-    content: '‖';
 }

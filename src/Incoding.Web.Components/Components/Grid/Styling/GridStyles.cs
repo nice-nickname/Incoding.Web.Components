@@ -34,8 +34,10 @@ public static class GridStyles
 
         public string SplitterCss { get; } = "grid-splitter";
 
-        public string SplitterPanelCss {get;} = "splitter-pane";
+        public string SplitterPanelCss { get; } = "splitter-pane";
 
-        public string SplitterDividerCss {get;} = "splitter-divider";
+        public string SplitterDividerCss { get; } = "splitter-divider ci-element";
+
+        public string SplitterDividerIconCss { get; } = "ci-planifi ci-dots-vertical ci-color-muted ci-h-color-base ci-size-24 ci-bg-alt";
     }
 }

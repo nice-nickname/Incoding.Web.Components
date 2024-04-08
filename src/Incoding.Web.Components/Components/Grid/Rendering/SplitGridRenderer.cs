@@ -121,7 +121,11 @@ public class SplitGridRenderer<T>
 
         div.Attributes["data-divider"] = "true";
 
-        div.InnerHtml.AppendHtml("&nbsp;");
+        var i = TagsFactory.Tag(HtmlTag.I);
+
+        i.AddCssClass(DefaultStyles.SplitterDividerIconCss);
+
+        div.InnerHtml.AppendHtml(i);
 
         return div;
     }

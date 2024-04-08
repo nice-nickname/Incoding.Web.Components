@@ -30,4 +30,6 @@ public static class TagsFactory
     public static TagBuilder TBody() => new TagBuilder(HtmlTag.TBody.ToStringLower());
 
     public static TagBuilder TFooter() => new TagBuilder("tfoot"); // HtmlTag.TFooter has wrong name
+
+    public static TagBuilder Tag(HtmlTag tag) => new TagBuilder(tag.ToStringLower());
 }

@@ -48,9 +48,9 @@ class TableController {
 
     /**
      * @type { {
-     *  cascadeEvents: boolean
      *  highlightRows: boolean
      *  placeholderRows: number
+     *  mode: 'stacked' | 'simple'
      * } }
      */
     options;

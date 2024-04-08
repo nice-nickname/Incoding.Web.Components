@@ -103,11 +103,9 @@
                         {
                             scroll.ChunkSize = 40;
                             scroll.LoadingRowsCount = 3;
-                            scroll.Enabled = false; // wtf?? :^(
                         })
                         .UI(ui =>
                         {
-                            ui.CascadeEvents = true;
                             ui.HighlightRowsOnHover = true;
                         })
                         ;

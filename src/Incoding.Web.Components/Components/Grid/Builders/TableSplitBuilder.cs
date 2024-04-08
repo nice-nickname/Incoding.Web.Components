@@ -16,17 +16,20 @@ public class TableSplitBuilder<T>
 
     public IHtmlHelper Html { get; }
 
-    public TableSplitBuilder(IHtmlHelper html)
+    public GridStyles.Stylings DefaultStyles { get; }
+
+    public TableSplitBuilder(IHtmlHelper html, GridStyles.Stylings styles)
     {
         this.Html = html;
 
         this.Tables = new List<Table<T>>();
         this.Splits = new List<Splitter>();
+        this.DefaultStyles = styles;
     }
 
     public SplitBuilder Add(string splitId, Action<TableBuilder<T>> splitter)
     {
-        var tableBuilder = new TableBuilder<T>(this.Html, splitId);
+        var tableBuilder = new TableBuilder<T>(this.Html, splitId, this.DefaultStyles);
         var splitBuilder = new SplitBuilder(this.Html);
 
         splitter(tableBuilder);

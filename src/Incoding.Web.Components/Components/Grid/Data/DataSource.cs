@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 using Incoding.Web.MvcContrib;
 
 #endregion
@@ -98,7 +99,7 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            var fieldName = ExpressionHelper.GetFieldName(Field);
+            var fieldName = Field.GetMemberName();
 
             return iml.When(Bindings.Grid.Init)
                     .OnBegin(dsl => controller.Init(dsl))

@@ -65,7 +65,7 @@
     {
         splitting.Add("regular", table =>
         {
-            table.Css("table table-bordered table-component")
+            table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
                  .Columns(regularCols)
                  .DropdownTmpl(
@@ -85,7 +85,7 @@
 
         splitting.Add("bebius", table =>
         {
-            table.Css("table table-bordered table-component")
+            table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate")
                                  .Bind(iml => iml.When(JqueryBind.InitIncoding)
                                                  .OnSuccess(dsl => dsl.Self().JQuery.Call("excelField"))))
@@ -102,7 +102,6 @@
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;
-        ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
         ui.PlaceholderRows = 5;
     })
     .Empty(@<text>

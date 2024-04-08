@@ -7,6 +7,13 @@ using Microsoft.AspNetCore.Html;
 
 #endregion
 
+public enum GridMode
+{
+    Stacked,
+
+    Simple
+}
+
 public class Grid<T>
 {
     public string Id { get; }
@@ -32,6 +39,8 @@ public class Grid<T>
     public ImlBinding Binds { get; set; } = null;
 
     public IGridDataSource DataSource { get; set; } = null;
+
+    public GridMode Mode { get; set; } = GridMode.Stacked;
 
     public Grid(string id)
     {

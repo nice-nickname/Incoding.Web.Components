@@ -37,7 +37,7 @@
     .Width("100%")
     .Height("100%")
     .Css("bg-white")
-    .Table(table => table.Css("table table-bordered table-component")
+    .Table(table => table.Css("table table-bordered ")
                          .Layout(LayoutType.Auto)
                          .Rows(row => row.Css("tr-item-calculate"))
                          .Columns(regularCols))
@@ -49,7 +49,6 @@
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;
-        ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
     })
     .Empty(@<text>
                 <div style="display: grid; place-items: center;">

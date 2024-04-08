@@ -1,7 +1,5 @@
 namespace Incoding.Web.Components.Grid;
 
-using System;
-
 #region << Using >>
 
 using System.Collections.Generic;
@@ -17,14 +15,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class TableRenderer<T>
 {
-    private readonly Table<T> _table;
+    public Table<T> Table { get; }
 
-    private readonly IHtmlHelper _html;
+    public IHtmlHelper Html { get; }
 
-    public TableRenderer(IHtmlHelper html, Table<T> table)
+    public GridStyles.Stylings DefaultStyles { get; }
+
+    public TableRenderer(IHtmlHelper html, Table<T> table, GridStyles.Stylings styles = null)
     {
-        this._html = html;
-        this._table = table;
+        this.Html = html;
+        this.Table = table;
+        this.DefaultStyles = styles;
     }
 
     public TableComponent RenderComponent()
@@ -39,11 +40,11 @@ public class TableRenderer<T>
 
         return new TableComponent
         {
-            Columns = this._table.Cells,
+            Columns = this.Table.Cells,
             LayoutHtml = table,
             RowTemplate = rowTemplate,
-            Nested = this._table.NestedTable,
-            NestedField = this._table.NestedField,
+            Nested = this.Table.NestedTable,
+            NestedField = this.Table.NestedField,
             DropdownTemplate = dropdownTemplate
         };
     }
@@ -52,19 +53,20 @@ public class TableRenderer<T>
     {
         var table = TagsFactory.Table();
 
-        var layout = this._table.Layout == LayoutType.Fixed ? "fixed" : "auto";
+        var layout = this.Table.Layout == LayoutType.Fixed ? "fixed" : "auto";
 
-        table.AddCssClass(this._table.Css);
+        table.AddCssClass(DefaultStyles.TableCss);
+        table.AddCssClass(this.Table.Css);
 
-        table.Attributes["id"] = this._table.Id;
-        table.AppendStyle("table-layout", this._table.Layout.ToStringLower());
+        table.Attributes["id"] = this.Table.Id;
+        table.AppendStyle("table-layout", this.Table.Layout.ToStringLower());
 
-        if (this._table.Binding != null)
+        if (this.Table.Binding != null)
         {
-            ImlBindingHelper.BindToTag(this._html, table, this._table.Binding);
+            ImlBindingHelper.BindToTag(this.Html, table, this.Table.Binding);
         }
 
-        table.Attributes.Merge(this._table.Attr);
+        table.Attributes.Merge(this.Table.Attr);
 
         table.InnerHtml.AppendHtml(RenderHeader());
         table.InnerHtml.AppendHtml(RenderBody(false));
@@ -77,14 +79,14 @@ public class TableRenderer<T>
     {
         var header = TagsFactory.THead();
 
-        var hasStacked = this._table.Columns.Any(s => s.Columns.Any());
+        var hasStacked = this.Table.Columns.Any(s => s.Columns.Any());
 
-        if (this._table.Columns.Any())
+        if (this.Table.Columns.Any())
         {
-            header.InnerHtml.AppendHtml(RenderHeaderRow(this._table.Columns, hasStacked));
+            header.InnerHtml.AppendHtml(RenderHeaderRow(this.Table.Columns, hasStacked));
         }
 
-        var stackedColumns = this._table.Columns.SelectMany(s => s.Columns).ToList();
+        var stackedColumns = this.Table.Columns.SelectMany(s => s.Columns).ToList();
         if (stackedColumns.Any())
         {
             header.InnerHtml.AppendHtml(RenderHeaderRow(stackedColumns, false));
@@ -143,9 +145,9 @@ public class TableRenderer<T>
     {
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelper(this._html, content))
+        using (var _ = new StringifiedHtmlHelper(this.Html, content))
         {
-            using var template = this._html.Incoding().Template<T>();
+            using var template = this.Html.Incoding().Template<T>();
             using var each = template.ForEach();
 
             AppendRowWithContent(each, _.CurrentWriter);
@@ -157,23 +159,25 @@ public class TableRenderer<T>
     private void AppendRowWithContent(ITemplateSyntax<T> tmpl, TextWriter contentWriter)
     {
         var row = TagsFactory.Tr();
-        row.AddCssClass(this._table.Row.Css);
+
+        row.AddCssClass(DefaultStyles.RowCss);
+        row.AddCssClass(this.Table.Row.Css);
 
         row.Attributes["body-row"] = "true";
 
-        if (this._table.Row.Binding != null)
+        if (this.Table.Row.Binding != null)
         {
-            ImlBindingHelper.BindToTag(this._html, row, this._table.Row.Binding, tmpl);
+            ImlBindingHelper.BindToTag(this.Html, row, this.Table.Row.Binding, tmpl);
         }
 
-        foreach (var (attr, tmplValue) in this._table.Row.Attr)
+        foreach (var (attr, tmplValue) in this.Table.Row.Attr)
         {
             row.Attributes.Add(attr, tmplValue(tmpl).HtmlContentToString());
         }
 
         contentWriter.Write(row.RenderStartTag().ToHtmlString());
 
-        foreach (var cellRenderer in this._table.CellRenderers)
+        foreach (var cellRenderer in this.Table.CellRenderers)
         {
             cellRenderer.Render(tmpl, contentWriter);
         }
@@ -183,14 +187,14 @@ public class TableRenderer<T>
 
     private string RenderDropdownTemplate()
     {
-        if (this._table.Row.DropdownContent == null)
+        if (this.Table.Row.DropdownContent == null)
             return string.Empty;
 
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelper(this._html, content))
+        using (var _ = new StringifiedHtmlHelper(this.Html, content))
         {
-            using var template = this._html.Incoding().Template<T>();
+            using var template = this.Html.Incoding().Template<T>();
             using var each = template.ForEach();
 
             AppendDropdownTemplate(each, _.CurrentWriter);
@@ -201,7 +205,7 @@ public class TableRenderer<T>
 
     private void AppendDropdownTemplate(ITemplateSyntax<T> each, TextWriter contentWriter)
     {
-        contentWriter.Write(this._table.Row.DropdownContent(each).HtmlContentToString());
+        contentWriter.Write(this.Table.Row.DropdownContent(each).HtmlContentToString());
     }
 
     private IHtmlContent RenderFooter()
@@ -212,7 +216,7 @@ public class TableRenderer<T>
 
         row.Attributes["footer-row"] = "true";
 
-        foreach (var gridCell in this._table.Cells)
+        foreach (var gridCell in this.Table.Cells)
         {
             var cell = TagsFactory.Td();
 

@@ -57,7 +57,7 @@
     {
         splitting.Add("regular", table =>
         {
-            table.Css("table table-bordered table-component")
+            table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
                  .Columns(regularCols)
                  .Nested(s => s.Children, nested =>
@@ -73,7 +73,7 @@
 
         splitting.Add("period", table =>
         {
-            table.Css("table table-bordered table-component")
+            table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
                  .Columns(periodCols);
 
@@ -90,7 +90,7 @@
 
         splitting.Add("bebius", table =>
         {
-            table.Css("table table-bordered table-component")
+            table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
                  .Columns(periodCols);
 
@@ -115,7 +115,6 @@
     .UI(ui =>
     {
         ui.HighlightRowsOnHover = true;
-        ui.CascadeEvents = true; // option for advanced simple (advanced) schemas
     })
     .Empty(@<text>
                 <div style="display: grid; place-items: center;">

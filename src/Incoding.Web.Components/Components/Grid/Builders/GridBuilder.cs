@@ -13,12 +13,16 @@ public class GridBuilder<T>
 {
     public Grid<T> Grid { get; }
 
+    public GridStyles.Stylings DefaultStyles { get; set; }
+
     public IHtmlHelper Html { get; }
 
     public GridBuilder(IHtmlHelper html, string id)
     {
         this.Html = html;
         this.Grid = new Grid<T>(id);
+
+        this.DefaultStyles = GridStyles.Default();
     }
 
     public GridBuilder<T> Width(string width)
@@ -77,7 +81,7 @@ public class GridBuilder<T>
 
     public GridBuilder<T> Split(Action<TableSplitBuilder<T>> splits)
     {
-        var splitter = new TableSplitBuilder<T>(this.Html);
+        var splitter = new TableSplitBuilder<T>(this.Html, this.DefaultStyles);
 
         splits(splitter);
 
@@ -123,8 +127,22 @@ public class GridBuilder<T>
         return this;
     }
 
+    public GridBuilder<T> Mode(GridMode mode)
+    {
+        this.Grid.Mode = mode;
+
+        return this;
+    }
+
+    public GridBuilder<T> Styling(GridStyles.Stylings stylings)
+    {
+        this.DefaultStyles = stylings;
+
+        return this;
+    }
+
     public IHtmlContent Render()
     {
-        return new SplitGridRenderer<T>(this.Html, this.Grid).Render(concurrent: false);
+        return new SplitGridRenderer<T>(this.Html, this.Grid, this.DefaultStyles).Render(concurrent: false);
     }
 }

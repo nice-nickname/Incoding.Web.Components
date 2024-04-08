@@ -16,10 +16,13 @@ public class TableBuilder<T>
 
     public IHtmlHelper Html { get; }
 
-    public TableBuilder(IHtmlHelper html, string id)
+    public GridStyles.Stylings DefaultStyles { get; }
+
+    public TableBuilder(IHtmlHelper html, string id, GridStyles.Stylings styles)
     {
         this.Html = html;
-        Table = new Table<T>(id);
+        this.Table = new Table<T>(id);
+        this.DefaultStyles = styles;
     }
 
     public TableBuilder<T> Css(string css)
@@ -89,17 +92,17 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Nested<U>(Expression<Func<T, IEnumerable<U>>> nestedField, Action<TableBuilder<U>> nestedTable)
+    public TableBuilder<T> Nested<TNested>(Expression<Func<T, IEnumerable<TNested>>> nestedField, Action<TableBuilder<TNested>> nestedTable)
 
     {
-        var tableBuilder = new TableBuilder<U>(this.Html, "");
+        var tableBuilder = new TableBuilder<TNested>(this.Html, "", this.DefaultStyles);
         tableBuilder.Table.InheritStyles(this.Table);
 
         nestedTable(tableBuilder);
 
         var fieldName = ExpressionHelper.GetFieldName(nestedField);
         this.Table.NestedField = fieldName;
-        this.Table.NestedTable = new TableRenderer<U>(this.Html, tableBuilder.Table).RenderComponent();
+        this.Table.NestedTable = new TableRenderer<TNested>(this.Html, tableBuilder.Table, this.DefaultStyles).RenderComponent();
 
         return this;
     }

@@ -3,7 +3,9 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using System.Collections;
 using System.Linq.Expressions;
+using System.Web;
 using Incoding.Core.Extensions;
 using Incoding.Web.MvcContrib;
 
@@ -103,7 +105,28 @@ public static class DataSource
 
             return iml.When(Bindings.Grid.Init)
                     .OnBegin(dsl => controller.Init(dsl))
-                    .OnSuccess(dsl => controller.AppendData(dsl, Template.For($"json {fieldName}")));
+                    .OnSuccess(dsl => controller.AppendData(dsl, Template.For($"escapedJson {fieldName}")));
+        }
+    }
+
+    public class Model : IGridDataSource
+    {
+        public object Data { get; set; }
+
+        public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
+        {
+            var controller = new IMLGridController(s => s.Self());
+
+            if (!typeof(IEnumerable).IsAssignableFrom(Data.GetType()))
+            {
+                Data = new object[] { Data };
+            }
+
+            var json = Data.ToJsonString();
+
+            return iml.When(Bindings.Grid.Init)
+                    .OnBegin(dsl => controller.Init(dsl))
+                    .OnSuccess(dsl => controller.AppendData(dsl, HttpUtility.HtmlEncode(json)));
         }
     }
 

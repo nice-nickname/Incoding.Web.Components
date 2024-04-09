@@ -1,4 +1,5 @@
 @using Incoding.Web.Components
+@using Incoding.Web.Components.Demo.Controllers
 @{
     Layout = "_Layout";
 }
@@ -54,15 +55,27 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-        .Ajax("/data-1")
-        .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Template.cshtml").Html())
-        .AsHtmlAttributes(new
-                        {
-                                @class = "btn btn-sm btn-primary"
-                        })
-        .ToButton(@<text>
-                        Inherit template
-                    </text>))
+              .Ajax("/data-1")
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Template.cshtml").Html())
+              .AsHtmlAttributes(new
+                              {
+                                      @class = "btn btn-sm btn-primary"
+                              })
+              .ToButton(@<text>
+                              Inherit template
+                          </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main"))
+                                   .Insert.WithTemplateByView("~/Views/Examples/Regular_ModelData.cshtml")
+                                   .Html())
+              .AsHtmlAttributes(new
+                              {
+                                      @class = "btn btn-sm btn-primary"
+                              })
+              .ToButton(@<text>
+                              Model data
+                          </text>))
 
         @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())

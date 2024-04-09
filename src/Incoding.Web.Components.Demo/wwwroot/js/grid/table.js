@@ -63,6 +63,11 @@ class TableController {
      */
     nested
 
+    /**
+     * @type  { SplitGridController | undefined }
+     */
+    splitGrid
+
     constructor(element, structure, options, data, parent) {
         this.$table = $(element);
         this.$thead = $(element).find('thead')
@@ -134,10 +139,6 @@ class TableController {
         var cells = this.$tfoot.find('span[data-format]').format()
 
         cells.removeAttr('data-format')
-    }
-
-    filter(criteria) {
-
     }
 
     format() {
@@ -271,8 +272,15 @@ class TableController {
 
         this.parent.siblings.forEach(table => {
             table.removeAllRows()
-            table.renderRows()
+
+            if (!this.splitGrid) {
+                table.renderRows()
+            }
         })
+
+        if (this.splitGrid) {
+            this.splitGrid.restart()
+        }
     }
 
     showDropdown(rowId) {

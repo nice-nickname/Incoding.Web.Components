@@ -47,8 +47,7 @@ class InfiniteScrollRenderer {
     }
 
     handleDataUpdated() {
-        const availableChunks = this.splitGrid.data.length / this.chunkSize
-        this.availableChunks = this.splitGrid.dataLoading ? Math.floor(availableChunks) : Math.ceil(availableChunks);
+        this.availableChunks = this.#getAvailableChunks()
 
         this.requestRender();
     }
@@ -58,7 +57,7 @@ class InfiniteScrollRenderer {
         this.splitGrid.resetScroll()
 
         this.currentChunk = 0
-        this.availableChunks = 0
+        this.availableChunks = this.#getAvailableChunks()
 
         this.nextChunkRequested = true
     }
@@ -112,4 +111,13 @@ class InfiniteScrollRenderer {
         this.nextChunkRequested = false;
         this.currentChunk++;
     }
+
+    #getAvailableChunks() {
+        const availableChunks = this.splitGrid.data.length / this.chunkSize
+
+        return this.splitGrid.dataLoading
+            ? Math.floor(availableChunks)
+            : Math.ceil(availableChunks)
+    }
+
 }

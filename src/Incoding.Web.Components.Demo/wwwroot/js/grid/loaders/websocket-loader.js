@@ -83,6 +83,7 @@ class WebsocketLoader {
         this.splitGrid.dataLoading = true
 
         this.splitGrid.initializeTables()
+        this.splitGrid.disableSort()
 
         this.$root.trigger('websocket-start')
     }
@@ -94,6 +95,7 @@ class WebsocketLoader {
     triggerComplete() {
         this.splitGrid.dataLoading = false
         this.splitGrid.totals()
+        this.splitGrid.enableSort()
 
         this.$root.trigger('websocket-complete')
     }

@@ -109,6 +109,7 @@ class SplitGridController {
 
             if (!controller) {
                 controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
+                controller.splitGrid = this
             }
 
             controller.data = this.data
@@ -128,6 +129,21 @@ class SplitGridController {
         }
 
         this.#initializeRenderer();
+    }
+
+    restart() {
+        this.$tables.each((i, table) => {
+            let controller = $(table).data('grid')
+
+            controller.removeAllRows()
+
+            controller.renderPlaceholderRows(this.options.table.placeholderRows)
+
+            controller.hideTotals()
+        })
+
+        this.renderer.restart()
+        this.renderer.handleDataUpdated()
     }
 
     appendData(data) {
@@ -197,16 +213,14 @@ class SplitGridController {
     }
 
     disableScroll() {
-        if (!this.scrollEnabled) return
-
-        this.$scroller.scrollTop
+        this.$scroller.each(function() {
+            this.style.overflowY = 'hidden'
+        })
 
         this.scrollEnabled = false
     }
 
     enableScroll() {
-        if (this.scrollEnabled) return
-
         this.$scroller.each(function() {
             this.style.overflowY = 'auto'
         })
@@ -215,17 +229,15 @@ class SplitGridController {
     }
 
     resetScroll() {
-        if (this.scrollEnabled) return
-
         this.$scroller.scrollTop(0)
     }
 
-    collapseAll() {
-
+    enableSort() {
+        this.$tables.find('[role=sort]').removeClass('hidden')
     }
 
-    expandAll() {
-
+    disableSort() {
+        this.$tables.find('[role=sort]').addClass('hidden')
     }
 
     isScrollable() {

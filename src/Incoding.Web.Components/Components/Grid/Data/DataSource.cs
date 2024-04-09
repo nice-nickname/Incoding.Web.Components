@@ -129,17 +129,17 @@ public static class DataSource
                         chunkSize = ChunkSize,
                         method = Method
                     }))
-                    .When(Bindings.Grid.Websocket.Start)
+                    .When(Bindings.Grid.SignalR.Start)
                     .OnSuccess(dsl =>
                     {
                         OnStart?.Invoke(dsl);
                     })
-                    .When(Bindings.Grid.Websocket.Complete)
+                    .When(Bindings.Grid.SignalR.Complete)
                     .OnSuccess(dsl =>
                     {
                         OnComplete?.Invoke(dsl);
                     })
-                    .When(Bindings.Grid.Websocket.Error)
+                    .When(Bindings.Grid.SignalR.Error)
                     .OnSuccess(dsl =>
                     {
                         OnError?.Invoke(dsl);

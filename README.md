@@ -1,6 +1,6 @@
 ## Incoding.Web.Components
 
-Библиотека UI компонентов для ASP.NET Core и Incoding.Framework
+Библиотека UI компонентов для ASP.NET Core и Incoding.Framework, а также Roslyn Analyzer ([README](./analyzer/Incoding.Analyzer.Package/README.md)) для IML
 
 Список компонентов
 - SplitGrid - таблицы со сложной иерархичной структурой

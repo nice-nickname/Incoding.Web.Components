@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Incoding.Web.Components.Analyzer\Incoding.Web.Components.Analyzer.csproj" />
     <ProjectReference Include="..\Incoding.Web.Components\Incoding.Web.Components.csproj" />
   </ItemGroup>
 

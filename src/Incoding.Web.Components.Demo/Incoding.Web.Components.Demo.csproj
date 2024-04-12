@@ -12,13 +12,16 @@
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="35.4.0" />
+    <PackageReference Include="Incoding.Analyzer" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Incoding.Web" Version="1.3.0" />
     <PackageReference Include="Microsoft.AspNet.SignalR.Core" Version="2.4.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Incoding.Web.Components.Analyzer\Incoding.Web.Components.Analyzer.csproj" />
     <ProjectReference Include="..\Incoding.Web.Components\Incoding.Web.Components.csproj" />
   </ItemGroup>
 

@@ -36,7 +36,7 @@
             Setup().Render();
         }
 
-        private GridBuilder<SampleData> Setup()
+        private SplitGridBuilder<SampleData> Setup()
         {
             var id = "grid-component-benchmark";
             var css = "Lorem ipsum dolor sit amet.";
@@ -48,7 +48,7 @@
             ImlBinding binding = iml => iml.When(Bindings.Grid.Init)
                                                     .OnSuccess(dsl => dsl.Self());
 
-            return new GridBuilder<SampleData>(MockIHtmlHelper(), id)
+            return new SplitGridBuilder<SampleData>(MockIHtmlHelper(), id)
                         .Css(css)
                         .Bind(binding)
                         .Empty(empty.ToMvcHtmlString())

@@ -22,9 +22,9 @@ public class ComponentsHtmlHelper
 
     public GridUtilsHtmlHelper GridUtils => new GridUtilsHtmlHelper(this._html);
 
-    public GridBuilder<T> Grid<T>(string id)
+    public SplitGridBuilder<T> Grid<T>(string id)
     {
-        return new GridBuilder<T>(this._html, id);
+        return new SplitGridBuilder<T>(this._html, id);
     }
 
     public IHtmlContent WebsocketStreamer(string id)

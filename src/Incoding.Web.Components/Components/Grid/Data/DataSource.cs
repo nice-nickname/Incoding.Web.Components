@@ -117,7 +117,7 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            if (!typeof(IEnumerable).IsAssignableFrom(Data.GetType()))
+            if (Data is not IEnumerable)
             {
                 Data = new object[] { Data };
             }

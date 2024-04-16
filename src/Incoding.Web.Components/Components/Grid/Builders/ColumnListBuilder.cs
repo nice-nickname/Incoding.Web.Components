@@ -83,16 +83,18 @@ public class ColumnListBuilder<T>
         {
             spreadColumns(clb, i);
 
-            foreach (var cell in clb.Cells.Skip(currentColumn))
+            var addedCells = clb.Cells.Skip(currentColumn);
+
+            foreach (var cell in addedCells)
             {
                 cell.SpreadField = spreadFieldName;
                 cell.SpreadIndex = i;
+
+                currentColumn++;
             }
 
             if (i == 0)
                 spreadedCells.AddRange(clb.CellRenderers);
-
-            currentColumn++;
         }
 
         this._currentIndex = clb._currentIndex;

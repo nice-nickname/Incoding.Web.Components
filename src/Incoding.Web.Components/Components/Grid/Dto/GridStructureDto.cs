@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 #endregion
 
 [UsedImplicitly]
-[Description("JS params")]
+[Description("initializeSplitGrid JS params")]
 public record GridStructureDto
 {
     public ColumnDto[] Columns { get; set; }

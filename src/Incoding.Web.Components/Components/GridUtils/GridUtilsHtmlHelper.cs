@@ -3,9 +3,11 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using Incoding.Core.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 #endregion
 
@@ -31,7 +33,11 @@ public class GridUtilsHtmlHelper
 
                         settings.OnClick?.Invoke(dsl);
                     })
-                    .AsHtmlAttributes(classes: settings.Css)
+                    .AsHtmlAttributes(new RouteValueDictionary
+                    {
+                        [HtmlAttribute.Class.ToStringLower()] = settings.Css,
+                        ["role"] = "expand"
+                    })
                     .ToTag(HtmlTag.Button, settings.Content);
     }
 

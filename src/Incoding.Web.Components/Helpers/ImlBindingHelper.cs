@@ -31,6 +31,8 @@ public static class ImlBindingHelper
 
     private static IIncodingMetaLanguageEventBuilderDsl Noop(IHtmlHelper html)
     {
+        // When element is TagBuilder, we don't have IIncodingMetaLanguageEventbuilderDsl
+        // So we start from noop event
         return html.When("_");
     }
 }

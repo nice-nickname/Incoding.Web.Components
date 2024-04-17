@@ -1,12 +1,8 @@
 namespace Incoding.Web.Components.Grid;
 
-#region << Using >>
-
-#endregion
-
-public class UIOptions
+public record UIOptions
 {
-    public bool HighlightRowsOnHover { get; set; }
+    public bool HighlightRowsOnHover { get; set; } = true;
 
     public int PlaceholderRows { get; set; } = 20;
 

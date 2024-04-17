@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -147,6 +148,20 @@ public class SplitGridBuilder<T>
         this.Grid.DataSource = dataSource;
 
         return this;
+    }
+
+    public SplitGridBuilder<T> Recalculate(Action<RecalculateOptions> buildAction)
+    {
+        var options = new RecalculateOptions();
+        buildAction(options);
+
+        return this.Bind(iml => iml.When(RecalculateOptions.Events.Recalculate)
+                                   .StopPropagation()
+                                   .Ajax(options.Url)
+                                   .OnBegin(dsl => dsl.With(s => s.EqualsAttribute("data-row-id", Selector.Event.Data.For("RowId")))
+                                                   .JQuery.Attr.AddClass("loading"))
+                                   .OnSuccess(dsl => dsl.Self().Call("triggerRerender", Selector.Result))
+                        );
     }
 
     public SplitGridBuilder<T> Mode(GridMode mode)

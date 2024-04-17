@@ -53,8 +53,6 @@ public class TableRenderer<T>
     {
         var table = TagsFactory.Table();
 
-        var layout = this.Table.Layout == LayoutType.Fixed ? "fixed" : "auto";
-
         table.AddCssClass(DefaultStyles.TableCss);
         table.AddCssClass(this.Table.Css);
 

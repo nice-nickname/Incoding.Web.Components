@@ -14,5 +14,7 @@ public static class Bindings
 
             public static readonly string Error = "websocket-error";
         }
+
+        internal static readonly string DataSourceInit = "grid-data-source-init";
     }
 }

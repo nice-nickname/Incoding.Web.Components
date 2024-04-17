@@ -1,6 +1,6 @@
 namespace Incoding.Web.Components.Grid;
 
-public class InfiniteScrollOptions
+public record InfiniteScrollOptions
 {
     public int ChunkSize { get; set; } = 50;
 

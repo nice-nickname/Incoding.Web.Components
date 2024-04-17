@@ -1,3 +1,24 @@
+function triggerRerender(data) {
+    for (const recalculate of data) {
+        const $rows = $(`[data-row-id="${recalculate.Current.RowId}"][role=row]`).addClass('loading')
+        
+        const table = $rows.closest('table').data('grid')
+
+        table?.rerenderRow({
+            record: recalculate.Current,
+            withChildren: recalculate.WithChildren || false
+        })
+    }
+
+    setTimeout(() => {
+        for (const recalculate of data) {
+            const $rows = $(`[data-row-id="${recalculate.Current.RowId}"][role=row]`).removeClass('loading')
+    
+            $rows.removeClass('loading')
+        }
+    }, 150)
+};
+
 class TableController {
 
     /**
@@ -50,7 +71,7 @@ class TableController {
      * @type { {
      *  highlightRows: boolean
      *  placeholderRows: number
-     *  mode: 'stacked' | 'simple'
+     *  mode: 'Stacked' | 'Simple'
      *  zebra: boolean
      * } }
      */
@@ -62,6 +83,13 @@ class TableController {
      * } }
      */
     nested
+
+    /**
+     * @type {
+     *  [key: string]: boolean
+     * }
+     */
+    expands
 
     /**
      * @type  { SplitGridController | undefined }
@@ -82,6 +110,7 @@ class TableController {
         this.$table.data('grid', this)
 
         this.nested = { }
+        this.expands = { }
 
         if (this.options.highlightRows) {
             this.#hoverableRows()
@@ -89,12 +118,12 @@ class TableController {
     }
 
     expand(rowId) {
-        const isExpanded = this.structure.expands[rowId]
+        const isExpanded = this.expands[rowId]
 
         const parentData = { siblings: [] }
 
         this.parent.siblings.forEach(table => {
-            table.structure.expands[rowId] = !isExpanded
+            table.expands[rowId] = !isExpanded
             const $row = table.#findRow(rowId)
 
             if (!table.nested[rowId]) {
@@ -103,8 +132,15 @@ class TableController {
                 table.nested[rowId] = true
             }
 
-            $row.next().toggleAttribute('data-expanded', 'true', 'false')
+            if ($row.next().is('[data-nested]')) {
+                $row.next().toggleAttribute('data-expanded', 'true', 'false')
+            }
         })
+
+        const $row = this.#findRow(rowId)
+        const $expander = $row.find('[role=expand]')
+
+        $expander.attr('data-expand', !isExpanded ? 'expanded' : 'collapsed')
     }
 
     totals() {
@@ -167,6 +203,10 @@ class TableController {
 
         const record = this.data.find(s => s.RowId == rowId)
         const childData = record[this.structure.nestedField]
+
+        if (childData.length == 0) {
+            return
+        }
 
         const tr = document.createElement('tr')
         const td = document.createElement('td')
@@ -243,7 +283,7 @@ class TableController {
         this.$tbody.empty()
 
         this.nested = { }
-        this.structure.expands = { }
+        this.expands = { }
     }
 
     hideTotals() {
@@ -262,13 +302,9 @@ class TableController {
 
         const getField = this.#getFieldAccessorByColumn(column)
 
-        this.data.sort((l, r) => {
-            return getField(l) > getField(r) ? 1 : -1
-        })
+        this.#markCellAsSorted(column)
 
-        if (order === 'desc') {
-            this.data.reverse()
-        }
+        this.#sortData(this.data, order, getField, this.structure)
 
         this.parent.siblings.forEach(table => {
             table.removeAllRows()
@@ -291,9 +327,7 @@ class TableController {
         const $row = this.#findRow(rowId)
         const $invoker = $row.find('[data-dropdown-invoker]')
 
-        if ($(document.body).find(`[data-dropdown-id="${rowId}"]`).length !== 0) {
-            return
-        }
+        $(document.body).find(`[data-dropdown-id]`).remove()
 
         const $dropdown = this.#renderDropdown($invoker, rowId)
 
@@ -301,6 +335,100 @@ class TableController {
             .appendTo(document.body)
             .find('> button').trigger('click')
 
+    }
+
+    rerenderRow(data) {
+        const {
+            record,
+            withChildren
+        } = data
+
+        const rowId = record.RowId
+        const rowIndex = this.data.findIndex(s => s.RowId == rowId)
+
+        let shouldRenderChildren = withChildren && this.expands[rowId] 
+
+        this.data[rowIndex] = record
+
+        const newData = this.data[rowIndex]
+        this.parent.siblings.forEach(table => {
+            const $row = table.#findRow(rowId)
+            const $rendered = $(ExecutableInsert.Template.render(table.structure.rowTmpl, {
+                data: [ newData ]
+            })).addClass('loading')
+
+            $row.replaceWith($rendered)
+
+            IncodingEngine.Current.parse($rendered)
+            table.format()
+            table.totals()
+
+            if (shouldRenderChildren) {
+                table.expands[rowId] = false
+                table.nested[rowId] = undefined
+
+                $rendered.next().remove()
+            }
+            else if (this.expands[rowId] ) {
+                $rendered.find('[role=expand]').attr('data-expand', 'expanded')
+            }
+        })
+
+        if (shouldRenderChildren) {
+            this.expand(rowId)
+        }
+    }
+
+    invokeRecalculate(rowId) {
+        const data = this.data.find(s => s.RowId == rowId)
+
+        this.$table.trigger('recalculate', {
+            ...data
+        })
+    }
+
+    #sortData(data, order, getter, structure) {
+        if (!data || data.length < 1) return
+
+        data.sort((a, b) => {
+            const left = getter(a)
+            const right = getter(b)
+
+            if (!left) return -1
+            if (!right) return 1
+
+            return getter(a) >= getter(b) ? 1 : -1
+        })
+
+        if (order === 'desc') {
+            data.reverse()
+        }
+
+        if (this.options.mode === 'Simple' && structure.nested) {
+            data.forEach(item => {
+                const nested = item[structure.nestedField]
+                
+                this.#sortData(nested, order, getter, structure.nested)
+            })
+        }
+    }
+
+    #markCellAsSorted(column) {
+        const $sortButton = this.$thead.find(`[data-index="${column.index}"] [role=sort]`)
+
+        this.parent.siblings.forEach(table => table.#resetSort())
+
+        $sortButton.addClass('active')
+    }
+
+    #resetSort(resetOrder = false) {
+        const $sortButton = this.$thead.find('[role=sort].active')
+
+        $sortButton.removeClass('active')
+
+        if (resetOrder) {
+            $sortButton.removeAttr('data-sort')
+        }
     }
 
     #renderDropdown($invoker, rowId) {
@@ -365,7 +493,6 @@ class TableController {
             const rowIndex = $row.index()
 
             const isNeedHighlight = $row.is('[body-row]')
-
 
             this.parent.siblings.forEach(table => {
                 const $candidate = table.$tbody.children().eq(rowIndex)

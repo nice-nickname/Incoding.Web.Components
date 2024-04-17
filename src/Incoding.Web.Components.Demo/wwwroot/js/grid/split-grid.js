@@ -122,6 +122,8 @@ class SplitGridController {
             controller.renderPlaceholderRows(this.options.table.placeholderRows)
 
             controller.hideTotals()
+
+            controller.$thead.find('[role=sort].active').removeClass('active').removeAttr('data-sort')
         })
 
         if (this.renderer) {
@@ -133,12 +135,10 @@ class SplitGridController {
 
     restart() {
         this.$tables.each((i, table) => {
-            let controller = $(table).data('grid')
+            const controller = $(table).data('grid')
 
             controller.removeAllRows()
-
             controller.renderPlaceholderRows(this.options.table.placeholderRows)
-
             controller.hideTotals()
         })
 
@@ -233,11 +233,11 @@ class SplitGridController {
     }
 
     enableSort() {
-        this.$tables.find('[role=sort]').removeClass('hidden')
+        this.$tables.find('[role=sort]').removeClass('disabled')
     }
 
     disableSort() {
-        this.$tables.find('[role=sort]').addClass('hidden')
+        this.$tables.find('[role=sort]').addClass('disabled')
     }
 
     isScrollable() {

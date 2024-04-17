@@ -20,6 +20,8 @@ public class Column
 
     public bool Sortable { get; set; }
 
+    public bool Filterable { get; set; }
+
     public SortType? Sort { get; set; }
 
     public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();

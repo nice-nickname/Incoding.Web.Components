@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
@@ -72,7 +73,7 @@ public class ColumnListBuilder<T>
         if (spreadCount <= 0)
             throw new ArgumentException("count should be positive number", nameof(spreadCount));
 
-        var spreadFieldName = ExpressionHelper.GetFieldName(spreadField);
+        var spreadFieldName = spreadField.GetMemberName();
 
         var clb = new ColumnListBuilder<TSpread>(this.Html, this._currentIndex);
 

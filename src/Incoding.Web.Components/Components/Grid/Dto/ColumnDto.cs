@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 #endregion
 
 [UsedImplicitly]
-[Description("JS params")]
+[Description("initializeSplitGrid JS params")]
 public record ColumnDto
 {
     public int Index { get; set; }

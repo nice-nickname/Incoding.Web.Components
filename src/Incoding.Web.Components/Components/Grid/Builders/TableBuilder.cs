@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -85,22 +86,21 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> DropdownTmpl(TemplateContent<T> contentAction)
+    public TableBuilder<T> DropdownTmpl(TemplateContent<T> dropdownContent)
     {
-        this.Table.Row.DropdownContent = contentAction;
+        this.Table.Row.DropdownContent = dropdownContent;
 
         return this;
     }
 
     public TableBuilder<T> Nested<TNested>(Expression<Func<T, IEnumerable<TNested>>> nestedField, Action<TableBuilder<TNested>> nestedTable)
-
     {
         var tableBuilder = new TableBuilder<TNested>(this.Html, "", this.DefaultStyles);
         tableBuilder.Table.InheritStyles(this.Table);
 
         nestedTable(tableBuilder);
 
-        var fieldName = ExpressionHelper.GetFieldName(nestedField);
+        var fieldName = nestedField.GetMemberName();
         this.Table.NestedField = fieldName;
         this.Table.NestedTable = new TableRenderer<TNested>(this.Html, tableBuilder.Table, this.DefaultStyles).RenderComponent();
 

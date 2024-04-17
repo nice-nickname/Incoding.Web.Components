@@ -45,8 +45,7 @@
 
             var attr = new { name = "viva vidi vici" };
 
-            ImlBinding binding = iml => iml.When(Bindings.Grid.Init)
-                                                    .OnSuccess(dsl => dsl.Self());
+            ImlBinding binding = iml => iml.When(Bindings.Grid.Init).OnSuccess(dsl => dsl.Self());
 
             return new SplitGridBuilder<SampleData>(MockIHtmlHelper(), id)
                         .Css(css)

@@ -172,7 +172,11 @@ public class SplitGridRenderer<T>
 
         var initBinding = this.Html.When(JqueryBind.InitIncoding)
                                     .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid", options))
-                                    .OnComplete(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.Init));
+                                    .OnComplete(dsl =>
+                                    {
+                                        dsl.Self().Trigger.Invoke(Bindings.Grid.Init);
+                                        dsl.Self().Trigger.Invoke(Bindings.Grid.DataSourceInit);
+                                    });
 
         if (bindings != null)
         {

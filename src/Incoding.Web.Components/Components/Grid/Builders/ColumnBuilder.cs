@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Linq.Expressions;
+using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -77,19 +78,27 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, $"{attr}"));
+        this.Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, attr));
+
         return this;
     }
 
     public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, $"{attr}"));
+        this.Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, attr));
         return this;
     }
 
     public ColumnBuilder<T> Totalable(bool value = true)
     {
         this.Column.Totalable = value;
+
+        return this;
+    }
+
+    public ColumnBuilder<T> Filterable(bool value = true)
+    {
+        this.Column.Filterable = value;
 
         return this;
     }
@@ -127,14 +136,10 @@ public class ColumnBuilder<T>
         this.Cell.Field = field;
 
         if (string.IsNullOrWhiteSpace(this.Column.Title))
-        {
             this.Column.Title = field;
-        }
 
         if (this.Cell.Content == null)
-        {
             Content(tmpl => tmpl.For(field));
-        }
 
         return this.Attr("data-value", tmpl => tmpl.For(field))
                    .Attr("title", tmpl => tmpl.For(field));
@@ -142,21 +147,17 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
     {
-        var fieldName = ExpressionHelper.GetFieldName(fieldAccessor);
+        var fieldName = fieldAccessor.GetMemberName();
         var colType = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
         var colFormat = colType.ToColumnFormat();
 
         this.Cell.Field = fieldName;
 
         if (string.IsNullOrWhiteSpace(this.Column.Title))
-        {
             Title(fieldName);
-        }
 
         if (this.Cell.Content == null)
-        {
             Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
-        }
 
         return this.Attr("data-value", tmpl => tmpl.For(fieldName))
                    .Attr("title", tmpl => tmpl.For(fieldName))

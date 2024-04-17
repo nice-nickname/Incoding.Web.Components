@@ -41,21 +41,8 @@ public static class ExpressionHelper
                 return ColumnType.String;
 
             default:
-                throw new InvalidOperationException($"type {actualType} cannit be mapped as column field");
+                throw new InvalidOperationException($"type {actualType} cannot be mapped as column field");
         }
-    }
-
-    public static string GetFieldName<T, TField>(Expression<Func<T, TField>> field)
-    {
-        var propInfo = GetPropertyInfoFromAccessor(field);
-
-        var type = typeof(T);
-        if (propInfo.ReflectedType != null && type != propInfo.ReflectedType && !type.IsSubclassOf(propInfo.ReflectedType))
-        {
-            throw new ArgumentException($"Expression '{field}' refers to a property that is not from type {type}.");
-        }
-
-        return propInfo.Name;
     }
 
     private static PropertyInfo GetPropertyInfoFromAccessor<T, TField>(Expression<Func<T, TField>> field)

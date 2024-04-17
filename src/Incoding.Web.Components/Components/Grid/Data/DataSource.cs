@@ -15,11 +15,11 @@ public static class DataSource
 {
     public class SubmitOn : IGridDataSource
     {
-        public Func<JquerySelector, JquerySelectorExtend> FormSelector { get; set; }
-
         public string Url { get; set; }
 
-        public JqueryBind Event { get; set; }
+        public JqueryBind? Event { get; set; }
+
+        public Func<JquerySelector, JquerySelectorExtend> FormSelector { get; set; }
 
         public Action<IIncodingMetaLanguageCallbackBodyDsl> OnSuccess { get; set; }
 
@@ -31,7 +31,9 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            return iml.When(Event)
+            var @event = Event?.ToStringLower() ?? Bindings.Grid.DataSourceInit;
+
+            return iml.When(@event)
                     .SubmitOn(FormSelector)
                     .OnBegin(dsl =>
                     {
@@ -47,10 +49,7 @@ public static class DataSource
 
                         OnSuccess?.Invoke(dsl);
                     })
-                    .OnError(dsl =>
-                    {
-                        OnError?.Invoke(dsl);
-                    });
+                    .OnError(dsl => OnError?.Invoke(dsl));
         }
     }
 
@@ -58,7 +57,7 @@ public static class DataSource
     {
         public string Url { get; set; }
 
-        public JqueryBind Event { get; set; }
+        public JqueryBind? Event { get; set; }
 
         public Action<IIncodingMetaLanguageCallbackBodyDsl> OnSuccess { get; set; }
 
@@ -70,7 +69,9 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            return iml.When(Event)
+            var @event = Event?.ToStringLower() ?? Bindings.Grid.DataSourceInit;
+
+            return iml.When(@event)
                 .Ajax(Url)
                 .OnBegin(dsl =>
                 {
@@ -84,10 +85,7 @@ public static class DataSource
 
                     OnSuccess?.Invoke(dsl);
                 })
-                .OnError(dsl =>
-                {
-                    OnError?.Invoke(dsl);
-                });
+                .OnError(dsl => OnError?.Invoke(dsl));
         }
     }
 
@@ -101,11 +99,9 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            var fieldName = Field.GetMemberName();
-
-            return iml.When(Bindings.Grid.Init)
-                    .OnBegin(dsl => controller.Init(dsl))
-                    .OnSuccess(dsl => controller.AppendData(dsl, Template.For($"escapedJson {fieldName}")));
+            return iml.When(Bindings.Grid.DataSourceInit)
+                      .OnBegin(dsl => controller.Init(dsl))
+                      .OnSuccess(dsl => controller.AppendData(dsl, Template.For($"escapedJson {Field.GetMemberName()}")));
         }
     }
 
@@ -118,15 +114,13 @@ public static class DataSource
             var controller = new IMLGridController(s => s.Self());
 
             if (Data is not IEnumerable)
-            {
                 Data = new object[] { Data };
-            }
 
             var json = Data.ToJsonString();
 
-            return iml.When(Bindings.Grid.Init)
-                    .OnBegin(dsl => controller.Init(dsl))
-                    .OnSuccess(dsl => controller.AppendData(dsl, HttpUtility.HtmlEncode(json)));
+            return iml.When(Bindings.Grid.DataSourceInit)
+                      .OnBegin(dsl => controller.Init(dsl))
+                      .OnSuccess(dsl => controller.AppendData(dsl, HttpUtility.HtmlEncode(json)));
         }
     }
 
@@ -146,27 +140,18 @@ public static class DataSource
         {
             var controller = new IMLGridController(s => s.Self());
 
-            return iml.When(Bindings.Grid.Init)
-                    .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("websocketLoader", new
-                    {
-                        chunkSize = ChunkSize,
-                        method = Method
-                    }))
-                    .When(Bindings.Grid.SignalR.Start)
-                    .OnSuccess(dsl =>
-                    {
-                        OnStart?.Invoke(dsl);
-                    })
-                    .When(Bindings.Grid.SignalR.Complete)
-                    .OnSuccess(dsl =>
-                    {
-                        OnComplete?.Invoke(dsl);
-                    })
-                    .When(Bindings.Grid.SignalR.Error)
-                    .OnSuccess(dsl =>
-                    {
-                        OnError?.Invoke(dsl);
-                    });
+            return iml.When(Bindings.Grid.DataSourceInit)
+                      .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("websocketLoader", new
+                      {
+                          chunkSize = ChunkSize,
+                          method = Method
+                      }))
+                      .When(Bindings.Grid.SignalR.Start)
+                      .OnSuccess(dsl => OnStart?.Invoke(dsl))
+                      .When(Bindings.Grid.SignalR.Complete)
+                      .OnSuccess(dsl => OnComplete?.Invoke(dsl))
+                      .When(Bindings.Grid.SignalR.Error)
+                      .OnSuccess(dsl => OnError?.Invoke(dsl));
         }
     }
 }

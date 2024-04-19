@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>Incoding.Analyzer</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>1.0.1.0</PackageVersion>
     <Authors>semyon@planifi.net</Authors>
     <PackageProjectUrl>https://github.com/Incoding-Software</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nice-nickname/Incoding.Web.Components</RepositoryUrl>

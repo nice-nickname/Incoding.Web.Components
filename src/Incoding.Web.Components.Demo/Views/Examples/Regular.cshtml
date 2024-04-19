@@ -61,11 +61,7 @@
     .DataSource(new DataSource.Ajax
     {
         Event = JqueryBind.Load,
-        Url = Url.Dispatcher().Query<SampleData>(new
-        {
-            ass = 123,
-            bass = "123"
-        }).AsJson()
+        Url = "/data-100"
     })
     .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
     .Render())

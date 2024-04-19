@@ -6,7 +6,7 @@ namespace Incoding.Analyzer
 
     #endregion
 
-    public static class AnonymousInitializerExtensions
+    internal static class AnonymousInitializerExtensions
     {
         public static string GetPropertyName(this AnonymousObjectMemberDeclaratorSyntax initializer)
         {

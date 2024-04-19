@@ -1,7 +1,7 @@
 function triggerRerender(data) {
     for (const recalculate of data) {
         const $rows = $(`[data-row-id="${recalculate.Current.RowId}"][role=row]`).addClass('loading')
-        
+
         const table = $rows.closest('table').data('grid')
 
         table?.rerenderRow({
@@ -13,7 +13,7 @@ function triggerRerender(data) {
     setTimeout(() => {
         for (const recalculate of data) {
             const $rows = $(`[data-row-id="${recalculate.Current.RowId}"][role=row]`).removeClass('loading')
-    
+
             $rows.removeClass('loading')
         }
     }, 150)
@@ -29,22 +29,27 @@ class TableController {
     /**
      * @type { JQuery<HTMLTableSectionElement> }
      */
-    $thead
+    $header
 
     /**
      * @type { JQuery<HTMLTableSectionElement> }
      */
-    $tbody
+    $body
 
     /**
      * @type { JQuery<HTMLTableSectionElement> }
      */
-    $tfoot
+    $footer
 
     /**
      * @type { any[] }
      */
     data;
+
+    /**
+     * @type { any[] }
+     */
+    originData
 
     /**
      * @type { {
@@ -54,26 +59,12 @@ class TableController {
     parent
 
     /**
-     * @type { {
-     *  columns: any[],
-     *  rowTmpl: string,
-     *  layoutHtml: string,
-     *  dropdownTmpl: string,
-     *  hasDropdown: boolean,
-     *  nestedField: string,
-     *  expands: any,
-     *  nested: any
-     * } }
+     * @type { TableStructure }
      */
     structure;
 
     /**
-     * @type { {
-     *  highlightRows: boolean
-     *  placeholderRows: number
-     *  mode: 'Stacked' | 'Simple'
-     *  zebra: boolean
-     * } }
+     * @type { TableOptions }
      */
     options;
 
@@ -96,11 +87,21 @@ class TableController {
      */
     splitGrid
 
+    /**
+     * @type { SortController }
+     */
+    sortController
+
+    /**
+     * @type { FilterController }
+     */
+    filterController
+
     constructor(element, structure, options, data, parent) {
         this.$table = $(element);
-        this.$thead = $(element).find('thead')
-        this.$tbody = $(element).find('tbody')
-        this.$tfoot = $(element).find('tfoot')
+        this.$header = $(element).find('thead')
+        this.$body = $(element).find('tbody')
+        this.$footer = $(element).find('tfoot')
 
         this.structure = structure;
         this.options = options
@@ -112,9 +113,16 @@ class TableController {
         this.nested = { }
         this.expands = { }
 
+        this.sortController = new SortController(this, this.structure.columns.find(s => s.sortedBy != null))
+        this.filterController = new FilterController(this)
+
         if (this.options.highlightRows) {
             this.#hoverableRows()
         }
+    }
+
+    isSimpleMode() {
+        return this.options.mode === 'Simple'
     }
 
     expand(rowId) {
@@ -146,33 +154,26 @@ class TableController {
     totals() {
         const totalableCols = this.structure.columns.filter(s => s.totalable)
 
-        totalableCols.forEach(col => {
+        totalableCols.forEach(column => {
             const {
                 index,
-                field,
-                spreadIndex,
-                spreadField,
                 format
-            } = col
+            } = column
 
-            let fieldAccessor = data => data[field]
-
-            if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
-                fieldAccessor = data => data[spreadField][spreadIndex][field]
-            }
+            const getter = this.getFieldAccessorByColumn(column)
 
             const total = this.data.reduce((sum, data) => {
-                const value = Number(fieldAccessor(data)) || 0
+                const value = Number(getter(data)) || 0
                 return sum += value
             }, 0)
 
-            this.$tfoot.find(`td[data-index="${index}"] span`).each(function () {
+            this.$footer.find(`td[data-index="${index}"] span`).each(function () {
                 $(this).attr('data-format', format)
                 $(this).attr('data-value', total)
             })
         })
 
-        var cells = this.$tfoot.find('span[data-format]').format()
+        var cells = this.$footer.find('span[data-format]').format()
 
         cells.removeAttr('data-format')
     }
@@ -182,6 +183,12 @@ class TableController {
             .find('td[data-format]')
             .format()
             .removeAttr('data-format')
+    }
+
+    openFilter(columnIndex) {
+        const column = this.structure.columns[columnIndex]
+
+        this.filterController.open(column)
     }
 
     renderRows(start = 0, end = undefined) {
@@ -243,7 +250,9 @@ class TableController {
         nestedController.totals()
     }
 
-    renderPlaceholderRows(count) {
+    renderPlaceholderRows(count = null) {
+        count = count || this.options.placeholderRows
+
         const tr = document.createElement('tr')
         tr.setAttribute('temp-row', true)
 
@@ -258,7 +267,7 @@ class TableController {
 
         const rows = Array.from({ length: count }, () => tr.cloneNode(true))
 
-        this.$tbody[0].append(...rows)
+        this.$body[0].append(...rows)
     }
 
     removeRow(rowId) {
@@ -269,9 +278,9 @@ class TableController {
         }
 
         this.parent.siblings.forEach(table => {
-            table.$tbody.find(`tr[data-row-id="${rowId}"]`).remove()
+            table.$body.find(`tr[data-row-id="${rowId}"]`).remove()
 
-            if (table.$tbody.children().length === 0) {
+            if (table.$body.children().length === 0) {
                 table.$table.remove()
             }
 
@@ -280,43 +289,27 @@ class TableController {
     }
 
     removeAllRows() {
-        this.$tbody.empty()
+        this.$body.empty()
 
         this.nested = { }
         this.expands = { }
     }
 
+    showTotals() {
+        this.$footer.find('span').removeClass('table-placeholder')
+    }
+
     hideTotals() {
-        const $totals = this.$tfoot.find('span')
+        const $totals = this.$footer.find('span')
 
         $totals.addClass('table-placeholder')
             .html('&nbsp;')
     }
 
-    showTotals() {
-        this.$tfoot.find('span').removeClass('table-placeholder')
-    }
-
-    sort(columnIndex, order) {
+    sort(columnIndex) {
         const column = this.structure.columns[columnIndex]
 
-        const getField = this.#getFieldAccessorByColumn(column)
-
-        this.#markCellAsSorted(column)
-
-        this.#sortData(this.data, order, getField, this.structure)
-
-        this.parent.siblings.forEach(table => {
-            table.removeAllRows()
-
-            if (!this.splitGrid) {
-                table.renderRows()
-            }
-        })
-
-        if (this.splitGrid) {
-            this.splitGrid.restart()
-        }
+        this.sortController.sortColumn(column)
     }
 
     showDropdown(rowId) {
@@ -337,6 +330,18 @@ class TableController {
 
     }
 
+    getFieldAccessorByColumn(column) {
+        const { field, spreadField, spreadIndex } = column
+
+        let fieldAccessor = data => data[field]
+
+        if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
+            fieldAccessor = data => data[spreadField][spreadIndex][field]
+        }
+
+        return fieldAccessor
+    }
+
     rerenderRow(data) {
         const {
             record,
@@ -346,7 +351,7 @@ class TableController {
         const rowId = record.RowId
         const rowIndex = this.data.findIndex(s => s.RowId == rowId)
 
-        let shouldRenderChildren = withChildren && this.expands[rowId] 
+        let shouldRenderChildren = withChildren && this.expands[rowId]
 
         this.data[rowIndex] = record
 
@@ -387,50 +392,6 @@ class TableController {
         })
     }
 
-    #sortData(data, order, getter, structure) {
-        if (!data || data.length < 1) return
-
-        data.sort((a, b) => {
-            const left = getter(a)
-            const right = getter(b)
-
-            if (!left) return -1
-            if (!right) return 1
-
-            return getter(a) >= getter(b) ? 1 : -1
-        })
-
-        if (order === 'desc') {
-            data.reverse()
-        }
-
-        if (this.options.mode === 'Simple' && structure.nested) {
-            data.forEach(item => {
-                const nested = item[structure.nestedField]
-                
-                this.#sortData(nested, order, getter, structure.nested)
-            })
-        }
-    }
-
-    #markCellAsSorted(column) {
-        const $sortButton = this.$thead.find(`[data-index="${column.index}"] [role=sort]`)
-
-        this.parent.siblings.forEach(table => table.#resetSort())
-
-        $sortButton.addClass('active')
-    }
-
-    #resetSort(resetOrder = false) {
-        const $sortButton = this.$thead.find('[role=sort].active')
-
-        $sortButton.removeClass('active')
-
-        if (resetOrder) {
-            $sortButton.removeAttr('data-sort')
-        }
-    }
-
     #renderDropdown($invoker, rowId) {
         const record = this.data.find(s => s.RowId == rowId)
         const $dropdown = $(ExecutableInsert.Template.render(this.structure.dropdownTmpl, {
@@ -461,7 +422,7 @@ class TableController {
     #findRow(rowId) {
         const selector = `tr[data-row-id="${rowId}"]:not([data-nested])`
 
-        return this.$tbody.find(selector)
+        return this.$body.find(selector)
     }
 
     #renderRows(data) {
@@ -475,10 +436,10 @@ class TableController {
         this.$table[0].tBodies[0].appendChild(template.content)
 
         if (this.options.zebra) {
-            $rows.each(function(index) {
-                $(this).addClass(index % 2 === 0 ? 'even' : 'odd')
-            })
+            this.#renderZebra($rows)
         }
+
+        //this.#updateFilterColumns()
 
         IncodingEngine.Current.parse($rows)
     }
@@ -486,7 +447,7 @@ class TableController {
     #hoverableRows() {
         let prevRowIndex = -1
 
-        this.$tbody[0].addEventListener('mouseover', (ev) => {
+        this.$body[0].addEventListener('mouseover', (ev) => {
             ev.stopPropagation()
 
             const $row = $(ev.target).closest('tr')
@@ -495,8 +456,8 @@ class TableController {
             const isNeedHighlight = $row.is('[body-row]')
 
             this.parent.siblings.forEach(table => {
-                const $candidate = table.$tbody.children().eq(rowIndex)
-                const $prev = table.$tbody.children().eq(prevRowIndex)
+                const $candidate = table.$body.children().eq(rowIndex)
+                const $prev = table.$body.children().eq(prevRowIndex)
 
                 $prev.removeClass('highlight')
 
@@ -508,25 +469,30 @@ class TableController {
             prevRowIndex = rowIndex
         })
 
-        this.$tbody[0].addEventListener('mouseleave', (ev) => {
+        this.$body[0].addEventListener('mouseleave', (ev) => {
             ev.stopPropagation()
 
             this.parent.siblings.forEach(table => {
-                const $candidate = table.$tbody.children()
+                const $candidate = table.$body.children()
                 $candidate.removeClass('highlight')
             })
         })
     }
 
-    #getFieldAccessorByColumn(column) {
-        const { field, spreadField, spreadIndex } = column
+    #renderZebra($rows) {
+        $rows.each(function(index) {
+            $(this).addClass(index % 2 === 0 ? 'even' : 'odd')
+        })
+    }
 
-        let fieldAccessor = data => data[field]
+    #updateFilterColumns() {
+        if (this.filterController.isApplied()) {
+            const $filteredCols = $rows.find(`td:nth-child(${this.filterController.filteredColumn.index})`)
 
-        if (!ExecutableHelper.IsNullOrEmpty(spreadField)) {
-            fieldAccessor = data => data[spreadField][spreadIndex][field]
+            $filteredCols.addClass('bg-primary').attr('current-filter', 'true')
         }
-
-        return fieldAccessor
+        else {
+            $rows.find('[current-filter]').removeClass('bg-primary')
+        }
     }
 }

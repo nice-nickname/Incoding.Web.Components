@@ -1,4 +1,4 @@
-class AtOnceRenderer {
+class ImmediateRowRenderer {
 
     /**
      * @type { SplitGridController }

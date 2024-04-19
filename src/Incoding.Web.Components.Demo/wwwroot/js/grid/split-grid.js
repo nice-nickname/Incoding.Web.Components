@@ -1,5 +1,4 @@
 
-
 class SplitGridController {
 
     /**
@@ -11,7 +10,6 @@ class SplitGridController {
      * @type { JQuery<HTMLElement> }
      */
     $empty;
-
 
     /**
      * @type  { JQuery<HTMLElement> }
@@ -34,33 +32,24 @@ class SplitGridController {
     data;
 
     /**
-     * @type { {
-     *  columns: any[],
-     *  rowTmpl: string,
-     *  layoutHtml: string,
-     *  dropdownTmpl: string,
-     *  hasDropdown: boolean,
-     *  nestedField: string,
-     *  nested: any
-     * }[] }
+     * @type { any[] }
+     */
+    originData
+
+    /**
+     * @type { TableStructure[] }
      */
     structure;
 
     /**
-     * @type { {
-     *  infiniteScroll: boolean
-     *  loadingRowCount: number
-     *  scrollChunkSize: number
-     * } }
+     * @type { GridOptions }
      */
     options;
 
     /**
-     * @type { {
-     *  handleDataUpdated: () => void
-     * } }
+     * @type { IRowRenderer }
      */
-    renderer
+    rowRenderer
 
     /**
      * @type { boolean }
@@ -77,6 +66,11 @@ class SplitGridController {
      */
     scrollEnabled
 
+    /**
+     * @type { TableController[] }
+     */
+    tables
+
     constructor(element, options) {
         this.$root = $(element)
         this.$empty = this.$root.find('.grid-empty')
@@ -84,66 +78,47 @@ class SplitGridController {
 
         this.$tables = this.$content.find('table');
 
-        this.hide()
-
         this.structure = options.structure;
         this.options = options
 
-        this.#initializeScroll();
+        this.data = []
 
-        this.scrollEnabled = true
+        this.#initializeScroll()
+        this.#initializeRenderer()
+        this.#initializeTables()
+
+        this.enableScroll()
+        this.hide()
     }
 
-    initializeTables() {
+
+    initializeTables() { // m-debug rename
         this.show()
 
         this.data = []
 
-        const parentData = {
-            data: this.data,
-            siblings: []
-        }
+        this.tables.forEach(table => {
+            table.data = this.data
 
-        this.$tables.each((i, table) => {
-            let controller = $(table).data('grid')
+            table.removeAllRows()
+            table.renderPlaceholderRows()
+            table.hideTotals()
 
-            if (!controller) {
-                controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
-                controller.splitGrid = this
-            }
-
-            controller.data = this.data
-            controller.parent = parentData
-
-            parentData.siblings.push(controller)
-
-            controller.removeAllRows()
-
-            controller.renderPlaceholderRows(this.options.table.placeholderRows)
-
-            controller.hideTotals()
-
-            controller.$thead.find('[role=sort].active').removeClass('active').removeAttr('data-sort')
+            table.sortController.reset()
         })
 
-        if (this.renderer) {
-            return this.renderer.restart()
-        }
-
-        this.#initializeRenderer();
+        this.rowRenderer.restart()
     }
 
-    restart() {
-        this.$tables.each((i, table) => {
-            const controller = $(table).data('grid')
-
-            controller.removeAllRows()
-            controller.renderPlaceholderRows(this.options.table.placeholderRows)
-            controller.hideTotals()
+    rerender() {
+        this.tables.forEach(table => {
+            table.removeAllRows()
+            table.renderPlaceholderRows()
+            table.hideTotals()
         })
 
-        this.renderer.restart()
-        this.renderer.handleDataUpdated()
+        this.rowRenderer.restart()
+        this.rowRenderer.handleDataUpdated()
     }
 
     appendData(data) {
@@ -159,7 +134,7 @@ class SplitGridController {
 
         this.data.push(...data);
 
-        this.renderer.handleDataUpdated()
+        this.rowRenderer.handleDataUpdated()
 
         if (this.data.length === 0) {
             this.hide()
@@ -189,22 +164,11 @@ class SplitGridController {
         }
     }
 
-    rerenderRow(data) {
-
-    }
-
     totals() {
-        this.$tables.each((i, table) => {
-            let controller = $(table).data('grid')
-
-            controller.totals()
-            controller.showTotals()
+        this.tables.forEach(table => {
+            table.totals()
+            table.showTotals()
         })
-    }
-
-    hide() {
-        this.$empty.removeClass('hidden')
-        this.$content.addClass('hidden')
     }
 
     show() {
@@ -212,12 +176,9 @@ class SplitGridController {
         this.$content.removeClass('hidden')
     }
 
-    disableScroll() {
-        this.$scroller.each(function() {
-            this.style.overflowY = 'hidden'
-        })
-
-        this.scrollEnabled = false
+    hide() {
+        this.$empty.removeClass('hidden')
+        this.$content.addClass('hidden')
     }
 
     enableScroll() {
@@ -228,20 +189,62 @@ class SplitGridController {
         this.scrollEnabled = true
     }
 
+    disableScroll() {
+        this.$scroller.each(function() {
+            this.style.overflowY = 'hidden'
+        })
+
+        this.scrollEnabled = false
+    }
+
     resetScroll() {
         this.$scroller.scrollTop(0)
     }
 
+    isScrollable() {
+        return this.$scroller.isScrollable()
+    }
+
     enableSort() {
-        this.$tables.find('[role=sort]').removeClass('disabled')
+        this.tables.forEach(table => {
+            table.sortController.enable()
+        })
     }
 
     disableSort() {
-        this.$tables.find('[role=sort]').addClass('disabled')
+        this.tables.forEach(table => {
+            table.sortController.disable()
+        })
     }
 
-    isScrollable() {
-        return this.$scroller.isScrollable()
+    enableFilter() {
+        this.tables.forEach(table => {
+            table.filterController.enable()
+        })
+    }
+
+    disableFilter() {
+        this.tables.forEach(table => {
+            table.filterController.disable()
+        })
+    }
+
+    #initializeTables() {
+        this.tables = []
+        const parentData = { siblings: [] }
+
+        this.$tables.each((i, table) => {
+            let controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
+            controller.splitGrid = this
+
+            controller.data = this.data
+            controller.parent = parentData
+
+            parentData.siblings.push(controller)
+            this.tables.push(controller)
+
+            controller.sortController.reset()
+        })
     }
 
     #initializeScroll() {
@@ -258,6 +261,8 @@ class SplitGridController {
 
         this.scrolledToEnd = !infiniteScroll
 
-        this.renderer = infiniteScroll ?  new InfiniteScrollRenderer(this, scrollChunkSize) : new AtOnceRenderer(this)
+        this.rowRenderer = infiniteScroll ?
+            new InfiniteScrollRowRenderer(this, scrollChunkSize) :
+            new ImmediateRowRenderer(this)
     }
 }

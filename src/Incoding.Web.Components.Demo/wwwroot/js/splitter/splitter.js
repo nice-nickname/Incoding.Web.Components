@@ -26,7 +26,6 @@ class Splitter {
      */
     $panels
 
-
     /**
      * @type { boolean }
      */
@@ -158,9 +157,5 @@ class Splitter {
             elements: [$left[0], $divider[0], $right[0]],
             resizeFn: this.resize.bind(this)
         }
-    }
-
-    refresh() {
-
     }
 }

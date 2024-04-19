@@ -24,9 +24,9 @@
                             }
                         </text>).Width(40);
 
-                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).SortedBy(SortType.Asc).Sortable();
+                        cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Sortable();
 
-                        cols.Add().Field(s => s.Name).Width(70);
+                        cols.Add().Field(s => s.Name).Width(70).Filterable();
                         cols.Add().Field(s => s.Description).Title("Notes").Width(200);
 
                         cols.Add().Field(s => s.Amount).Width(70).Totalable();

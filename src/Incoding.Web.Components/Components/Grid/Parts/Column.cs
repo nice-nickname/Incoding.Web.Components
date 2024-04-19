@@ -22,7 +22,7 @@ public class Column
 
     public bool Filterable { get; set; }
 
-    public SortType? Sort { get; set; }
+    public SortOrder? SortedBy { get; set; }
 
     public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 

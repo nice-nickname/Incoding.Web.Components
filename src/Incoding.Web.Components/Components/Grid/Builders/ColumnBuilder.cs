@@ -110,9 +110,9 @@ public class ColumnBuilder<T>
         return this;
     }
 
-    public ColumnBuilder<T> SortedBy(SortType sort)
+    public ColumnBuilder<T> SortedBy(SortOrder sort)
     {
-        this.Column.Sort = sort;
+        this.Column.SortedBy = sort;
 
         return this;
     }

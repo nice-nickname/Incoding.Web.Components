@@ -1,4 +1,4 @@
-class InfiniteScrollRenderer {
+class InfiniteScrollRowRenderer {
 
     /**
      * @type { JQuery<HTMLElement> }
@@ -81,7 +81,7 @@ class InfiniteScrollRenderer {
             return
         }
 
-        this.splitGrid.scrolledToEnd = (this.currentChunk + 1) >= this.availableChunks
+        this.splitGrid.scrolledToEnd = this.#isScrolledToEnd()
 
         this.tryRenderNextChunk();
 
@@ -120,4 +120,7 @@ class InfiniteScrollRenderer {
             : Math.ceil(availableChunks)
     }
 
+    #isScrolledToEnd() {
+        return (this.currentChunk + 1) >= this.availableChunks
+    }
 }

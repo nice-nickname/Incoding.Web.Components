@@ -327,7 +327,7 @@
 
 } (jQuery));
 
-(function() {
+(function($) {
 
     const current = {
         $selection: $(),
@@ -479,6 +479,22 @@
     function deactivateInput($cell) {
         current.inputInFocus = false
         $cell.trigger('focus')
+    }
+
+} (jQuery));
+
+(function($) {
+
+    $.fn.boundElementTo = function($target) {
+        const bounds = $target[0].getBoundingClientRect()
+
+        const styles = {
+            top: bounds.top + bounds.height,
+            left: bounds.left,
+            position: 'absolute'
+        }
+
+        return $(this).css(styles).appendTo(document.body)
     }
 
 } (jQuery));

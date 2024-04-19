@@ -28,6 +28,9 @@ public record ColumnDto
     public bool Sortable { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]
+    public SortOrder? SortedBy { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
     public ColumnType Type { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]

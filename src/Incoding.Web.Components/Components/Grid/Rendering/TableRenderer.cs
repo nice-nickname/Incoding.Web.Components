@@ -9,7 +9,9 @@ using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.VisualBasic;
 
 #endregion
 
@@ -108,11 +110,12 @@ public class TableRenderer<T>
             cell.MergeAttributes(column.Attr);
 
             if (!isStacked && column.Sortable)
-            {
                 cell.InnerHtml.AppendHtml(RenderSortButton(column));
-            }
 
             cell.InnerHtml.AppendHtml(column.Title);
+
+            if (!isStacked && column.Filterable)
+                cell.InnerHtml.AppendHtml(RenderFilterButton(column));
 
             if (hasStacked)
             {
@@ -120,9 +123,9 @@ public class TableRenderer<T>
                 cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
             }
 
-            var width = isStacked
-                ? column.Columns.Sum(s => s.Width)
-                : column.Width.GetValueOrDefault(0);
+            var width = isStacked ?
+                column.Columns.Sum(s => s.Width) :
+                column.Width.GetValueOrDefault(0);
 
             cell.AppendStyle(CssStyling.Width, width + "px");
 
@@ -136,10 +139,11 @@ public class TableRenderer<T>
     {
         var sortButton = TagsFactory.Button();
         sortButton.Attributes["role"] = "sort";
+        sortButton.InnerHtml.Append("s");
 
-        if (column.Sort.HasValue)
+        if (column.SortedBy.HasValue)
         {
-            sortButton.Attributes["data-sort"] = column.Sort.ToStringLower();
+            sortButton.Attributes["data-sort"] = column.SortedBy.ToStringLower();
         }
 
         ImlBindingHelper.BindToTag(Html, sortButton, iml => iml.When(JqueryBind.Click)
@@ -152,6 +156,22 @@ public class TableRenderer<T>
                                     );
 
         return sortButton;
+    }
+
+    private IHtmlContent RenderFilterButton(Column column)
+    {
+        var filterButton = TagsFactory.Button();
+        filterButton.Attributes["role"] = "filter";
+        filterButton.InnerHtml.Append("f");
+
+        ImlBindingHelper.BindToTag(Html, filterButton, iml => iml.When(JqueryBind.Click)
+                                                                 .StopPropagation()
+                                                                 .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                                                     .JQuery.Call("data('grid').openFilter",
+                                                                                        Selector.Jquery.Self().Closest(HtmlTag.Th).Attr("data-index")))
+                                    );
+
+        return filterButton;
     }
 
     private IHtmlContent RenderBody(bool includeTemplate)
@@ -288,7 +308,8 @@ public class TableComponent
                 SpreadField = s.SpreadField,
                 SpreadIndex = s.SpreadIndex,
                 Totalable = s.Column.Totalable,
-                Sortable = s.Column.Sortable
+                Sortable = s.Column.Sortable,
+                SortedBy = s.Column.SortedBy
             };
         }).ToArray();
 

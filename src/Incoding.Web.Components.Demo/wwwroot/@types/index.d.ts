@@ -42,6 +42,14 @@ interface Column {
     format: 'Empty' | 'Currency' | 'Percentage' | 'Numeric' | 'DateTime'
 }
 
+interface FilterColumn {
+    column: Column
+    criteria: Set<stirng>
+    getter
+}
+
+
+
 interface IRowRenderer {
 
     handleDataUpdated(): void

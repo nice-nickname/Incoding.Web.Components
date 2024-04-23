@@ -7,38 +7,27 @@ class FilterController {
     table
 
     /**
-     * @type { Column }
+     * @type { FilterColumn[] }
      */
-    filteredColumn = null
+    filters
 
     constructor(table) {
         this.table = table
+        this.filters = []
     }
 
     isApplied() {
-        return this.filteredColumn != null
+        return this.filters.length
     }
 
-    /**
-     * @param { Column } column
-     */
     open(column) {
-        if (this.filteredColumn == column)
-            return
+        this.close()
 
-        this.filteredColumn = column
-
-        const $button = this.table.$header.find(`[data-index=${column.index}]`)
-
-        const values = this.#collectValues()
-        const $filter = this.#createFilter(values)
-
-        $filter.boundElementTo($button)
+        this.#createFilter(column)
     }
 
     close() {
         $('[role=filter-dropdown]').remove()
-        this.filteredColumn = null
     }
 
     enable() {
@@ -49,18 +38,30 @@ class FilterController {
         this.table.$header.find('[role=filter]').addClass('disabled')
     }
 
-    apply(criteria) {
-        const getter = this.table.getFieldAccessorByColumn(this.filteredColumn)
+    apply(column, criteria) {
+        let filterColumn = this.#getFilterColumn(column)
 
-        const filtered = this.#filterData(this.table.data, getter, criteria, this.table.structure)
+        if (!filterColumn) {
+            filterColumn = {
+                column: column,
+                getter: this.table.getFieldAccessorByColumn(column)
+            }
+
+            this.filters.push(filterColumn)
+        }
+
+        filterColumn.criteria = criteria
+
+        const nextFilters = this.#getNextFilters(column)
+        const filtered = this.#filterData(this.table.originData, this.table.structure, filterColumn, nextFilters)
 
         if (this.table.splitGrid) {
-            this.table.splitGrid.originData = this.table.splitGrid.data
+            this.table.splitGrid.data = filtered
         }
 
         this.table.parent.siblings.forEach(table => {
-            table.originData = table.data
             table.data = filtered
+
             table.removeAllRows()
 
             if (!table.splitGrid) {
@@ -70,78 +71,122 @@ class FilterController {
 
         if (this.table.splitGrid) {
             this.table.splitGrid.rerender()
-            this.table.splitGrid.data = filtered
         }
     }
 
-    #createFilter(values) {
-        const $filter = FilterController.renderMenu(values)
-
-        const $menu = $filter.find('[role=filter-menu]')
-        const $apply = $filter.find('[role=filter-apply]')
-
-        $apply.on('click', (ev) => {
-            ev.stopPropagation()
-            const criteria = FilterController.collectCriteria($menu)
-
-            if (criteria.size !== 0) {
-                this.apply(criteria)
-            }
-
-            this.close()
-        })
-
-        return $filter
+    reset() {
 
     }
 
-    #filterData(data, getter, criteria, structure) {
+    #filterData(data, structure, filterColumn, nextFilters) {
+        if (!data || data.length === 0) return []
+
         return data.filter(item => {
-            const value = getter(item)
+            const value = filterColumn.getter(item)
+            let isVisible = filterColumn.criteria.has(String(value))
 
-            const isVisible = criteria.has(String(value))
+            if (isVisible && nextFilters.length !== 0) {
+               isVisible = !nextFilters.some(s => s.criteria.has(String(s.getter(item))))
+            }
 
-            if (isVisible && structure.nested) {
-                const nestedData = item[structure.nestedField]
-
-                item[structure.nestedField] = this.#filterData(nestedData, getter, criteria, structure.nested)
+            if (isVisible && this.table.isSimpleMode() && structure.nested) {
+                item[structure.nested] = this.#filterData(item[structure.nested], structure.nested, filterColumn)
             }
 
             return isVisible
         })
     }
 
-    #collectValues() {
-        const getter = this.table.getFieldAccessorByColumn(this.filteredColumn)
+    #createFilter(column) {
+        const values = this.#collectValues(column)
 
+        const $button = this.table.$header.find(`[data-index=${column.index}] [role=filter]`)
+        const $filter = FilterController.renderMenu(values)
+
+        const $menu = $filter.find('[role=filter-menu]')
+        const $apply = $filter.find('[role=filter-apply]')
+
+        $apply.on('click', () => {
+            const criteria = FilterController.collectCriteria($menu)
+
+            this.apply(column, criteria)
+            this.close()
+        })
+
+        $filter
+            .boundElementTo($button)
+            .on('shown.bs.dropdown', () => {
+                requestAnimationFrame(() => {
+                    $filter.find('ul').css('transform', '')
+                })
+            })
+
+        $filter.find('> button').trigger('click')
+
+    }
+
+    #collectValues(column) {
         const values = new Set()
+        const getter = this.table.getFieldAccessorByColumn(column)
 
-        this.#collectValuesFromData(values, this.table.data, getter, this.table.structure)
+        const applied = this.#getPreviousFilters(column)
+        const currentFilter = this.#getCurrentFilter(column)
 
-        return [...values].map(val => {
-            return { Value: val, Text: val }
+        this.#collectValuesFromData(values, this.table.originData, getter, this.table.structure, applied)
+
+        return [...values].filter(s => s !== null).map(val => {
+            const isFiltered = !currentFilter || currentFilter.criteria.size == 0 || currentFilter.criteria.has(val)
+
+            return { Value: val, Text: val, Visible: isFiltered }
         })
     }
 
-    #collectValuesFromData(collectorDest, data, getter, structure) {
+    #collectValuesFromData(values, data, getter, structure, prevFilters) {
         data.forEach(item => {
             const val = getter(item)
 
-            collectorDest.add(val)
+            if (prevFilters.length !== 0 && !prevFilters.some(s => s.criteria.has(String(s.getter(item))))) {
+                return null
+            }
+
+            values.add(String(val))
 
             if (this.table.isSimpleMode() && structure.nested && item[structure.nestedField]) {
-                this.#collectValuesFromData(collectorDest, item[structure.nestedField], getter, structure.nested)
+                this.#collectValuesFromData(values, item[structure.nestedField], getter, structure.nested)
             }
         })
     }
 
-    /**
-     * @param { JQuery<HTMLElement> } $menu
-     */
+    #getFilterColumn(column) {
+        return this.filters.find(s => s.column == column)
+    }
+
+    #getPreviousFilters(column) {
+        const filterIndex = this.filters.findIndex(s => s.column == column)
+        const filterColumnIndex = filterIndex >= 0 ? filterIndex : this.filters.length
+
+        const prevFilters = this.filters.slice(0, filterColumnIndex)
+
+        return prevFilters || []
+    }
+
+    #getNextFilters(column) {
+        const filterIndex = this.filters.findIndex(s => s.column == column)
+        const filterColumnIndex = filterIndex >= 0 ? filterIndex : this.filters.length
+
+        const nextFilters = this.filters.slice(filterColumnIndex + 1)
+
+        return nextFilters || []
+    }
+
+    #getCurrentFilter(column) {
+        return this.filters.find(s => s.column == column)
+    }
+
     static collectCriteria($menu) {
         const criteria = new Set()
 
-        $menu.find('input[type=checkbox]:checked').each(function() {
+        $($menu).find('input[type=checkbox]:checked').each(function() {
             criteria.add($(this).val())
         })
 
@@ -149,29 +194,32 @@ class FilterController {
     }
 
     static renderMenu(data) {
-        return $(ExecutableInsert.Template.render(this.Template, { data }))
+        const html = ExecutableInsert.Template.render(this.Template, { data })
+
+        return $(html)
     }
 
     static Template = ExecutableInsert.Template.compile(`
-    <div class="dropdown" role="filter-dropdown">
-        <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-        <ul class="dropdown-menu show" role='filter-menu'>
+<div class="dropdown" role="filter-dropdown">
+    <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+
+    <ul class="dropdown-menu" role='filter-menu'>
+        <li class="dropdown-item">
+            <a href="javascript:void(0)">
+                <button role='filter-apply'>Apply</button>
+            </a>
+        </li>
+
+        {{#each data}}
             <li class="dropdown-item">
                 <a href="javascript:void(0)">
-                    <button role='filter-apply'>Apply</button>
+                    <div class="checkbox">
+                        <input type="checkbox" value="{{Value}}" {{#if Visible}}checked="checked"{{/if}} {{#if Disabled}}disabled="disabled"{{/if}} />
+                        <label>{{Text}}</label>
+                    </div>
                 </a>
             </li>
-
-            {{#each data}}
-                <li class="dropdown-item">
-                    <a href="javascript:void(0)">
-                        <div class="checkbox">
-                            <input type="checkbox" value="{{Value}}" />
-                            <label>{{Text}}</label>
-                        </div>
-                    </a>
-                </li>
-            {{/each}}
-        </ul>
-    </div>`)
+        {{/each}}
+    </ul>
+</div>`)
 }

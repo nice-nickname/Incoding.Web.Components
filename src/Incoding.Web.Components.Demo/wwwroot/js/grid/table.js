@@ -106,6 +106,7 @@ class TableController {
         this.structure = structure;
         this.options = options
         this.data = data;
+        this.originData = data;
         this.parent = parent
 
         this.$table.data('grid', this)
@@ -439,7 +440,7 @@ class TableController {
             this.#renderZebra($rows)
         }
 
-        //this.#updateFilterColumns()
+        this.#updateFilterColumns($rows)
 
         IncodingEngine.Current.parse($rows)
     }
@@ -485,14 +486,18 @@ class TableController {
         })
     }
 
-    #updateFilterColumns() {
-        if (this.filterController.isApplied()) {
-            const $filteredCols = $rows.find(`td:nth-child(${this.filterController.filteredColumn.index})`)
+    #updateFilterColumns($rows) {
+        if (!this.filterController.isApplied()) {
+            $rows.find('[current-filter]').removeClass('bg-primary')
+            return
+        }
+
+        for (const filter of this.filterController.filters) {
+            const nthChildIndex = filter.column.index + 1
+
+            const $filteredCols = $rows.find(`td:nth-child(${nthChildIndex})`)
 
             $filteredCols.addClass('bg-primary').attr('current-filter', 'true')
-        }
-        else {
-            $rows.find('[current-filter]').removeClass('bg-primary')
         }
     }
 }

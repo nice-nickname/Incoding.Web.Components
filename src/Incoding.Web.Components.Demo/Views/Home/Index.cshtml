@@ -15,34 +15,24 @@
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Small.cshtml").Html())
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
-                            Partial (0.5 of chunk)
-                        </text>))
+                             Ajax
+                         </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many_Floating.cshtml").Html())
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Submit.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
-                            Partial (2.5 chunks)
-                        </text>))
-
-        @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many.cshtml").Html())
-              .AsHtmlAttributes(new
-                                {
-                                        @class = "btn btn-sm btn-primary"
-                                })
-              .ToButton(@<text>
-                            Partial (3 chunck)
-                        </text>))
+                             Submit
+                         </text>))
 
         @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/InfiniteScroll_Ajax.cshtml").Html())
@@ -55,6 +45,36 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Small.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                            Websocket (0.5 of chunk)
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many_Floating.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                            Websocket (2.5 chunks)
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Partial_Many.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                            Websocket (3 chunck)
+                        </text>))
+
+        @(Html.When(JqueryBind.Click)
               .Ajax("/data-1")
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Template.cshtml").Html())
               .AsHtmlAttributes(new
@@ -62,7 +82,7 @@
                                       @class = "btn btn-sm btn-primary"
                               })
               .ToButton(@<text>
-                              Inherit template
+                              Template syntax
                           </text>))
 
         @(Html.When(JqueryBind.Click)
@@ -76,26 +96,6 @@
               .ToButton(@<text>
                               Model data
                           </text>))
-
-        @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
-              .AsHtmlAttributes(new
-                                {
-                                        @class = "btn btn-sm btn-primary"
-                                })
-              .ToButton(@<text>
-                             Regular
-                         </text>))
-
-        @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular_Submit.cshtml").Html())
-              .AsHtmlAttributes(new
-                                {
-                                        @class = "btn btn-sm btn-primary"
-                                })
-              .ToButton(@<text>
-                             Regular submit
-                         </text>))
 
         @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))

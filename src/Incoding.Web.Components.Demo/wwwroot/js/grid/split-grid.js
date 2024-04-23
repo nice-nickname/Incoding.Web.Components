@@ -82,6 +82,7 @@ class SplitGridController {
         this.options = options
 
         this.data = []
+        this.originData = this.data
 
         this.#initializeScroll()
         this.#initializeRenderer()
@@ -99,12 +100,14 @@ class SplitGridController {
 
         this.tables.forEach(table => {
             table.data = this.data
+            table.originData = this.data
 
             table.removeAllRows()
             table.renderPlaceholderRows()
             table.hideTotals()
 
             table.sortController.reset()
+            table.sortController.setDefaultSort()
         })
 
         this.rowRenderer.restart()
@@ -238,12 +241,11 @@ class SplitGridController {
             controller.splitGrid = this
 
             controller.data = this.data
+            controller.originData = this.data
             controller.parent = parentData
 
             parentData.siblings.push(controller)
             this.tables.push(controller)
-
-            controller.sortController.reset()
         })
     }
 

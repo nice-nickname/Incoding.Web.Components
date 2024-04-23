@@ -78,6 +78,15 @@ th [role=sort] {
     left: 0 !important;
 }
 
+th [role=sort].active {
+    background-color: lightgreen;
+}
+
+th [role=sort].disabled,
+th [role=filter].disabled {
+    background-color: lightgrey;
+}
+
 th:has(> [role=filter]) {
     padding-right: 30px;
 }
@@ -85,4 +94,17 @@ th:has(> [role=filter]) {
 th [role=filter] {
     position: absolute !important;
     right: 0 !important;
+}
+
+td [role=expand] {
+    text-align: center !important;
+}
+
+td [role=expand]::before,
+td [role=expand][data-expand=collapsed]::before {
+    content: '+';
+}
+
+td [role=expand][data-expand=expanded]::before {
+    content: '-';
 }

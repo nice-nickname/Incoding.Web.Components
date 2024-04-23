@@ -11,13 +11,41 @@ class SortController {
      */
     sortedColumn
 
+    /**
+     * @type { {
+     *  sortedBy: 'Asc' | 'Desc'
+     *  index: number
+     * } | null }
+     */
+    defaultSort
+
     constructor(table, sortedColumn = null) {
         this.table = table
-        this.sortedColumn = sortedColumn
 
-        if (this.sortedColumn) {
-            this.#updateSortAttribute()
+        if (sortedColumn) {
+            this.defaultSort = {
+                index: sortedColumn.index,
+                sortedBy: sortedColumn.sortedBy
+            }
+
+            this.setDefaultSort()
         }
+    }
+
+    enable() {
+        this.table.$header.find('[role=sort]').removeClass('disabled')
+    }
+
+    disable() {
+        this.table.$header.find('[role=sort]').addClass('disabled')
+    }
+
+    reset() {
+        if (this.sortedColumn) {
+            this.#setActiveSortButton(false)
+        }
+
+        this.sortedColumn = null
     }
 
     /**
@@ -25,9 +53,9 @@ class SortController {
      * @param { Column } column
      */
     sortColumn(column) {
-        this.sortedColumn = column
-        this.#toggleSort()
-        this.#updateSortAttribute()
+        this.#setSortedColumn(column)
+
+        this.sortedColumn.sortedBy = this.sortedColumn.sortedBy === 'Asc' ? 'Desc' : 'Asc'
 
         const getter = this.table.getFieldAccessorByColumn(column)
 
@@ -46,21 +74,33 @@ class SortController {
         }
     }
 
-    enable() {
-        const $sortButtons = this.table.$header.find('[role=sort]')
+    setDefaultSort() {
+        if (!this.defaultSort) return
 
-        $sortButtons.removeAttr('disabled')
+        const sorted = this.table.structure.columns.find(s => s.index === this.defaultSort.index)
+        sorted.sortedBy = this.defaultSort.sortedBy
+
+        this.#setSortedColumn(sorted)
     }
 
-    disable() {
-        const $sortButtons = this.table.$header.find('[role=sort]')
+    #setSortedColumn(column) {
+        this.table.parent.siblings.forEach(table => {
+            table.sortController.reset()
+        })
 
-        $sortButtons.attr('disabled', 'true')
+        this.sortedColumn = column
+
+        this.#setActiveSortButton(true)
     }
 
-    reset() {
-        const $sorter = this.table.$header.find('[role=sort].active')
-        $sorter.removeClass('active')
+    #setActiveSortButton(active) {
+        const $activeSort = this.table.$header.find(`[data-index=${this.sortedColumn.index}] [role=sort]`)
+
+        if (active) {
+            $activeSort.addClass('active').attr('data-sort', this.sortedColumn.index)
+        } else {
+            $activeSort.removeClass('active').removeAttr('data-sort')
+        }
     }
 
     #sortData(data, getter, structure) {
@@ -88,18 +128,5 @@ class SortController {
                 this.#sortData(nested, getter, structure.nested)
             })
         }
-    }
-
-    #toggleSort() {
-        const value = this.sortedColumn.sortedBy
-
-        this.sortedColumn.sortedBy = value === 'Asc' ? 'Desc' : 'Asc'
-    }
-
-    #updateSortAttribute() {
-        const $sorter = this.table.$header.find(`[data-index=${this.sortedColumn.index}] [role=sort]`)
-
-        $sorter.addClass('active')
-            .attr('data-sort', this.sortedColumn.sortedBy)
     }
 }

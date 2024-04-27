@@ -2,7 +2,7 @@ function triggerRerender(data) {
     for (const recalculate of data) {
         const $rows = $(`[data-row-id="${recalculate.Current.RowId}"][role=row]`).addClass('loading')
 
-        const table = $rows.closest('table').data('grid')
+        const table = $rows.closest('table').data('table')
 
         table?.rerenderRow({
             record: recalculate.Current,
@@ -109,7 +109,7 @@ class TableController {
         this.originData = data;
         this.parent = parent
 
-        this.$table.data('grid', this)
+        this.$table.data('table', this)
 
         this.nested = { }
         this.expands = { }
@@ -243,7 +243,7 @@ class TableController {
         $row[0].after(tr)
 
         const nestedController = new TableController($table[0], nestedTable, this.options, childData, parentData)
-        $table.data('grid', nestedController)
+        $table.data('table', nestedController)
 
         parentData.siblings.push(nestedController)
 

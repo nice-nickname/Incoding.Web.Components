@@ -29,7 +29,8 @@ public class GridUtilsHtmlHelper
                     .StopPropagation()
                     .OnSuccess(dsl =>
                     {
-                        dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('grid')?.expand", Selector.Jquery.Self().Closest(HtmlTag.Tr).Attr("data-row-id")); // m-controller
+                        dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table')?.expand",
+                            Selector.Jquery.Self().Closest(HtmlTag.Tr).Attr("data-row-id")); // m-controller
 
                         settings.OnClick?.Invoke(dsl);
                     })
@@ -58,11 +59,10 @@ public class GridUtilsHtmlHelper
                          .OnSuccess(dsl =>
                          {
                              var rowId = Selector.Jquery.Self().Closest(HtmlTag.Tr).Attr("data-row-id");
-                             var dropdownId = settings.Button(Selector.Jquery).ToSelector();
 
-                             dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('grid')?.showDropdown", rowId, dropdownId); // m-controller
+                             dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table')?.showDropdown", rowId); // m-controller
                          })
                          .AsHtmlAttributes(attrs)
-                         .ToTag(HtmlTag.Div, settings.Content);
+                         .ToTag(settings.Tag, settings.Content);
     }
 }

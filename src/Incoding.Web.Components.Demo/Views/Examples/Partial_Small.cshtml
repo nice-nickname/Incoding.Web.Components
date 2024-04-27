@@ -24,12 +24,7 @@
                      {
                         cols.Add().Content(
                             @<text>
-                                @Html.Components().GridUtils.DropdownInvoker(settings =>
-                                {
-                                    settings.Content = "...";
-
-                                    settings.Button = s => s.Id("regular-dropdown");
-                                })
+                                @Html.Components().GridUtils.DropdownInvoker(settings => settings.Content = "...")
                             </text>).Width(40);
 
                         cols.Add().Field(s => s.Index).Width(50).Format(ColumnFormat.Empty).HeaderAttr("style", "height: 54px;").SortedBy(SortOrder.Asc).Sortable();

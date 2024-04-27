@@ -11,12 +11,12 @@ public class IMLTableController
 {
     public IExecutableSetting RemoveRow(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector rowId)
     {
-        return dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('grid').removeRow", rowId);
+        return dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').removeRow", rowId);
     }
 
     public IExecutableSetting RerenderRow(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector data)
     {
-        return dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('grid').rerenderRow", data);
+        return dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').rerenderRow", data);
     }
 }
 
@@ -24,10 +24,8 @@ public class IMLGridController
 {
     private readonly JquerySelectorExtend _selector;
 
-    public IMLGridController(string id)
-    {
-        this._selector = id.ToId();
-    }
+    public IMLGridController(string id) : this(s => s.Id(id))
+    { }
 
     public IMLGridController(Func<JquerySelector, JquerySelectorExtend> selector)
     {
@@ -48,6 +46,8 @@ public class IMLGridController
     {
         return dsl.With(this._selector).JQuery.Call("data('loader').cancelLoading");
     }
+
+
 
     public IExecutableSetting AppendData(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector dataSelector)
     {

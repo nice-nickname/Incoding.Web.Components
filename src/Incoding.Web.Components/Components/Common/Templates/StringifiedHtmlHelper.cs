@@ -5,32 +5,41 @@ namespace Incoding.Web.Components;
 using System;
 using System.IO;
 using System.Text;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
-public sealed class StringifiedHtmlHelper : IDisposable
+public sealed class StringifiedHtmlHelper<T> : IDisposable
 {
     private readonly IHtmlHelper _html;
 
+    private readonly MvcTemplate<T> _template;
+
     private readonly TextWriter _originWriter;
 
-    private readonly TextWriter _newWriter;
+    public TextWriter ContentWriter { get; }
 
-    public TextWriter CurrentWriter => this._newWriter;
+    public ITemplateSyntax<T> TemplateSyntax { get; }
 
-    public StringifiedHtmlHelper(IHtmlHelper html, StringBuilder sb)
+    public StringifiedHtmlHelper(IHtmlHelper html, StringBuilder content)
     {
+        this.ContentWriter = new StringWriter(content);
+
         this._html = html;
-        this._originWriter = html.ViewContext.Writer;
+        this._originWriter = this._html.ViewContext.Writer;
+        this._html.ViewContext.Writer = this.ContentWriter;
 
-        this._newWriter = new StringWriter(sb);
+        this._template = html.Incoding().Template<T>();
 
-        this._html.ViewContext.Writer = _newWriter;
+        this.TemplateSyntax = this._template.ForEach();
     }
 
     public void Dispose()
     {
+        this.TemplateSyntax.Dispose();
+        this._template.Dispose();
+
         this._html.ViewContext.Writer = this._originWriter;
     }
 }

@@ -16,20 +16,20 @@
     }
 
     function prepareSchema(schema) {
-        const rowTmpl = decodeRowTemplate(schema.rowTmpl)
-        const dropdownTmpl = decodeRowTemplate(schema.dropdownTmpl)
+        const rowTmpl = decodeTemplate(schema.rowTmpl)
+        const dropdownTmpl = decodeTemplate(schema.dropdownTmpl)
 
         schema.rowTmpl = ExecutableInsert.Template.compile(rowTmpl)
         schema.dropdownTmpl = ExecutableInsert.Template.compile(dropdownTmpl)
         schema.layoutTmpl = ExecutableInsert.Template.compile(schema.layoutTmpl)
-        schema.expands = {}
+        schema.expands = { }
 
         if (schema.nested) {
             prepareSchema(schema.nested)
         }
     }
 
-    function decodeRowTemplate(tmpl) {
+    function decodeTemplate(tmpl) {
         return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
     }
 
@@ -62,7 +62,8 @@
      */
 
     $.fn.connectScrolls = function () {
-        if ($(this).data('connected')) return
+        if ($(this).data('connected'))
+            return
 
         const scrollables = $(this).get()
 

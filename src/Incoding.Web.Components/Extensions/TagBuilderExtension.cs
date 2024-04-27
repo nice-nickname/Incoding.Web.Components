@@ -28,6 +28,12 @@ public static class TagBuilderExtension
         tag.AppendAttribute(HtmlAttribute.Style.ToStringLower(), styleAttr);
     }
 
+
+    public static void AppendAttribute(this TagBuilder tag, HtmlAttribute attr, string value)
+    {
+        tag.AppendAttribute(attr.ToStringLower(), value);
+    }
+
     public static void AppendAttribute(this TagBuilder tag, string attr, string value)
     {
         if (!tag.Attributes.ContainsKey(attr))

@@ -153,7 +153,7 @@ class SplitGridController {
         } = this.options
 
         this.$tables.each(function() {
-            const controller = $(this).data('grid')
+            const controller = $(this).data('table')
 
             controller.renderRows(start, end)
 

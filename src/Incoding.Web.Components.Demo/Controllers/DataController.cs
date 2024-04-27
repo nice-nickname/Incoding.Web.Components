@@ -72,9 +72,19 @@ namespace Incoding.Web.Components.Demo.Controllers
                 {
                     item.Children = fakerData.Generate(childCount);
 
+                    for (int i = 0; i < item.Children.Count; i++)
+                    {
+                        item.Children[i].Index = i;
+                    }
+
                     foreach (var iitem in item.Children)
                     {
                         iitem.Children = fakerData.Generate(childCount);
+
+                        for (int i = 0; i < iitem.Children.Count; i++)
+                        {
+                            iitem.Children[i].Index = i;
+                        }
                     }
                 }
             }

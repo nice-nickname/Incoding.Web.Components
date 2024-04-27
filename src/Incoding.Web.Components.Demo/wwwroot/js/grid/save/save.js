@@ -11,7 +11,7 @@
         const id = $row.data('rowId')
         const value = $input.unmasked()
 
-        const controller = $table.data('grid')
+        const controller = $table.data('table')
 
         const record = controller.data.find(s => s.RowId == id)
 

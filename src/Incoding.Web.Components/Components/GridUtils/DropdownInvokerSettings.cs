@@ -9,8 +9,6 @@ using Incoding.Web.MvcContrib;
 
 public record DropdownInvokerSettings
 {
-    public Func<JquerySelector, JquerySelectorExtend> Button { get; set; } = null;
-
     public string Content { get; set; }
 
     public string Css { get; set; }

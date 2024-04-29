@@ -141,7 +141,7 @@ public static class DataSource
             var controller = new IMLGridController(s => s.Self());
 
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("websocketLoader", new
+                      .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalrLoader", new
                       {
                           chunkSize = ChunkSize,
                           method = Method

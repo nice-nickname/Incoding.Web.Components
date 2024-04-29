@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Incoding.Core.Extensions;
+using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
@@ -58,7 +59,7 @@ public class TableRenderer<T>
 
         if (this.Table.Binding != null)
         {
-            ImlBindingHelper.BindToTag(this.Html, table, this.Table.Binding);
+            ImlBinder.BindToTag(this.Html, table, this.Table.Binding);
         }
 
         table.Attributes.Merge(this.Table.Attr);
@@ -108,7 +109,7 @@ public class TableRenderer<T>
             {
                 cell.InnerHtml.AppendHtml(RenderSortButton(column));
 
-                ImlBindingHelper.BindToTag(Html, cell, iml => iml.When(JqueryBind.Click)
+                ImlBinder.BindToTag(Html, cell, iml => iml.When(JqueryBind.Click)
                                                                  .StopPropagation()
                                                                  .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
                                                                                       .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")))
@@ -158,7 +159,7 @@ public class TableRenderer<T>
         filterButton.Attributes["role"] = "filter";
         filterButton.InnerHtml.Append("f");
 
-        ImlBindingHelper.BindToTag(Html, filterButton, iml => iml.When(JqueryBind.Click)
+        ImlBinder.BindToTag(Html, filterButton, iml => iml.When(JqueryBind.Click)
                                                                  .StopPropagation()
                                                                  .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
                                                                                      .JQuery.Call("data('table').openFilter",
@@ -184,12 +185,12 @@ public class TableRenderer<T>
     {
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlTemplateWrapper<T>(this.Html, content))
         {
             AppendRowWithContent(_.TemplateSyntax, _.ContentWriter);
         }
 
-        return EncodeTemplate(content.ToString());
+        return TemplateEncoder.Encode(content.ToString());
     }
 
     private void AppendRowWithContent(ITemplateSyntax<T> tmpl, TextWriter contentWriter)
@@ -203,7 +204,7 @@ public class TableRenderer<T>
 
         if (this.Table.Row.Binding != null)
         {
-            ImlBindingHelper.BindToTag(this.Html, row, this.Table.Row.Binding, tmpl);
+            ImlBinder.BindToTag(this.Html, row, this.Table.Row.Binding, tmpl);
         }
 
         foreach (var (attr, tmplValue) in this.Table.Row.Attr)
@@ -228,12 +229,12 @@ public class TableRenderer<T>
 
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlTemplateWrapper<T>(this.Html, content))
         {
             AppendDropdownTemplate(_.TemplateSyntax, _.ContentWriter);
         }
 
-        return EncodeTemplate(content.ToString());
+        return TemplateEncoder.Encode(content.ToString());
     }
 
     private void AppendDropdownTemplate(ITemplateSyntax<T> each, TextWriter contentWriter)
@@ -265,11 +266,6 @@ public class TableRenderer<T>
 
         footer.InnerHtml.AppendHtml(row);
         return footer;
-    }
-
-    private static string EncodeTemplate(string content)
-    {
-        return content.Replace("{{", "!-").Replace("}}", "-!");
     }
 }
 

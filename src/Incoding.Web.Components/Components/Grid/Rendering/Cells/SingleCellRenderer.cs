@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System.IO;
 using Incoding.Core.Extensions;
+using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,14 +29,14 @@ public class SingleCellRenderer<T> : ICellRenderer<T>
 
         if (this._cell.Binding != null)
         {
-            ImlBindingHelper.BindToTag(this._html, tag, this._cell.Binding, template);
+            ImlBinder.BindToTag(this._html, tag, this._cell.Binding, template);
         }
 
         content.Write(tag.ToHtmlString());
     }
 
     private TagBuilder RenderCell(ITemplateSyntax<T> template)
-    {
+{
         var cellTag = TagsFactory.Td();
         cellTag.AddCssClass(this._cell.Column.Css);
 

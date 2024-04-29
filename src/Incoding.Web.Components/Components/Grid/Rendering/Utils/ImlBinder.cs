@@ -1,4 +1,4 @@
-namespace Incoding.Web.Components;
+namespace Incoding.Web.Components.Grid.Rendering;
 
 #region << Using >>
 
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
-public static class ImlBindingHelper
+public static class ImlBinder
 {
     public static void BindToTag(IHtmlHelper html, TagBuilder tag,  ImlBinding binding)
     {

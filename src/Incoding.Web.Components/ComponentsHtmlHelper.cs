@@ -27,14 +27,6 @@ public class ComponentsHtmlHelper
         return new SplitGridBuilder<T>(this._html, id);
     }
 
-    public IHtmlContent WebsocketStreamer(string id)
-    {
-        return this._html.When(JqueryBind.InitIncoding)
-                    .OnSuccess(dsl => dsl.Self())
-                    .AsHtmlAttributes(new { id })
-                    .ToInput(HtmlInputType.Hidden, "");
-    }
-
     public IHtmlContent SignalR(string action)
     {
         return this._html.When(JqueryBind.InitIncoding)

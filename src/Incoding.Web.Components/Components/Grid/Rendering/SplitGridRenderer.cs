@@ -5,6 +5,7 @@ namespace Incoding.Web.Components.Grid;
 using System.Collections.Generic;
 using System.Linq;
 using Incoding.Core.Extensions;
+using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -54,7 +55,7 @@ public class SplitGridRenderer<T>
         root.AppendStyle(CssStyling.Width, this.Grid.Width);
         root.AppendStyle(CssStyling.Height, this.Grid.Height);
 
-        ImlBindingHelper.BindToTag(this.Html, root, iml => Bind(tables, this.Grid.Binds));
+        ImlBinder.BindToTag(this.Html, root, iml => Bind(tables, this.Grid.Binds));
 
         root.Attributes.Merge(this.Grid.Attr);
 

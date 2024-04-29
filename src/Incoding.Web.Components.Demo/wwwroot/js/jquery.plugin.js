@@ -38,15 +38,15 @@
 (function ($) {
 
     /**
-     * Websocket partial loading & infinite scroll initialization
+     * SignalR partial loading & infinite scroll initialization
      */
 
-    $.fn.websocketLoader = function (options) {
+    $.fn.signalrLoader = function (options) {
         options = $.extend({
             chunkSize: 40,
         }, options)
 
-        const loader = new WebsocketLoader(options.method, options)
+        const loader = new SignalrLoader(options.method, options)
 
         loader.initialize(this)
 
@@ -54,6 +54,17 @@
     }
 
 }(jQuery));
+
+(function () {
+
+    $.fn.splitter = function (panels) {
+        panels = JSON.parse(panels)
+
+        this.data('splitter', new Splitter(this[0], panels))
+    }
+
+}(jQuery));
+
 
 (function ($) {
 
@@ -367,8 +378,6 @@
 
                 current.$selection.addClass('selected')
                 $cell.trigger('focus')
-
-                console.log('asd', $cell);
 
                 current.$active = $cell
 

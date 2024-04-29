@@ -22,6 +22,7 @@
 .grid-component > .grid-splitter > .splitter-pane.resizing {
     user-select: none;
     -webkit-user-select: none;
+    pointer-events: none;
 }
 
 .grid-component > .grid-splitter > .splitter-pane table {

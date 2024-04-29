@@ -1,25 +1,110 @@
-(function ($) {
 
-    const retryDelaysInMilliseconds  = [
-        0, 10, 60, 60, 60, 60, 60, 60, 60, 60
-    ].map(seconds => seconds * 1000)
+class SignalrLoader {
 
-    $.fn.signalr = function (action) {
-        if (window.signalrConnection) return
+    /**
+     * @type { SplitGridController }
+     */
+    splitGrid
 
-        let builder = new signalR.HubConnectionBuilder()
-            .withAutomaticReconnect(retryDelaysInMilliseconds)
-            .withUrl(action)
+    /**
+     * @type { number }
+     */
+    chunkSize
 
-        if (ExecutableBase.IsDebug) {
-            builder.configureLogging(signalR.LogLevel.Information)
+    /**
+     * @type { JQuery<HTMLElement> }
+     */
+    $root
+
+    /**
+     * @type { string }
+     */
+    method
+
+    signalrConnection
+
+    signalrStream
+
+    constructor(method, options) {
+        if (!window.signalrConnection) {
+            return console.error('SignalR connection not found')
         }
 
-        const connection = builder.build()
+        this.signalrConnection = window.signalrConnection
 
-        connection.start().catch(console.error)
-
-        window.signalrConnection = connection
+        this.chunkSize = options.chunkSize
+        this.method = method
     }
 
-}(jQuery));
+    initialize(element) {
+        this.cancelLoading()
+
+        this.$root = $(element)
+        this.$scroll = this.$root.find(this.scroller).first()
+
+        this.splitGrid = this.$root.data('splitGrid')
+
+        this.splitGrid.dataLoading = false
+    }
+
+    cancelLoading() {
+        if (this.signalrStream) {
+            this.signalrStream.dispose()
+        }
+    }
+
+    startLoading(params) {
+        this.cancelLoading()
+
+        this.triggerStart()
+
+        params = _.isString(params || {}) ? JSON.parse(params) : params
+
+        this.signalrStream = this.signalrConnection
+            .stream(this.method, { ChunkSize: this.chunkSize, Query: params })
+            .subscribe({
+                next: (data) => {
+                    if (!data.IsNext) {
+                        this.triggerComplete()
+                    }
+
+                    this.triggerLoad(data.Items)
+                },
+                error: (err) => {
+                    this.triggerError(err)
+                },
+                complete: () => {
+                    this.triggerComplete()
+                }
+            })
+    }
+
+    triggerStart() {
+        this.splitGrid.dataLoading = true
+
+        this.splitGrid.initializeTables()
+        this.splitGrid.disableSort()
+        this.splitGrid.disableFilter()
+
+        this.$root.trigger('websocket-start')
+    }
+
+    triggerLoad(data) {
+        this.splitGrid.appendData(data)
+    }
+
+    triggerComplete() {
+        this.splitGrid.dataLoading = false
+        this.splitGrid.totals()
+        this.splitGrid.enableSort()
+        this.splitGrid.enableFilter()
+
+        this.$root.trigger('websocket-complete')
+    }
+
+    triggerError(err) {
+        this.$root.trigger('websocket-error')
+
+        console.error('websocket-loader', err)
+    }
+}

@@ -1,14 +1,3 @@
-(function () {
-
-    $.fn.splitter = function (panels) {
-        panels = JSON.parse(panels)
-
-        this.data('splitter', new Splitter(this[0], panels))
-    }
-
-}(jQuery));
-
-
 class Splitter {
 
     /**
@@ -20,11 +9,6 @@ class Splitter {
      * @type { JQuery<HTMLElement> }
      */
     $splitterElements
-
-    /**
-     * @type { JQuery<HTMLElement> }
-     */
-    $panels
 
     /**
      * @type { boolean }
@@ -87,75 +71,16 @@ class Splitter {
         const $divider = this.$splitterElements.eq(order)
 
         $divider.on('mousedown', () => {
-            this.startResize(order)
-        })
-
-        document.addEventListener('mouseup', () => {
-            this.stopResize()
+            this.#startResize(order)
         })
     }
 
-    startResize(order) {
-        this.resizing = true
-
-        this.current = this.prepareCurrent(order)
-
-        this.raf = null
-
-        this.$splitterElements.addClass('resizing')
-
-        document.addEventListener('mousemove', this.current.resizeFn)
-    }
-
-    resize(event) {
-        if (!this.resizing || this.waitNextFrame) return
-
-        const {
-            totalWidth,
-            rootOffest,
-            splitterWidth,
-        } = this.current
-
-        const [left, divider, right] = this.current.elements
-
-        const leftOffset = event.clientX - rootOffest
-        const diff = leftOffset - divider.offsetLeft
-
-        const l = left.offsetWidth + diff
-        const r = right.offsetWidth - diff
-
-        if (l - splitterWidth >= 0 && l + splitterWidth <= totalWidth) {
-            this.waitNextFrame = requestAnimationFrame(() => {
-                left.style.flexBasis = l + 'px'
-                right.style.flexBasis = r + 'px'
-
-                this.waitNextFrame = null
-            })
-        }
-    }
-
-    stopResize() {
-        if (!this.resizing) return
-
-        this.$splitterElements.removeClass('resizing')
-
-        document.removeEventListener('mousemove', this.current.resizeFn)
-
-        this.resizing = false
-        this.current = null
-    }
-
-    prepareCurrent(order) {
+    #startResize(order) {
         const $divider = this.$splitterElements.eq(order)
         const $left = this.$splitterElements.eq(order - 1)
         const $right = this.$splitterElements.eq(order + 1)
 
-        return {
-            splitterWidth: $divider.width(),
-            rootOffest: this.$root.offset().left,
-            totalWidth: $left.width() + $right.width(),
-            elements: [$left[0], $divider[0], $right[0]],
-            resizeFn: this.resize.bind(this)
-        }
+        SplitterResizingHandler.global = new SplitterResizingHandler(this, $left[0], $divider[0], $right[0])
+        SplitterResizingHandler.global.start()
     }
 }

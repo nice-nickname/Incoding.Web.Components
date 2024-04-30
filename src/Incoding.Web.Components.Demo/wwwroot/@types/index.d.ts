@@ -44,7 +44,7 @@ interface Column {
 
 interface FilterColumn {
     column: Column
-    criteria: Set<stirng>
+    criteria: Set<string>
     getter
 }
 

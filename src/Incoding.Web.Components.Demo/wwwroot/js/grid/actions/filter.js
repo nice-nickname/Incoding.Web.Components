@@ -55,23 +55,7 @@ class FilterController {
         const nextFilters = this.#getNextFilters(column)
         const filtered = this.#filterData(this.table.originData, this.table.structure, filterColumn, nextFilters)
 
-        if (this.table.splitGrid) {
-            this.table.splitGrid.data = filtered
-        }
-
-        this.table.parent.siblings.forEach(table => {
-            table.data = filtered
-
-            table.removeAllRows()
-
-            if (!table.splitGrid) {
-                table.renderRows()
-            }
-        })
-
-        if (this.table.splitGrid) {
-            this.table.splitGrid.rerender()
-        }
+        this.table.rerender(filtered)
     }
 
     reset(column) {
@@ -86,25 +70,7 @@ class FilterController {
             return this.apply(this.filters[0].column, this.filters[0].criteria)
         }
 
-        if (this.table.splitGrid) {
-            this.table.splitGrid.data = this.table.splitGrid.originData
-        }
-
-        this.table.parent.siblings.forEach(table => {
-            table.data = table.originData
-        })
-
-        this.table.parent.siblings.forEach(table => {
-            table.removeAllRows()
-
-            if (!table.splitGrid) {
-                table.renderRows()
-            }
-        })
-
-        if (this.table.splitGrid) {
-            this.table.splitGrid.rerender()
-        }
+        this.table.rerender(this.table.originData)
     }
 
     #filterData(data, structure, filterColumn, nextFilters) {

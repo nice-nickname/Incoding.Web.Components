@@ -385,6 +385,27 @@ class TableController {
         }
     }
 
+    rerender(newData = undefined) {
+        this.parent.siblings.forEach(table => {
+            if (newData) {
+                table.data = newData
+            }
+
+            if (!table.splitGrid) {
+                table.removeAllRows()
+                table.renderRows()
+            }
+        })
+
+        if (this.splitGrid) {
+            if (newData) {
+                this.splitGrid.data = newData
+            }
+
+            this.splitGrid.rerender()
+        }
+    }
+
     invokeRecalculate(rowId) {
         const data = this.data.find(s => s.RowId == rowId)
 

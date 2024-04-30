@@ -61,17 +61,7 @@ class SortController {
 
         this.#sortData(this.table.data, getter, this.table.structure)
 
-        this.table.parent.siblings.forEach(table => {
-            table.removeAllRows()
-
-            if (!table.splitGrid) {
-                table.renderRows()
-            }
-        })
-
-        if (this.table.splitGrid) {
-            this.table.splitGrid.rerender()
-        }
+        this.table.rerender()
     }
 
     setDefaultSort() {

@@ -9,8 +9,7 @@ using JetBrains.Annotations;
 
 #endregion
 
-[UsedImplicitly]
-[Description("initializeSplitGrid JS params")]
+[UsedImplicitly, Description("initializeSplitGrid JS params")]
 public record TableOptionsDto
 {
     public bool HighlightRows { get; set; }

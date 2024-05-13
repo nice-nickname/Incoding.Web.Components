@@ -2,14 +2,11 @@
 @using Incoding.Web.Components.Demo.Controllers
 @{
     Layout = "_Layout";
-}
 
-@Html.Components().SignalR("/signals")
-
-@{
     ComponentsDefaults.DecimalScale = 2;
 }
 
+@Html.Components().SignalR("/signals")
 @Html.Components().DefaultDecimalPrecision(ComponentsDefaults.DecimalScale)
 
 <div class="d-flex flex-column vh-100 pb-3">

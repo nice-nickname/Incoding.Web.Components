@@ -1,0 +1,12 @@
+@model ITemplateSyntax<SampleData>
+
+<div class="dropdown">
+    <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+    <ul class="dropdown-menu">
+        @(Html.When(JqueryBind.Click)
+                .StopPropagation()
+                .OnSuccess(dsl => dsl.Window.Alert(Model.For(s => s.AmountPercentage)))
+                .AsHtmlAttributes()
+                .ToTag(HtmlTag.Li, "<a class='dropdown-item' href='javascript:void(0)'>Monkey type</a>"))
+    </ul>
+</div>

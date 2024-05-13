@@ -92,6 +92,17 @@ public class TableBuilder<T>
 
         return this;
     }
+    public TableBuilder<T> DropdownTmpl(TemplateContentAsync<T> dropdownContentAsync)
+    {
+        this.Table.Row.DropdownContent = tmpl =>
+        {
+            var awaitable = dropdownContentAsync(tmpl).ConfigureAwait(false);
+
+            return awaitable.GetAwaiter().GetResult();
+        };
+
+        return this;
+    }
 
     public TableBuilder<T> Nested<TNested>(Expression<Func<T, IEnumerable<TNested>>> nestedField, Action<TableBuilder<TNested>> nestedTable)
     {

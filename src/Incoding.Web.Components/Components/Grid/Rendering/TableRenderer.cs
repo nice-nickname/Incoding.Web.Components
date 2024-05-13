@@ -131,7 +131,8 @@ public class TableRenderer<T>
                 column.Columns.Sum(s => s.Width) :
                 column.Width.GetValueOrDefault(0);
 
-            cell.AppendStyle(CssStyling.Width, width + "px");
+            if (width != 0)
+                cell.AppendStyle(CssStyling.Width, width + "px");
 
             row.InnerHtml.AppendHtml(cell);
         }

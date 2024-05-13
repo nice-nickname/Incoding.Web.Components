@@ -1,3 +1,4 @@
+@using Incoding.Web.Components.Demo.Controllers
 @using Incoding.Web.Components.Grid;
 @{
     Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
@@ -40,8 +41,6 @@
                                             cols.Add().Field(s => s.End).Width(70);
                                         });
                      };
-
-    var controller = new IMLGridController("grid");
 }
 
 @{
@@ -105,8 +104,6 @@
             });
         });
     })
-    .Bind(iml => iml.When(JqueryBind.Load)
-                    .OnSuccess(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba"))))
     .InfiniteScrolling(scroll =>
     {
         scroll.ChunkSize = 10;
@@ -119,7 +116,8 @@
     .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
     .DataSource(new DataSource.SignalR
     {
-        ChunkSize = 40,
-        Method = "StreamData_Many"
+        Event = JqueryBind.Load,
+        Method = nameof(SignalHub.StreamData_Many),
+        Data = Selector.Jquery.Name("aboba")
     })
     .Render())

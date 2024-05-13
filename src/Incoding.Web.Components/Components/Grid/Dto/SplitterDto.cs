@@ -7,8 +7,7 @@ using JetBrains.Annotations;
 
 #endregion
 
-[UsedImplicitly]
-[Description("initializeSplitGrid JS params")]
+[UsedImplicitly, Description("initializeSplitGrid JS params")]
 public record SplitterDto
 {
     public string Min { get; set; }

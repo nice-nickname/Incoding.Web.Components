@@ -128,7 +128,11 @@ public static class DataSource
     {
         public string Method { get; set; }
 
-        public int ChunkSize { get; set; }
+        public int ChunkSize { get; set; } = 40;
+
+        public JqueryBind Event { get; set; }
+
+        public Selector Data { get; set; }
 
         public Action<IIncodingMetaLanguageCallbackBodyDsl> OnStart { get; set; }
 
@@ -151,7 +155,14 @@ public static class DataSource
                       .When(Bindings.Grid.SignalR.Complete)
                       .OnSuccess(dsl => OnComplete?.Invoke(dsl))
                       .When(Bindings.Grid.SignalR.Error)
-                      .OnSuccess(dsl => OnError?.Invoke(dsl));
+                      .OnSuccess(dsl =>
+                      {
+                          dsl.With(s => s.Document()).Trigger.Invoke(JqueryBind.IncAjaxError);
+
+                          OnError?.Invoke(dsl);
+                      })
+                      .When(Event)
+                      .OnSuccess(dsl => controller.StartWebsocket(dsl, Data));
         }
     }
 }

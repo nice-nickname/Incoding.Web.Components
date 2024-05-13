@@ -101,10 +101,7 @@ public class SplitGridBuilder<T>
 
     public SplitGridBuilder<T> Table(Action<TableBuilder<T>> table)
     {
-        return Split(splits =>
-        {
-            splits.Add(this.Grid.Id + "-table", table);
-        });
+        return Split(splits => splits.Add(table));
     }
 
     public SplitGridBuilder<T> Bind(ImlBinding binding)
@@ -171,9 +168,9 @@ public class SplitGridBuilder<T>
         return this;
     }
 
-    public SplitGridBuilder<T> Styling(GridStyles.Stylings stylings)
+    public SplitGridBuilder<T> Styling(Func<GridStyles.Stylings> stylings)
     {
-        this.DefaultStyles = stylings;
+        this.DefaultStyles = stylings();
 
         return this;
     }

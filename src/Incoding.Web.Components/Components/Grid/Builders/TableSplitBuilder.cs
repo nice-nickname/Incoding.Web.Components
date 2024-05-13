@@ -27,6 +27,11 @@ public class TableSplitBuilder<T>
         this.DefaultStyles = styles;
     }
 
+    public SplitBuilder Add(Action<TableBuilder<T>> splitter)
+    {
+        return Add(Guid.NewGuid().ToString(), splitter);
+    }
+
     public SplitBuilder Add(string splitId, Action<TableBuilder<T>> splitter)
     {
         var tableBuilder = new TableBuilder<T>(this.Html, splitId, this.DefaultStyles);

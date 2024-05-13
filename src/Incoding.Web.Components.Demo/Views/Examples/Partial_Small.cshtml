@@ -1,3 +1,4 @@
+@using Incoding.Web.Components.Demo.Controllers
 @using Incoding.Web.Components.Grid;
 @{
     Action<ColumnListBuilder<SampleData>> periodCols = cols => cols.Spreaded(s => s.Period, 5,
@@ -43,8 +44,6 @@
                                             cols.Add().Field(s => s.End).Width(70);
                                         });
                      };
-
-    var controller = new IMLGridController("grid");
 }
 
 @{
@@ -63,19 +62,7 @@
             table.Css("table table-bordered ")
                  .Rows(row => row.Css("tr-item-calculate"))
                  .Columns(regularCols)
-                 .DropdownTmpl(
-                    @<text>
-                        <div class="dropdown">
-                            <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
-                            <ul class="dropdown-menu">
-                                @(Html.When(JqueryBind.Click)
-                                      .StopPropagation()
-                                      .OnSuccess(dsl => dsl.Window.Alert(item.For(s => s.AmountPercentage)))
-                                      .AsHtmlAttributes()
-                                      .ToTag(HtmlTag.Li, "<a class='dropdown-item' href='javascript:void(0)'>Monkey type</a>"))
-                            </ul>
-                        </div>
-                    </text>);
+                 .DropdownTmpl(tmpl => Html.PartialAsync("~/Views/Shared/Dropdown.cshtml", tmpl));
         });
 
         splitting.Add("bebius", table =>
@@ -87,8 +74,6 @@
                  .Columns(periodCols);
         });
     })
-    .Bind(iml => iml.When(JqueryBind.Load)
-                    .OnSuccess(dsl => controller.StartWebsocket(dsl, Selector.Jquery.Name("aboba"))))
     .InfiniteScrolling(scroll =>
     {
         scroll.ChunkSize = 20;
@@ -103,6 +88,8 @@
     .DataSource(new DataSource.SignalR
     {
         ChunkSize = 40,
-        Method = "StreamData_Small"
+        Method = nameof(SignalHub.StreamData_Small),
+        Data = Selector.Jquery.Name("aboba"),
+        Event = JqueryBind.Load
     })
     .Render())

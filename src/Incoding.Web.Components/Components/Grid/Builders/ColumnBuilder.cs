@@ -33,9 +33,7 @@ public class ColumnBuilder<T>
     {
         this.Column.Index = index;
 
-        this.HeaderAttr("data-index", index.ToString())
-            .Attr("data-index", index.ToString())
-            .FooterAttr("data-index", index.ToString());
+        SetIndexAttributes(index);
     }
 
     public ColumnBuilder<T> Css(string css)
@@ -141,8 +139,9 @@ public class ColumnBuilder<T>
         if (this.Cell.Content == null)
             Content(tmpl => tmpl.For(field));
 
-        return this.Attr("data-value", tmpl => tmpl.For(field))
-                   .Attr("title", tmpl => tmpl.For(field));
+        SetDataValueAttributes(this.Cell.Content);
+
+        return this;
     }
 
     public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
@@ -159,9 +158,9 @@ public class ColumnBuilder<T>
         if (this.Cell.Content == null)
             Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
 
-        return this.Attr("data-value", tmpl => tmpl.For(fieldName))
-                   .Attr("title", tmpl => tmpl.For(fieldName))
-                   .Type(colType)
+        SetDataValueAttributes(this.Cell.Content);
+
+        return this.Type(colType)
                    .Format(colFormat);
 
     }
@@ -204,5 +203,18 @@ public class ColumnBuilder<T>
         this.Cell.Binding = binding;
 
         return this;
+    }
+
+    private void SetDataValueAttributes(TemplateContent<T> tmpl)
+    {
+        this.Attr("data-value", tmpl)
+            .Attr("title", tmpl);
+    }
+
+    private void SetIndexAttributes(int index)
+    {
+        this.HeaderAttr("data-index", index.ToString())
+            .Attr("data-index", index.ToString())
+            .FooterAttr("data-index", index.ToString());
     }
 }

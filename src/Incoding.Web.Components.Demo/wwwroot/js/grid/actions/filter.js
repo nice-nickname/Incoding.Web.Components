@@ -102,6 +102,9 @@ class FilterController {
         const $apply = $filter.find('[role=filter-apply]')
         const $clear = $filter.find('[role=filter-clear]')
 
+        const $search = $filter.find('[role=filter-search]')
+        const $selectAll = $filter.find('[role=filter-select-all]')
+
         $apply.on('click', () => {
             const criteria = FilterController.collectCriteria($menu)
 
@@ -111,6 +114,44 @@ class FilterController {
 
         $clear.on('click', () => {
             this.reset(column)
+        })
+
+        $search.on('keyup', function() {
+            const searchValue = $(this).val()
+            const isSearchEmpty = !searchValue || searchValue.length === 0
+
+            $menu.find('.dropdown-item').each(function() {
+                const isVisible = isSearchEmpty || $(this).attr('value').indexOf(searchValue) !== -1
+
+                if (isVisible) {
+                    $(this).removeClass('hidden')
+                } else {
+                    $(this).addClass('hidden')
+                }
+            })
+        })
+
+        $selectAll.on('change', function() {
+            const isChecked = $(this).prop('checked')
+
+            $filter.find('input[type=checkbox]:visible').each(function() {
+                $(this).prop('checked', isChecked)
+            })
+
+            $menu.trigger('change')
+        })
+
+        $menu.on('change', function() {
+            const isFilterEmpty = $menu.find('input[type=checkbox]:checked').length === 0
+
+            if (isFilterEmpty) {
+                $apply.addClass('disabled')
+                $selectAll.prop('checked', false)
+            }
+            else {
+                $apply.removeClass('disabled')
+                $selectAll.prop('checked', true)
+            }
         })
 
         $filter
@@ -203,7 +244,7 @@ class FilterController {
 <div class="dropdown" role="filter-dropdown">
     <button id="regular-dropdown" class="hidden" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
 
-    <ul class="dropdown-menu" role='filter-menu'>
+    <ul class="dropdown-menu">
         <li class="dropdown-item">
             <a href="javascript:void(0)">
                 <button role='filter-clear'>Clear</button>
@@ -212,20 +253,36 @@ class FilterController {
 
         <li class="dropdown-item">
             <a href="javascript:void(0)">
-                <button role='filter-apply'>Apply</button>
+                <div class="input-group">
+                    <input type="text" class="form-control" role='filter-search' />
+                    <div class="input-group-append">
+                        <button class="btn btn-sm btn-primary" type="button" role='filter-apply'>Apply</button>
+                    </div>
+                </div>
             </a>
         </li>
 
-        {{#each data}}
-            <li class="dropdown-item">
-                <a href="javascript:void(0)">
-                    <div class="checkbox">
-                        <input type="checkbox" value="{{Value}}" {{#if Visible}}checked="checked"{{/if}} {{#if Disabled}}disabled="disabled"{{/if}} />
-                        <label>{{Text}}</label>
-                    </div>
-                </a>
-            </li>
-        {{/each}}
+        <li class="dropdown-item">
+            <a href="javascript:void(0)">
+                <div class="checkbox">
+                    <input type="checkbox" checked role='filter-select-all' />
+                    <label>Select all</label>
+                </div>
+            </a>
+        </li>
+
+        <ul role='filter-menu'>
+            {{#each data}}
+                <li class="dropdown-item" value="{{Value}}">
+                    <a href="javascript:void(0)">
+                        <div class="checkbox">
+                            <input type="checkbox" value="{{Value}}" {{#if Visible}}checked="checked"{{/if}} {{#if Disabled}}disabled="disabled"{{/if}} />
+                            <label>{{Text}}</label>
+                        </div>
+                    </a>
+                </li>
+            {{/each}}
+        </ul>
     </ul>
 </div>`)
 }

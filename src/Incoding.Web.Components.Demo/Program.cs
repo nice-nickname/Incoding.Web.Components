@@ -3,9 +3,12 @@ namespace Incoding.Web.Components.Demo
     #region << Using >>
 
     using Incoding.Core;
+    using Incoding.Core.Block.Caching;
+    using Incoding.Core.Block.Caching.Providers;
     using Incoding.Core.Block.IoC;
     using Incoding.Core.Block.IoC.Provider;
     using Incoding.Web.Components.Demo.Controllers;
+    using Microsoft.Extensions.Caching.Memory;
 
     #endregion
 
@@ -47,6 +50,8 @@ namespace Incoding.Web.Components.Demo
             app.MapHub<SignalHub>("/signals");
 
             IoCFactory.Instance.Initialize(ioc => ioc.WithProvider(new MSDependencyInjectionIoCProvider(app.Services)));
+
+            CachingFactory.Instance.Initialize(init => init.WithProvider(new NetCachedProvider(() => app.Services.GetRequiredService<IMemoryCache>())));
 
             app.Run();
         }

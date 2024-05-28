@@ -95,6 +95,18 @@
                           </text>))
 
         @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main"))
+                                   .Insert.WithTemplateByView("~/Views/Examples/Regular_MapFromAttr.cshtml")
+                                   .Html())
+              .AsHtmlAttributes(new
+                              {
+                                      @class = "btn btn-sm btn-primary"
+                              })
+              .ToButton(@<text>
+                              Map from attrs
+                          </text>))
+
+        @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
               .AsHtmlAttributes(new
                                 {

@@ -7,13 +7,6 @@ using Microsoft.AspNetCore.Html;
 
 #endregion
 
-public enum GridMode
-{
-    Stacked,
-
-    Simple
-}
-
 public class Grid<T>
 {
     public string Id { get; }

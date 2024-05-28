@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
+using Incoding.Core.Block.Caching;
 using Incoding.Core.Extensions;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -103,5 +105,57 @@ public class ColumnListBuilder<T>
         this.Columns.AddRange(clb.Columns);
         this.Cells.AddRange(clb.Cells);
         this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(spreadField, spreadedCells));
+    }
+
+    public void AutoMap()
+    {
+        new ColumnAttributeMapper(this)
+            .MapFromType();
+    }
+
+    public class ColumnAttributeMapper
+    {
+        private readonly ColumnListBuilder<T> _columnBuilder;
+
+        private readonly List<ColumnAttribute> _columnAttributes;
+
+        public ColumnAttributeMapper(ColumnListBuilder<T> columnBuilder)
+        {
+            this._columnBuilder = columnBuilder;
+            this._columnAttributes = CachingFactory.Instance.Retrieve(nameof(T),
+                () => typeof(T)
+                            .GetProperties()
+                            .Where(prop => prop.HasAttribute<ColumnAttribute>())
+                            .Select(prop =>
+                            {
+                                var columnAttr = prop.GetCustomAttribute<ColumnAttribute>();
+
+                                columnAttr.Field = prop.Name;
+                                columnAttr.Type = prop.ToColumnType();
+
+                                columnAttr.Format = columnAttr.Format;
+
+                                return columnAttr;
+                            })
+                            .ToList());
+        }
+
+        public void MapFromType()
+        {
+            foreach (var column in this._columnAttributes.Where(col => string.IsNullOrWhiteSpace(col.Stacked)))
+                this._columnBuilder.Add().Map(column);
+
+            foreach (var stacked in this._columnAttributes.Where(col => !string.IsNullOrWhiteSpace(col.Stacked))
+                                                          .GroupBy(col => col.Stacked))
+            {
+                this._columnBuilder.Stacked(
+                    stackedColumn => stackedColumn.Title(stacked.Key),
+                    columnsList =>
+                    {
+                        foreach (var column in stacked.ToList())
+                            columnsList.Add().Map(column);
+                    });
+            }
+        }
     }
 }

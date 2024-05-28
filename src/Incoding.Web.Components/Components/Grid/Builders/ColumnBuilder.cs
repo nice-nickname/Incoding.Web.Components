@@ -205,6 +205,20 @@ public class ColumnBuilder<T>
         return this;
     }
 
+    public void Map(ColumnAttribute columnAttribute)
+    {
+        this.Width(columnAttribute.Width);
+        this.Format(columnAttribute.Format);
+        this.Field(columnAttribute.Field);
+        this.Sortable().Filterable();
+
+        if (!string.IsNullOrWhiteSpace(this.Column.Title))
+            this.Title(columnAttribute.Title);
+
+        if (columnAttribute.Type == ColumnType.Numeric)
+            this.Totalable();
+    }
+
     private void SetDataValueAttributes(TemplateContent<T> tmpl)
     {
         this.Attr("data-value", tmpl)

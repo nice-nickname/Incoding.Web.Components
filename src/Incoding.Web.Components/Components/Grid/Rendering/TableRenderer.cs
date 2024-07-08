@@ -54,7 +54,9 @@ public class TableRenderer<T>
         table.AddCssClass(DefaultStyles.TableCss);
         table.AddCssClass(this.Table.Css);
 
-        table.Attributes["id"] = this.Table.Id;
+        table.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Table.Id;
+        table.Attributes["role"] = "table";
+
         table.AppendStyle("table-layout", this.Table.Layout.ToStringLower());
 
         if (this.Table.Binding != null)
@@ -79,7 +81,7 @@ public class TableRenderer<T>
 
         if (this.Table.Columns.Any())
         {
-            header.InnerHtml.AppendHtml(RenderHeaderRow(this.Table.Columns, hasStacked));
+            header.InnerHtml.AppendHtml(RenderHeaderRow(this.Table.Columns, true));
         }
 
         var stackedColumns = this.Table.Columns.SelectMany(s => s.Columns).ToList();
@@ -91,7 +93,7 @@ public class TableRenderer<T>
         return header;
     }
 
-    private IHtmlContent RenderHeaderRow(List<Column> columns, bool hasStacked)
+    private IHtmlContent RenderHeaderRow(List<Column> columns, bool isStackedLevel)
     {
         var row = TagsFactory.Tr();
 
@@ -105,34 +107,53 @@ public class TableRenderer<T>
 
             cell.MergeAttributes(column.Attr);
 
-            if (!isStacked && column.Sortable)
+            if (column.Sortable)
             {
+                cell.AddCssClass(DefaultStyles.HeaderCellOrderCss);
                 cell.InnerHtml.AppendHtml(RenderSortButton(column));
-
-                ImlBinder.BindToTag(Html, cell, iml => iml.When(JqueryBind.Click)
-                                                                 .StopPropagation()
-                                                                 .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                                                                      .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")))
-                                          );
             }
 
             cell.InnerHtml.AppendHtml(column.Title);
 
             if (!isStacked && column.Filterable)
-                cell.InnerHtml.AppendHtml(RenderFilterButton(column));
-
-            if (hasStacked)
             {
-                cell.Attributes["rowspan"] = isStacked ? "1" : "2";
-                cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
+                cell.AddCssClass(DefaultStyles.HeaderCellFilterCss);
+                cell.InnerHtml.AppendHtml(RenderFilterButton(column));
             }
 
-            var width = isStacked ?
-                column.Columns.Sum(s => s.Width) :
-                column.Width.GetValueOrDefault(0);
+            cell.Attributes["rowspan"] = isStacked || !isStackedLevel ? "1" : "2";
+            cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
 
-            if (width != 0)
-                cell.AppendStyle(CssStyling.Width, width + "px");
+            cell.AppendStyle(CssStyling.Width, isStacked ? $"{column.Columns.Sum(s => s.Width)}px" : $"{column.Width}px");
+
+            if (column.Sortable || column.Filterable)
+            {
+                ImlBinder.BindToTag(Html,
+                                    cell,
+                                    iml =>
+                                    {
+                                        if (column.Sortable)
+                                        {
+                                            iml.When(JqueryBind.Click)
+                                               .StopPropagation()
+                                               .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                                    .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")));
+                                        }
+
+                                        if (column.Filterable)
+                                        {
+                                            iml.When("contextmenu")
+                                               .StopPropagation()
+                                               .PreventDefault()
+                                               .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                                    .JQuery.Call("data('table').openFilter",
+                                                                                 Selector.Jquery.Self().Attr("data-index")));
+                                        }
+
+                                        return iml;
+                                    }
+                                   );
+            }
 
             row.InnerHtml.AppendHtml(cell);
         }
@@ -144,7 +165,7 @@ public class TableRenderer<T>
     {
         var sortButton = TagsFactory.Button();
         sortButton.Attributes["role"] = "sort";
-        sortButton.InnerHtml.Append("s");
+        sortButton.AddCssClass(DefaultStyles.HeaderCellOrderButtonCss);
 
         if (column.SortedBy.HasValue)
         {
@@ -158,14 +179,26 @@ public class TableRenderer<T>
     {
         var filterButton = TagsFactory.Button();
         filterButton.Attributes["role"] = "filter";
-        filterButton.InnerHtml.Append("f");
+        filterButton.AddCssClass(DefaultStyles.HeaderCellFilterButtonCss);
 
-        ImlBinder.BindToTag(Html, filterButton, iml => iml.When(JqueryBind.Click)
-                                                                 .StopPropagation()
-                                                                 .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                                                                     .JQuery.Call("data('table').openFilter",
-                                                                                        Selector.Jquery.Self().Closest(HtmlTag.Th).Attr("data-index")))
-                                    );
+        ImlBinder.BindToTag(Html,
+                            filterButton,
+                            iml => iml.When(JqueryBind.Click)
+                                      .StopPropagation()
+                                      .OnSuccess(dsl =>
+                                                 {
+                                                     dsl.Self().JQuery.ToggleAttribute("data-opened", "true", "false");
+
+                                                     dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                        .JQuery.Call("data('table').openFilter",
+                                                                     Selector.Jquery.Self().Closest(HtmlTag.Th).Attr("data-index"))
+                                                        .If(() => Selector.Jquery.Self().Attr("data-opened") == "true");
+
+                                                     dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                        .JQuery.Call("data('table').closeFilter")
+                                                        .If(() => Selector.Jquery.Self().Attr("data-opened") == "false");
+                                                 })
+                           );
 
         return filterButton;
     }
@@ -200,6 +233,7 @@ public class TableRenderer<T>
 
         row.AddCssClass(DefaultStyles.RowCss);
         row.AddCssClass(this.Table.Row.Css);
+        row.Attributes["role"] = "row";
 
         row.Attributes["body-row"] = "true";
 
@@ -287,21 +321,21 @@ public class TableComponent
     public GridStructureDto ToDto()
     {
         var columnDtos = Columns.Select(s =>
-        {
-            return new ColumnDto
-            {
-                Index = s.Column.Index,
-                Field = s.Field,
-                Title = s.Column.Title,
-                Format = s.Format,
-                Type = s.Type,
-                SpreadField = s.SpreadField,
-                SpreadIndex = s.SpreadIndex,
-                Totalable = s.Column.Totalable,
-                Sortable = s.Column.Sortable,
-                SortedBy = s.Column.SortedBy
-            };
-        }).ToArray();
+                                        {
+                                            return new ColumnDto
+                                            {
+                                                Index = s.Column.Index,
+                                                Field = s.Field,
+                                                Title = s.Column.Title,
+                                                Format = s.Format,
+                                                Type = s.Type,
+                                                SpreadField = s.SpreadField,
+                                                SpreadIndex = s.SpreadIndex,
+                                                Totalable = s.Column.Totalable,
+                                                Sortable = s.Column.Sortable,
+                                                SortedBy = s.Column.SortedBy
+                                            };
+                                        }).ToArray();
 
         var dto = new GridStructureDto
         {

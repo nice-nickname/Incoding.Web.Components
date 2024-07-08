@@ -25,7 +25,6 @@ public class ColumnListBuilder<T>
 
     private int _currentIndex { get; set; }
 
-
     public ColumnListBuilder(IHtmlHelper html, int startIndex = 0)
     {
         this.Columns = new List<Column>();
@@ -58,13 +57,13 @@ public class ColumnListBuilder<T>
         var columns = new ColumnListBuilder<T>(this.Html, this._currentIndex);
         stackedColumns(columns);
 
-        this._currentIndex = columns._currentIndex;
-
         header.Column.Columns.AddRange(columns.Columns);
 
         this.Columns.Add(header.Column);
         this.Cells.AddRange(columns.Cells);
         this.CellRenderers.AddRange(columns.CellRenderers);
+
+        this._currentIndex = columns._currentIndex;
     }
 
     public void Spreaded<TSpread>(
@@ -100,11 +99,11 @@ public class ColumnListBuilder<T>
                 spreadedCells.AddRange(clb.CellRenderers);
         }
 
-        this._currentIndex = clb._currentIndex;
-
         this.Columns.AddRange(clb.Columns);
         this.Cells.AddRange(clb.Cells);
         this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(spreadField, spreadedCells));
+
+        this._currentIndex = clb._currentIndex;
     }
 
     public void AutoMap()

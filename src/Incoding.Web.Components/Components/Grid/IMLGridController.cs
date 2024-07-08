@@ -34,7 +34,7 @@ public class IMLGridController
 
     public IExecutableSetting Init(IIncodingMetaLanguageCallbackBodyDsl dsl)
     {
-        return dsl.With(this._selector).JQuery.Call("data('splitGrid').initializeTables");
+        return dsl.With(this._selector).JQuery.Call("data('splitGrid')?.initializeTables");
     }
 
     public IExecutableSetting StartWebsocket(IIncodingMetaLanguageCallbackBodyDsl dsl, Selector @params = null)

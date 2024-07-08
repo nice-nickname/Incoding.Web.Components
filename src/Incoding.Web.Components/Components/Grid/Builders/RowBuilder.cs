@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class RowBuilder<T>
 {
-    public IHtmlHelper Html { get; }
-
-    public Row<T> Row { get; }
-
     public RowBuilder(IHtmlHelper html)
     {
         this.Row = new Row<T>();
         this.Html = html;
     }
+
+    public IHtmlHelper Html { get; }
+
+    public Row<T> Row { get; }
 
     public RowBuilder<T> Css(string css)
     {

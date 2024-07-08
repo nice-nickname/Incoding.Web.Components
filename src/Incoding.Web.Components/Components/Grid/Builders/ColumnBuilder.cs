@@ -29,11 +29,14 @@ public class ColumnBuilder<T>
         this.Html = html;
     }
 
-    public ColumnBuilder(IHtmlHelper html, int index) : this(html)
+    public ColumnBuilder(IHtmlHelper html, int index)
+            : this(html)
     {
         this.Column.Index = index;
 
-        SetIndexAttributes(index);
+        this.HeaderAttr("data-index", index.ToString())
+            .Attr("data-index", index.ToString())
+            .FooterAttr("data-index", index.ToString());
     }
 
     public ColumnBuilder<T> Css(string css)
@@ -139,9 +142,10 @@ public class ColumnBuilder<T>
         if (this.Cell.Content == null)
             Content(tmpl => tmpl.For(field));
 
-        SetDataValueAttributes(this.Cell.Content);
-
-        return this;
+        return this.Attr("data-value", tmpl => tmpl.For(field))
+                   .Attr("title", tmpl => tmpl.For(field))
+                   .Sortable()
+                   .Filterable();
     }
 
     public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
@@ -158,11 +162,12 @@ public class ColumnBuilder<T>
         if (this.Cell.Content == null)
             Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
 
-        SetDataValueAttributes(this.Cell.Content);
-
-        return this.Type(colType)
-                   .Format(colFormat);
-
+        return this.Attr("data-value", tmpl => tmpl.For(fieldName))
+                   .Attr("title", tmpl => tmpl.For(fieldName))
+                   .Type(colType)
+                   .Format(colFormat)
+                   .Sortable()
+                   .Filterable();
     }
 
     public ColumnBuilder<T> Type(ColumnType type)
@@ -205,7 +210,7 @@ public class ColumnBuilder<T>
         return this;
     }
 
-    public void Map(ColumnAttribute columnAttribute)
+    public ColumnBuilder<T> Map(ColumnAttribute columnAttribute)
     {
         this.Width(columnAttribute.Width);
         this.Format(columnAttribute.Format);
@@ -217,18 +222,7 @@ public class ColumnBuilder<T>
 
         if (columnAttribute.Type == ColumnType.Numeric)
             this.Totalable();
-    }
 
-    private void SetDataValueAttributes(TemplateContent<T> tmpl)
-    {
-        this.Attr("data-value", tmpl)
-            .Attr("title", tmpl);
-    }
-
-    private void SetIndexAttributes(int index)
-    {
-        this.HeaderAttr("data-index", index.ToString())
-            .Attr("data-index", index.ToString())
-            .FooterAttr("data-index", index.ToString());
+        return this;
     }
 }

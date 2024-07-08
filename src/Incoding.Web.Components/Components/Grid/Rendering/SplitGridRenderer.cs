@@ -31,10 +31,9 @@ public class SplitGridRenderer<T>
 
     public IHtmlContent Render(bool concurrent = false)
     {
-        var tables = concurrent
-                ? this.Grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
-                : this.Grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
-
+        var tables = false
+                             ? this.Grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
+                             : this.Grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
 
         var root = Root(tables);
 
@@ -51,7 +50,11 @@ public class SplitGridRenderer<T>
         root.AddCssClass(this.DefaultStyles.GridCss);
         root.AddCssClass(this.Grid.Css);
 
-        root.Attributes["id"] = this.Grid.Id;
+        root.AddCssClass(this.Grid.Mode == GridMode.Simple ? this.DefaultStyles.GridSimpleCss : this.DefaultStyles.GridStackedCss);
+
+        root.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Grid.Id;
+        root.Attributes["role"] = "grid";
+
         root.AppendStyle(CssStyling.Width, this.Grid.Width);
         root.AppendStyle(CssStyling.Height, this.Grid.Height);
 
@@ -80,9 +83,9 @@ public class SplitGridRenderer<T>
         var splitDto = this.Grid.Splits.ToJsonString();
 
         var incodingAttrs = this.Html.When(JqueryBind.InitIncoding)
-                                      .OnSuccess(dsl => dsl.Self().JQuery.Call("splitter", splitDto))
-                                      .AsHtmlAttributes()
-                                      .ToDictionary();
+                                .OnSuccess(dsl => dsl.Self().JQuery.Call("splitter", splitDto))
+                                .AsHtmlAttributes()
+                                .ToDictionary();
 
         foreach (var (attr, value) in incodingAttrs)
         {
@@ -165,19 +168,20 @@ public class SplitGridRenderer<T>
             gridOptionsDto.LoadingRowCount = this.Grid.InfiniteScroll.LoadingRowsCount;
         }
 
-        var options = JsonConvert.SerializeObject(gridOptionsDto, new JsonSerializerSettings
-        {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            DefaultValueHandling = DefaultValueHandling.Include
-        });
+        var options = JsonConvert.SerializeObject(gridOptionsDto,
+                                                  new JsonSerializerSettings
+                                                  {
+                                                      ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                                                      DefaultValueHandling = DefaultValueHandling.Include
+                                                  });
 
         var initBinding = this.Html.When(JqueryBind.InitIncoding)
-                                    .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid", options))
-                                    .OnComplete(dsl =>
-                                    {
-                                        dsl.Self().Trigger.Invoke(Bindings.Grid.Init);
-                                        dsl.Self().Trigger.Invoke(Bindings.Grid.DataSourceInit);
-                                    });
+                              .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid", options))
+                              .OnComplete(dsl =>
+                                          {
+                                              dsl.Self().Trigger.Invoke(Bindings.Grid.Init);
+                                              dsl.Self().Trigger.Invoke(Bindings.Grid.DataSourceInit);
+                                          });
 
         if (bindings != null)
         {

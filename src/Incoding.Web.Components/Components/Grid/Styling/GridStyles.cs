@@ -32,6 +32,15 @@ public static class GridStyles
         public string EmptyContainerCss { get; } = "grid-empty hidden";
 
 
+        public string HeaderCellOrderCss { get; } = "order-column";
+
+        public string HeaderCellOrderButtonCss { get; } = "ci-planifi ci-arrow-up-circle ci-color-alt ci-size-18";
+
+        public string HeaderCellFilterCss { get; } = "filter-column";
+
+        public string HeaderCellFilterButtonCss { get; } = "ci-planifi ci-filter ci-color-alt ci-size-18";
+
+
         public string SplitterCss { get; } = "grid-splitter";
 
         public string SplitterPanelCss { get; } = "splitter-pane";

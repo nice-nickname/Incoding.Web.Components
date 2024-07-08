@@ -170,7 +170,8 @@ class TableController {
 
             this.$footer.find(`td[data-index="${index}"] span`).each(function () {
                 $(this).attr('data-format', format)
-                $(this).attr('data-value', total)
+                       .attr('data-value', total)
+                       .attr('total', total)
             })
         })
 
@@ -190,6 +191,10 @@ class TableController {
         const column = this.structure.columns[columnIndex]
 
         this.filterController.open(column)
+    }
+
+    closeFilter() {
+        this.filterController.close()
     }
 
     renderRows(start = 0, end = undefined) {
@@ -352,7 +357,8 @@ class TableController {
         const rowId = record.RowId
         const rowIndex = this.data.findIndex(s => s.RowId == rowId)
 
-        let shouldRenderChildren = withChildren && this.expands[rowId]
+        const shouldRenderChildren = withChildren && this.nested[rowId]
+        const shouldExpandChildren = shouldRenderChildren && this.expands[rowId]
 
         this.data[rowIndex] = record
 
@@ -364,6 +370,8 @@ class TableController {
             })).addClass('loading')
 
             $row.replaceWith($rendered)
+
+            table.#updateFilterColumns($rendered)
 
             IncodingEngine.Current.parse($rendered)
             table.format()
@@ -380,7 +388,7 @@ class TableController {
             }
         })
 
-        if (shouldRenderChildren) {
+        if (shouldExpandChildren) {
             this.expand(rowId)
         }
     }
@@ -426,19 +434,7 @@ class TableController {
 
         return $dropdown
             .attr('data-dropdown-id', rowId)
-            .css({
-                top: bounds.top + bounds.height,
-                left: bounds.left,
-                position: 'absolute'
-            })
-            .on('hidden.bs.dropdown', () => {
-                $dropdown.remove()
-            })
-            .on('shown.bs.dropdown', () => {
-                requestAnimationFrame(() => {
-                    $dropdown.find('ul').css('transform', '')
-                })
-            })
+            .boundElementTo($invoker)
     }
 
     #findRow(rowId) {
@@ -509,7 +505,7 @@ class TableController {
 
     #updateFilterColumns($rows) {
         if (!this.filterController.isApplied()) {
-            $rows.find('[current-filter]').removeClass('bg-primary')
+            $rows.find('[current-filter]').removeClass('filtered')
             return
         }
 
@@ -518,7 +514,7 @@ class TableController {
 
             const $filteredCols = $rows.find(`td:nth-child(${nthChildIndex})`)
 
-            $filteredCols.addClass('bg-primary').attr('current-filter', 'true')
+            $filteredCols.addClass('filtered').attr('current-filter', 'true')
         }
     }
 }

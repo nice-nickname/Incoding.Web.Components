@@ -164,7 +164,7 @@
         let number = Number(value) || 0
 
         const isNegative = number < 0
-        number = Math.abs(number).toFixed(precision)
+        number = formatNumericString(Math.abs(number), precision)
         number = `${prefix}${number}${postfix}`
 
         if (isNegative) {
@@ -176,6 +176,22 @@
         }
 
         element.innerHTML = number
+        element.setAttribute('title', number)
+    }
+
+    function formatNumericString(number, decimalScale) {
+        var parts = number.toString().split('.');
+        var integerPart = parts[0];
+        var decimalPart = parts.length > 1 ? parts[1] : '';
+
+        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+        if (decimalScale > 0) {
+            decimalPart = decimalPart.padEnd(decimalScale, '0').slice(0, decimalScale);
+            return integerPart + '.' + decimalPart;
+        } else {
+            return integerPart;
+        }
     }
 
     function formatDateTime(element, value) {
@@ -206,20 +222,36 @@
     */
    const defaultOptions = {
         nullable: false,
-        decimalScale: 2,
+        decimalScale: 0,
         negative: false,
         selectOnFocus: false,
         type: 'currency'
    }
 
+    $.fn.unmasked = function() {
+        return this.maskMoney('unmasked')[0]
+    }
+
+    $.fn.maskedVal = function(value) {
+        return this.maskMoney('mask', parseFloat(value))
+    }
+
     $.fn.maskedInput = function (options) {
-        options = $.extend(defaultOptions, options)
+        options = $.extend({}, defaultOptions, options)
 
         let maskIndex = 0
         const masks = prepareMasksPair(options)
 
         if (this.val() !== '') {
-            this.val(parseFloat(this.val()).toFixed(options.decimalScale))
+            const numericVal = parseFloat(this.val())
+
+            if (numericVal < 0) {
+                maskIndex = 1
+
+                this.toggleClass('ci-text-danger')
+            }
+
+            this.val(numericVal.toFixed(options.decimalScale))
         }
 
         this.on('keydown', (event) => {
@@ -239,15 +271,6 @@
             }
         })
 
-        if (options.type === 'percentage') {
-            this.on('keyup', (event) => {
-                const parsed = parseNumber(event.target.value.replace('%', '').replace(',', ''))
-                if (parsed > 100) {
-                    $(event.target).maskMoney('mask', 100)
-                }
-            })
-        }
-
         return applyMask(this, masks[maskIndex], options)
     }
 
@@ -257,7 +280,7 @@
             positiveFormat = { prefix: '$', suffix: '' }
             negativeFormat = { prefix: '$(', suffix: ')' }
         }
-        else if (options.type === 'decimal') {
+        else if (options.type === 'decimal' || options.type === 'integer') {
             positiveFormat = { prefix: '', suffix: '' }
             negativeFormat = { prefix: '(', suffix: ')' }
         }
@@ -277,7 +300,7 @@
             allowZero: true,
             allowNegative: false,
             allowEmpty: options.nullable,
-            thousands: ',',
+            thousands: options.type === 'integer' ? '' : ',',
             decimal: options.decimalScale !== 0 ? '.' : '',
             precision: options.decimalScale,
             selectAllOnFocus: options.selectOnFocus
@@ -324,8 +347,6 @@
 
 (function($) {
 
-    // Maybe ComponentsHelper here ??
-
     $.fn.isScrollable = function(axis = 'vertical') {
         const {
             scroll,
@@ -350,8 +371,14 @@
 
     $.fn.excelField = function() {
         return this.find('[excel-field]').each(function() {
-            const $cell = $(this).addClass('excel-field').prop('tabindex', 0)
-            const $input = $cell.find('input').prop('tabindex', -1)
+            const $cell = $(this)
+            const $input = $cell.find('input:not([type="hidden"])').attr('tabindex', -1)
+
+            if ($cell.is('[disabled]')) {
+                return
+            }
+
+            $cell.addClass('excel-field').prop('tabindex', 0)
 
             $cell.on('mousedown', function(event) {
                 event.preventDefault()
@@ -429,10 +456,10 @@
             $active,
             $selection
         } = current
-        const value = $active.find('input').val()
+        const value = $active.find('input:not([type="hidden"])').val()
 
         $selection.each(function() {
-            const $input = $(this).find('input')
+            const $input = $(this).find('input:not([type="hidden"])')
 
             $input.val(value)
 
@@ -475,7 +502,7 @@
     }
 
     function activateInput($cell, resetValue = false) {
-        const $input = $cell.find('input')
+        const $input = $cell.find('input:not([type="hidden"])')
 
         if (resetValue) {
             $input.val('')
@@ -501,8 +528,19 @@
         const styles = {
             top: bounds.top + bounds.height,
             left: bounds.left,
-            position: 'absolute'
+            position: 'absolute',
+            zIndex: Number.MAX_SAFE_INTEGER
         }
+
+        $(this)
+            .on('hidden.bs.dropdown', () => {
+                $(this).remove()
+            })
+            .on('shown.bs.dropdown', () => {
+                requestAnimationFrame(() => {
+                    $(this).find('ul').css('transform', '')
+                })
+            })
 
         return $(this).css(styles).appendTo(document.body)
     }

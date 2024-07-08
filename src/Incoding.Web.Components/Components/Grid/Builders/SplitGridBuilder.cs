@@ -40,6 +40,11 @@ public class SplitGridBuilder<T>
         return this;
     }
 
+    public SplitGridBuilder<T> Height(int px)
+    {
+        return this.Height($"{px}px");
+    }
+
     public SplitGridBuilder<T> Css(string css)
     {
         this.Grid.Css += " " + css;
@@ -101,7 +106,7 @@ public class SplitGridBuilder<T>
 
     public SplitGridBuilder<T> Table(Action<TableBuilder<T>> table)
     {
-        return Split(splits => splits.Add(table));
+        return Split(splits => { splits.Add(this.Grid.Id + "-table", table); });
     }
 
     public SplitGridBuilder<T> Bind(ImlBinding binding)
@@ -111,12 +116,12 @@ public class SplitGridBuilder<T>
             var origin = this.Grid.Binds;
 
             this.Grid.Binds = iml =>
-            {
-                origin(iml);
-                binding(iml);
+                              {
+                                  origin(iml);
+                                  binding(iml);
 
-                return iml;
-            };
+                                  return iml;
+                              };
 
             return this;
         }
@@ -156,7 +161,7 @@ public class SplitGridBuilder<T>
                                    .StopPropagation()
                                    .Ajax(options.Url)
                                    .OnBegin(dsl => dsl.With(s => s.EqualsAttribute("data-row-id", Selector.Event.Data.For("RowId")))
-                                                   .JQuery.Attr.AddClass("loading"))
+                                                      .JQuery.Attr.AddClass("loading"))
                                    .OnSuccess(dsl => dsl.Self().Call("triggerRerender", Selector.Result))
                         );
     }

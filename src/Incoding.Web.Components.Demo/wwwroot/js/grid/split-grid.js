@@ -108,6 +108,7 @@ class SplitGridController {
 
             table.sortController.reset()
             table.sortController.setDefaultSort()
+            table.filterController.resetAll()
         })
 
         this.rowRenderer.restart()
@@ -121,7 +122,9 @@ class SplitGridController {
         })
 
         this.rowRenderer.restart()
-        this.rowRenderer.handleDataUpdated()
+
+        if (!this.data || this.data.length !== 0)
+            this.rowRenderer.handleDataUpdated()
     }
 
     appendData(data) {
@@ -182,6 +185,14 @@ class SplitGridController {
     hide() {
         this.$empty.removeClass('hidden')
         this.$content.addClass('hidden')
+    }
+
+    showLoader() {
+        this.$content.addClass('loading')
+    }
+
+    hideLoader() {
+        this.$content.removeClass('loading')
     }
 
     enableScroll() {

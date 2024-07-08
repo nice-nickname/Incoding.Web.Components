@@ -53,9 +53,9 @@ class SortController {
      * @param { Column } column
      */
     sortColumn(column) {
-        this.#setSortedColumn(column)
+        column.sortedBy = column.sortedBy === 'Asc' ? 'Desc' : 'Asc'
 
-        this.sortedColumn.sortedBy = this.sortedColumn.sortedBy === 'Asc' ? 'Desc' : 'Asc'
+        this.#setSortedColumn(column)
 
         const getter = this.table.getFieldAccessorByColumn(column)
 
@@ -87,7 +87,7 @@ class SortController {
         const $activeSort = this.table.$header.find(`[data-index=${this.sortedColumn.index}] [role=sort]`)
 
         if (active) {
-            $activeSort.addClass('active').attr('data-sort', this.sortedColumn.index)
+            $activeSort.addClass('active').attr('data-sort', this.sortedColumn.sortedBy)
         } else {
             $activeSort.removeClass('active').removeAttr('data-sort')
         }
@@ -101,15 +101,17 @@ class SortController {
             const left = getter(a)
             const right = getter(b)
 
-            if (!left) return -1
-            if (!right) return 1
+            if (left == null) return this.sortedColumn.sortedBy === 'Asc' ? -1 : 1
+            if (right == null) return this.sortedColumn.sortedBy === 'Asc' ? 1 : -1
 
-            return getter(a) >= getter(b) ? 1 : -1
+			if (left == right) return 0
+
+			return this.sortedColumn.sortedBy === 'Asc' ?
+				(getter(a) >= getter(b) ? 1 : -1) :
+				(getter(a) >= getter(b) ? -1 : 1)
+
+            return
         })
-
-        if (this.sortedColumn.sortedBy === 'Desc') {
-            data.reverse()
-        }
 
         if (this.table.isSimpleMode() && structure.nested) {
             data.forEach(item => {

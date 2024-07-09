@@ -133,7 +133,7 @@ public static class DataSource
     {
         public string Method { get; set; }
 
-        public int ChunkSize { get; set; }
+        public int ChunkSize { get; set; } = 50;
 
         public Action<IIncodingMetaLanguageCallbackBodyDsl> OnStart { get; set; }
 

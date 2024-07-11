@@ -217,7 +217,7 @@ public class ColumnBuilder<T>
         this.Field(columnAttribute.Field);
         this.Sortable().Filterable();
 
-        if (!string.IsNullOrWhiteSpace(this.Column.Title))
+        if (string.IsNullOrWhiteSpace(this.Column.Title))
             this.Title(columnAttribute.Title);
 
         if (columnAttribute.Type == ColumnType.Numeric)

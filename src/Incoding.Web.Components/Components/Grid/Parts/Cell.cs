@@ -31,5 +31,5 @@ public class Cell<T> : Cell
 
     public TemplateContent<T> Content { get; set; }
 
-    public ImlTemplateBinding<T> Binding { get; internal set; }
+    public ImlTemplateBinding<T> Binding { get; set; }
 }

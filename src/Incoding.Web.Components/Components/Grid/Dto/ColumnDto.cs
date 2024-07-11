@@ -34,4 +34,6 @@ public record ColumnDto
 
     [JsonConverter(typeof(StringEnumConverter))]
     public ColumnFormat Format { get; set; }
+
+    public bool HasDefaultSort => SortedBy.HasValue;
 }

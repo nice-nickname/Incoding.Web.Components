@@ -114,7 +114,7 @@ class TableController {
         this.nested = { }
         this.expands = { }
 
-        this.sortController = new SortController(this, this.structure.columns.find(s => s.sortedBy != null))
+        this.sortController = new SortController(this, this.structure.columns.find(s => s.hasDefaultSort))
         this.filterController = new FilterController(this)
 
         if (this.options.highlightRows) {

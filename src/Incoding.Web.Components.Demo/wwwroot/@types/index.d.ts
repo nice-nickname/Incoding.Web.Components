@@ -37,6 +37,7 @@ interface Column {
     sortable: string
 
     sortedBy: 'Asc' | 'Desc' | null
+    hasDefaultSort: boolean
 
     type: 'String' | 'Numeric' | 'Datetime' | 'Boolean'
     format: 'Empty' | 'Currency' | 'Percentage' | 'Numeric' | 'DateTime'

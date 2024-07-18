@@ -99,27 +99,23 @@ class SplitterResizingHandler {
      */
     static global = null;
 
-    static start() {
+    static start(handler) {
+        this.stop()
+
+        this.global = handler
         this.global.start();
     }
 
     static stop() {
-        this.global.stop();
+        if (this.global) {
+            this.global.stop()
+        }
+
         this.global = null;
-    }
-
-    static isResizing() {
-        return this.global !== null;
-    }
-
-    static initGlobalHandler() {
-        document.addEventListener('mouseup', () => {
-            if (!this.isResizing())
-                return;
-
-            this.stop();
-        });
     }
 }
 
-SplitterResizingHandler.initGlobalHandler();
+
+document.addEventListener('mouseup', () => {
+    SplitterResizingHandler.stop()
+});

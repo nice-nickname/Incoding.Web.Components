@@ -8,6 +8,7 @@
 /// <reference path="js/grid/table.js" />
 /// <reference path="js/grid/split-grid.js" />
 /// <reference path="js/grid/handlebars.helpers.js" />
+/// <reference path="js/grid/consts/events.js" />
 /// <reference path="js/grid/loaders/signalr.js" />
 /// <reference path="js/grid/loaders/signalr-loader.js" />
 /// <reference path="js/grid/rendering/immediate-renderer.js" />

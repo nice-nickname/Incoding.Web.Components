@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
-public sealed class StringifiedHtmlTemplateWrapper<T> : IDisposable
+public sealed class StringifiedHtmlHelperWrapper<T> : IDisposable
 {
     private readonly IHtmlHelper _html;
 
@@ -22,7 +22,7 @@ public sealed class StringifiedHtmlTemplateWrapper<T> : IDisposable
 
     public ITemplateSyntax<T> TemplateSyntax { get; }
 
-    public StringifiedHtmlTemplateWrapper(IHtmlHelper html, StringBuilder content)
+    public StringifiedHtmlHelperWrapper(IHtmlHelper html, StringBuilder content)
     {
         this.ContentWriter = new StringWriter(content);
 

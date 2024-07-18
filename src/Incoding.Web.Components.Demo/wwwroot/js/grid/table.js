@@ -435,7 +435,7 @@ class TableController {
     invokeRecalculate(rowId) {
         const data = this.data.find(s => s.RowId == rowId)
 
-        this.$table.trigger('recalculate', {
+        this.$table.trigger(events.recalculate, {
             ...data
         })
     }

@@ -130,8 +130,6 @@ public class TableRenderer<T>
             cell.Attributes["rowspan"] = isStacked || !isStackedLevel ? "1" : "2";
             cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
 
-            cell.AppendStyle(CssStyling.Width, isStacked ? $"{column.Columns.Sum(s => s.Width)}px" : $"{column.Width}px");
-
             if (column.Sortable || column.Filterable)
             {
                 ImlBinder.BindToTag(Html,
@@ -220,7 +218,8 @@ public class TableRenderer<T>
                                                      .PreventDefault()
                                                      .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
                                                      .When(JqueryBind.Click)
-                                                     .StopPropagation());
+                                                     .StopPropagation()
+                                                     .PreventDefault());
 
         return resizer;
     }
@@ -241,7 +240,7 @@ public class TableRenderer<T>
     {
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlTemplateWrapper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlHelperWrapper<T>(this.Html, content))
         {
             AppendRowWithContent(_.TemplateSyntax, _.ContentWriter);
         }
@@ -286,7 +285,7 @@ public class TableRenderer<T>
 
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlTemplateWrapper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlHelperWrapper<T>(this.Html, content))
         {
             AppendDropdownTemplate(_.TemplateSyntax, _.ContentWriter);
         }

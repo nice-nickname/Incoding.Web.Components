@@ -16,12 +16,14 @@ class ColumnResizerController {
     startResize(column) {
         const header = this.table.$header.find(`[data-index=${column.index}]`)
 
-        ColumnResizerHandler.global = new ColumnResizerHandler(column, header, this.table)
-        ColumnResizerHandler.start()
+        const handler = new ColumnResizerHandler(column, header, this.table)
+        ColumnResizerHandler.start(handler)
     }
 }
 
 class ColumnResizerHandler {
+
+    static minWidth = 15
 
     /**
      * @type { Column }
@@ -82,7 +84,7 @@ class ColumnResizerHandler {
 
         let width = Math.round(event.clientX - this.#offset)
 
-        if (width > 15) {
+        if (width > ColumnResizerHandler.minWidth) {
             this.#waitNextFrame = requestAnimationFrame(() => {
                 this.table.colgroupController.resizeColumn(this.column.index, width)
                 this.#waitNextFrame = null
@@ -96,7 +98,7 @@ class ColumnResizerHandler {
         this.$target.removeClass('active')
         this.$target.closest('table')
             .removeClass('resizing')
-            .trigger('grid-column-resize', this.column)
+            .trigger(events.resize, this.column)
 
         if (this.table.isSimpleMode()) {
             const nestedTables = this.table.$table.find('table')
@@ -115,22 +117,22 @@ class ColumnResizerHandler {
      */
     static global = null
 
-    static start() {
+    static start(handler) {
+        this.stop()
+
+        this.global = handler
         this.global.start()
     }
 
     static stop() {
-        this.global.stop()
-        this.global = null
-    }
+        if (this.global) {
+            this.global.stop()
+        }
 
-    static initGlobalHandler() {
-        document.addEventListener('mouseup', () => {
-            if (this.global) {
-                this.stop()
-            }
-        })
+        this.global = null
     }
 }
 
-ColumnResizerHandler.initGlobalHandler();
+document.addEventListener('mouseup', () => {
+    ColumnResizerHandler.stop()
+});

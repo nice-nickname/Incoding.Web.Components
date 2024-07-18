@@ -86,7 +86,7 @@ class SignalrLoader {
         this.splitGrid.disableSort()
         this.splitGrid.disableFilter()
 
-        this.$root.trigger('websocket-start')
+        this.$root.trigger(events.signalr.start)
     }
 
     triggerLoad(data) {
@@ -99,11 +99,11 @@ class SignalrLoader {
         this.splitGrid.enableSort()
         this.splitGrid.enableFilter()
 
-        this.$root.trigger('websocket-complete')
+        this.$root.trigger(events.signalr.complete)
     }
 
     triggerError(err) {
-        this.$root.trigger('websocket-error')
+        this.$root.trigger(events.signalr.error)
 
         console.error('websocket-loader', err)
     }

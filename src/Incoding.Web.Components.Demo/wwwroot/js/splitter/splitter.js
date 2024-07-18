@@ -80,7 +80,8 @@ class Splitter {
         const $left = this.$splitterElements.eq(order - 1)
         const $right = this.$splitterElements.eq(order + 1)
 
-        SplitterResizingHandler.global = new SplitterResizingHandler(this, $left[0], $divider[0], $right[0])
-        SplitterResizingHandler.global.start()
+        const handler = new SplitterResizingHandler(this, $left[0], $divider[0], $right[0])
+
+        SplitterResizingHandler.start(handler)
     }
 }

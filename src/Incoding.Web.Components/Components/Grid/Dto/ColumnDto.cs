@@ -12,7 +12,11 @@ using JetBrains.Annotations;
 [UsedImplicitly, Description("initializeSplitGrid JS params")]
 public record ColumnDto
 {
+    public int? Id { get; set; }
+
     public int Index { get; set; }
+
+    public int? ParentIndex { get; set; }
 
     public string Field { get; set; }
 
@@ -25,6 +29,8 @@ public record ColumnDto
     public bool Totalable { get; set; }
 
     public bool Sortable { get; set; }
+
+    public int? Width { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]
     public SortOrder? SortedBy { get; set; }

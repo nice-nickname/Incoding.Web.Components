@@ -121,6 +121,12 @@ public class TableRenderer<T>
                 cell.InnerHtml.AppendHtml(RenderFilterButton(column));
             }
 
+            if (!isStacked && column.Resizable)
+            {
+                cell.AddCssClass(DefaultStyles.HeaderCellResizeCss);
+                cell.InnerHtml.AppendHtml(RenderResizer(column));
+            }
+
             cell.Attributes["rowspan"] = isStacked || !isStackedLevel ? "1" : "2";
             cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
 
@@ -201,6 +207,22 @@ public class TableRenderer<T>
                            );
 
         return filterButton;
+    }
+
+    private IHtmlContent RenderResizer(Column column)
+    {
+        var resizer = TagsFactory.Button();
+        resizer.Attributes["role"] = "resize";
+        resizer.AddCssClass(DefaultStyles.HeaderCellResizeButtonCss);
+
+        ImlBinder.BindToTag(Html, resizer, iml => iml.When(JqueryBind.MouseDown)
+                                                     .StopPropagation()
+                                                     .PreventDefault()
+                                                     .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
+                                                     .When(JqueryBind.Click)
+                                                     .StopPropagation());
+
+        return resizer;
     }
 
     private IHtmlContent RenderBody(bool includeTemplate)
@@ -320,22 +342,24 @@ public class TableComponent
 
     public GridStructureDto ToDto()
     {
-        var columnDtos = Columns.Select(s =>
-                                        {
-                                            return new ColumnDto
-                                            {
-                                                Index = s.Column.Index,
-                                                Field = s.Field,
-                                                Title = s.Column.Title,
-                                                Format = s.Format,
-                                                Type = s.Type,
-                                                SpreadField = s.SpreadField,
-                                                SpreadIndex = s.SpreadIndex,
-                                                Totalable = s.Column.Totalable,
-                                                Sortable = s.Column.Sortable,
-                                                SortedBy = s.Column.SortedBy
-                                            };
-                                        }).ToArray();
+        var columnDtos = Columns
+            .Select(s => new ColumnDto
+            {
+                Id = s.Column.Id,
+                Index = s.Column.Index,
+                Field = s.Field,
+                Title = s.Column.Title,
+                Format = s.Format,
+                Type = s.Type,
+                SpreadField = s.SpreadField,
+                SpreadIndex = s.SpreadIndex,
+                Totalable = s.Column.Totalable,
+                Sortable = s.Column.Sortable,
+                SortedBy = s.Column.SortedBy,
+                ParentIndex = s.Column.ParentIndex,
+                Width = s.Column.Width
+            })
+            .ToArray();
 
         var dto = new GridStructureDto
         {

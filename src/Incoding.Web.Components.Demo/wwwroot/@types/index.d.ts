@@ -41,6 +41,9 @@ interface Column {
 
     type: 'String' | 'Numeric' | 'Datetime' | 'Boolean'
     format: 'Empty' | 'Currency' | 'Percentage' | 'Numeric' | 'DateTime'
+
+    parentIndex: number | null
+    width: number | null
 }
 
 interface FilterColumn {

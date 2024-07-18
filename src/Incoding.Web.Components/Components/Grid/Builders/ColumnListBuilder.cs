@@ -51,11 +51,17 @@ public class ColumnListBuilder<T>
 
     public void Stacked(Action<ColumnBuilder<T>> stackedHeader, Action<ColumnListBuilder<T>> stackedColumns)
     {
-        var header = new ColumnBuilder<T>(this.Html);
+        var headerIndex = this._currentIndex++;
+        var header = new ColumnBuilder<T>(this.Html, headerIndex);
         stackedHeader(header);
 
         var columns = new ColumnListBuilder<T>(this.Html, this._currentIndex);
         stackedColumns(columns);
+
+        foreach (var stacked in columns.Columns)
+        {
+            stacked.ParentIndex = headerIndex;
+        }
 
         header.Column.Columns.AddRange(columns.Columns);
 

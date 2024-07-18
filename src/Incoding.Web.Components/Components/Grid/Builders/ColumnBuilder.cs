@@ -39,6 +39,13 @@ public class ColumnBuilder<T>
             .FooterAttr("data-index", index.ToString());
     }
 
+    public ColumnBuilder<T> Id(int id)
+    {
+        this.Column.Id = id;
+
+        return this;
+    }
+
     public ColumnBuilder<T> Css(string css)
     {
         this.Column.Css += " " + css;
@@ -114,6 +121,13 @@ public class ColumnBuilder<T>
     public ColumnBuilder<T> SortedBy(SortOrder sort)
     {
         this.Column.SortedBy = sort;
+
+        return this;
+    }
+
+    public ColumnBuilder<T> Resizable(bool value = true)
+    {
+        this.Column.Resizable = value;
 
         return this;
     }
@@ -212,10 +226,10 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Map(ColumnAttribute columnAttribute)
     {
-        this.Width(columnAttribute.Width);
+        this.Width(columnAttribute.Width == 0 ? 200 : columnAttribute.Width);
         this.Format(columnAttribute.Format);
         this.Field(columnAttribute.Field);
-        this.Sortable().Filterable();
+        this.Sortable().Filterable().Resizable();
 
         if (string.IsNullOrWhiteSpace(this.Column.Title))
             this.Title(columnAttribute.Title);
@@ -224,5 +238,10 @@ public class ColumnBuilder<T>
             this.Totalable();
 
         return this;
+    }
+
+    public ColumnBuilder<T> Hidden()
+    {
+        return this.Width(0);
     }
 }

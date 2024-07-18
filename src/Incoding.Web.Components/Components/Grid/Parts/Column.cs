@@ -8,7 +8,11 @@ using System.Collections.Generic;
 
 public class Column
 {
+    public int? Id { get; set; }
+
     public int Index { get; set; }
+
+    public int? ParentIndex { get; set; }
 
     public int? Width { get; set; }
 
@@ -21,6 +25,8 @@ public class Column
     public bool Sortable { get; set; }
 
     public bool Filterable { get; set; }
+
+    public bool Resizable { get; set; }
 
     public SortOrder? SortedBy { get; set; }
 

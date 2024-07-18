@@ -106,7 +106,7 @@ public class SplitGridBuilder<T>
 
     public SplitGridBuilder<T> Table(Action<TableBuilder<T>> table)
     {
-        return Split(splits => { splits.Add(this.Grid.Id + "-table", table); });
+        return Split(splits => splits.Add(this.Grid.Id + "-table", table));
     }
 
     public SplitGridBuilder<T> Bind(ImlBinding binding)

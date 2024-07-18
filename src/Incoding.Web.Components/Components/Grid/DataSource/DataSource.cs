@@ -31,10 +31,10 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var @event = Event?.ToStringLower() ?? Bindings.Grid.DataSourceInit;
-
             var controller = new IMLGridController(s => s.Self());
-            return iml.When(@event)
+            var events = PrepareEvents(Event);
+
+            return iml.When(events)
                       .SubmitOn(FormSelector)
                       .OnBegin(dsl =>
                                {
@@ -72,10 +72,9 @@ public static class DataSource
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
             var controller = new IMLGridController(s => s.Self());
+            var events = PrepareEvents(Event);
 
-            var @event = Event?.ToStringLower() ?? Bindings.Grid.DataSourceInit;
-
-            return iml.When(@event)
+            return iml.When(events)
                       .Ajax(Url)
                       .OnBegin(dsl =>
                                {
@@ -172,5 +171,21 @@ public static class DataSource
                       .OnBegin(dsl => controller.Init(dsl))
                       .OnSuccess(dsl => controller.StartWebsocket(dsl, Params));
         }
+    }
+
+
+    private static string InitIncoding = JqueryBind.InitIncoding.ToStringLower();
+
+    private static string PrepareEvents(JqueryBind? events)
+    {
+        if (!events.HasValue)
+            return Bindings.Grid.DataSourceInit;
+
+        var eventsAsString = events.ToJqueryString();
+
+        if (events.Value.HasFlag(JqueryBind.InitIncoding))
+            eventsAsString = eventsAsString.Replace(InitIncoding, Bindings.Grid.DataSourceInit);
+
+        return eventsAsString;
     }
 }

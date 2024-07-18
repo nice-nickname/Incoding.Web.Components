@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public static class ImlBinder
 {
-    public static void BindToTag(IHtmlHelper html, TagBuilder tag,  ImlBinding binding)
+    public static void BindToTag(IHtmlHelper html, TagBuilder tag, ImlBinding binding)
     {
         var incodingAttrs = binding(Noop(html))
                     .AsHtmlAttributes()

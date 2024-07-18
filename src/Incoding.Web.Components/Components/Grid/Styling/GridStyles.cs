@@ -40,6 +40,10 @@ public static class GridStyles
 
         public string HeaderCellFilterButtonCss { get; } = "ci-planifi ci-filter ci-color-alt ci-size-18";
 
+        public string HeaderCellResizeCss { get; } = "resize-column";
+
+        public string HeaderCellResizeButtonCss { get; } = "resize-button";
+
 
         public string SplitterCss { get; } = "grid-splitter";
 

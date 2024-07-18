@@ -1,4 +1,8 @@
 
+table.table-component * {
+    box-sizing: border-box !important;
+}
+
 /* core table-component styles */
 table.table-component {
     table-layout: fixed;
@@ -94,6 +98,22 @@ th:has(> [role=filter]) {
 th [role=filter] {
     position: absolute !important;
     right: 0 !important;
+}
+
+th [role=resize] {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    height: 100% !important;
+    width: 4px !important;
+    background-color: transparent !important;
+    cursor: ew-resize !important;
+    resize: vertical;
+}
+
+.table-component:not(.resizing) th:hover [role=resize],
+th.active [role=resize] {
+    background-color: #e8eaec !important;
 }
 
 td [role=expand] {

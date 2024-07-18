@@ -97,6 +97,16 @@ class TableController {
      */
     filterController
 
+    /**
+     * @type { ColumnResizerController }
+     */
+    resizeController
+
+    /**
+     * @type { ColGroupController }
+     */
+    colgroupController
+
     constructor(element, structure, options, data, parent) {
         this.$table = $(element);
         this.$header = $(element).find('thead')
@@ -116,6 +126,8 @@ class TableController {
 
         this.sortController = new SortController(this, this.structure.columns.find(s => s.hasDefaultSort))
         this.filterController = new FilterController(this)
+        this.resizeController = new ColumnResizerController(this)
+        this.colgroupController = new ColGroupController(this)
 
         if (this.options.highlightRows) {
             this.#hoverableRows()
@@ -195,6 +207,12 @@ class TableController {
 
     closeFilter() {
         this.filterController.close()
+    }
+
+    startResize(columnIndex) {
+        const column = this.structure.columns.find(s => s.index == columnIndex)
+
+        this.resizeController.startResize(column)
     }
 
     renderRows(start = 0, end = undefined) {

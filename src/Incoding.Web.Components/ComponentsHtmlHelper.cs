@@ -27,6 +27,11 @@ public class ComponentsHtmlHelper
         return new SplitGridBuilder<T>(this._html, id);
     }
 
+    public SplitGridBuilder<dynamic> Grid(string id)
+    {
+        return new SplitGridBuilder<dynamic>(this._html, id);
+    }
+
     public IHtmlContent SignalR(string action)
     {
         return this._html.When(JqueryBind.InitIncoding)

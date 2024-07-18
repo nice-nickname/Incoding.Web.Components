@@ -4,17 +4,19 @@ public static class Bindings
 {
     public static class Grid
     {
-        public static readonly string Init = "grid-init";
+        public const string Init = "grid-init";
 
         public static class SignalR
         {
-            public static readonly string Start = "websocket-start";
+            public const string Start = "websocket-start";
 
-            public static readonly string Complete = "websocket-complete";
+            public const string Complete = "websocket-complete";
 
-            public static readonly string Error = "websocket-error";
+            public const string Error = "websocket-error";
         }
 
-        internal static readonly string DataSourceInit = "grid-data-source-init";
+        internal const string DataSourceInit = "grid-data-source-init";
+
+        public const string ColumnResize = "grid-column-resize";
     }
 }

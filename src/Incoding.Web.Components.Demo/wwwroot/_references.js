@@ -14,6 +14,7 @@
 /// <reference path="js/grid/rendering/infinite-scroll-renderer.js" />
 /// <reference path="js/grid/actions/filter.js" />
 /// <reference path="js/grid/actions/sort.js" />
+/// <reference path="js/grid/parts/colgroup.js" />
 /// <reference path="@types/index.d.ts" />
 /// <reference path="js/splitter/splitter.js" />
 /// <reference path="js/splitter/splitter-resizer.js" />

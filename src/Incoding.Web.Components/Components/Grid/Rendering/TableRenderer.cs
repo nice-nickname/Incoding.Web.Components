@@ -55,7 +55,7 @@ public class TableRenderer<T>
         table.AddCssClass(this.Table.Css);
 
         table.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Table.Id;
-        table.Attributes["role"] = "table";
+        table.Attributes["role"] = GlobalSelectors.Roles.Table;
 
         table.AppendStyle("table-layout", this.Table.Layout.ToStringLower());
 
@@ -75,101 +75,21 @@ public class TableRenderer<T>
 
     private IHtmlContent RenderHeader()
     {
-        var header = TagsFactory.THead();
-
-        var hasStacked = this.Table.Columns.Any(s => s.Columns.Any());
-
-        if (this.Table.Columns.Any())
+        var renderer = new TableHeaderRenderer<T>
         {
-            header.InnerHtml.AppendHtml(RenderHeaderRow(this.Table.Columns, true));
-        }
+            DefaultStyles = DefaultStyles,
+            Html = this.Html,
+            Table = this.Table
+        };
 
-        var stackedColumns = this.Table.Columns.SelectMany(s => s.Columns).ToList();
-        if (stackedColumns.Any())
-        {
-            header.InnerHtml.AppendHtml(RenderHeaderRow(stackedColumns, false));
-        }
-
-        return header;
+        return renderer.Render();
     }
 
-    private IHtmlContent RenderHeaderRow(List<Column> columns, bool isStackedLevel)
-    {
-        var row = TagsFactory.Tr();
-
-        row.Attributes["header-row"] = "true";
-
-        foreach (var column in columns)
-        {
-            var isStacked = column.Columns.Any();
-
-            var cell = TagsFactory.Th();
-
-            cell.MergeAttributes(column.Attr);
-
-            if (column.Sortable)
-            {
-                cell.AddCssClass(DefaultStyles.HeaderCellOrderCss);
-                cell.InnerHtml.AppendHtml(RenderSortButton(column));
-            }
-
-            cell.InnerHtml.AppendHtml(column.Title);
-
-            if (!isStacked && column.Filterable)
-            {
-                cell.AddCssClass(DefaultStyles.HeaderCellFilterCss);
-                cell.InnerHtml.AppendHtml(RenderFilterButton(column));
-            }
-
-            if (!isStacked && column.Resizable)
-            {
-                cell.AddCssClass(DefaultStyles.HeaderCellResizeCss);
-                cell.InnerHtml.AppendHtml(RenderResizer(column));
-            }
-
-            cell.Attributes["rowspan"] = isStacked || !isStackedLevel ? "1" : "2";
-            cell.Attributes["colspan"] = isStacked ? column.Columns.Count.ToString() : "1";
-
-            if (column.Sortable || column.Filterable)
-            {
-                ImlBinder.BindToTag(Html,
-                                    cell,
-                                    iml =>
-                                    {
-                                        if (column.Sortable)
-                                        {
-                                            iml.When(JqueryBind.Click)
-                                               .StopPropagation()
-                                               .OnBegin(dsl => dsl.Break.If(() => Selector.Jquery.Self().Is(c => c.Class(B.Active))))
-                                               .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                                                    .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")));
-                                        }
-
-                                        if (column.Filterable)
-                                        {
-                                            iml.When("contextmenu")
-                                               .StopPropagation()
-                                               .PreventDefault()
-                                               .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                                                    .JQuery.Call("data('table').openFilter",
-                                                                                 Selector.Jquery.Self().Attr("data-index")));
-                                        }
-
-                                        return iml;
-                                    }
-                                   );
-            }
-
-            row.InnerHtml.AppendHtml(cell);
-        }
-
-        return row;
-    }
 
     private TagBuilder RenderSortButton(Column column)
     {
         var sortButton = TagsFactory.Button();
-        sortButton.Attributes["role"] = "sort";
+        sortButton.Attributes["role"] = GlobalSelectors.Roles.Sort;
         sortButton.AddCssClass(DefaultStyles.HeaderCellOrderButtonCss);
 
         if (column.SortedBy.HasValue)
@@ -183,7 +103,7 @@ public class TableRenderer<T>
     private IHtmlContent RenderFilterButton(Column column)
     {
         var filterButton = TagsFactory.Button();
-        filterButton.Attributes["role"] = "filter";
+        filterButton.Attributes["role"] = GlobalSelectors.Roles.Filter;
         filterButton.AddCssClass(DefaultStyles.HeaderCellFilterButtonCss);
 
         ImlBinder.BindToTag(Html,
@@ -211,7 +131,8 @@ public class TableRenderer<T>
     private IHtmlContent RenderResizer(Column column)
     {
         var resizer = TagsFactory.Button();
-        resizer.Attributes["role"] = "resize";
+        resizer.Attributes["role"] = GlobalSelectors.Roles.Resize;
+
         resizer.AddCssClass(DefaultStyles.HeaderCellResizeButtonCss);
 
         ImlBinder.BindToTag(Html, resizer, iml => iml.When(JqueryBind.MouseDown)
@@ -255,7 +176,7 @@ public class TableRenderer<T>
 
         row.AddCssClass(DefaultStyles.RowCss);
         row.AddCssClass(this.Table.Row.Css);
-        row.Attributes["role"] = "row";
+        row.Attributes["role"] = GlobalSelectors.Roles.Row;
 
         row.Attributes["body-row"] = "true";
 

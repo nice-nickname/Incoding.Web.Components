@@ -53,7 +53,7 @@ public class SplitGridRenderer<T>
         root.AddCssClass(this.Grid.Mode == GridMode.Simple ? this.DefaultStyles.GridSimpleCss : this.DefaultStyles.GridStackedCss);
 
         root.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Grid.Id;
-        root.Attributes["role"] = "grid";
+        root.Attributes["role"] = GlobalSelectors.Roles.Grid;
 
         root.AppendStyle(CssStyling.Width, this.Grid.Width);
         root.AppendStyle(CssStyling.Height, this.Grid.Height);

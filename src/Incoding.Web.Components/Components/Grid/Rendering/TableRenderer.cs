@@ -140,6 +140,7 @@ public class TableRenderer<T>
                                         {
                                             iml.When(JqueryBind.Click)
                                                .StopPropagation()
+                                               .OnBegin(dsl => dsl.Break.If(() => Selector.Jquery.Self().Is(c => c.Class(B.Active))))
                                                .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
                                                                     .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")));
                                         }

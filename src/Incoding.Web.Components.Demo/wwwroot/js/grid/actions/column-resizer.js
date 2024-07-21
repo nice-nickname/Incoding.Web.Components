@@ -95,7 +95,10 @@ class ColumnResizerHandler {
     stop() {
         document.removeEventListener('mousemove', this.#resizeBind);
 
-        this.$target.removeClass('active')
+        setTimeout(() => {
+            this.$target.removeClass('active')
+        }, 100)
+
         this.$target.closest('table')
             .removeClass('resizing')
             .trigger(events.resize, this.column)

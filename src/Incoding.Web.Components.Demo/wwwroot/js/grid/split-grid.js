@@ -81,6 +81,14 @@ class SplitGridController {
         this.structure = options.structure;
         this.options = options
 
+        if (this.options.table.mode === 'Simple') {
+            for (const structure of this.structure) {
+                const columns = structure.columns
+
+                this.#initializeSimpleColumns(structure, columns)
+            }
+        }
+
         this.data = []
         this.originData = this.data
 
@@ -277,5 +285,13 @@ class SplitGridController {
         this.rowRenderer = infiniteScroll ?
             new InfiniteScrollRowRenderer(this, scrollChunkSize) :
             new ImmediateRowRenderer(this)
+    }
+
+    #initializeSimpleColumns(structure, columns) {
+        structure.columns = columns
+
+        if (structure.nested) {
+            this.#initializeSimpleColumns(structure.nested, columns)
+        }
     }
 }

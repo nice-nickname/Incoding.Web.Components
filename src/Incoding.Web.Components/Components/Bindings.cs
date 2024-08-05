@@ -8,11 +8,11 @@ public static class Bindings
 
         public static class SignalR
         {
-            public const string Start = "websocket-start";
+            public const string Start = "signalr-start";
 
-            public const string Complete = "websocket-complete";
+            public const string Complete = "signalr-complete";
 
-            public const string Error = "websocket-error";
+            public const string Error = "signalr-error";
         }
 
         internal const string DataSourceInit = "grid-data-source-init";

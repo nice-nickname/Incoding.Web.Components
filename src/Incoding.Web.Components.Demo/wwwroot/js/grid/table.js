@@ -107,6 +107,11 @@ class TableController {
      */
     colgroupController
 
+    /**
+     * @type { HoverRowsController }
+     */
+    hoverRowsController
+
     constructor(element, structure, options, data, parent) {
         this.$table = $(element);
         this.$header = $(element).find('thead')
@@ -130,7 +135,7 @@ class TableController {
         this.colgroupController = new ColGroupController(this)
 
         if (this.options.highlightRows) {
-            this.#hoverableRows()
+            this.hoverRowsController = new HoverRowsController(this)
         }
     }
 

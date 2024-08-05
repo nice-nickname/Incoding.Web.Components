@@ -1,12 +1,16 @@
 
 const events = {
+
     signalr: {
-        start: 'websocket-start',
-        complete: 'websocket-complete',
-        error: 'websocket-error'
+        start: 'signalr-start',
+
+        complete: 'signalr-complete',
+
+        error: 'signalr-error'
     },
 
     recalculate: 'recalculate',
 
     resize: 'grid-column-resize'
+
 };

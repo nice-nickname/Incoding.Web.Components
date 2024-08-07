@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
@@ -242,6 +243,11 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Hidden()
     {
-        return this.Width(0);
+        this.Column.Width = 0;
+
+        foreach (var stacked in this.Column.Columns)
+            stacked.Width = 0;
+
+        return this;
     }
 }

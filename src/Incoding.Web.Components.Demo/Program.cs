@@ -26,6 +26,13 @@ namespace Incoding.Web.Components.Demo
                    .AddControllersWithViews()
                    .AddRazorRuntimeCompilation();
 
+            builder.Services.AddWebOptimizer(pipeline =>
+            {
+                pipeline.AddJavaScriptBundle("js/_libs.js", "lib/jquery.min.js", "lib/underscore-min.js", "lib/*.js");
+                pipeline.AddJavaScriptBundle("js/_scripts.js", "js/**/*.js");
+                pipeline.AddCssBundle("css/_styles.css", "css/**/*.css");
+            });
+
             builder.Services.AddSignalR()
                             .AddJsonProtocol(options =>
                                 {
@@ -40,6 +47,7 @@ namespace Incoding.Web.Components.Demo
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseWebOptimizer();
 
             app.UseRouting();
 

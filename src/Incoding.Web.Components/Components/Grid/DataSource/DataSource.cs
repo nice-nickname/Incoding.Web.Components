@@ -31,14 +31,13 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var controller = new IMLGridController(s => s.Self());
             var events = PrepareEvents(Event);
 
             return iml.When(events)
                       .SubmitOn(FormSelector)
                       .OnBegin(dsl =>
                                {
-                                   controller.Init(dsl);
+                                   dsl.Grid().Init();
 
                                    dsl.With(FormSelector).JQuery.Attr.Set(HtmlAttribute.Action, Url);
 
@@ -46,7 +45,7 @@ public static class DataSource
                                })
                       .OnSuccess(dsl =>
                                  {
-                                     controller.AppendData(dsl, Selector.Result);
+                                     dsl.Grid().AppendData(Selector.Result);
 
                                      OnSuccess?.Invoke(dsl);
                                  })
@@ -71,20 +70,19 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var controller = new IMLGridController(s => s.Self());
             var events = PrepareEvents(Event);
 
             return iml.When(events)
                       .Ajax(Url)
                       .OnBegin(dsl =>
                                {
-                                   controller.Init(dsl);
+                                   dsl.Grid().Init();
 
                                    OnBegin?.Invoke(dsl);
                                })
                       .OnSuccess(dsl =>
                                  {
-                                     controller.AppendData(dsl, Selector.Result);
+                                     dsl.Grid().AppendData(Selector.Result);
 
                                      OnSuccess?.Invoke(dsl);
                                  })
@@ -101,11 +99,9 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var controller = new IMLGridController(s => s.Self());
-
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnBegin(dsl => controller.Init(dsl))
-                      .OnSuccess(dsl => controller.AppendData(dsl, Template.For($"escapedJson {Field.GetMemberName()}")));
+                      .OnBegin(dsl => dsl.Grid().Init())
+                      .OnSuccess(dsl => dsl.Grid().AppendData(Template.For($"escapedJson {Field.GetMemberName()}")));
         }
     }
 
@@ -115,16 +111,14 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var controller = new IMLGridController(s => s.Self());
-
             if (Data is not IEnumerable)
                 Data = new object[] { Data };
 
             var json = Data.ToJsonString();
 
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnBegin(dsl => controller.Init(dsl))
-                      .OnSuccess(dsl => controller.AppendData(dsl, HttpUtility.HtmlEncode(json)));
+                      .OnBegin(dsl => dsl.Grid().Init())
+                      .OnSuccess(dsl => dsl.Grid().AppendData(HttpUtility.HtmlEncode(json)));
         }
     }
 
@@ -146,8 +140,6 @@ public static class DataSource
 
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
-            var controller = new IMLGridController(s => s.Self());
-
             return iml.When(Bindings.Grid.DataSourceInit)
                       .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalrLoader",
                                                                  new
@@ -168,8 +160,8 @@ public static class DataSource
                                  })
                       .When(Event)
                       .StopPropagation()
-                      .OnBegin(dsl => controller.Init(dsl))
-                      .OnSuccess(dsl => controller.StartWebsocket(dsl, Params));
+                      .OnBegin(dsl => dsl.Grid().Init())
+                      .OnSuccess(dsl => dsl.Grid().StartWebsocket(Params));
         }
     }
 

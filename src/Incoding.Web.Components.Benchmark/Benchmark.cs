@@ -111,7 +111,7 @@
         }
 
         [GlobalSetup]
-        private void Bootstrap()
+        public void Bootstrap()
         {
             var services = new ServiceCollection();
 

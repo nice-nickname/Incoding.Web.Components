@@ -21,21 +21,21 @@ public class TableBuilder<T>
 
     public TableBuilder(IHtmlHelper html, string id, GridStyles.Stylings styles)
     {
-        this.Html = html;
-        this.Table = new Table<T>(id);
-        this.DefaultStyles = styles;
+        Html = html;
+        Table = new Table<T>(id);
+        DefaultStyles = styles;
     }
 
     public TableBuilder<T> Css(string css)
     {
-        this.Table.Css += " " + css;
+        Table.Css += " " + css;
 
         return this;
     }
 
     public TableBuilder<T> Attr(string attr, string value)
     {
-        this.Table.Attr[attr] = value;
+        Table.Attr[attr] = value;
 
         return this;
     }
@@ -44,7 +44,7 @@ public class TableBuilder<T>
     {
         foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
         {
-            this.Attr(key, value.ToString());
+            Attr(key, value.ToString());
         }
 
         return this;
@@ -52,50 +52,50 @@ public class TableBuilder<T>
 
     public TableBuilder<T> Layout(LayoutType layout)
     {
-        this.Table.Layout = layout;
+        Table.Layout = layout;
 
         return this;
     }
 
     public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> columns)
     {
-        var clb = new ColumnListBuilder<T>(this.Html);
+        var clb = new ColumnListBuilder<T>(Html);
         columns(clb);
 
-        this.Table.Columns = clb.Columns;
-        this.Table.Cells = clb.Cells;
-        this.Table.CellRenderers = clb.CellRenderers;
+        Table.Columns = clb.Columns;
+        Table.Cells = clb.Cells;
+        Table.CellRenderers = clb.CellRenderers;
 
         return this;
     }
 
     public TableBuilder<T> Rows(Action<RowBuilder<T>> rows)
     {
-        var rb = new RowBuilder<T>(this.Html);
+        var rb = new RowBuilder<T>(Html);
         rows(rb);
 
-        this.Table.Row = rb.Row;
+        Table.Row = rb.Row;
 
         return this;
     }
 
     public TableBuilder<T> Bind(ImlBinding bindings)
     {
-        this.Table.Binding = bindings;
+        Table.Binding = bindings;
 
         return this;
     }
 
     public TableBuilder<T> DropdownTmpl(TemplateContent<T> dropdownContent)
     {
-        this.Table.Row.DropdownContent = dropdownContent;
+        Table.Row.DropdownContent = dropdownContent;
 
         return this;
     }
 
     public TableBuilder<T> DropdownTmpl(TemplateContentAsync<T> dropdownContentAsync)
     {
-        this.Table.Row.DropdownContent = tmpl =>
+        Table.Row.DropdownContent = tmpl =>
                                          {
                                              var awaitable = dropdownContentAsync(tmpl).ConfigureAwait(false);
 
@@ -107,14 +107,14 @@ public class TableBuilder<T>
 
     public TableBuilder<T> Nested<TNested>(Expression<Func<T, IEnumerable<TNested>>> nestedField, Action<TableBuilder<TNested>> nestedTable)
     {
-        var tableBuilder = new TableBuilder<TNested>(this.Html, this.Table.Id + "-nested", this.DefaultStyles);
-        tableBuilder.Table.InheritStyles(this.Table);
+        var tableBuilder = new TableBuilder<TNested>(Html, Table.Id + "-nested", DefaultStyles);
+        tableBuilder.Table.InheritStyles(Table);
 
         nestedTable(tableBuilder);
 
         var fieldName = nestedField.GetMemberName();
-        this.Table.NestedField = fieldName;
-        this.Table.NestedTable = new TableRenderer<TNested>(this.Html, tableBuilder.Table, this.DefaultStyles).RenderComponent();
+        Table.NestedField = fieldName;
+        Table.NestedTable = new TableRenderer<TNested>(Html, tableBuilder.Table, DefaultStyles).RenderComponent();
 
         return this;
     }

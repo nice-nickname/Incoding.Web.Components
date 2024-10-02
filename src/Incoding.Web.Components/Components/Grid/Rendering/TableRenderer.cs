@@ -24,9 +24,9 @@ public class TableRenderer<T>
 
     public TableRenderer(IHtmlHelper html, Table<T> table, GridStyles.Stylings styles = null)
     {
-        this.Html = html;
-        this.Table = table;
-        this.DefaultStyles = styles;
+        Html = html;
+        Table = table;
+        DefaultStyles = styles;
     }
 
     public TableComponent RenderComponent()
@@ -38,11 +38,11 @@ public class TableRenderer<T>
 
         return new TableComponent
         {
-            Columns = this.Table.Cells,
+            Columns = Table.Cells,
             LayoutHtml = table,
             RowTemplate = rowTemplate,
-            Nested = this.Table.NestedTable,
-            NestedField = this.Table.NestedField,
+            Nested = Table.NestedTable,
+            NestedField = Table.NestedField,
             DropdownTemplate = dropdownTemplate
         };
     }
@@ -52,19 +52,19 @@ public class TableRenderer<T>
         var table = TagsFactory.Table();
 
         table.AddCssClass(DefaultStyles.TableCss);
-        table.AddCssClass(this.Table.Css);
+        table.AddCssClass(Table.Css);
 
-        table.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Table.Id;
+        table.Attributes[HtmlAttribute.Id.ToStringLower()] = Table.Id;
         table.Attributes["role"] = GlobalSelectors.Roles.Table;
 
-        table.AppendStyle("table-layout", this.Table.Layout.ToStringLower());
+        table.AppendStyle("table-layout", Table.Layout.ToStringLower());
 
-        if (this.Table.Binding != null)
+        if (Table.Binding != null)
         {
-            ImlBinder.BindToTag(this.Html, table, this.Table.Binding);
+            ImlBinder.BindToTag(Html, table, Table.Binding);
         }
 
-        table.Attributes.Merge(this.Table.Attr);
+        table.Attributes.Merge(Table.Attr);
 
         table.InnerHtml.AppendHtml(RenderHeader());
         table.InnerHtml.AppendHtml(RenderBody(false));
@@ -78,8 +78,8 @@ public class TableRenderer<T>
         var renderer = new TableHeaderRenderer<T>
         {
             DefaultStyles = DefaultStyles,
-            Html = this.Html,
-            Table = this.Table
+            Html = Html,
+            Table = Table
         };
 
         return renderer.Render();
@@ -162,7 +162,7 @@ public class TableRenderer<T>
     {
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelperWrapper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlHelperWrapper<T>(Html, content))
         {
             AppendRowWithContent(_.TemplateSyntax, _.ContentWriter);
         }
@@ -175,24 +175,24 @@ public class TableRenderer<T>
         var row = TagsFactory.Tr();
 
         row.AddCssClass(DefaultStyles.RowCss);
-        row.AddCssClass(this.Table.Row.Css);
+        row.AddCssClass(Table.Row.Css);
         row.Attributes["role"] = GlobalSelectors.Roles.Row;
 
         row.Attributes["body-row"] = "true";
 
-        if (this.Table.Row.Binding != null)
+        if (Table.Row.Binding != null)
         {
-            ImlBinder.BindToTag(this.Html, row, this.Table.Row.Binding, tmpl);
+            ImlBinder.BindToTag(Html, row, Table.Row.Binding, tmpl);
         }
 
-        foreach (var (attr, tmplValue) in this.Table.Row.Attr)
+        foreach (var (attr, tmplValue) in Table.Row.Attr)
         {
             row.Attributes.Add(attr, tmplValue(tmpl).HtmlContentToString());
         }
 
         contentWriter.Write(row.RenderStartTag().ToHtmlString());
 
-        foreach (var cellRenderer in this.Table.CellRenderers)
+        foreach (var cellRenderer in Table.CellRenderers)
         {
             cellRenderer.Render(tmpl, contentWriter);
         }
@@ -202,12 +202,12 @@ public class TableRenderer<T>
 
     private string RenderDropdownTemplate()
     {
-        if (this.Table.Row.DropdownContent == null)
+        if (Table.Row.DropdownContent == null)
             return string.Empty;
 
         var content = StringBuilderHelper.Default;
 
-        using (var _ = new StringifiedHtmlHelperWrapper<T>(this.Html, content))
+        using (var _ = new StringifiedHtmlHelperWrapper<T>(Html, content))
         {
             AppendDropdownTemplate(_.TemplateSyntax, _.ContentWriter);
         }
@@ -217,7 +217,7 @@ public class TableRenderer<T>
 
     private void AppendDropdownTemplate(ITemplateSyntax<T> each, TextWriter contentWriter)
     {
-        contentWriter.Write(this.Table.Row.DropdownContent(each).HtmlContentToString());
+        contentWriter.Write(Table.Row.DropdownContent(each).HtmlContentToString());
     }
 
     private IHtmlContent RenderFooter()
@@ -228,7 +228,7 @@ public class TableRenderer<T>
 
         row.Attributes["footer-row"] = "true";
 
-        foreach (var gridCell in this.Table.Cells)
+        foreach (var gridCell in Table.Cells)
         {
             var cell = TagsFactory.Td();
 

@@ -17,7 +17,7 @@ public class InputHtmlHelper
 
     public InputHtmlHelper(IHtmlHelper html)
     {
-        this._html = html;
+        _html = html;
     }
 
     public IHtmlContent Text(Action<InputOptions> buildAction)
@@ -36,7 +36,7 @@ public class InputHtmlHelper
 
         Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
 
-        var inputBinds = this._html
+        var inputBinds = _html
                              .When(JqueryBind.InitIncoding)
                              .OnSuccess(dsl =>
                              {
@@ -75,7 +75,7 @@ public class InputHtmlHelper
 
         Expression<Func<bool>> isEscape = () => Selector.Event.Which == (int)KeyCode.escape;
 
-        return this._html
+        return _html
                    .When(JqueryBind.InitIncoding)
                    .StopPropagation()
                    .OnSuccess(dsl =>
@@ -127,7 +127,7 @@ public class InputHtmlHelper
             attrs["checked"] = "checked";
         }
 
-        return this._html.When(JqueryBind.InitIncoding)
+        return _html.When(JqueryBind.InitIncoding)
                          .OnSuccess(dsl => options.Input.OnInit?.Invoke(dsl))
                          .When(JqueryBind.Change)
                          .OnSuccess(dsl =>

@@ -20,11 +20,11 @@ public class TableSplitBuilder<T>
 
     public TableSplitBuilder(IHtmlHelper html, GridStyles.Stylings styles)
     {
-        this.Html = html;
+        Html = html;
 
-        this.Tables = new List<Table<T>>();
-        this.Splits = new List<Splitter>();
-        this.DefaultStyles = styles;
+        Tables = new List<Table<T>>();
+        Splits = new List<Splitter>();
+        DefaultStyles = styles;
     }
 
     public SplitBuilder Add(Action<TableBuilder<T>> splitter)
@@ -34,13 +34,13 @@ public class TableSplitBuilder<T>
 
     public SplitBuilder Add(string splitId, Action<TableBuilder<T>> splitter)
     {
-        var tableBuilder = new TableBuilder<T>(this.Html, splitId, this.DefaultStyles);
-        var splitBuilder = new SplitBuilder(this.Html);
+        var tableBuilder = new TableBuilder<T>(Html, splitId, DefaultStyles);
+        var splitBuilder = new SplitBuilder(Html);
 
         splitter(tableBuilder);
 
-        this.Tables.Add(tableBuilder.Table);
-        this.Splits.Add(splitBuilder.Splitter);
+        Tables.Add(tableBuilder.Table);
+        Splits.Add(splitBuilder.Splitter);
 
         return splitBuilder;
     }

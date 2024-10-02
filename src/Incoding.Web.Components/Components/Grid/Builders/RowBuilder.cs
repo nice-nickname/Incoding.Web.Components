@@ -14,13 +14,13 @@ public class RowBuilder<T>
 
     public RowBuilder(IHtmlHelper html)
     {
-        this.Row = new Row<T>();
-        this.Html = html;
+        Row = new Row<T>();
+        Html = html;
     }
 
     public RowBuilder<T> Css(string css)
     {
-        this.Row.Css += " " + css;
+        Row.Css += " " + css;
 
         return this;
     }
@@ -32,21 +32,21 @@ public class RowBuilder<T>
 
     public RowBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        this.Row.Attr[attr] = value;
+        Row.Attr[attr] = value;
 
         return this;
     }
 
     public RowBuilder<T> Bind(ImlBinding binding)
     {
-        this.Row.Binding = (iml, tmpl) => binding(iml);
+        Row.Binding = (iml, tmpl) => binding(iml);
 
         return this;
     }
 
     public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        this.Row.Binding = binding;
+        Row.Binding = binding;
 
         return this;
     }

@@ -17,7 +17,7 @@ public class GridUtilsHtmlHelper
 
     public GridUtilsHtmlHelper(IHtmlHelper html)
     {
-        this._html = html;
+        _html = html;
     }
 
     public IHtmlContent ExpandButton(Action<ExpandButtonSettings> buildAction)
@@ -25,7 +25,7 @@ public class GridUtilsHtmlHelper
         var settings = new ExpandButtonSettings();
         buildAction(settings);
 
-        return this._html.When(JqueryBind.Click)
+        return _html.When(JqueryBind.Click)
                     .StopPropagation()
                     .OnSuccess(dsl =>
                     {
@@ -54,7 +54,7 @@ public class GridUtilsHtmlHelper
 
         attrs["data-dropdown-invoker"] = true;
 
-        return this._html.When(JqueryBind.Click)
+        return _html.When(JqueryBind.Click)
                          .StopPropagation()
                          .OnSuccess(dsl =>
                          {

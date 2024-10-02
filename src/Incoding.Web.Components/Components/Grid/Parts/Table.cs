@@ -33,15 +33,15 @@ public class Table<T>
 
     public Table(string id)
     {
-        this.Id = id;
+        Id = id;
     }
 
     public void InheritStyles<U>(Table<U> parent)
     {
-        this.Css = parent.Css;
-        this.Row.Css = parent.Row.Css;
-        this.Layout = parent.Layout;
+        Css = parent.Css;
+        Row.Css = parent.Row.Css;
+        Layout = parent.Layout;
 
-        this.Attr.Merge(parent.Attr);
+        Attr.Merge(parent.Attr);
     }
 }

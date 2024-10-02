@@ -24,22 +24,22 @@ public sealed class StringifiedHtmlHelperWrapper<T> : IDisposable
 
     public StringifiedHtmlHelperWrapper(IHtmlHelper html, StringBuilder content)
     {
-        this.ContentWriter = new StringWriter(content);
+        ContentWriter = new StringWriter(content);
 
-        this._html = html;
-        this._originWriter = this._html.ViewContext.Writer;
-        this._html.ViewContext.Writer = this.ContentWriter;
+        _html = html;
+        _originWriter = _html.ViewContext.Writer;
+        _html.ViewContext.Writer = ContentWriter;
 
-        this._template = html.Incoding().Template<T>();
+        _template = html.Incoding().Template<T>();
 
-        this.TemplateSyntax = this._template.ForEach();
+        TemplateSyntax = _template.ForEach();
     }
 
     public void Dispose()
     {
-        this.TemplateSyntax.Dispose();
-        this._template.Dispose();
+        TemplateSyntax.Dispose();
+        _template.Dispose();
 
-        this._html.ViewContext.Writer = this._originWriter;
+        _html.ViewContext.Writer = _originWriter;
     }
 }

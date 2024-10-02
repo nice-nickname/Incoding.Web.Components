@@ -20,15 +20,15 @@ public class SpreadedCellRenderer<T, TSpread> : ICellRenderer<T>
             Expression<Func<T, IEnumerable<TSpread>>> spreadedField,
             List<ICellRenderer<TSpread>> renderers)
     {
-        this._renderers = renderers;
-        this._spreadedField = spreadedField;
+        _renderers = renderers;
+        _spreadedField = spreadedField;
     }
 
     public void Render(ITemplateSyntax<T> template, TextWriter content)
     {
-        using (var spreadEach = template.ForEach(this._spreadedField))
+        using (var spreadEach = template.ForEach(_spreadedField))
         {
-            foreach (var cellRenderer in this._renderers)
+            foreach (var cellRenderer in _renderers)
             {
                 cellRenderer.Render(spreadEach, content);
             }

@@ -24,16 +24,16 @@ public class SplitGridRenderer<T>
 
     public SplitGridRenderer(IHtmlHelper html, Grid<T> grid, GridStyles.Stylings styles)
     {
-        this.Grid = grid;
-        this.Html = html;
-        this.DefaultStyles = styles;
+        Grid = grid;
+        Html = html;
+        DefaultStyles = styles;
     }
 
     public IHtmlContent Render(bool concurrent = false)
     {
         var tables = false
-                             ? this.Grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
-                             : this.Grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
+                             ? Grid.Tables.AsParallel().Select(RenderTableToComponent).ToList()
+                             : Grid.Tables.AsEnumerable().Select(RenderTableToComponent).ToList();
 
         var root = Root(tables);
 
@@ -47,20 +47,20 @@ public class SplitGridRenderer<T>
     {
         var root = TagsFactory.Div();
 
-        root.AddCssClass(this.DefaultStyles.GridCss);
-        root.AddCssClass(this.Grid.Css);
+        root.AddCssClass(DefaultStyles.GridCss);
+        root.AddCssClass(Grid.Css);
 
-        root.AddCssClass(this.Grid.Mode == GridMode.Simple ? this.DefaultStyles.GridSimpleCss : this.DefaultStyles.GridStackedCss);
+        root.AddCssClass(Grid.Mode == GridMode.Simple ? DefaultStyles.GridSimpleCss : DefaultStyles.GridStackedCss);
 
-        root.Attributes[HtmlAttribute.Id.ToStringLower()] = this.Grid.Id;
+        root.Attributes[HtmlAttribute.Id.ToStringLower()] = Grid.Id;
         root.Attributes["role"] = GlobalSelectors.Roles.Grid;
 
-        root.AppendStyle(CssStyling.Width, this.Grid.Width);
-        root.AppendStyle(CssStyling.Height, this.Grid.Height);
+        root.AppendStyle(CssStyling.Width, Grid.Width);
+        root.AppendStyle(CssStyling.Height, Grid.Height);
 
-        ImlBinder.BindToTag(this.Html, root, iml => Bind(tables, this.Grid.Binds));
+        ImlBinder.BindToTag(Html, root, iml => Bind(tables, Grid.Binds));
 
-        root.Attributes.Merge(this.Grid.Attr);
+        root.Attributes.Merge(Grid.Attr);
 
         return root;
     }
@@ -70,7 +70,7 @@ public class SplitGridRenderer<T>
         var empty = TagsFactory.Div();
         empty.AddCssClass(DefaultStyles.EmptyContainerCss);
 
-        empty.InnerHtml.AppendHtml(this.Grid.EmptyContent);
+        empty.InnerHtml.AppendHtml(Grid.EmptyContent);
 
         return empty;
     }
@@ -80,9 +80,9 @@ public class SplitGridRenderer<T>
         var panel = TagsFactory.Div();
         panel.AddCssClass(DefaultStyles.SplitterCss);
 
-        var splitDto = this.Grid.Splits.ToJsonString();
+        var splitDto = Grid.Splits.ToJsonString();
 
-        var incodingAttrs = this.Html.When(JqueryBind.InitIncoding)
+        var incodingAttrs = Html.When(JqueryBind.InitIncoding)
                                 .OnSuccess(dsl => dsl.Self().JQuery.Call("splitter", splitDto))
                                 .AsHtmlAttributes()
                                 .ToDictionary();
@@ -93,7 +93,7 @@ public class SplitGridRenderer<T>
         }
 
         var index = 0;
-        foreach (var (table, splitter) in tables.Zip(this.Grid.Splits))
+        foreach (var (table, splitter) in tables.Zip(Grid.Splits))
         {
             panel.InnerHtml.AppendHtml(RenderSplitPanel(table, splitter));
 
@@ -136,7 +136,7 @@ public class SplitGridRenderer<T>
 
     private TableComponent RenderTableToComponent(Table<T> table)
     {
-        var renderer = new TableRenderer<T>(this.Html, table, this.DefaultStyles);
+        var renderer = new TableRenderer<T>(Html, table, DefaultStyles);
         return renderer.RenderComponent();
     }
 
@@ -146,13 +146,13 @@ public class SplitGridRenderer<T>
         {
             Table = new TableOptionsDto
             {
-                HighlightRows = this.Grid.UI.HighlightRowsOnHover,
-                PlaceholderRows = this.Grid.UI.PlaceholderRows,
-                Mode = this.Grid.Mode,
-                Zebra = this.Grid.UI.Zebra
+                HighlightRows = Grid.UI.HighlightRowsOnHover,
+                PlaceholderRows = Grid.UI.PlaceholderRows,
+                Mode = Grid.Mode,
+                Zebra = Grid.UI.Zebra
             },
 
-            Splitter = this.Grid.Splits.Select(s => new SplitterDto
+            Splitter = Grid.Splits.Select(s => new SplitterDto
             {
                 Min = s.MinWidth,
                 Max = s.MaxWidth
@@ -161,11 +161,11 @@ public class SplitGridRenderer<T>
             Structure = tables.Select(t => t.ToDto()).ToArray()
         };
 
-        if (this.Grid.InfiniteScroll != null)
+        if (Grid.InfiniteScroll != null)
         {
             gridOptionsDto.InfiniteScroll = true;
-            gridOptionsDto.ScrollChunkSize = this.Grid.InfiniteScroll.ChunkSize;
-            gridOptionsDto.LoadingRowCount = this.Grid.InfiniteScroll.LoadingRowsCount;
+            gridOptionsDto.ScrollChunkSize = Grid.InfiniteScroll.ChunkSize;
+            gridOptionsDto.LoadingRowCount = Grid.InfiniteScroll.LoadingRowsCount;
         }
 
         var options = JsonConvert.SerializeObject(gridOptionsDto,
@@ -175,7 +175,7 @@ public class SplitGridRenderer<T>
                                                       DefaultValueHandling = DefaultValueHandling.Include
                                                   });
 
-        var initBinding = this.Html.When(JqueryBind.InitIncoding)
+        var initBinding = Html.When(JqueryBind.InitIncoding)
                               .OnSuccess(dsl => dsl.Self().JQuery.Call("splitGrid", options))
                               .OnComplete(dsl =>
                                           {
@@ -188,9 +188,9 @@ public class SplitGridRenderer<T>
             initBinding = bindings(initBinding);
         }
 
-        if (this.Grid.DataSource != null)
+        if (Grid.DataSource != null)
         {
-            initBinding = this.Grid.DataSource.Bind(initBinding);
+            initBinding = Grid.DataSource.Bind(initBinding);
         }
 
         return initBinding;

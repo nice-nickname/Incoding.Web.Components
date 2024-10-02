@@ -28,7 +28,7 @@ namespace Incoding.Web.Components.Benchmark
 
         public bool HasChildren => Children.Any();
 
-        public string RowId => this.Id;
+        public string RowId => Id;
     }
 
     public record SamplePeriod

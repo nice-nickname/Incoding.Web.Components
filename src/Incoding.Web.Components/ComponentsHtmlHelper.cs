@@ -15,26 +15,26 @@ public class ComponentsHtmlHelper
 
     public ComponentsHtmlHelper(IHtmlHelper html)
     {
-        this._html = html;
+        _html = html;
     }
 
-    public InputHtmlHelper Inputs => new InputHtmlHelper(this._html);
+    public InputHtmlHelper Inputs => new(_html);
 
-    public GridUtilsHtmlHelper GridUtils => new GridUtilsHtmlHelper(this._html);
+    public GridUtilsHtmlHelper GridUtils => new(_html);
 
     public SplitGridBuilder<T> Grid<T>(string id)
     {
-        return new SplitGridBuilder<T>(this._html, id);
+        return new SplitGridBuilder<T>(_html, id);
     }
 
     public SplitGridBuilder<dynamic> Grid(string id)
     {
-        return new SplitGridBuilder<dynamic>(this._html, id);
+        return new SplitGridBuilder<dynamic>(_html, id);
     }
 
     public IHtmlContent SignalR(string action)
     {
-        return this._html.When(JqueryBind.InitIncoding)
+        return _html.When(JqueryBind.InitIncoding)
                    .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalr", action))
                    .AsHtmlAttributes()
                    .ToInput(HtmlInputType.Hidden, string.Empty);
@@ -42,7 +42,7 @@ public class ComponentsHtmlHelper
 
     public IHtmlContent DefaultDecimalPrecision(int precision)
     {
-        return this._html.When(JqueryBind.InitIncoding)
+        return _html.When(JqueryBind.InitIncoding)
                          .OnSuccess(dsl => dsl.Self().JQuery.Call("format", "precision", precision))
                          .AsHtmlAttributes()
                          .ToDiv();

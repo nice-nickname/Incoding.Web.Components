@@ -18,6 +18,6 @@ public class Row<T>
 
     public Row()
     {
-        this.Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
+        Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
     }
 }

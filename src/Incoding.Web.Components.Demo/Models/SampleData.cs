@@ -40,6 +40,6 @@ namespace Incoding.Web.Components.Demo
 
         public bool HasChildren => Children.Any();
 
-        public string RowId => this.Id;
+        public string RowId => Id;
     }
 }

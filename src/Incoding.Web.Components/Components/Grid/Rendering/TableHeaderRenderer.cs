@@ -23,19 +23,19 @@ public class TableHeaderRenderer<T>
 
     public TableHeaderRenderer()
     {
-        this._header = TagsFactory.THead();
+        _header = TagsFactory.THead();
     }
 
     public IHtmlContent Render()
     {
-        AppendColumns(this.Table.Columns);
+        AppendColumns(Table.Columns);
 
-        var stacked = this.Table.Columns.SelectMany(s => s.Columns).ToList();
+        var stacked = Table.Columns.SelectMany(s => s.Columns).ToList();
 
         if (stacked.Any())
             AppendColumns(stacked);
 
-        return this._header;
+        return _header;
     }
 
     private void AppendColumns(List<Column> columns)
@@ -48,7 +48,7 @@ public class TableHeaderRenderer<T>
             row.InnerHtml.AppendHtml(RenderColumn(column));
         }
 
-        this._header.InnerHtml.AppendHtml(row);
+        _header.InnerHtml.AppendHtml(row);
     }
 
     private IHtmlContent RenderColumn(Column column)

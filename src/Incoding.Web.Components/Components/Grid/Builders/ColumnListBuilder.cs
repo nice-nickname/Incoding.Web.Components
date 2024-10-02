@@ -27,35 +27,35 @@ public class ColumnListBuilder<T>
 
     public ColumnListBuilder(IHtmlHelper html, int startIndex = 0)
     {
-        this.Columns = new List<Column>();
-        this.Cells = new List<Cell>();
-        this.CellRenderers = new List<ICellRenderer<T>>();
+        Columns = new List<Column>();
+        Cells = new List<Cell>();
+        CellRenderers = new List<ICellRenderer<T>>();
 
-        this._currentIndex = startIndex;
-        this.Html = html;
+        _currentIndex = startIndex;
+        Html = html;
     }
 
     public ColumnBuilder<T> Add()
     {
-        var columnBuilder = new ColumnBuilder<T>(this.Html, this._currentIndex++);
+        var columnBuilder = new ColumnBuilder<T>(Html, _currentIndex++);
 
         var newCell = columnBuilder.Cell;
 
-        this.Cells.Add(newCell);
-        this.Columns.Add(columnBuilder.Column);
+        Cells.Add(newCell);
+        Columns.Add(columnBuilder.Column);
 
-        CellRenderers.Add(new SingleCellRenderer<T>(newCell, this.Html));
+        CellRenderers.Add(new SingleCellRenderer<T>(newCell, Html));
 
         return columnBuilder;
     }
 
     public void Stacked(Action<ColumnBuilder<T>> stackedHeader, Action<ColumnListBuilder<T>> stackedColumns)
     {
-        var headerIndex = this._currentIndex++;
-        var header = new ColumnBuilder<T>(this.Html, headerIndex);
+        var headerIndex = _currentIndex++;
+        var header = new ColumnBuilder<T>(Html, headerIndex);
         stackedHeader(header);
 
-        var columns = new ColumnListBuilder<T>(this.Html, this._currentIndex);
+        var columns = new ColumnListBuilder<T>(Html, _currentIndex);
         stackedColumns(columns);
 
         foreach (var stacked in columns.Columns)
@@ -65,11 +65,11 @@ public class ColumnListBuilder<T>
 
         header.Column.Columns.AddRange(columns.Columns);
 
-        this.Columns.Add(header.Column);
-        this.Cells.AddRange(columns.Cells);
-        this.CellRenderers.AddRange(columns.CellRenderers);
+        Columns.Add(header.Column);
+        Cells.AddRange(columns.Cells);
+        CellRenderers.AddRange(columns.CellRenderers);
 
-        this._currentIndex = columns._currentIndex;
+        _currentIndex = columns._currentIndex;
     }
 
     public void Spreaded<TSpread>(
@@ -82,7 +82,7 @@ public class ColumnListBuilder<T>
 
         var spreadFieldName = spreadField.GetMemberName();
 
-        var clb = new ColumnListBuilder<TSpread>(this.Html, this._currentIndex);
+        var clb = new ColumnListBuilder<TSpread>(Html, _currentIndex);
 
         var currentColumn = 0;
         var spreadedCells = new List<ICellRenderer<TSpread>>();
@@ -105,11 +105,11 @@ public class ColumnListBuilder<T>
                 spreadedCells.AddRange(clb.CellRenderers);
         }
 
-        this.Columns.AddRange(clb.Columns);
-        this.Cells.AddRange(clb.Cells);
-        this.CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(spreadField, spreadedCells));
+        Columns.AddRange(clb.Columns);
+        Cells.AddRange(clb.Cells);
+        CellRenderers.Add(new SpreadedCellRenderer<T, TSpread>(spreadField, spreadedCells));
 
-        this._currentIndex = clb._currentIndex;
+        _currentIndex = clb._currentIndex;
     }
 
     public void AutoMap()
@@ -126,8 +126,8 @@ public class ColumnListBuilder<T>
 
         public ColumnAttributeMapper(ColumnListBuilder<T> columnBuilder)
         {
-            this._columnBuilder = columnBuilder;
-            this._columnAttributes = CachingFactory.Instance.Retrieve(nameof(T),
+            _columnBuilder = columnBuilder;
+            _columnAttributes = CachingFactory.Instance.Retrieve(nameof(T),
                 () => typeof(T)
                             .GetProperties()
                             .Where(prop => prop.HasAttribute<ColumnAttribute>())
@@ -147,13 +147,13 @@ public class ColumnListBuilder<T>
 
         public void MapFromType()
         {
-            foreach (var column in this._columnAttributes.Where(col => string.IsNullOrWhiteSpace(col.Stacked)))
-                this._columnBuilder.Add().Map(column);
+            foreach (var column in _columnAttributes.Where(col => string.IsNullOrWhiteSpace(col.Stacked)))
+                _columnBuilder.Add().Map(column);
 
-            foreach (var stacked in this._columnAttributes.Where(col => !string.IsNullOrWhiteSpace(col.Stacked))
+            foreach (var stacked in _columnAttributes.Where(col => !string.IsNullOrWhiteSpace(col.Stacked))
                                                           .GroupBy(col => col.Stacked))
             {
-                this._columnBuilder.Stacked(
+                _columnBuilder.Stacked(
                     stackedColumn => stackedColumn.Title(stacked.Key),
                     columnsList =>
                     {

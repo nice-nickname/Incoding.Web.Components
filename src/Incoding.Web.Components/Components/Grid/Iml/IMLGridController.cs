@@ -21,33 +21,33 @@ public class ImlGridController
 
     public ImlGridController(IIncodingMetaLanguageCallbackInstancesDsl dsl)
     {
-        this._dsl = dsl;
+        _dsl = dsl;
     }
 
     public IExecutableSetting Init()
     {
-        return this._dsl.JQuery.Call("data('splitGrid')?.initializeTables");
+        return _dsl.JQuery.Call("data('splitGrid')?.initializeTables");
     }
 
     public IExecutableSetting StartWebsocket(Selector @params = null)
     {
-        return this._dsl.JQuery.Call("data('loader').startLoading", @params);
+        return _dsl.JQuery.Call("data('loader').startLoading", @params);
     }
 
     public IExecutableSetting CancelWebsocket()
     {
-        return this._dsl.JQuery.Call("data('loader').cancelLoading");
+        return _dsl.JQuery.Call("data('loader').cancelLoading");
     }
 
 
 
     public IExecutableSetting AppendData(Selector dataSelector)
     {
-        return this._dsl.JQuery.Call("data('splitGrid').appendData", dataSelector);
+        return _dsl.JQuery.Call("data('splitGrid').appendData", dataSelector);
     }
 
     public IExecutableSetting Totals()
     {
-        return this._dsl.JQuery.Call("data('splitGrid').totals");
+        return _dsl.JQuery.Call("data('splitGrid').totals");
     }
 }

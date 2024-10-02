@@ -17,9 +17,9 @@ public class Grid<T>
 
     public string Height { get; set; } = "100%";
 
-    public List<Table<T>> Tables { get; set; } = new();
+    public List<Table<T>> Tables { get; set; } = [];
 
-    public List<Splitter> Splits { get; set; } = new();
+    public List<Splitter> Splits { get; set; } = [];
 
     public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 

@@ -21,48 +21,48 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder(IHtmlHelper html)
     {
-        this.Cell = new Cell<T>();
-        this.Column = new Column();
+        Cell = new Cell<T>();
+        Column = new Column();
 
-        this.Cell.Column = this.Column;
-        this.Column.Cell = this.Cell;
-        this.Html = html;
+        Cell.Column = Column;
+        Column.Cell = Cell;
+        Html = html;
     }
 
     public ColumnBuilder(IHtmlHelper html, int index)
             : this(html)
     {
-        this.Column.Index = index;
+        Column.Index = index;
 
-        this.HeaderAttr("data-index", index.ToString())
+        HeaderAttr("data-index", index.ToString())
             .Attr("data-index", index.ToString())
             .FooterAttr("data-index", index.ToString());
     }
 
     public ColumnBuilder<T> Id(int id)
     {
-        this.Column.Id = id;
+        Column.Id = id;
 
         return this;
     }
 
     public ColumnBuilder<T> Css(string css)
     {
-        this.Column.Css += " " + css;
+        Column.Css += " " + css;
 
         return this;
     }
 
     public ColumnBuilder<T> Width(int width)
     {
-        this.Column.Width = width;
+        Column.Width = width;
 
         return this;
     }
 
     public ColumnBuilder<T> Title(string title)
     {
-        this.Column.Title = title;
+        Column.Title = title;
 
         return this;
     }
@@ -79,84 +79,84 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        this.Cell.Attrs[attr] = value;
+        Cell.Attrs[attr] = value;
 
         return this;
     }
 
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, attr));
+        Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, attr));
 
         return this;
     }
 
     public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> isField, string attr)
     {
-        this.Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, attr));
+        Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, attr));
         return this;
     }
 
     public ColumnBuilder<T> Totalable(bool value = true)
     {
-        this.Column.Totalable = value;
+        Column.Totalable = value;
 
         return this;
     }
 
     public ColumnBuilder<T> Filterable(bool value = true)
     {
-        this.Column.Filterable = value;
+        Column.Filterable = value;
 
         return this;
     }
 
     public ColumnBuilder<T> Sortable(bool value = true)
     {
-        this.Column.Sortable = value;
+        Column.Sortable = value;
 
         return this;
     }
 
     public ColumnBuilder<T> SortedBy(SortOrder sort)
     {
-        this.Column.SortedBy = sort;
+        Column.SortedBy = sort;
 
         return this;
     }
 
     public ColumnBuilder<T> Resizable(bool value = true)
     {
-        this.Column.Resizable = value;
+        Column.Resizable = value;
 
         return this;
     }
 
     public ColumnBuilder<T> HeaderAttr(string attr, string value)
     {
-        this.Column.Attr[attr] = value;
+        Column.Attr[attr] = value;
 
         return this;
     }
 
     public ColumnBuilder<T> FooterAttr(string attr, string value)
     {
-        this.Column.FooterAttr[attr] = value;
+        Column.FooterAttr[attr] = value;
 
         return this;
     }
 
     public ColumnBuilder<T> Field(string field)
     {
-        this.Cell.Field = field;
+        Cell.Field = field;
 
-        if (string.IsNullOrWhiteSpace(this.Column.Title))
-            this.Column.Title = field;
+        if (string.IsNullOrWhiteSpace(Column.Title))
+            Column.Title = field;
 
-        if (this.Cell.Content == null)
+        if (Cell.Content == null)
             Content(tmpl => tmpl.For(field));
 
-        return this.Attr("data-value", tmpl => tmpl.For(field))
+        return Attr("data-value", tmpl => tmpl.For(field))
                    .Attr("title", tmpl => tmpl.For(field))
                    .Sortable()
                    .Filterable();
@@ -168,15 +168,15 @@ public class ColumnBuilder<T>
         var colType = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
         var colFormat = colType.ToColumnFormat();
 
-        this.Cell.Field = fieldName;
+        Cell.Field = fieldName;
 
-        if (string.IsNullOrWhiteSpace(this.Column.Title))
+        if (string.IsNullOrWhiteSpace(Column.Title))
             Title(fieldName);
 
-        if (this.Cell.Content == null)
+        if (Cell.Content == null)
             Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
 
-        return this.Attr("data-value", tmpl => tmpl.For(fieldName))
+        return Attr("data-value", tmpl => tmpl.For(fieldName))
                    .Attr("title", tmpl => tmpl.For(fieldName))
                    .Type(colType)
                    .Format(colFormat)
@@ -186,65 +186,65 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Type(ColumnType type)
     {
-        this.Cell.Type = type;
+        Cell.Type = type;
 
-        return this.Attr("data-type", this.Cell.Type.ToString());
+        return Attr("data-type", Cell.Type.ToString());
     }
 
     public ColumnBuilder<T> Format(ColumnFormat format)
     {
-        this.Cell.Format = format;
+        Cell.Format = format;
 
-        return this.Attr("data-format", this.Cell.Format.ToString());
+        return Attr("data-format", Cell.Format.ToString());
     }
 
     public ColumnBuilder<T> Align(ColumnAlignment alignment)
     {
-        this.Cell.Alignment = alignment;
+        Cell.Alignment = alignment;
 
         return this;
     }
 
     public ColumnBuilder<T> Content(IHtmlContent content)
     {
-        return this.Content(_ => content);
+        return Content(_ => content);
     }
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        this.Cell.Content = contentLambda;
+        Cell.Content = contentLambda;
 
         return this;
     }
 
     public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        this.Cell.Binding = binding;
+        Cell.Binding = binding;
 
         return this;
     }
 
     public ColumnBuilder<T> Map(ColumnAttribute columnAttribute)
     {
-        this.Width(columnAttribute.Width == 0 ? 200 : columnAttribute.Width);
-        this.Format(columnAttribute.Format);
-        this.Field(columnAttribute.Field);
-        this.Sortable().Filterable().Resizable();
+        Width(columnAttribute.Width == 0 ? 200 : columnAttribute.Width);
+        Format(columnAttribute.Format);
+        Field(columnAttribute.Field);
+        Sortable().Filterable().Resizable();
 
-        if (string.IsNullOrWhiteSpace(this.Column.Title))
-            this.Title(columnAttribute.Title);
+        if (string.IsNullOrWhiteSpace(Column.Title))
+            Title(columnAttribute.Title);
 
         if (columnAttribute.Type == ColumnType.Numeric)
-            this.Totalable();
+            Totalable();
 
         return this;
     }
 
     public ColumnBuilder<T> Hidden()
     {
-        this.Column.Width = 0;
+        Column.Width = 0;
 
-        foreach (var stacked in this.Column.Columns)
+        foreach (var stacked in Column.Columns)
             stacked.Width = 0;
 
         return this;

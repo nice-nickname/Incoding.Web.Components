@@ -143,23 +143,23 @@ public class SplitGridRenderer<T>
     private IIncodingMetaLanguageEventBuilderDsl Bind(List<TableComponent> tables, ImlBinding bindings)
     {
         var gridOptionsDto = new GridDto
-        {
-            Table = new TableOptionsDto
-            {
-                HighlightRows = Grid.UI.HighlightRowsOnHover,
-                PlaceholderRows = Grid.UI.PlaceholderRows,
-                Mode = Grid.Mode,
-                Zebra = Grid.UI.Zebra
-            },
+                             {
+                                     Table = new TableOptionsDto
+                                             {
+                                                     HighlightRows = Grid.UI.HighlightRowsOnHover,
+                                                     PlaceholderRows = Grid.UI.PlaceholderRows,
+                                                     Mode = Grid.Mode,
+                                                     Zebra = Grid.UI.Zebra
+                                             },
 
-            Splitter = Grid.Splits.Select(s => new SplitterDto
-            {
-                Min = s.MinWidth,
-                Max = s.MaxWidth
-            }).ToArray(),
+                                     Splitter = Grid.Splits.Select(s => new SplitterDto
+                                                                        {
+                                                                                Min = s.MinWidth,
+                                                                                Max = s.MaxWidth
+                                                                        }).ToArray(),
 
-            Structure = tables.Select(t => t.ToDto()).ToArray()
-        };
+                                     Structure = tables.Select(t => t.ToDto()).ToArray()
+                             };
 
         if (Grid.InfiniteScroll != null)
         {
@@ -171,8 +171,8 @@ public class SplitGridRenderer<T>
         var options = JsonConvert.SerializeObject(gridOptionsDto,
                                                   new JsonSerializerSettings
                                                   {
-                                                      ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                                                      DefaultValueHandling = DefaultValueHandling.Include
+                                                          ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                                                          DefaultValueHandling = DefaultValueHandling.Include
                                                   });
 
         var initBinding = Html.When(JqueryBind.InitIncoding)

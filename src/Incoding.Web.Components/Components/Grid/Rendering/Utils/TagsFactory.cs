@@ -16,7 +16,6 @@ public static class TagsFactory
 
     public static TagBuilder Button() => new TagBuilder(HtmlTag.Button.ToStringLower());
 
-
     public static TagBuilder Table() => new TagBuilder(HtmlTag.Table.ToStringLower());
 
     public static TagBuilder Tr() => new TagBuilder(HtmlTag.Tr.ToStringLower());

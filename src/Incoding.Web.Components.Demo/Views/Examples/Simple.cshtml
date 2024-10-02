@@ -4,19 +4,14 @@
 @(Html.Components().Grid<SampleData>("grid")
       .Width("100%").Height("100%")
       .Css("bg-white")
+      .Mode(GridMode.Simple)
       .Split(splitting =>
              {
                  splitting.Add(table => table.Columns(cols =>
                                                       {
-                                                          cols.Add().Field(s => s.Index).Format(ColumnFormat.Numeric).Resizable();
-                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage).Resizable();
-                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable();
-                                                          cols.Stacked(s => s.Title("Dates"),
-                                                                       stacked =>
-                                                                       {
-                                                                           stacked.Add().Field(s => s.Start).Resizable();
-                                                                           stacked.Add().Field(s => s.End).Resizable();
-                                                                       });
+                                                          cols.Add().Field(s => s.Id);
+                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage);
+                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage);
                                                       }));
 
                  splitting.Add(table => table.Columns(cols =>
@@ -44,6 +39,5 @@
                   {
                           Event = JqueryBind.Load,
                           Method = nameof(SignalHub.StreamData_Many),
-                          Params = Selector.Jquery.Id("asd")
                   })
       .Render())

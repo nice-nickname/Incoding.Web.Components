@@ -115,34 +115,34 @@ public class ColumnListBuilder<T>
     public void AutoMap()
     {
         new ColumnAttributeMapper(this)
-            .MapFromType();
+                .MapFromType();
     }
 
     public class ColumnAttributeMapper
     {
-        private readonly ColumnListBuilder<T> _columnBuilder;
-
         private readonly List<ColumnAttribute> _columnAttributes;
+
+        private readonly ColumnListBuilder<T> _columnBuilder;
 
         public ColumnAttributeMapper(ColumnListBuilder<T> columnBuilder)
         {
             _columnBuilder = columnBuilder;
             _columnAttributes = CachingFactory.Instance.Retrieve(nameof(T),
-                () => typeof(T)
-                            .GetProperties()
-                            .Where(prop => prop.HasAttribute<ColumnAttribute>())
-                            .Select(prop =>
-                            {
-                                var columnAttr = prop.GetCustomAttribute<ColumnAttribute>();
+                                                                 () => typeof(T)
+                                                                       .GetProperties()
+                                                                       .Where(prop => prop.HasAttribute<ColumnAttribute>())
+                                                                       .Select(prop =>
+                                                                               {
+                                                                                   var columnAttr = prop.GetCustomAttribute<ColumnAttribute>();
 
-                                columnAttr.Field = prop.Name;
-                                columnAttr.Type = prop.ToColumnType();
+                                                                                   columnAttr.Field = prop.Name;
+                                                                                   columnAttr.Type = prop.ToColumnType();
 
-                                columnAttr.Format = columnAttr.Format;
+                                                                                   columnAttr.Format = columnAttr.Format;
 
-                                return columnAttr;
-                            })
-                            .ToList());
+                                                                                   return columnAttr;
+                                                                               })
+                                                                       .ToList());
         }
 
         public void MapFromType()
@@ -151,15 +151,15 @@ public class ColumnListBuilder<T>
                 _columnBuilder.Add().Map(column);
 
             foreach (var stacked in _columnAttributes.Where(col => !string.IsNullOrWhiteSpace(col.Stacked))
-                                                          .GroupBy(col => col.Stacked))
+                                                     .GroupBy(col => col.Stacked))
             {
                 _columnBuilder.Stacked(
-                    stackedColumn => stackedColumn.Title(stacked.Key),
-                    columnsList =>
-                    {
-                        foreach (var column in stacked.ToList())
-                            columnsList.Add().Map(column);
-                    });
+                                       stackedColumn => stackedColumn.Title(stacked.Key),
+                                       columnsList =>
+                                       {
+                                           foreach (var column in stacked.ToList())
+                                               columnsList.Add().Map(column);
+                                       });
             }
         }
     }

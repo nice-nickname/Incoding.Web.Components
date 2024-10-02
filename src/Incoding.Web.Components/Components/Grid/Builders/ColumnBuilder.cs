@@ -35,8 +35,8 @@ public class ColumnBuilder<T>
         Column.Index = index;
 
         HeaderAttr("data-index", index.ToString())
-            .Attr("data-index", index.ToString())
-            .FooterAttr("data-index", index.ToString());
+                .Attr("data-index", index.ToString())
+                .FooterAttr("data-index", index.ToString());
     }
 
     public ColumnBuilder<T> Id(int id)
@@ -157,9 +157,9 @@ public class ColumnBuilder<T>
             Content(tmpl => tmpl.For(field));
 
         return Attr("data-value", tmpl => tmpl.For(field))
-                   .Attr("title", tmpl => tmpl.For(field))
-                   .Sortable()
-                   .Filterable();
+               .Attr("title", tmpl => tmpl.For(field))
+               .Sortable()
+               .Filterable();
     }
 
     public ColumnBuilder<T> Field(Expression<Func<T, object>> fieldAccessor)
@@ -177,11 +177,11 @@ public class ColumnBuilder<T>
             Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
 
         return Attr("data-value", tmpl => tmpl.For(fieldName))
-                   .Attr("title", tmpl => tmpl.For(fieldName))
-                   .Type(colType)
-                   .Format(colFormat)
-                   .Sortable()
-                   .Filterable();
+               .Attr("title", tmpl => tmpl.For(fieldName))
+               .Type(colType)
+               .Format(colFormat)
+               .Sortable()
+               .Filterable();
     }
 
     public ColumnBuilder<T> Type(ColumnType type)

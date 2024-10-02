@@ -12,7 +12,7 @@ public static class GridStyles
         new Stylings
         {
             GridCss = "grid-component",
-            TableCss = "table-component"
+            TableCss = "table-component table table-bordered"
         };
 
     public record Stylings

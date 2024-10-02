@@ -2,11 +2,12 @@ namespace Incoding.Web.Components;
 
 #region << Using >>
 
+using System;
 using Incoding.Web.Components.Grid;
 
 #endregion
 
-public class ColumnAttribute : System.Attribute
+public class ColumnAttribute : Attribute
 {
     public string Title { get; set; }
 

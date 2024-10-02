@@ -14,9 +14,9 @@ public sealed class StringifiedHtmlHelperWrapper<T> : IDisposable
 {
     private readonly IHtmlHelper _html;
 
-    private readonly MvcTemplate<T> _template;
-
     private readonly TextWriter _originWriter;
+
+    private readonly MvcTemplate<T> _template;
 
     public TextWriter ContentWriter { get; }
 

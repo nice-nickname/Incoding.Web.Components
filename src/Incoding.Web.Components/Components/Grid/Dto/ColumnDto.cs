@@ -2,10 +2,10 @@ namespace Incoding.Web.Components.Grid;
 
 #region << Using >>
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.ComponentModel;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 #endregion
 

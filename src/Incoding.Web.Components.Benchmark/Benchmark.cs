@@ -1,4 +1,4 @@
-﻿namespace Incoding.Web.Components.Benchmark
+namespace Incoding.Web.Components.Benchmark
 {
     #region << Using >>
 
@@ -59,7 +59,6 @@
                                 void buildTable(TableBuilder<SampleData> table, int nestedIndex)
                                 {
                                     table.Attr(attr)
-                                         .Bind(binding)
                                          .Css(css)
                                          .Layout(LayoutType.Fixed)
                                          .Rows(r => r.Css(css))

@@ -144,8 +144,8 @@ public static class DataSource
                       .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalrLoader",
                                                                  new
                                                                  {
-                                                                     chunkSize = ChunkSize,
-                                                                     method = Method
+                                                                         chunkSize = ChunkSize,
+                                                                         method = Method
                                                                  }))
                       .When(Bindings.Grid.SignalR.Start)
                       .OnSuccess(dsl => OnStart?.Invoke(dsl))
@@ -165,8 +165,7 @@ public static class DataSource
         }
     }
 
-
-    private static string InitIncoding = JqueryBind.InitIncoding.ToStringLower();
+    private static readonly string InitIncoding = JqueryBind.InitIncoding.ToStringLower();
 
     private static string PrepareEvents(JqueryBind? events)
     {

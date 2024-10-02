@@ -9,17 +9,18 @@ using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 #endregion
 
 public class TableHeaderRenderer<T>
 {
+    private readonly TagBuilder _header;
+
     public Table<T> Table { get; set; }
 
     public IHtmlHelper Html { get; set; }
 
     public GridStyles.Stylings DefaultStyles { get; set; }
-
-    private readonly TagBuilder _header;
 
     public TableHeaderRenderer()
     {
@@ -145,13 +146,15 @@ public class TableHeaderRenderer<T>
 
         button.AddCssClass(DefaultStyles.HeaderCellResizeButtonCss);
 
-        ImlBinder.BindToTag(Html, button, iml => iml.When(JqueryBind.MouseDown)
-                                                    .StopPropagation()
-                                                    .PreventDefault()
-                                                    .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
-                                                    .When(JqueryBind.Click)
-                                                    .StopPropagation()
-                                                    .PreventDefault());
+        ImlBinder.BindToTag(Html,
+                            button,
+                            iml => iml.When(JqueryBind.MouseDown)
+                                      .StopPropagation()
+                                      .PreventDefault()
+                                      .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
+                                      .When(JqueryBind.Click)
+                                      .StopPropagation()
+                                      .PreventDefault());
 
         return button;
     }
@@ -159,29 +162,29 @@ public class TableHeaderRenderer<T>
     private void BindClick(TagBuilder tag, Column column)
     {
         ImlBinder.BindToTag(Html,
-            tag,
-            iml =>
-            {
-                if (column.Sortable)
-                {
-                    iml.When(JqueryBind.Click)
-                        .StopPropagation()
-                        .OnBegin(dsl => dsl.Break.If(() => Selector.Jquery.Self().Is(c => c.Class(B.Active))))
-                        .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                            .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")));
-                }
+                            tag,
+                            iml =>
+                            {
+                                if (column.Sortable)
+                                {
+                                    iml.When(JqueryBind.Click)
+                                       .StopPropagation()
+                                       .OnBegin(dsl => dsl.Break.If(() => Selector.Jquery.Self().Is(c => c.Class(B.Active))))
+                                       .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                            .JQuery.Call("data('table').sort", Selector.Jquery.Self().Attr("data-index")));
+                                }
 
-                if (column.Filterable)
-                {
-                    iml.When("contextmenu")
-                        .StopPropagation()
-                        .PreventDefault()
-                        .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
-                                            .JQuery.Call("data('table').openFilter",
-                                                            Selector.Jquery.Self().Attr("data-index")));
-                }
+                                if (column.Filterable)
+                                {
+                                    iml.When("contextmenu")
+                                       .StopPropagation()
+                                       .PreventDefault()
+                                       .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table))
+                                                            .JQuery.Call("data('table').openFilter",
+                                                                         Selector.Jquery.Self().Attr("data-index")));
+                                }
 
-                return iml;
-            });
+                                return iml;
+                            });
     }
 }

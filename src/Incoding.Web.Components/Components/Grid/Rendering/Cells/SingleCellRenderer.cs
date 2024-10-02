@@ -13,9 +13,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class SingleCellRenderer<T> : ICellRenderer<T>
 {
-    private readonly IHtmlHelper _html;
-
     private readonly Cell<T> _cell;
+
+    private readonly IHtmlHelper _html;
 
     public SingleCellRenderer(Cell<T> cell, IHtmlHelper html)
     {
@@ -36,7 +36,7 @@ public class SingleCellRenderer<T> : ICellRenderer<T>
     }
 
     private TagBuilder RenderCell(ITemplateSyntax<T> template)
-{
+    {
         var cellTag = TagsFactory.Td();
         cellTag.AddCssClass(_cell.Column.Css);
 

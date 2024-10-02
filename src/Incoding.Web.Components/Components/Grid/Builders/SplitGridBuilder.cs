@@ -116,12 +116,12 @@ public class SplitGridBuilder<T>
             var origin = Grid.Binds;
 
             Grid.Binds = iml =>
-                              {
-                                  origin(iml);
-                                  binding(iml);
+                         {
+                             origin(iml);
+                             binding(iml);
 
-                                  return iml;
-                              };
+                             return iml;
+                         };
 
             return this;
         }
@@ -158,12 +158,12 @@ public class SplitGridBuilder<T>
         buildAction(options);
 
         return Bind(iml => iml.When(RecalculateOptions.Events.Recalculate)
-                                   .StopPropagation()
-                                   .Ajax(options.Url)
-                                   .OnBegin(dsl => dsl.With(s => s.EqualsAttribute("data-row-id", Selector.Event.Data.For("RowId")))
-                                                      .JQuery.Attr.AddClass("loading"))
-                                   .OnSuccess(dsl => dsl.Self().Call("triggerRerender", Selector.Result))
-                        );
+                              .StopPropagation()
+                              .Ajax(options.Url)
+                              .OnBegin(dsl => dsl.With(s => s.EqualsAttribute("data-row-id", Selector.Event.Data.For("RowId")))
+                                                 .JQuery.Attr.AddClass("loading"))
+                              .OnSuccess(dsl => dsl.Self().Call("triggerRerender", Selector.Result))
+                   );
     }
 
     public SplitGridBuilder<T> Mode(GridMode mode)

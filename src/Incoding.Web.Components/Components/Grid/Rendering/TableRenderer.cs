@@ -37,14 +37,14 @@ public class TableRenderer<T>
         var table = RootTable();
 
         return new TableComponent
-        {
-            Columns = Table.Cells,
-            LayoutHtml = table,
-            RowTemplate = rowTemplate,
-            Nested = Table.NestedTable,
-            NestedField = Table.NestedField,
-            DropdownTemplate = dropdownTemplate
-        };
+               {
+                       Columns = Table.Cells,
+                       LayoutHtml = table,
+                       RowTemplate = rowTemplate,
+                       Nested = Table.NestedTable,
+                       NestedField = Table.NestedField,
+                       DropdownTemplate = dropdownTemplate
+               };
     }
 
     private TagBuilder RootTable()
@@ -59,11 +59,6 @@ public class TableRenderer<T>
 
         table.AppendStyle("table-layout", Table.Layout.ToStringLower());
 
-        if (Table.Binding != null)
-        {
-            ImlBinder.BindToTag(Html, table, Table.Binding);
-        }
-
         table.Attributes.Merge(Table.Attr);
 
         table.InnerHtml.AppendHtml(RenderHeader());
@@ -76,15 +71,14 @@ public class TableRenderer<T>
     private IHtmlContent RenderHeader()
     {
         var renderer = new TableHeaderRenderer<T>
-        {
-            DefaultStyles = DefaultStyles,
-            Html = Html,
-            Table = Table
-        };
+                       {
+                               DefaultStyles = DefaultStyles,
+                               Html = Html,
+                               Table = Table
+                       };
 
         return renderer.Render();
     }
-
 
     private TagBuilder RenderSortButton(Column column)
     {
@@ -135,13 +129,15 @@ public class TableRenderer<T>
 
         resizer.AddCssClass(DefaultStyles.HeaderCellResizeButtonCss);
 
-        ImlBinder.BindToTag(Html, resizer, iml => iml.When(JqueryBind.MouseDown)
-                                                     .StopPropagation()
-                                                     .PreventDefault()
-                                                     .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
-                                                     .When(JqueryBind.Click)
-                                                     .StopPropagation()
-                                                     .PreventDefault());
+        ImlBinder.BindToTag(Html,
+                            resizer,
+                            iml => iml.When(JqueryBind.MouseDown)
+                                      .StopPropagation()
+                                      .PreventDefault()
+                                      .OnSuccess(dsl => dsl.WithSelf(s => s.Closest(HtmlTag.Table)).JQuery.Call("data('table').startResize", column.Index))
+                                      .When(JqueryBind.Click)
+                                      .StopPropagation()
+                                      .PreventDefault());
 
         return resizer;
     }
@@ -264,34 +260,34 @@ public class TableComponent
     public GridStructureDto ToDto()
     {
         var columnDtos = Columns
-            .Select(s => new ColumnDto
-            {
-                Id = s.Column.Id,
-                Index = s.Column.Index,
-                Field = s.Field,
-                Title = s.Column.Title,
-                Format = s.Format,
-                Type = s.Type,
-                SpreadField = s.SpreadField,
-                SpreadIndex = s.SpreadIndex,
-                Totalable = s.Column.Totalable,
-                Sortable = s.Column.Sortable,
-                SortedBy = s.Column.SortedBy,
-                ParentIndex = s.Column.ParentIndex,
-                Width = s.Column.Width
-            })
-            .ToArray();
+                         .Select(s => new ColumnDto
+                                      {
+                                              Id = s.Column.Id,
+                                              Index = s.Column.Index,
+                                              Field = s.Field,
+                                              Title = s.Column.Title,
+                                              Format = s.Format,
+                                              Type = s.Type,
+                                              SpreadField = s.SpreadField,
+                                              SpreadIndex = s.SpreadIndex,
+                                              Totalable = s.Column.Totalable,
+                                              Sortable = s.Column.Sortable,
+                                              SortedBy = s.Column.SortedBy,
+                                              ParentIndex = s.Column.ParentIndex,
+                                              Width = s.Column.Width
+                                      })
+                         .ToArray();
 
         var dto = new GridStructureDto
-        {
-            Columns = columnDtos,
-            RowTmpl = RowTemplate,
-            DropdownTmpl = DropdownTemplate,
-            HasDropdown = !string.IsNullOrWhiteSpace(DropdownTemplate),
-            LayoutTmpl = LayoutHtml.HtmlContentToString(),
-            NestedField = NestedField,
-            Nested = Nested?.ToDto()
-        };
+                  {
+                          Columns = columnDtos,
+                          RowTmpl = RowTemplate,
+                          DropdownTmpl = DropdownTemplate,
+                          HasDropdown = !string.IsNullOrWhiteSpace(DropdownTemplate),
+                          LayoutTmpl = LayoutHtml.HtmlContentToString(),
+                          NestedField = NestedField,
+                          Nested = Nested?.ToDto()
+                  };
 
         return dto;
     }

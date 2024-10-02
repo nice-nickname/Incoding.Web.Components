@@ -79,13 +79,6 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Bind(ImlBinding bindings)
-    {
-        Table.Binding = bindings;
-
-        return this;
-    }
-
     public TableBuilder<T> DropdownTmpl(TemplateContent<T> dropdownContent)
     {
         Table.Row.DropdownContent = dropdownContent;
@@ -96,11 +89,11 @@ public class TableBuilder<T>
     public TableBuilder<T> DropdownTmpl(TemplateContentAsync<T> dropdownContentAsync)
     {
         Table.Row.DropdownContent = tmpl =>
-                                         {
-                                             var awaitable = dropdownContentAsync(tmpl).ConfigureAwait(false);
+                                    {
+                                        var awaitable = dropdownContentAsync(tmpl).ConfigureAwait(false);
 
-                                             return awaitable.GetAwaiter().GetResult();
-                                         };
+                                        return awaitable.GetAwaiter().GetResult();
+                                    };
 
         return this;
     }

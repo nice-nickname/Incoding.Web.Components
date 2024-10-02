@@ -13,14 +13,14 @@ public class ComponentsHtmlHelper
 {
     private readonly IHtmlHelper _html;
 
+    public InputHtmlHelper Inputs => new(_html);
+
+    public GridUtilsHtmlHelper GridUtils => new(_html);
+
     public ComponentsHtmlHelper(IHtmlHelper html)
     {
         _html = html;
     }
-
-    public InputHtmlHelper Inputs => new(_html);
-
-    public GridUtilsHtmlHelper GridUtils => new(_html);
 
     public SplitGridBuilder<T> Grid<T>(string id)
     {
@@ -35,16 +35,16 @@ public class ComponentsHtmlHelper
     public IHtmlContent SignalR(string action)
     {
         return _html.When(JqueryBind.InitIncoding)
-                   .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalr", action))
-                   .AsHtmlAttributes()
-                   .ToInput(HtmlInputType.Hidden, string.Empty);
+                    .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalr", action))
+                    .AsHtmlAttributes()
+                    .ToInput(HtmlInputType.Hidden, string.Empty);
     }
 
     public IHtmlContent DefaultDecimalPrecision(int precision)
     {
         return _html.When(JqueryBind.InitIncoding)
-                         .OnSuccess(dsl => dsl.Self().JQuery.Call("format", "precision", precision))
-                         .AsHtmlAttributes()
-                         .ToDiv();
+                    .OnSuccess(dsl => dsl.Self().JQuery.Call("format", "precision", precision))
+                    .AsHtmlAttributes()
+                    .ToDiv();
     }
 }

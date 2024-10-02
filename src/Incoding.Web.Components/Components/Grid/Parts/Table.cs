@@ -7,7 +7,7 @@ using Incoding.Core.Extensions;
 
 #endregion
 
-public class Table<T> 
+public class Table<T>
 {
     public string Id { get; }
 
@@ -24,8 +24,6 @@ public class Table<T>
     public List<Cell> Cells { get; set; } = new();
 
     public List<ICellRenderer<T>> CellRenderers { get; set; } = new();
-
-    public ImlBinding Binding { get; set; } = null;
 
     public string NestedField { get; set; }
 

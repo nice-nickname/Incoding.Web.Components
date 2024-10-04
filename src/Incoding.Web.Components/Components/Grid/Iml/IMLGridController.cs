@@ -29,7 +29,7 @@ public class ImlGridController
 
     public IExecutableSetting StartWebsocket(Selector @params = null)
     {
-        return _dsl.JQuery.Call("data('loader').startLoading", @params);
+        return _dsl.JQuery.Call("data('loader').startLoading", @params ?? string.Empty);
     }
 
     public IExecutableSetting CancelWebsocket()

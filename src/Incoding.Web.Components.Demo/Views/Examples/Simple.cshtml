@@ -9,9 +9,15 @@
              {
                  splitting.Add(table => table.Columns(cols =>
                                                       {
-                                                          cols.Add().Field(s => s.Id);
-                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage);
-                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage);
+                                                          cols.Add().Field(s => s.Id).Resizable();
+                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage).Resizable();
+                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable();
+                                                          cols.Stacked(s => s.Title("Dates"),
+                                                                       stacked =>
+                                                                       {
+                                                                           stacked.Add().Field(s => s.Start).Resizable();
+                                                                           stacked.Add().Field(s => s.End).Resizable();
+                                                                       });
                                                       }));
 
                  splitting.Add(table => table.Columns(cols =>

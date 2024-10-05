@@ -33,7 +33,7 @@ public class Grid<T>
 
     public IGridDataSource DataSource { get; set; } = null;
 
-    public GridMode Mode { get; set; } = GridMode.Stacked;
+    public GridMode Mode { get; set; } = GridMode.SubGrid;
 
     public Grid(string id)
     {

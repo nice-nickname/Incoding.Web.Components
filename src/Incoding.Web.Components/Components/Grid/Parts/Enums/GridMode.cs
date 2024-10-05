@@ -5,7 +5,7 @@ namespace Incoding.Web.Components.Grid;
 
 public enum GridMode
 {
-    Stacked,
+    SubGrid,
 
-    Simple
+    Stacked
 }

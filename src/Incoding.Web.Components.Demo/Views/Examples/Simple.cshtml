@@ -4,7 +4,7 @@
 @(Html.Components().Grid<SampleData>("grid")
       .Width("100%").Height("100%")
       .Css("bg-white")
-      .Mode(GridMode.Simple)
+      .Mode(GridMode.Stacked)
       .Split(splitting =>
              {
                  splitting.Add(table => table.Columns(cols =>

@@ -50,7 +50,7 @@ public class SplitGridRenderer<T>
         root.AddCssClass(DefaultStyles.GridCss);
         root.AddCssClass(Grid.Css);
 
-        root.AddCssClass(Grid.Mode == GridMode.Simple ? DefaultStyles.GridSimpleCss : DefaultStyles.GridStackedCss);
+        root.AddCssClass(Grid.Mode == GridMode.Stacked ? DefaultStyles.GridSimpleCss : DefaultStyles.GridStackedCss);
 
         root.Attributes[HtmlAttribute.Id.ToStringLower()] = Grid.Id;
         root.Attributes["role"] = GlobalSelectors.Roles.Grid;

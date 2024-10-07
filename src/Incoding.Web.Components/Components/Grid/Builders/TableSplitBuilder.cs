@@ -4,27 +4,24 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Collections.Generic;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
 public class TableSplitBuilder<T>
 {
-    public List<Table<T>> Tables { get; }
+    public List<Table> Tables { get; }
 
     public List<Splitter> Splits { get; }
 
     public IHtmlHelper Html { get; }
 
-    public GridStyles.Stylings DefaultStyles { get; }
-
-    public TableSplitBuilder(IHtmlHelper html, GridStyles.Stylings styles)
+    public TableSplitBuilder(IHtmlHelper html)
     {
         Html = html;
-
-        Tables = new List<Table<T>>();
+        Tables = new List<Table>();
         Splits = new List<Splitter>();
-        DefaultStyles = styles;
     }
 
     public SplitBuilder Add(Action<TableBuilder<T>> splitter)
@@ -34,7 +31,7 @@ public class TableSplitBuilder<T>
 
     public SplitBuilder Add(string splitId, Action<TableBuilder<T>> splitter)
     {
-        var tableBuilder = new TableBuilder<T>(Html, splitId, DefaultStyles);
+        var tableBuilder = new TableBuilder<T>(Html, splitId);
         var splitBuilder = new SplitBuilder(Html);
 
         splitter(tableBuilder);

@@ -5,25 +5,28 @@ namespace Incoding.Web.Components.Grid;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Incoding.Core.Block.IoC;
 using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
 public class TableBuilder<T>
 {
-    public Table<T> Table { get; }
+    private readonly ITemplateSyntax<T> _template;
+
+    public Table Table { get; }
 
     public IHtmlHelper Html { get; }
 
-    public GridStyles.Stylings DefaultStyles { get; }
-
-    public TableBuilder(IHtmlHelper html, string id, GridStyles.Stylings styles)
+    public TableBuilder(IHtmlHelper html, string id)
     {
         Html = html;
-        Table = new Table<T>(id);
-        DefaultStyles = styles;
+        Table = new Table(id);
+
+        _template = IoCFactory.Instance.TryResolve<ITemplateFactory>().ForEach<T>(html);
     }
 
     public TableBuilder<T> Css(string css)
@@ -33,45 +36,23 @@ public class TableBuilder<T>
         return this;
     }
 
-    public TableBuilder<T> Attr(string attr, string value)
-    {
-        Table.Attr[attr] = value;
-
-        return this;
-    }
-
-    public TableBuilder<T> Attr(object attrs)
-    {
-        foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
-        {
-            Attr(key, value.ToString());
-        }
-
-        return this;
-    }
-
-    public TableBuilder<T> Layout(LayoutType layout)
-    {
-        Table.Layout = layout;
-
-        return this;
-    }
-
     public TableBuilder<T> Columns(Action<ColumnListBuilder<T>> columns)
     {
-        var clb = new ColumnListBuilder<T>(Html);
+        var clb = new ColumnListBuilder<T>(Html)
+                  {
+                          Template = _template
+                  };
+
         columns(clb);
 
         Table.Columns = clb.Columns;
-        Table.Cells = clb.Cells;
-        Table.CellRenderers = clb.CellRenderers;
 
         return this;
     }
 
     public TableBuilder<T> Rows(Action<RowBuilder<T>> rows)
     {
-        var rb = new RowBuilder<T>(Html);
+        var rb = new RowBuilder<T>(Html) { Template = _template };
         rows(rb);
 
         Table.Row = rb.Row;
@@ -81,33 +62,31 @@ public class TableBuilder<T>
 
     public TableBuilder<T> DropdownTmpl(TemplateContent<T> dropdownContent)
     {
-        Table.Row.DropdownContent = dropdownContent;
+        Table.Row.DropdownTmpl = dropdownContent(_template).HtmlContentToString();
 
         return this;
     }
 
     public TableBuilder<T> DropdownTmpl(TemplateContentAsync<T> dropdownContentAsync)
     {
-        Table.Row.DropdownContent = tmpl =>
-                                    {
-                                        var awaitable = dropdownContentAsync(tmpl).ConfigureAwait(false);
-
-                                        return awaitable.GetAwaiter().GetResult();
-                                    };
+        Table.Row.DropdownTmpl = dropdownContentAsync(_template).ConfigureAwait(false)
+                                                                .GetAwaiter()
+                                                                .GetResult()
+                                                                .HtmlContentToString();
 
         return this;
     }
 
     public TableBuilder<T> Nested<TNested>(Expression<Func<T, IEnumerable<TNested>>> nestedField, Action<TableBuilder<TNested>> nestedTable)
     {
-        var tableBuilder = new TableBuilder<TNested>(Html, Table.Id + "-nested", DefaultStyles);
+        var tableBuilder = new TableBuilder<TNested>(Html, Table.Id + "-nested");
         tableBuilder.Table.InheritStyles(Table);
 
         nestedTable(tableBuilder);
 
         var fieldName = nestedField.GetMemberName();
         Table.NestedField = fieldName;
-        Table.NestedTable = new TableRenderer<TNested>(Html, tableBuilder.Table, DefaultStyles).RenderComponent();
+        Table.Nested = tableBuilder.Table;
 
         return this;
     }

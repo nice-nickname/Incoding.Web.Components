@@ -2,19 +2,24 @@ namespace Incoding.Web.Components.Grid;
 
 #region << Using >>
 
+using Incoding.Web.Components.Grid.Rendering;
+using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
 
 public class RowBuilder<T>
 {
-    public Row<T> Row { get; }
+    public Row Row { get; }
 
     public IHtmlHelper Html { get; }
 
+    public ITemplateSyntax<T> Template { get; set; }
+
     public RowBuilder(IHtmlHelper html)
     {
-        Row = new Row<T>();
+        Row = new Row();
         Html = html;
     }
 
@@ -32,21 +37,21 @@ public class RowBuilder<T>
 
     public RowBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        Row.Attr[attr] = value;
+        Row.Attr[attr] = value(Template).HtmlContentToString();
 
         return this;
     }
 
     public RowBuilder<T> Bind(ImlBinding binding)
     {
-        Row.Binding = (iml, tmpl) => binding(iml);
+        Row.Executable = ImlBinder.ToExecutable(Html, binding);
 
         return this;
     }
 
     public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        Row.Binding = binding;
+        Row.Executable = ImlBinder.ToExecutable(Html, Template, binding);
 
         return this;
     }

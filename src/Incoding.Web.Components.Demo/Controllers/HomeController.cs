@@ -13,25 +13,5 @@ namespace Incoding.Web.Components.Demo.Controllers
         {
             return View();
         }
-
-        public IActionResult Babah()
-        {
-            var cols = new List<Column>();
-
-            cols.Add(new Column
-            {
-                Totalable = true,
-                Title = "Id",
-                Css = "",
-                Cell = new Cell
-                {
-                    Field = "Id",
-                    Format = ColumnFormat.Numeric,
-                    Type = ColumnType.Numeric
-                }
-            });
-
-            return Json(cols);
-        }
     }
 }

@@ -2,15 +2,24 @@
 @using Incoding.Web.Components.Grid
 
 @(Html.Components().Grid<SampleData>("grid")
-      .Width("100%").Height("100%")
       .Css("bg-white")
       .Mode(GridMode.Stacked)
       .Split(splitting =>
+
              {
                  splitting.Add(table => table.Columns(cols =>
+
                                                       {
-                                                          cols.Add().Field(s => s.Id).Resizable();
-                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage).Resizable();
+                                                          cols.Add().Field(s => s.Id).Content(@<text>
+                                                                                                   @item.For(s => s.Amount)
+                                                                                               </text>
+                                                                                             ).Resizable();
+
+                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage)
+                                                              .Bind((iml, tmpl) => iml.When(JqueryBind.Change)
+                                                                                      .OnBegin(dsl => dsl.Window.Console.Log("m-debug", tmpl.For(s => s.Amount))))
+                                                              .Resizable();
+
                                                           cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable();
                                                           cols.Stacked(s => s.Title("Dates"),
                                                                        stacked =>
@@ -42,8 +51,10 @@
                          })
       .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
       .DataSource(new DataSource.SignalR
+
                   {
                           Event = JqueryBind.Load,
+
                           Method = nameof(SignalHub.StreamData_Many),
                   })
       .Render())

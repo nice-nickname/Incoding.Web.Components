@@ -6,18 +6,13 @@ using System.Collections.Generic;
 
 #endregion
 
-public class Row<T>
+public class Row
 {
     public string Css { get; set; } = string.Empty;
 
-    public ImlTemplateBinding<T> Binding { get; set; } = null;
+    public string Executable { get; set; }
 
-    public TemplateContent<T> DropdownContent { get; set; } = null;
+    public string DropdownTmpl { get; set; }
 
-    public IDictionary<string, TemplateContent<T>> Attr { get; } = new Dictionary<string, TemplateContent<T>>();
-
-    public Row()
-    {
-        Attr.Add("data-row-id", tmpl => tmpl.For("RowId"));
-    }
+    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
 }

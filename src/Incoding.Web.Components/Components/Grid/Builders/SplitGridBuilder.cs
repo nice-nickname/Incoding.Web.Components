@@ -12,23 +12,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class SplitGridBuilder<T>
 {
-    public Grid<T> Grid { get; }
+    private ImlBinding _binds;
 
-    public GridStyles.Stylings DefaultStyles { get; set; }
+    public SplitGrid Grid { get; }
 
     public IHtmlHelper Html { get; }
+
+    public SplitGridBuilder(IHtmlHelper html)
+            : this(html, Guid.NewGuid().ToString()) { }
 
     public SplitGridBuilder(IHtmlHelper html, string id)
     {
         Html = html;
-        Grid = new Grid<T>(id);
-
-        DefaultStyles = GridStyles.Default();
+        Grid = new SplitGrid(id)
+               {
+                       Width = "100%",
+                       Height = "100%",
+                       Format = FormatOptions.Default()
+               };
     }
 
     public SplitGridBuilder<T> Width(string width)
     {
         Grid.Width = width;
+
+        return this;
+    }
+
+    public SplitGridBuilder<T> Width(int widthPx)
+    {
+        Grid.Width = $"{widthPx}px";
 
         return this;
     }
@@ -40,31 +53,14 @@ public class SplitGridBuilder<T>
         return this;
     }
 
-    public SplitGridBuilder<T> Height(int px)
+    public SplitGridBuilder<T> Height(int heightPx)
     {
-        return Height($"{px}px");
+        return Height($"{heightPx}px");
     }
 
     public SplitGridBuilder<T> Css(string css)
     {
         Grid.Css += " " + css;
-
-        return this;
-    }
-
-    public SplitGridBuilder<T> Attr(string attr, string value)
-    {
-        Grid.Attr[attr] = value;
-
-        return this;
-    }
-
-    public SplitGridBuilder<T> Attr(object attrs)
-    {
-        foreach (var (key, value) in AnonymousHelper.ToDictionary(attrs))
-        {
-            Attr(key, value.ToString());
-        }
 
         return this;
     }
@@ -92,14 +88,24 @@ public class SplitGridBuilder<T>
         return this;
     }
 
+    public SplitGridBuilder<T> Format(Action<FormatOptions> formatOptions)
+    {
+        Grid.Format = new FormatOptions();
+        formatOptions(Grid.Format);
+
+        return this;
+    }
+
     public SplitGridBuilder<T> Split(Action<TableSplitBuilder<T>> splits)
     {
-        var splitter = new TableSplitBuilder<T>(Html, DefaultStyles);
+        using (var htmlWrapper = new StringifiedHtmlHelperWrapper<T>(Html, StringBuilderHelper.Default))
+        {
+            var splitter = new TableSplitBuilder<T>(Html);
+            splits(splitter);
 
-        splits(splitter);
-
-        Grid.Tables.AddRange(splitter.Tables);
-        Grid.Splits.AddRange(splitter.Splits);
+            Grid.Tables.AddRange(splitter.Tables);
+            Grid.Splits.AddRange(splitter.Splits);
+        }
 
         return this;
     }
@@ -111,59 +117,45 @@ public class SplitGridBuilder<T>
 
     public SplitGridBuilder<T> Bind(ImlBinding binding)
     {
-        if (Grid.Binds != null)
+        if (_binds != null)
         {
-            var origin = Grid.Binds;
+            var prevBinds = _binds;
 
-            Grid.Binds = iml =>
-                         {
-                             origin(iml);
-                             binding(iml);
+            _binds = iml =>
+                     {
+                         prevBinds(iml);
+                         binding(iml);
 
-                             return iml;
-                         };
+                         return iml;
+                     };
 
             return this;
         }
 
-        Grid.Binds = binding;
+        _binds = binding;
 
         return this;
     }
 
     public SplitGridBuilder<T> Empty(IHtmlContent content)
     {
-        Grid.EmptyContent = content;
+        Grid.EmptyContent = content.HtmlContentToString();
 
         return this;
     }
 
     public SplitGridBuilder<T> Empty(Func<dynamic, IHtmlContent> content)
     {
-        Grid.EmptyContent = content(null);
+        Grid.EmptyContent = content(null).HtmlContentToString();
 
         return this;
     }
 
     public SplitGridBuilder<T> DataSource(IGridDataSource dataSource)
     {
-        Grid.DataSource = dataSource;
+        Bind(dataSource.Bind);
 
         return this;
-    }
-
-    public SplitGridBuilder<T> Recalculate(Action<RecalculateOptions> buildAction)
-    {
-        var options = new RecalculateOptions();
-        buildAction(options);
-
-        return Bind(iml => iml.When(RecalculateOptions.Events.Recalculate)
-                              .StopPropagation()
-                              .Ajax(options.Url)
-                              .OnBegin(dsl => dsl.With(s => s.EqualsAttribute("data-row-id", Selector.Event.Data.For("RowId")))
-                                                 .JQuery.Attr.AddClass("loading"))
-                              .OnSuccess(dsl => dsl.Self().Call("triggerRerender", Selector.Result))
-                   );
     }
 
     public SplitGridBuilder<T> Mode(GridMode mode)
@@ -173,15 +165,13 @@ public class SplitGridBuilder<T>
         return this;
     }
 
-    public SplitGridBuilder<T> Styling(Func<GridStyles.Stylings> stylings)
-    {
-        DefaultStyles = stylings();
-
-        return this;
-    }
-
     public IHtmlContent Render()
     {
-        return new SplitGridRenderer<T>(Html, Grid, DefaultStyles).Render(concurrent: false);
+        var renderer = new SplitGridRenderer(Html, Grid)
+                       {
+                               Binds = _binds
+                       };
+
+        return renderer.Render();
     }
 }

@@ -11,27 +11,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public static class ImlBinder
 {
-    public static void BindToTag(IHtmlHelper html, TagBuilder tag, ImlBinding binding)
+    public static string ToExecutable(IHtmlHelper html, ImlBinding binding)
     {
-        var incodingAttrs = binding(Noop(html))
-                            .AsHtmlAttributes()
-                            .ToDictionary(s => s.Key, s => s.Value.ToString());
+        var attrs = binding(Noop(html))
+                    .AsHtmlAttributes()
+                    .ToDictionary(s => s.Key, s => s.Value.ToString());
 
-        tag.Attributes.Merge(incodingAttrs);
+        return attrs["incoding"];
     }
 
-    public static void BindToTag<T>(IHtmlHelper html, TagBuilder tag, ImlTemplateBinding<T> binding, ITemplateSyntax<T> tmpl)
+    public static string ToExecutable<T>(IHtmlHelper html, ITemplateSyntax<T> template, ImlTemplateBinding<T> binding)
     {
-        var incodingAttrs = binding(Noop(html), tmpl)
-                            .AsHtmlAttributes()
-                            .ToDictionary(s => s.Key, s => s.Value.ToString());
+        var attrs = binding(Noop(html), template)
+                    .AsHtmlAttributes()
+                    .ToDictionary(s => s.Key, s => s.Value.ToString());
 
-        tag.Attributes.Merge(incodingAttrs);
+        return attrs["incoding"];
     }
 
     private static IIncodingMetaLanguageEventBuilderDsl Noop(IHtmlHelper html)
     {
-        // When element is TagBuilder, we don't have IIncodingMetaLanguageEventbuilderDsl
+        // When element is TagBuilder, we don't have IIncodingMetaLanguageEventBuilderDsl
         // So we start from noop event
         return html.When("_");
     }

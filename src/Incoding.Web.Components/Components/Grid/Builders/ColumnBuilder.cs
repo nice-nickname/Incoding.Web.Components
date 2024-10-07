@@ -5,7 +5,9 @@ namespace Incoding.Web.Components.Grid;
 using System;
 using System.Linq.Expressions;
 using Incoding.Core.Extensions;
+using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
+using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -13,30 +15,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class ColumnBuilder<T>
 {
-    public IHtmlHelper Html { get; }
+    public ITemplateSyntax<T> Template { get; set; }
 
-    public Cell<T> Cell { get; }
+    public IHtmlHelper Html { get; }
 
     public Column Column { get; }
 
     public ColumnBuilder(IHtmlHelper html)
     {
-        Cell = new Cell<T>();
-        Column = new Column();
-
-        Cell.Column = Column;
-        Column.Cell = Cell;
         Html = html;
+
+        Column = new Column();
     }
 
     public ColumnBuilder(IHtmlHelper html, int index)
             : this(html)
     {
         Column.Index = index;
-
-        HeaderAttr("data-index", index.ToString())
-                .Attr("data-index", index.ToString())
-                .FooterAttr("data-index", index.ToString());
     }
 
     public ColumnBuilder<T> Id(int id)
@@ -69,31 +64,36 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Attr(string attr)
     {
-        return Attr(attr, _ => string.Empty.ToHtmlString());
+        Column.Attr[attr] = string.Empty;
+
+        return this;
     }
 
     public ColumnBuilder<T> Attr(string attr, string value)
     {
-        return Attr(attr, _ => value.ToHtmlString());
+        Column.Attr[attr] = value;
+
+        return this;
     }
 
     public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        Cell.Attrs[attr] = value;
+        Column.Attr[attr] = value(Template).HtmlContentToString();
 
         return this;
     }
 
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
-        Cell.TemplateAttrs.Add(tmpl => tmpl.IsInline(isField, attr));
+        Column.Attr[Template.IsInline(isField, attr).HtmlContentToString()] = attr;
 
         return this;
     }
 
-    public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> isField, string attr)
+    public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> notField, string attr)
     {
-        Cell.TemplateAttrs.Add(tmpl => tmpl.NotInline(isField, attr));
+        Column.Attr[Template.IsInline(notField, attr).HtmlContentToString()] = attr;
+
         return this;
     }
 
@@ -132,32 +132,14 @@ public class ColumnBuilder<T>
         return this;
     }
 
-    public ColumnBuilder<T> HeaderAttr(string attr, string value)
-    {
-        Column.Attr[attr] = value;
-
-        return this;
-    }
-
-    public ColumnBuilder<T> FooterAttr(string attr, string value)
-    {
-        Column.FooterAttr[attr] = value;
-
-        return this;
-    }
-
     public ColumnBuilder<T> Field(string field)
     {
-        Cell.Field = field;
+        Column.Field = field;
 
         if (string.IsNullOrWhiteSpace(Column.Title))
             Column.Title = field;
 
-        if (Cell.Content == null)
-            Content(tmpl => tmpl.For(field));
-
-        return Attr("data-value", tmpl => tmpl.For(field))
-               .Attr("title", tmpl => tmpl.For(field))
+        return Attr("title", tmpl => tmpl.For(field))
                .Sortable()
                .Filterable();
     }
@@ -168,16 +150,12 @@ public class ColumnBuilder<T>
         var colType = ExpressionHelper.GetColumnTypeFromField(fieldAccessor);
         var colFormat = colType.ToColumnFormat();
 
-        Cell.Field = fieldName;
+        Column.Field = fieldName;
 
         if (string.IsNullOrWhiteSpace(Column.Title))
             Title(fieldName);
 
-        if (Cell.Content == null)
-            Content(tmpl => tmpl.For(fieldAccessor).ToString().ToMvcHtmlString());
-
-        return Attr("data-value", tmpl => tmpl.For(fieldName))
-               .Attr("title", tmpl => tmpl.For(fieldName))
+        return Attr("title", tmpl => tmpl.For(fieldName))
                .Type(colType)
                .Format(colFormat)
                .Sortable()
@@ -186,66 +164,59 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Type(ColumnType type)
     {
-        Cell.Type = type;
+        Column.Type = type;
 
-        return Attr("data-type", Cell.Type.ToString());
+        return this;
     }
 
     public ColumnBuilder<T> Format(ColumnFormat format)
     {
-        Cell.Format = format;
+        Column.Format = format;
 
-        return Attr("data-format", Cell.Format.ToString());
+        return this;
     }
 
     public ColumnBuilder<T> Align(ColumnAlignment alignment)
     {
-        Cell.Alignment = alignment;
+        Column.Alignment = alignment;
 
         return this;
     }
 
     public ColumnBuilder<T> Content(IHtmlContent content)
     {
-        return Content(_ => content);
+        Column.Content = content.HtmlContentToString();
+
+        return this;
     }
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        Cell.Content = contentLambda;
+        Column.Content = contentLambda(Template).HtmlContentToString().Trim();
+
+        return this;
+    }
+
+    public ColumnBuilder<T> Bind(ImlBinding binding)
+    {
+        Column.Executable = ImlBinder.ToExecutable(Html, binding);
 
         return this;
     }
 
     public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        Cell.Binding = binding;
-
-        return this;
-    }
-
-    public ColumnBuilder<T> Map(ColumnAttribute columnAttribute)
-    {
-        Width(columnAttribute.Width == 0 ? 200 : columnAttribute.Width);
-        Format(columnAttribute.Format);
-        Field(columnAttribute.Field);
-        Sortable().Filterable().Resizable();
-
-        if (string.IsNullOrWhiteSpace(Column.Title))
-            Title(columnAttribute.Title);
-
-        if (columnAttribute.Type == ColumnType.Numeric)
-            Totalable();
+        Column.Executable = ImlBinder.ToExecutable(Html, Template, binding);
 
         return this;
     }
 
     public ColumnBuilder<T> Hidden()
     {
-        Column.Width = 0;
+        Column.Hidden = true;
 
-        foreach (var stacked in Column.Columns)
-            stacked.Width = 0;
+        foreach (var stacked in Column.Stacked)
+            stacked.Hidden = true;
 
         return this;
     }

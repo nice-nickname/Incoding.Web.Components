@@ -1,5 +1,8 @@
 namespace Incoding.Web.Components.Grid;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 #region << Using >>
 
 using System.Collections.Generic;
@@ -20,6 +23,32 @@ public class Column
 
     public string Css { get; set; } = string.Empty;
 
+    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
+
+    public List<Column> Stacked { get; } = new();
+
+    public string Field { get; set; }
+
+    public string SpreadField { get; set; }
+
+    public int? SpreadIndex { get; set; }
+
+    public string Executable { get; set; }
+
+    public string Content { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ColumnType Type { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ColumnFormat Format { get; set; }
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public ColumnAlignment Alignment { get; set; } = ColumnAlignment.Left;
+
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SortOrder? SortedBy { get; set; }
+
     public bool Totalable { get; set; }
 
     public bool Sortable { get; set; }
@@ -28,13 +57,7 @@ public class Column
 
     public bool Resizable { get; set; }
 
-    public SortOrder? SortedBy { get; set; }
+    public bool Hidden { get; set; }
 
-    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
-
-    public IDictionary<string, string> FooterAttr { get; } = new Dictionary<string, string>();
-
-    public List<Column> Columns { get; } = new();
-
-    public Cell Cell { get; set; }
+    public bool IsSorted => SortedBy.HasValue;
 }

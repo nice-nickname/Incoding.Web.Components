@@ -1,0 +1,38 @@
+
+/* #region split-grid layout */
+
+.split-grid {
+
+}
+
+.split-grid .splitter {
+    display: flex;
+    height: 100%;
+}
+
+
+.split-grid .splitter .panel {
+    height: 100%;
+}
+
+.split-grid .splitter .divider {
+    width: 2px;
+
+    background: #eaeaea;
+}
+
+.split-grid .empty {
+    width: 100%;
+    height: 100%;
+}
+
+/* #endregion */
+
+
+/* #region split-table */
+
+.split-table {
+    table-layout: fixed;
+}
+
+/* #endregion */

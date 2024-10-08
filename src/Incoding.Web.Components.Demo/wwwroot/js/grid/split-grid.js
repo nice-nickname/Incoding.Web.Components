@@ -1,297 +1,133 @@
 
-class SplitGridController {
+class SplitGrid {
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { string }
      */
-    $root;
+    id
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { string }
      */
-    $empty;
+    width
 
     /**
-     * @type  { JQuery<HTMLElement> }
+     * @type { string }
      */
-    $content;
+    height
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { string[] }
      */
-    $scroller;
+    css
 
     /**
-     * @type { JQuery<HTMLTableElement> }
+     * @type { string }
      */
-    $tables;
+    emptyContent
 
     /**
-     * @type { any[] }
+     * @type { FormatOptions }
      */
-    data;
+    format
 
     /**
-     * @type { any[] }
+     * @type { InfitniteScrollOptions | null }
      */
-    originData
+    infiniteScroll
 
     /**
-     * @type { TableStructure[] }
+     * @type { GridUIOptions }
      */
-    structure;
+    ui
 
     /**
-     * @type { GridOptions }
+     * @type { GridMode }
      */
-    options;
+    mode
 
     /**
-     * @type { IRowRenderer }
+     * @type { SplitPanel[] }
      */
-    rowRenderer
+    splits
 
     /**
-     * @type { boolean }
+     * @type { SplitTableSchema[] }
      */
-    dataLoading
+    schema
 
     /**
-     * @type { boolean }
+     * @type { HTMLDivElement }
      */
-    scrolledToEnd
+    root
+
 
     /**
-     * @type  { boolean }
+     * @type { DataSource }
      */
-    scrollEnabled
+    data
+
 
     /**
-     * @type { TableController[] }
+     * @type { Splitter }
      */
-    tables
+    splitter
 
-    constructor(element, options) {
-        this.$root = $(element)
-        this.$empty = this.$root.find('.grid-empty')
-        this.$content = this.$root.find('.grid-splitter')
+    /**
+     * @type { SplitTable[] }
+     */
+    tables = []
 
-        this.$tables = this.$content.find('table');
 
-        this.structure = options.structure;
-        this.options = options
+    constructor(grid) {
+        this.id = grid.id
+        this.width = grid.width
+        this.height = grid.height
+        this.emptyContent = grid.emptyContent
+        this.format = grid.format
+        this.infiniteScroll = grid.infiniteScroll
+        this.ui = grid.ui
+        this.mode = grid.mode
+        this.splits = grid.splits
+        this.schema = grid.tables
 
-        if (this.options.table.mode === 'Simple') {
-            for (const structure of this.structure) {
-                const columns = structure.columns
-
-                this.#initializeSimpleColumns(structure, columns)
-            }
+        if (grid.css) {
+            this.css = grid.css.split(' ').filter(s => !ExecutableHelper.IsNullOrEmpty(s))
         }
 
-        this.data = []
-        this.originData = this.data
+        this.data = new DataSource()
 
-        this.#initializeScroll()
-        this.#initializeRenderer()
-        this.#initializeTables()
-
-        this.enableScroll()
-        this.hide()
+        this.splitter = new Splitter(this)
     }
 
+    render() {
+        this.root = document.getElementById(this.id)
+        this.root.style.width = this.width
+        this.root.style.height = this.height
 
-    initializeTables() { // m-debug rename
-        this.show()
+        this.root.classList.add('split-grid')
+        this.root.classList.add(...this.css)
 
-        this.data = []
+        this.splitter.render()
 
-        this.tables.forEach(table => {
-            table.data = this.data
-            table.originData = this.data
+        const emptyEl = document.createElement('div')
+        emptyEl.classList.add('empty', 'hidden')
+        emptyEl.innerHTML = this.emptyContent
 
-            table.removeAllRows()
-            table.renderPlaceholderRows()
-            table.hideTotals()
+        this.root.appendChild(emptyEl)
 
-            table.sortController.reset()
-            table.sortController.setDefaultSort()
-            table.filterController.resetAll()
-        })
+        for (let i = 0; i < this.splitter.panelElements.length; i++) {
+            const panel = this.splitter.panelElements[i];
+            const schema = this.schema[i]
 
-        this.rowRenderer.restart()
-    }
+            const table = new SplitTable(schema)
+            table.appendTo(panel)
 
-    rerender() {
-        this.tables.forEach(table => {
-            table.removeAllRows()
-            table.renderPlaceholderRows()
-            table.hideTotals()
-        })
-
-        this.rowRenderer.restart()
-
-        if (!this.data || this.data.length !== 0)
-            this.rowRenderer.handleDataUpdated()
-    }
-
-    appendData(data) {
-        if (_.isString(data)) {
-            data = _.unescape(data)
-
-            data = JSON.parse(data || "[]")
-        }
-
-        if (!data) {
-            data = []
-        }
-
-        this.data.push(...data);
-
-        this.rowRenderer.handleDataUpdated()
-
-        if (this.data.length === 0) {
-            this.hide()
+            this.tables.push(table)
         }
     }
 
-    renderRows(start, end) {
-        const dataLoading = this.dataLoading
-        const scrolledToEnd = this.scrolledToEnd
-
-        const {
-            loadingRowCount
-        } = this.options
-
-        this.$tables.each(function() {
-            const controller = $(this).data('table')
-
-            controller.renderRows(start, end)
-
-            if (dataLoading || !scrolledToEnd) {
-                controller.renderPlaceholderRows(loadingRowCount)
-            }
-        })
-
-        if (!this.dataLoading) {
-            this.totals()
-        }
-    }
-
-    totals() {
-        this.tables.forEach(table => {
-            table.totals()
-            table.showTotals()
-        })
-    }
-
-    show() {
-        this.$empty.addClass('hidden')
-        this.$content.removeClass('hidden')
-    }
-
-    hide() {
-        this.$empty.removeClass('hidden')
-        this.$content.addClass('hidden')
-    }
-
-    showLoader() {
-        this.$content.addClass('loading')
-    }
-
-    hideLoader() {
-        this.$content.removeClass('loading')
-    }
-
-    enableScroll() {
-        this.$scroller.each(function() {
-            this.style.overflowY = 'auto'
-        })
-
-        this.scrollEnabled = true
-    }
-
-    disableScroll() {
-        this.$scroller.each(function() {
-            this.style.overflowY = 'hidden'
-        })
-
-        this.scrollEnabled = false
-    }
-
-    resetScroll() {
-        this.$scroller.scrollTop(0)
-    }
-
-    isScrollable() {
-        return this.$scroller.isScrollable()
-    }
-
-    enableSort() {
-        this.tables.forEach(table => {
-            table.sortController.enable()
-        })
-    }
-
-    disableSort() {
-        this.tables.forEach(table => {
-            table.sortController.disable()
-        })
-    }
-
-    enableFilter() {
-        this.tables.forEach(table => {
-            table.filterController.enable()
-        })
-    }
-
-    disableFilter() {
-        this.tables.forEach(table => {
-            table.filterController.disable()
-        })
-    }
-
-    #initializeTables() {
-        this.tables = []
-        const parentData = { siblings: [] }
-
-        this.$tables.each((i, table) => {
-            let controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
-            controller.splitGrid = this
-
-            controller.data = this.data
-            controller.originData = this.data
-            controller.parent = parentData
-
-            parentData.siblings.push(controller)
-            this.tables.push(controller)
-        })
-    }
-
-    #initializeScroll() {
-        this.$scroller = this.$root.find('.splitter-pane');
-
-        this.$scroller.connectScrolls()
-    }
-
-    #initializeRenderer() {
-        const {
-            infiniteScroll,
-            scrollChunkSize
-        } = this.options
-
-        this.scrolledToEnd = !infiniteScroll
-
-        this.rowRenderer = infiniteScroll ?
-            new InfiniteScrollRowRenderer(this, scrollChunkSize) :
-            new ImmediateRowRenderer(this)
-    }
-
-    #initializeSimpleColumns(structure, columns) {
-        structure.columns = columns
-
-        if (structure.nested) {
-            this.#initializeSimpleColumns(structure.nested, columns)
-        }
+    destroy() {
+        this.root.remove()
     }
 }

@@ -3,10 +3,12 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 #endregion
 
@@ -167,11 +169,12 @@ public class SplitGridBuilder<T>
 
     public IHtmlContent Render()
     {
-        var renderer = new SplitGridRenderer(Html, Grid)
-                       {
-                               Binds = _binds
-                       };
-
-        return renderer.Render();
+        return Html.When(JqueryBind.InitIncoding)
+                   .OnSuccess(dsl => dsl.Self().Call("initializeSplitGrid", Grid.ToJsonString()))
+                   .AsHtmlAttributes(new RouteValueDictionary
+                                     {
+                                             [HtmlAttribute.Id.ToStringLower()] = Grid.Id,
+                                     })
+                   .ToDiv();
     }
 }

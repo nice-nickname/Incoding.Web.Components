@@ -4,22 +4,10 @@
 /// <reference path="lib/handlebars.min.js" />
 /// <reference path="lib/morphdom-umd.min.js" />
 
-/// <reference path="js/jquery.plugin.js" />
-/// <reference path="js/grid/table.js" />
-/// <reference path="js/grid/split-grid.js" />
-/// <reference path="js/grid/handlebars.helpers.js" />
-/// <reference path="js/grid/consts/events.js" />
-/// <reference path="js/grid/consts/classes.js" />
-/// <reference path="js/grid/loaders/signalr.js" />
-/// <reference path="js/grid/loaders/signalr-loader.js" />
-/// <reference path="js/grid/rendering/immediate-renderer.js" />
-/// <reference path="js/grid/rendering/infinite-scroll-renderer.js" />
-/// <reference path="js/grid/actions/filter.js" />
-/// <reference path="js/grid/actions/sort.js" />
-/// <reference path="js/grid/actions/hover-rows.js" />
-/// <reference path="js/grid/actions/column-resizer.js" />
-/// <reference path="js/grid/parts/colgroup.js" />
 /// <reference path="@types/index.d.ts" />
-/// <reference path="js/splitter/splitter.js" />
-/// <reference path="js/splitter/splitter-resizer.js" />
+/// <reference path="js/jquery.plugin.js" />
 /// <reference path="js/helpers.js" />
+
+/// <reference path="js/grid/split-grid.js" />
+/// <reference path="js/grid/data/data-source.js" />
+/// <reference path="js/grid/splitter.js" />

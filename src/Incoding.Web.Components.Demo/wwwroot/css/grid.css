@@ -1,9 +1,8 @@
-
+/*
 table.table-component * {
     box-sizing: border-box !important;
 }
 
-/* core table-component styles */
 table.table-component {
     table-layout: fixed;
     white-space: nowrap;
@@ -127,4 +126,4 @@ td [role=expand][data-expand=collapsed]::before {
 
 td [role=expand][data-expand=expanded]::before {
     content: '-';
-}
+} */

@@ -1,10 +1,15 @@
+
+function initializeSplitGrid(options) {
+    const grid = new SplitGrid(JSON.parse(options))
+    grid.render()
+};
+
 (function ($) {
 
     /**
      * Split grid control initialization point
      * called once on component first render
      */
-
     $.fn.splitGrid = function (options = "{}") {
         options = JSON.parse(options)
 

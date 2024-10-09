@@ -18,13 +18,34 @@
     display: none !important;
 }
 
-tr.highlight {
-    background-color: rgb(222, 242, 250) !important;
-
+.table-placeholder {
+    width: 100% !important;
+    display: block;
+    background: linear-gradient(-45deg, #ffffff, #e3e3e3, #ffffff, #e3e3e3);
+    background-size: 400% 400%;
+    animation: placeholder-gradient 2s ease-in-out infinite;
+    border-radius: 3px;
+    color: transparent;
 }
 
-table.table-component button {
-    all: unset;
-    background: gray;
-    width: 20px;
+@keyframes placeholder-gradient {
+    0% {
+        background-position: 5% 0;
+    }
+
+    100% {
+        background-position: 100% 70%;
+    }
+}
+
+
+ul.dropdown-menu .sidemenu {
+    position: relative;
+}
+
+.dropdown-menu .sidemenu:hover > .dropdown-menu {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 100%;
 }

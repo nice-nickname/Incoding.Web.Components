@@ -1,35 +1,43 @@
 @using Incoding.Web.Components.Demo.Controllers
 @using Incoding.Web.Components.Grid
 
-@(Html.Components().Grid<SampleData>("grid")
-      .Css("bg-white")
+@(Html.Grid<SampleData>("grid")
       .Mode(GridMode.Stacked)
       .Split(splitting =>
-
              {
-                 splitting.Add(table => table.Columns(cols =>
-
+                 splitting.Add("regular",
+                               table => table.Columns(cols =>
                                                       {
-                                                          cols.Add().Field(s => s.Id).Content(@<text>
-                                                                                                   @item.For(s => s.Amount)
-                                                                                               </text>
-                                                                                             ).Resizable();
+                                                          cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable().Totalable();
+                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable().Totalable().Filterable();
+                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %");
 
-                                                          cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage)
-                                                              .Bind((iml, tmpl) => iml.When(JqueryBind.Change)
-                                                                                      .OnBegin(dsl => dsl.Window.Console.Log("m-debug", tmpl.For(s => s.Amount))))
-                                                              .Resizable();
-
-                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable();
                                                           cols.Stacked(s => s.Title("Dates"),
                                                                        stacked =>
                                                                        {
                                                                            stacked.Add().Field(s => s.Start).Resizable();
                                                                            stacked.Add().Field(s => s.End).Resizable();
                                                                        });
-                                                      }));
+                                                      })
+                                             .DropdownTmpl(async tmpl => await Html.PartialAsync("~/Views/Shared/Dropdown.cshtml", tmpl))
+                                             .Nested(s => s.Children,
+                                                     table => table.Columns(cols =>
+                                                                            {
+                                                                                cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable();
+                                                                                cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable();
+                                                                                cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %");
 
-                 splitting.Add(table => table.Columns(cols =>
+                                                                                cols.Stacked(s => s.Title("Dates"),
+                                                                                             stacked =>
+                                                                                             {
+                                                                                                 stacked.Add().Field(s => s.Start).Resizable();
+                                                                                                 stacked.Add().Field(s => s.End).Resizable();
+                                                                                             });
+                                                                            }))
+                                             .Summary(summary => summary.Title = "Wow"));
+
+                 splitting.Add("periods",
+                               table => table.Columns(cols =>
                                                       {
                                                           cols.Spreaded(s => s.Period,
                                                                         5,
@@ -38,23 +46,36 @@
                                                                             builder.Stacked(s => s.Title(i.ToString()),
                                                                                             stacked =>
                                                                                             {
-                                                                                                stacked.Add().Field(s => s.Hours);
-                                                                                                stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency);
+                                                                                                stacked.Add().Field(s => s.Hours).Totalable()
+                                                                                                       .Summary<SampleData>(s => s.Average(c => c.Period[i].Hours));
+
+                                                                                                stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable()
+                                                                                                       .Summary($"SUM(Period.{i}.JTD)");
                                                                                             });
                                                                         });
-                                                      }));
+                                                      })
+                                             .Nested(s => s.Children,
+                                                     table => table.Columns(cols =>
+                                                                            {
+                                                                                cols.Spreaded(s => s.Period,
+                                                                                              5,
+                                                                                              (builder, i) =>
+                                                                                              {
+                                                                                                  builder.Stacked(s => s.Title(i.ToString()),
+                                                                                                                  stacked =>
+                                                                                                                  {
+                                                                                                                      stacked.Add().Field(s => s.Hours).Totalable();
+                                                                                                                      stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable();
+                                                                                                                  });
+                                                                                              });
+                                                                            })));
              })
-      .InfiniteScrolling(scroll =>
-                         {
-                             scroll.ChunkSize = 10;
-                             scroll.LoadingRowsCount = 3;
-                         })
       .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
+      .InfiniteScrolling()
       .DataSource(new DataSource.SignalR
-
                   {
-                          Event = JqueryBind.Load,
-
-                          Method = nameof(SignalHub.StreamData_Many),
+                          Event = JqueryBind.None,
+                          ChunkSize = 40,
+                          Method = nameof(SignalHub.StreamData_Many_Floating)
                   })
       .Render())

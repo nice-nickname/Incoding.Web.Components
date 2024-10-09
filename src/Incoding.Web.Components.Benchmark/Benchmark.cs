@@ -37,7 +37,7 @@ namespace Incoding.Web.Components.Benchmark
 
             var empty = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sint ipsam? Ut sapiente laborum ducimus tempore deleniti quia voluptates veritatis odio illum alias! Aliquam, impedit at voluptatem necessitatibus neque ex?";
 
-            ImlBinding binding = iml => iml.When(Bindings.Grid.Init).OnSuccess(dsl => dsl.Self());
+            ImlBinding binding = iml => iml.When(Bindings.Grid.ColumnUpdate).OnSuccess(dsl => dsl.Self());
 
             return new SplitGridBuilder<SampleData>(MockIHtmlHelper(), id)
                         .Css(css)

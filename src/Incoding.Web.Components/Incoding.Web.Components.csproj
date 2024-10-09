@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Components\Grid\Store\**" />
-    <EmbeddedResource Remove="Components\Grid\Store\**" />
-    <None Remove="Components\Grid\Store\**" />
+    <Compile Remove="Grid\Store\**" />
+    <EmbeddedResource Remove="Grid\Store\**" />
+    <None Remove="Grid\Store\**" />
   </ItemGroup>
 
   <ItemGroup>

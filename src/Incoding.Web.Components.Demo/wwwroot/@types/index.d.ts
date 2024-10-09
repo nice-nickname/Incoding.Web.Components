@@ -1,5 +1,5 @@
 
-interface SplitPanel {
+interface SplitPanelModel {
 
     minWidth: string | null,
 
@@ -7,45 +7,57 @@ interface SplitPanel {
 
 }
 
-interface SplitTable {
+interface SplitTableModel {
 
     id: string
 
     css: string,
 
-    row: Row
+    row: RowModel
 
-    columns: Column[]
+    columns: ColumnModel[]
 
     nestedField: string,
 
-    nested: SplitTable
+    nested: SplitTableModel
+
+    summary: SplitTableSummaryModel | null
 }
 
-interface Row {
+interface SplitTableSummaryModel {
+    title: string
+}
+
+interface RowModel {
 
     css: string,
 
     executable: string,
 
-    DropdownTmpl: string
+    dropdownTmpl: string
 
     attrs: { [a: string]: string }
 }
 
-interface Column {
+interface ColumnModel {
+
+    uid: string
 
     id: number | null
 
     index: number
 
-    parentIndex: number | null
+    parentUid: number | null
+
+    minWidth: number | null
 
     width: number | null
 
     field: string
 
     title: string
+
+    css: string
 
     spreadIndex: number | null
 
@@ -71,13 +83,19 @@ interface Column {
 
     resizable: boolean
 
+    showMenu: boolean
+
     hidden: boolean
 
     isSorted: boolean
 
     attrs: { [a: string]: string }
 
-    stacked: Column[]
+    stacked: ColumnModel[]
+
+    specialColumnKind: SpecialColumnKind
+
+    summaryExpr: string
 
 }
 
@@ -86,9 +104,7 @@ interface Column {
 
 interface FormatOptions {
 
-    decimalScale: number,
-
-    dateTimeFormat: string
+    decimalScale: number
 
 }
 
@@ -106,11 +122,13 @@ interface GridUIOptions {
 
 }
 
+type Aggregate = "sum" | "avg" | "min" | "max" | "count"
+
 //#endregion options
 
 //#region enums
 
-enum GridMode {
+declare enum GridMode {
 
     SubGrid,
 
@@ -118,7 +136,7 @@ enum GridMode {
 
 }
 
-enum ColumnSortOption {
+declare enum ColumnSortOption {
 
     Asc,
 
@@ -126,7 +144,7 @@ enum ColumnSortOption {
 
 }
 
-enum ColumnType {
+declare enum ColumnType {
 
     String,
 
@@ -138,7 +156,7 @@ enum ColumnType {
 
 }
 
-enum ColumnFormat {
+declare enum ColumnFormat {
 
     Empty,
 
@@ -152,7 +170,7 @@ enum ColumnFormat {
 
 }
 
-enum ColumnAsignment {
+declare enum ColumnAsignment {
 
     Left,
 
@@ -162,46 +180,61 @@ enum ColumnAsignment {
 
 }
 
+declare enum SpecialColumnKind {
+
+    Expand,
+
+    Dropdown
+
+}
+
 //#endregion
 
-// interface FilterColumn {
-//     column: Column
-//     criteria: Set<string>
-//     getter
-// }
+interface RenderingBehaviour {
 
-// interface GridOptions {
-//     infiniteScroll: boolean
-//     loadingRowCount: number
-//     scrollChunkSize: number
+    reset(): void
 
-//     table: TableOptions
-// }
+    handleDataChanged(): void
 
-// interface TableOptions {
-//     highlightRows: boolean
-//     placeholderRows: number
-//     mode: 'Stacked' | 'Simple'
-//     zebra: boolean
-// }
-
-// interface TableStructure {
-//     columns: Column[]
-
-//     rowTmpl: string
-//     layoutHtml: string
-//     dropdownTmpl: string
-
-//     nestedField: string
-//     nested: TableStructure | null
-// }
+}
 
 
+//#region menu
 
-// interface IRowRenderer {
+interface MenuOptions {
+    items: MenuItem[]
+    onClick: (action?: string, subMenuAction?: string) => void
+    onClose: () => void
+    onOpen: () => void,
 
-//     handleDataUpdated(): void
+    clickableInside: boolean,
+}
 
-//     restart(): void
+interface MenuItem {
+    action?: string
+    subAction?: string
 
-// }
+    icon: string,
+    text: string,
+
+    isDivider: string
+    isDisabled: boolean
+
+    template: string
+
+    sideMenu?: MenuItem[]
+}
+
+//#endregion
+
+
+//#region filter
+
+interface FilterItem {
+    value: string
+    text: string
+    selected: boolean
+    visible: boolean
+}
+
+//#endregion

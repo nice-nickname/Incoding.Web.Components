@@ -1,14 +1,6 @@
-@using Incoding.Web.Components
-@using Incoding.Web.Components.Demo.Controllers
-@using Incoding.Web.Components.Grid
 @{
     Layout = "_Layout";
-
-    ComponentsDefaults.DecimalScale = 2;
 }
-
-@Html.Components().SignalR("/signals")
-@Html.Components().DefaultDecimalPrecision(ComponentsDefaults.DecimalScale)
 
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
@@ -33,7 +25,7 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
+              .OnSuccess(dsl => dsl.WithId("grid").Trigger.None())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-success"

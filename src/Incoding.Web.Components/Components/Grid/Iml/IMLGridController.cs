@@ -29,21 +29,16 @@ public class ImlGridController
 
     public IExecutableSetting StartWebsocket(Selector @params = null)
     {
-        return _dsl.JQuery.Call("data('loader').startLoading", @params ?? string.Empty);
+        return _dsl.JQuery.Call("data('loader').start", @params ?? string.Empty);
     }
 
     public IExecutableSetting CancelWebsocket()
     {
-        return _dsl.JQuery.Call("data('loader').cancelLoading");
+        return _dsl.JQuery.Call("data('loader').cancel");
     }
 
     public IExecutableSetting AppendData(Selector dataSelector)
     {
         return _dsl.JQuery.Call("data('splitGrid').appendData", dataSelector);
-    }
-
-    public IExecutableSetting Totals()
-    {
-        return _dsl.JQuery.Call("data('splitGrid').totals");
     }
 }

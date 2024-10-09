@@ -1,6 +1,5 @@
 namespace Incoding.Web.Components.Demo.Controllers
 {
-
     #region << Using >>
 
     using Bogus;
@@ -85,10 +84,10 @@ namespace Incoding.Web.Components.Demo.Controllers
                 }
 
                 yield return new StreamResult<SampleData>
-                {
-                    Items = items,
-                    IsNext = currentPage != allPages
-                };
+                             {
+                                     Items = items,
+                                     IsNext = currentPage != allPages
+                             };
 
                 Thread.Sleep(5.Seconds());
             }
@@ -97,19 +96,19 @@ namespace Incoding.Web.Components.Demo.Controllers
         public async IAsyncEnumerable<StreamResult<SampleData>> StreamData_Many(StreamParam<SampleQuery> @params, [EnumeratorCancellation] CancellationToken token)
         {
             var currentPage = 0;
-            var allPages = 3;
+            var allPages = 30;
 
             while (currentPage < allPages && !token.IsCancellationRequested)
             {
                 var items = Data(currentPage++, @params.ChunkSize);
 
                 yield return new StreamResult<SampleData>
-                {
-                    Items = items,
-                    IsNext = currentPage != allPages
-                };
+                             {
+                                     Items = items,
+                                     IsNext = currentPage != allPages
+                             };
 
-                Thread.Sleep(5.Seconds());
+                Thread.Sleep(1.Seconds());
             }
         }
 
@@ -123,10 +122,10 @@ namespace Incoding.Web.Components.Demo.Controllers
                 var items = Data(currentPage++, 5);
 
                 yield return new StreamResult<SampleData>
-                {
-                    Items = items,
-                    IsNext = currentPage != allPages
-                };
+                             {
+                                     Items = items,
+                                     IsNext = currentPage != allPages
+                             };
 
                 Thread.Sleep(5.Seconds());
             }

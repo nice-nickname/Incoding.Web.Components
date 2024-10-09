@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Incoding.Core.Block.IoC;
 using Incoding.Core.Extensions;
+using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,17 +63,17 @@ public class TableBuilder<T>
 
     public TableBuilder<T> DropdownTmpl(TemplateContent<T> dropdownContent)
     {
-        Table.Row.DropdownTmpl = dropdownContent(_template).HtmlContentToString();
+        Table.Row.DropdownTmpl = TemplateEncoder.Encode(dropdownContent(_template).HtmlContentToString());
 
         return this;
     }
 
     public TableBuilder<T> DropdownTmpl(TemplateContentAsync<T> dropdownContentAsync)
     {
-        Table.Row.DropdownTmpl = dropdownContentAsync(_template).ConfigureAwait(false)
-                                                                .GetAwaiter()
-                                                                .GetResult()
-                                                                .HtmlContentToString();
+        Table.Row.DropdownTmpl = TemplateEncoder.Encode(dropdownContentAsync(_template).ConfigureAwait(false)
+                                                                                       .GetAwaiter()
+                                                                                       .GetResult()
+                                                                                       .HtmlContentToString());
 
         return this;
     }

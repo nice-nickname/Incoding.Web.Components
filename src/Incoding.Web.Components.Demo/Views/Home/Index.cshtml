@@ -7,9 +7,6 @@
     ComponentsDefaults.DecimalScale = 2;
 }
 
-@Html.Components().SignalR("/signals")
-@Html.Components().DefaultDecimalPrecision(ComponentsDefaults.DecimalScale)
-
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
@@ -33,7 +30,7 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
+              .OnSuccess(dsl => dsl.WithId("grid").Trigger.None())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-success"

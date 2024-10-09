@@ -4,6 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Linq.Expressions;
+using HandlebarsDotNet;
 using Incoding.Core.Extensions;
 using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
@@ -132,6 +133,13 @@ public class ColumnBuilder<T>
         return this;
     }
 
+    public ColumnBuilder<T> ShowMenu(bool value = true)
+    {
+        Column.ShowMenu = value;
+
+        return this;
+    }
+
     public ColumnBuilder<T> Field(string field)
     {
         Column.Field = field;
@@ -192,7 +200,9 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        Column.Content = contentLambda(Template).HtmlContentToString().Trim();
+        Column.Content = TemplateEncoder.Encode(
+            contentLambda(Template).HtmlContentToString().Trim()
+        );
 
         return this;
     }
@@ -219,5 +229,20 @@ public class ColumnBuilder<T>
             stacked.Hidden = true;
 
         return this;
+    }
+
+    public void Expand() => SpecialColumn(SpecialColumnKind.Expand);
+
+    public void Dropdown() => SpecialColumn(SpecialColumnKind.Dropdown);
+
+    private void SpecialColumn(SpecialColumnKind kind)
+    {
+        Column.SpecialColumnKind = kind;
+
+        Column.Totalable = false;
+        Column.Filterable = false;
+        Column.Sortable = false;
+        Column.ShowMenu = false;
+        Column.Resizable = false;
     }
 }

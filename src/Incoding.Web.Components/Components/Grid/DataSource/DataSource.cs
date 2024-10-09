@@ -37,8 +37,6 @@ public static class DataSource
                       .SubmitOn(FormSelector)
                       .OnBegin(dsl =>
                                {
-                                   dsl.Grid().Init();
-
                                    dsl.With(FormSelector).JQuery.Attr.Set(HtmlAttribute.Action, Url);
 
                                    OnBegin?.Invoke(dsl);
@@ -74,12 +72,7 @@ public static class DataSource
 
             return iml.When(events)
                       .Ajax(Url)
-                      .OnBegin(dsl =>
-                               {
-                                   dsl.Grid().Init();
-
-                                   OnBegin?.Invoke(dsl);
-                               })
+                      .OnBegin(dsl => OnBegin?.Invoke(dsl))
                       .OnSuccess(dsl =>
                                  {
                                      dsl.Grid().AppendData(Selector.Result);
@@ -100,7 +93,6 @@ public static class DataSource
         public IIncodingMetaLanguageEventBuilderDsl Bind(IIncodingMetaLanguageEventBuilderDsl iml)
         {
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnBegin(dsl => dsl.Grid().Init())
                       .OnSuccess(dsl => dsl.Grid().AppendData(Template.For($"escapedJson {Field.GetMemberName()}")));
         }
     }
@@ -117,8 +109,7 @@ public static class DataSource
             var json = Data.ToJsonString();
 
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnBegin(dsl => dsl.Grid().Init())
-                      .OnSuccess(dsl => dsl.Grid().AppendData(HttpUtility.HtmlEncode(json)));
+                      .OnSuccess(dsl => dsl.Grid().AppendData(json));
         }
     }
 
@@ -160,7 +151,6 @@ public static class DataSource
                                  })
                       .When(Event)
                       .StopPropagation()
-                      .OnBegin(dsl => dsl.Grid().Init())
                       .OnSuccess(dsl => dsl.Grid().StartWebsocket(Params));
         }
     }

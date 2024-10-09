@@ -9,6 +9,8 @@ namespace Incoding.Web.Components.Demo
     using Incoding.Core.Block.IoC.Provider;
     using Incoding.Web.Components.Demo.Controllers;
     using Microsoft.Extensions.Caching.Memory;
+    using NUglify.Css;
+    using NUglify.JavaScript;
 
     #endregion
 
@@ -27,18 +29,25 @@ namespace Incoding.Web.Components.Demo
                    .AddRazorRuntimeCompilation();
 
             builder.Services.AddWebOptimizer(pipeline =>
-            {
-                pipeline.AddJavaScriptBundle("js/_libs.js", "lib/jquery.min.js", "lib/underscore-min.js", "lib/*.js");
-                pipeline.AddJavaScriptBundle("js/_scripts.js", "js/**/*.js");
-                pipeline.AddCssBundle("css/_styles.css", "css/**/*.css");
-            });
+                                             {
+                                                 pipeline.MinifyJsFiles(new CodeSettings());
+                                                 pipeline.MinifyCssFiles(new CssSettings());
+
+                                                 pipeline.AddJavaScriptBundle("js/_libs.js", "lib/jquery.min.js", "lib/underscore-min.js", "lib/*.js");
+                                                 pipeline.AddJavaScriptBundle("js/_scripts.js", "js/**/*.js");
+                                                 pipeline.AddCssBundle("css/_styles.css", "css/**/*.css");
+                                             },
+                                             options =>
+                                             {
+                                                 options.EnableTagHelperBundling = false;
+                                             });
 
             builder.Services.AddSignalR()
-                            .AddJsonProtocol(options =>
-                                {
-                                    options.PayloadSerializerOptions.PropertyNameCaseInsensitive = false;
-                                    options.PayloadSerializerOptions.PropertyNamingPolicy = null;
-                                });
+                   .AddJsonProtocol(options =>
+                                    {
+                                        options.PayloadSerializerOptions.PropertyNameCaseInsensitive = false;
+                                        options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+                                    });
 
             builder.Services.ConfigureIncodingWebServices();
             builder.Services.ConfigureIncodingCoreServices();

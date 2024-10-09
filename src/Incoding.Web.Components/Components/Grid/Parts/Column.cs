@@ -1,14 +1,15 @@
 namespace Incoding.Web.Components.Grid;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
 #region << Using >>
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
+using Newtonsoft.Json.Serialization;
 
 #endregion
 
+[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public class Column
 {
     public int? Id { get; set; }
@@ -56,6 +57,8 @@ public class Column
     public bool Filterable { get; set; }
 
     public bool Resizable { get; set; }
+
+    public bool ShowMenu { get; set; } = true;
 
     public bool Hidden { get; set; }
 

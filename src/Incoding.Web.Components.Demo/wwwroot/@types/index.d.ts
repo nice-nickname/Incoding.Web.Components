@@ -1,5 +1,5 @@
 
-interface SplitPanel {
+interface SplitPanelModel {
 
     minWidth: string | null,
 
@@ -7,33 +7,33 @@ interface SplitPanel {
 
 }
 
-interface SplitTable {
+interface SplitTableModel {
 
     id: string
 
     css: string,
 
-    row: Row
+    row: RowModel
 
-    columns: Column[]
+    columns: ColumnModel[]
 
     nestedField: string,
 
-    nested: SplitTable
+    nested: SplitTableModel
 }
 
-interface Row {
+interface RowModel {
 
     css: string,
 
     executable: string,
 
-    DropdownTmpl: string
+    dropdownTmpl: string
 
     attrs: { [a: string]: string }
 }
 
-interface Column {
+interface ColumnModel {
 
     id: number | null
 
@@ -46,6 +46,8 @@ interface Column {
     field: string
 
     title: string
+
+    css: string
 
     spreadIndex: number | null
 
@@ -71,13 +73,15 @@ interface Column {
 
     resizable: boolean
 
+    showMenu: boolean
+
     hidden: boolean
 
     isSorted: boolean
 
     attrs: { [a: string]: string }
 
-    stacked: Column[]
+    stacked: ColumnModel[]
 
 }
 
@@ -162,46 +166,59 @@ enum ColumnAsignment {
 
 }
 
+enum SpecialColumnKind {
+
+    Expand,
+
+    Dropdown
+
+}
+
 //#endregion
 
-// interface FilterColumn {
-//     column: Column
-//     criteria: Set<string>
-//     getter
-// }
+interface RenderingBehaviour {
 
-// interface GridOptions {
-//     infiniteScroll: boolean
-//     loadingRowCount: number
-//     scrollChunkSize: number
+    reset(): void
 
-//     table: TableOptions
-// }
+    handleDataChanged(): void
 
-// interface TableOptions {
-//     highlightRows: boolean
-//     placeholderRows: number
-//     mode: 'Stacked' | 'Simple'
-//     zebra: boolean
-// }
-
-// interface TableStructure {
-//     columns: Column[]
-
-//     rowTmpl: string
-//     layoutHtml: string
-//     dropdownTmpl: string
-
-//     nestedField: string
-//     nested: TableStructure | null
-// }
+}
 
 
+//#region menu
 
-// interface IRowRenderer {
+interface MenuOptions {
+    items: MenuItem[]
+    onClick: (action: string | null) => void
+    onClose: (menu: Menu) => void
+    onOpen: (menu: Menu) => void,
 
-//     handleDataUpdated(): void
+    closeOnItemClick: boolean,
 
-//     restart(): void
+    destroyOnHide: boolean
+}
 
-// }
+interface MenuItem {
+    action: string
+
+    icon: string,
+    text: string,
+
+    isDivider: string
+    isDisabled: boolean
+
+    template: string
+}
+
+//#endregion
+
+
+//#region filter
+
+interface FilterItem {
+    value: string
+    text: string
+    selected: boolean
+}
+
+//#endregion

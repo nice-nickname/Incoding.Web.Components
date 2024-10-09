@@ -117,7 +117,6 @@ public static class DataSource
             var json = Data.ToJsonString();
 
             return iml.When(Bindings.Grid.DataSourceInit)
-                      .OnBegin(dsl => dsl.Grid().Init())
                       .OnSuccess(dsl => dsl.Grid().AppendData(HttpUtility.HtmlEncode(json)));
         }
     }

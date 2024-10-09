@@ -3,10 +3,12 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Incoding.Core;
 using Incoding.Core.Block.Caching;
 using Incoding.Core.Extensions;
@@ -78,22 +80,20 @@ public class ColumnListBuilder<T>
         {
             spreadColumns(clb, i);
 
-            var addedCells = clb.Columns.Skip(i);
+            var addedColumns = clb.Columns.Skip(i);
 
-            foreach (var cell in addedCells)
+            foreach (var column in addedColumns)
             {
-                if (cell.Stacked != null)
+                if (column.Stacked != null)
                 {
-                    foreach (var stacked in cell.Stacked)
+                    foreach (var stacked in column.Stacked)
                     {
-                        stacked.SpreadField = spreadFieldName;
-                        stacked.SpreadIndex = i;
+                        SetSpreadColumn(stacked, spreadFieldName, i);
                     }
                 }
                 else
                 {
-                    cell.SpreadField = spreadFieldName;
-                    cell.SpreadIndex = i;
+                    SetSpreadColumn(column, spreadFieldName, i);
                 }
             }
         }
@@ -101,5 +101,17 @@ public class ColumnListBuilder<T>
         Columns.AddRange(clb.Columns);
 
         _currentIndex = clb._currentIndex;
+
+        void SetSpreadColumn(Column column, string spreadField, int spreadIndex)
+        {
+            column.SpreadField = spreadField;
+            column.SpreadIndex = spreadIndex;
+
+            var field = "{{" + column.Field + "}}";
+            var actualField = "{{" + $"{column.SpreadField}.{column.SpreadIndex}.{column.Field}" + "}}";
+
+            if (!string.IsNullOrWhiteSpace(column.Content))
+                column.Content = column.Content.Replace(field, actualField);
+        }
     }
 }

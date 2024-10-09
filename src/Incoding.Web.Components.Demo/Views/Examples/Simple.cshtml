@@ -7,20 +7,17 @@
       .Split(splitting =>
 
              {
-                 splitting.Add(table => table.Columns(cols =>
-
+                 splitting.Add(table => table.Css("table table-bordered")
+                                             .Columns(cols =>
                                                       {
-                                                          cols.Add().Field(s => s.Id).Content(@<text>
-                                                                                                   @item.For(s => s.Amount)
-                                                                                               </text>
-                                                                                             ).Resizable();
+                                                          cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty);
 
                                                           cols.Add().Field(s => s.Amount).Format(ColumnFormat.Percentage)
                                                               .Bind((iml, tmpl) => iml.When(JqueryBind.Change)
                                                                                       .OnBegin(dsl => dsl.Window.Console.Log("m-debug", tmpl.For(s => s.Amount))))
                                                               .Resizable();
 
-                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable();
+                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %");
                                                           cols.Stacked(s => s.Title("Dates"),
                                                                        stacked =>
                                                                        {
@@ -29,7 +26,8 @@
                                                                        });
                                                       }));
 
-                 splitting.Add(table => table.Columns(cols =>
+                 splitting.Add(table => table.Css("table table-bordered")
+                                             .Columns(cols =>
                                                       {
                                                           cols.Spreaded(s => s.Period,
                                                                         5,
@@ -46,15 +44,12 @@
              })
       .InfiniteScrolling(scroll =>
                          {
-                             scroll.ChunkSize = 10;
+                             scroll.ChunkSize = 40;
                              scroll.LoadingRowsCount = 3;
                          })
       .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
-      .DataSource(new DataSource.SignalR
-
+      .DataSource(new DataSource.Model
                   {
-                          Event = JqueryBind.Load,
-
-                          Method = nameof(SignalHub.StreamData_Many),
+                          Data = DataController.GenerateData(60)
                   })
       .Render())

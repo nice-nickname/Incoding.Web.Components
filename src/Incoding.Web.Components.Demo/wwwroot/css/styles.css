@@ -17,14 +17,3 @@
 .hidden {
     display: none !important;
 }
-
-tr.highlight {
-    background-color: rgb(222, 242, 250) !important;
-
-}
-
-table.table-component button {
-    all: unset;
-    background: gray;
-    width: 20px;
-}

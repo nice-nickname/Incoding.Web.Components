@@ -1,5 +1,5 @@
 
-interface SplitPanel {
+interface SplitPanelModel {
 
     minWidth: string | null,
 
@@ -7,33 +7,33 @@ interface SplitPanel {
 
 }
 
-interface SplitTable {
+interface SplitTableModel {
 
     id: string
 
     css: string,
 
-    row: Row
+    row: RowModel
 
-    columns: Column[]
+    columns: ColumnModel[]
 
     nestedField: string,
 
-    nested: SplitTable
+    nested: SplitTableModel
 }
 
-interface Row {
+interface RowModel {
 
     css: string,
 
     executable: string,
 
-    DropdownTmpl: string
+    dropdownTmpl: string
 
     attrs: { [a: string]: string }
 }
 
-interface Column {
+interface ColumnModel {
 
     id: number | null
 
@@ -46,6 +46,8 @@ interface Column {
     field: string
 
     title: string
+
+    css: string
 
     spreadIndex: number | null
 
@@ -77,7 +79,7 @@ interface Column {
 
     attrs: { [a: string]: string }
 
-    stacked: Column[]
+    stacked: ColumnModel[]
 
 }
 
@@ -163,6 +165,15 @@ enum ColumnAsignment {
 }
 
 //#endregion
+
+
+interface RenderingBehaviour {
+
+    reset(): void
+
+    handleDataChanged(): void
+
+}
 
 // interface FilterColumn {
 //     column: Column

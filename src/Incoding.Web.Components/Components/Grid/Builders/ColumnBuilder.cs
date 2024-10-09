@@ -192,7 +192,9 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        Column.Content = contentLambda(Template).HtmlContentToString().Trim();
+        Column.Content = TemplateEncoder.Encode(
+            contentLambda(Template).HtmlContentToString().Trim()
+        );
 
         return this;
     }

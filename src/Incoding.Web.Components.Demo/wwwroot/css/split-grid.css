@@ -1,0 +1,63 @@
+
+/* #region split-grid layout */
+
+.split-grid {
+
+}
+
+.split-grid .splitter {
+    display: flex;
+    height: 100%;
+}
+
+
+.split-grid .splitter .panel {
+    height: 100%;
+    overflow: auto;
+}
+
+.split-grid .splitter .divider {
+    width: 2px;
+
+    background: #eaeaea;
+}
+
+.split-grid .splitter .panel::-webkit-scrollbar {
+    width: 0;
+}
+
+.split-grid .splitter .panel:last-child::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.split-grid .empty {
+    width: 100%;
+    height: 100%;
+}
+
+/* #endregion */
+
+
+/* #region split-table */
+
+.split-table {
+    margin: 0;
+    padding: 0;
+
+    table-layout: fixed;
+}
+
+.split-table tr.hover {
+    background-color: rgb(222, 242, 250) !important;
+}
+
+.split-table .positive {
+    color: rgb(141, 255, 141);
+}
+
+.split-table .negative {
+    color: rgb(253, 129, 129);
+}
+
+/* #endregion */

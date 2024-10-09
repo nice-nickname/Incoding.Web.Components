@@ -33,7 +33,7 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke(JqueryBind.Load))
+              .OnSuccess(dsl => dsl.WithId("grid").Trigger.Invoke("grid-data-source-init"))
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-success"

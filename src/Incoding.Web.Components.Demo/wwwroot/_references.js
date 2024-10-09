@@ -8,6 +8,24 @@
 /// <reference path="js/jquery.plugin.js" />
 /// <reference path="js/helpers.js" />
 
-/// <reference path="js/_grid/split-grid.js" />
-/// <reference path="js/_grid/data-source.js" />
-/// <reference path="js/_grid/splitter.js" />
+/// <reference path="js/grid/table/table.js" />
+/// <reference path="js/grid/table/rendering/footer-renderer.js" />
+/// <reference path="js/grid/table/rendering/header-renderer.js" />
+/// <reference path="js/grid/table/rendering/row-renderer.js" />
+
+/// <reference path="js/grid/table/modules/sort.js" />
+/// <reference path="js/grid/table/modules/filter.js" />
+/// <reference path="js/grid/table/modules/column-reorder.js" />
+/// <reference path="js/grid/table/modules/column-resize.js" />
+
+
+/// <reference path="js/grid/splitter/splitter.js" />
+
+/// <reference path="js/grid/models/column.js" />
+/// <reference path="js/grid/models/row.js" />
+/// <reference path="js/grid/models/table-schema.js" />
+
+/// <reference path="js/grid/data/immediate-rendering.js" />
+/// <reference path="js/grid/data/infinite-scroll-rendering.js" />
+/// <reference path="js/grid/data/data-binding.js" />
+/// <reference path="js/grid/split-grid.js" />

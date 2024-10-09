@@ -3,10 +3,13 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 #endregion
 
-public class Table
+[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+public record Table
 {
     public string Id { get; }
 
@@ -19,6 +22,8 @@ public class Table
     public string NestedField { get; set; }
 
     public Table Nested { get; set; }
+
+    public TableSummary Summary { get; set; }
 
     public Table(string id)
     {

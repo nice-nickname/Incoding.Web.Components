@@ -31,20 +31,4 @@ public class ComponentsHtmlHelper
     {
         return new SplitGridBuilder<dynamic>(_html, id);
     }
-
-    public IHtmlContent SignalR(string action)
-    {
-        return _html.When(JqueryBind.InitIncoding)
-                    .OnSuccess(dsl => dsl.Self().JQuery.PlugIn("signalr", action))
-                    .AsHtmlAttributes()
-                    .ToInput(HtmlInputType.Hidden, string.Empty);
-    }
-
-    public IHtmlContent DefaultDecimalPrecision(int precision)
-    {
-        return _html.When(JqueryBind.InitIncoding)
-                    .OnSuccess(dsl => dsl.Self().JQuery.Call("format", "precision", precision))
-                    .AsHtmlAttributes()
-                    .ToDiv();
-    }
 }

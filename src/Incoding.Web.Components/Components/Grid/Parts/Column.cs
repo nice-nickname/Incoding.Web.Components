@@ -1,21 +1,27 @@
 namespace Incoding.Web.Components.Grid;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
 #region << Using >>
 
+using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 #endregion
 
+[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public class Column
 {
+    public string Uid { get; }
+
     public int? Id { get; set; }
 
-    public int Index { get; set; }
+    public int? Index { get; set; }
 
-    public int? ParentIndex { get; set; }
+    public string ParentUid { get; set; }
+
+    public int? MinWidth { get; set; }
 
     public int? Width { get; set; }
 
@@ -49,6 +55,9 @@ public class Column
     [JsonConverter(typeof(StringEnumConverter))]
     public SortOrder? SortedBy { get; set; }
 
+    [JsonConverter(typeof(StringEnumConverter))]
+    public SpecialColumnKind? SpecialColumnKind { get; set; }
+
     public bool Totalable { get; set; }
 
     public bool Sortable { get; set; }
@@ -57,7 +66,16 @@ public class Column
 
     public bool Resizable { get; set; }
 
+    public bool ShowMenu { get; set; } = true;
+
     public bool Hidden { get; set; }
 
     public bool IsSorted => SortedBy.HasValue;
+
+    public string SummaryExpr { get; set; }
+
+    public Column()
+    {
+        this.Uid = Guid.NewGuid().ToString()[..10];
+    }
 }

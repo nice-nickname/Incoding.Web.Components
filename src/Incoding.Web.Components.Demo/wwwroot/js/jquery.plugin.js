@@ -6,212 +6,6 @@ function initializeSplitGrid(options) {
 
 (function ($) {
 
-    /**
-     * Split grid control initialization point
-     * called once on component first render
-     */
-    $.fn.splitGrid = function (options = "{}") {
-        options = JSON.parse(options)
-
-        options.structure.forEach(prepareSchema);
-
-        const splitGrid = new SplitGridController(this, options)
-
-        this.data('splitGrid', splitGrid)
-    }
-
-    function prepareSchema(schema) {
-        const rowTmpl = decodeTemplate(schema.rowTmpl)
-        const dropdownTmpl = decodeTemplate(schema.dropdownTmpl)
-
-        schema.rowTmpl = ExecutableInsert.Template.compile(rowTmpl)
-        schema.dropdownTmpl = ExecutableInsert.Template.compile(dropdownTmpl)
-        schema.layoutTmpl = ExecutableInsert.Template.compile(schema.layoutTmpl)
-        schema.expands = { }
-
-        if (schema.nested) {
-            prepareSchema(schema.nested)
-        }
-    }
-
-    function decodeTemplate(tmpl) {
-        return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
-    }
-
-}(jQuery));
-
-(function ($) {
-
-    /**
-     * SignalR partial loading & infinite scroll initialization
-     */
-
-    $.fn.signalrLoader = function (options) {
-        options = $.extend({
-            chunkSize: 40,
-        }, options)
-
-        const loader = new SignalrLoader(options.method, options)
-
-        loader.initialize(this)
-
-        $(this).data('loader', loader)
-    }
-
-}(jQuery));
-
-(function () {
-
-    $.fn.splitter = function (panels) {
-        panels = JSON.parse(panels)
-
-        this.data('splitter', new Splitter(this[0], panels))
-    }
-
-}(jQuery));
-
-
-(function ($) {
-
-    /**
-     * Connect two scrolls to scroll simultaneously
-     */
-
-    $.fn.connectScrolls = function () {
-        if ($(this).data('connected'))
-            return
-
-        const scrollables = $(this).get()
-
-        for (let i = 0; i < scrollables.length; i++) {
-            let current = scrollables[i]
-            $(current)
-                .on('scroll', ev => {
-                    for (let j = 0; j < scrollables.length; j++) {
-                        if (i != j) {
-                            scrollables[j].scrollTop = current.scrollTop
-                        }
-                    }
-                })
-        }
-
-        $(this).data('connected', true)
-    }
-
-}(jQuery));
-
-(function ($) {
-
-    /**
-     * Formatting table cells
-     */
-
-    $.fn.format = function (action, precision) {
-        if (action === 'precision') {
-            $.fn.format.defaults.precision = Number(precision)
-            return
-        }
-
-        return this.filter(':not(:has(button))').filter(':not(:has(input))').each(function () {
-            const format = this.dataset.format
-            const value = this.dataset.value
-
-            switch (format) {
-                case 'Numeric':
-                    formatNumber(this, value)
-                    break;
-                case 'Currency':
-                    formatCurrency(this, value)
-                    break;
-                case 'Percentage':
-                    formatPercentage(this, value)
-                    break;
-                case 'DateTime':
-                    formatDateTime(this, value)
-                    break;
-                default:
-                    break;
-            }
-        })
-    }
-
-    $.fn.format.defaults = {
-        precision: 2
-    };
-
-    function formatCurrency(element, value) {
-        return formatNumber(element, value, {
-            prefix: '$',
-            postfix: ''
-        })
-    }
-
-    function formatPercentage(element, value) {
-        return formatNumber(element, value, {
-            prefix: '',
-            postfix: '%'
-        })
-    }
-
-    function formatNumber(element, value, options) {
-        options = $.extend({
-            prefix: '',
-            postfix: '',
-            precision: $.fn.format.defaults.precision
-        }, options)
-
-        const {
-            prefix,
-            postfix,
-            precision
-        } = options
-
-        let number = Number(value) || 0
-
-        const isNegative = number < 0
-        number = formatNumericString(Math.abs(number), precision)
-        number = `${prefix}${number}${postfix}`
-
-        if (isNegative) {
-            element.classList.add('negative')
-            number = `(${number})`
-        }
-        else {
-            element.classList.remove('negative')
-        }
-
-        element.innerHTML = number
-        element.setAttribute('title', number)
-    }
-
-    function formatNumericString(number, decimalScale) {
-        var parts = number.toString().split('.');
-        var integerPart = parts[0];
-        var decimalPart = parts.length > 1 ? parts[1] : '';
-
-        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-        if (decimalScale > 0) {
-            decimalPart = decimalPart.padEnd(decimalScale, '0').slice(0, decimalScale);
-            return integerPart + '.' + decimalPart;
-        } else {
-            return integerPart;
-        }
-    }
-
-    function formatDateTime(element, value) {
-        if (!value) {
-            return ''
-        }
-        const parsed = new Date(Date.parse(value)).toLocaleString('en-US', { month: 'numeric', year: 'numeric', day: 'numeric' })
-
-        element.innerHTML = parsed
-    }
-
-}(jQuery));
-
-(function ($) {
-
     $.fn.toggleAttribute = function (attr, on, off) {
         return this.each(function () {
             $(this).attr(attr, (_, value) => value == on ? off : on)
@@ -551,3 +345,37 @@ function initializeSplitGrid(options) {
     }
 
 } (jQuery));
+
+(function($) {
+
+    const retryDelaysInMilliseconds  = [
+        0, 10, 60, 60, 60, 60, 60, 60, 60, 60
+    ].map(seconds => seconds * 1000)
+
+    const signalrConnections = { }
+
+    $.fn.signalr = function (action) {
+        if (signalrConnections[action]) {
+            return signalrConnections[action]
+        }
+
+        let builder = new signalR.HubConnectionBuilder()
+            .withAutomaticReconnect(retryDelaysInMilliseconds)
+            .withUrl(action)
+            .configureLogging(signalR.LogLevel.Information)
+
+        const connection = builder.build()
+
+        connection.start().catch(console.error)
+        signalrConnections[action] = connection
+
+        return signalrConnections[action]
+    }
+
+    $.fn.signalrLoader = function(options) {
+        const loader = new SignalRLoader(this[0], options)
+
+        $(this).data('loader', loader)
+    }
+
+} (jQuery))

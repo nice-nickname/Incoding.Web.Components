@@ -15,12 +15,22 @@ public class SplitBuilder
     public SplitBuilder(IHtmlHelper html)
     {
         Html = html;
-        Splitter = new Splitter();
+        Splitter = new Splitter
+                   {
+                           MinWidth = "100px"
+                   };
     }
 
     public SplitBuilder Min(string width)
     {
         Splitter.MinWidth = width;
+
+        return this;
+    }
+
+    public SplitBuilder Min(int widthPx)
+    {
+        Splitter.MinWidth = widthPx + "px";
 
         return this;
     }
@@ -32,9 +42,9 @@ public class SplitBuilder
         return this;
     }
 
-    public SplitBuilder Width(string width)
+    public SplitBuilder Max(int widthPx)
     {
-        Splitter.Width = width;
+        Splitter.MaxWidth = widthPx + "px";
 
         return this;
     }

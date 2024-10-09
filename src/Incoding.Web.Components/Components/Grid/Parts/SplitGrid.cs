@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 #endregion
 
+[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
 public record SplitGrid(string Id)
 {
     public string Css { get; set; } = string.Empty;

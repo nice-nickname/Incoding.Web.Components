@@ -29,7 +29,7 @@ public class Column
 
     public string Css { get; set; } = string.Empty;
 
-    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
+    public IDictionary<string, string> Attrs { get; } = new Dictionary<string, string>();
 
     public List<Column> Stacked { get; } = new();
 

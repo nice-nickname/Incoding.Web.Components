@@ -108,6 +108,25 @@ class RowRenderer {
         td.classList.add(...column.css)
         td.dataset.index = column.index
         td.dataset.uid = column.uid
+        for (let [attr, value] of Object.entries(column.attrs ?? {})) {
+            if (attr.includes('!-')) {
+                attr = ExecutableInsert.Template.render(
+                    ExecutableInsert.Template.compile(SplitGridHelpers.decodeTempalte(attr)),
+                    data
+                )
+            }
+
+            if (value.includes('!-')) {
+                value = ExecutableInsert.Template.render(
+                    ExecutableInsert.Template.compile(SplitGridHelpers.decodeTempalte(value)),
+                    data
+                )
+            }
+
+            if (!ExecutableHelper.IsNullOrEmpty(attr)) {
+                td.setAttribute(attr, value)
+            }
+        }
 
         td.style.textAlign = column.alignment.toLocaleString().toLowerCase()
 

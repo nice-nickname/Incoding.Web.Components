@@ -78,35 +78,37 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Attr(string attr)
     {
-        Column.Attr[attr] = string.Empty;
+        Column.Attrs[attr] = string.Empty;
 
         return this;
     }
 
     public ColumnBuilder<T> Attr(string attr, string value)
     {
-        Column.Attr[attr] = value;
+        Column.Attrs[attr] = value;
 
         return this;
     }
 
     public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        Column.Attr[attr] = value(Template).HtmlContentToString();
+        Column.Attrs[attr] = TemplateEncoder.Encode(value(Template).HtmlContentToString());
 
         return this;
     }
 
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
-        Column.Attr[Template.IsInline(isField, attr).HtmlContentToString()] = attr;
+        var isAttr = Template.IsInline(isField, attr).HtmlContentToString();
+        Column.Attrs[TemplateEncoder.Encode(isAttr)] = attr;
 
         return this;
     }
 
     public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> notField, string attr)
     {
-        Column.Attr[Template.IsInline(notField, attr).HtmlContentToString()] = attr;
+        var notAttr = Template.NotInline(notField, attr).HtmlContentToString();
+        Column.Attrs[TemplateEncoder.Encode(notAttr)] = attr;
 
         return this;
     }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Incoding.Core.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -78,7 +79,7 @@ public class ColumnListBuilder<T>
 
             foreach (var column in addedColumns)
             {
-                if (column.Stacked != null)
+                if (column.Stacked != null && column.Stacked.Count != 0)
                 {
                     foreach (var stacked in column.Stacked)
                     {
@@ -101,11 +102,16 @@ public class ColumnListBuilder<T>
             column.SpreadField = spreadField;
             column.SpreadIndex = spreadIndex;
 
-            var field = "{{" + column.Field + "}}";
-            var actualField = "{{" + $"{column.SpreadField}.{column.SpreadIndex}.{column.Field}" + "}}";
-
             if (!string.IsNullOrWhiteSpace(column.Content))
-                column.Content = column.Content.Replace(field, actualField);
+            {
+                var shouldRemoveUps = !Regex.IsMatch(column.Content, @"\.\d\.");
+
+                while (Regex.IsMatch(column.Content, @"!-([^\./\d]*)-!"))
+                    column.Content = Regex.Replace(column.Content, @"!-([^\./\d]*)-!", "!-" + $"{spreadField}.{spreadIndex}." + "$1-!");
+
+                if (shouldRemoveUps)
+                    column.Content = column.Content.Replace("../", string.Empty);
+            }
         }
     }
 }

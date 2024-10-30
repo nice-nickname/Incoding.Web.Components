@@ -10,7 +10,11 @@
                                                       {
                                                           cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable().Totalable();
                                                           cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable().Totalable().Filterable();
-                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %");
+                                                          cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %")
+                                                              .Attr("monkey", "type")
+                                                              .Attr("data-value", tmpl => tmpl.For(s => s.Amount).ToHtmlString())
+                                                              .IsAttr(tmpl => tmpl.Index, "ahaha")
+                                                              .NotAttr(tmpl => tmpl.Index, "hehehe");
 
                                                           cols.Stacked(s => s.Title("Dates"),
                                                                        stacked =>
@@ -64,7 +68,10 @@
                                                                                                   builder.Stacked(s => s.Title(i.ToString()),
                                                                                                                   stacked =>
                                                                                                                   {
-                                                                                                                      stacked.Add().Field(s => s.Hours).Totalable();
+                                                                                                                      stacked.Add().Field(s => s.Hours).Totalable().Content(@<text>
+                                                                                                                                                                                 <input value="@item.For(s => s.Hours)" title="@item.For(s => s.Hours)" />
+                                                                                                                                                                                 <span>@item.Up().For("Amount")</span>
+                                                                                                                                                                             </text>);
                                                                                                                       stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable();
                                                                                                                   });
                                                                                               });

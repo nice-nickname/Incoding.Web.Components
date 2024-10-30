@@ -1,63 +1,240 @@
 
-interface GridOptions {
-    infiniteScroll: boolean
-    loadingRowCount: number
-    scrollChunkSize: number
+interface SplitPanelModel {
 
-    table: TableOptions
+    minWidth: string | null,
+
+    maxWidth: string | null,
+
 }
 
-interface TableOptions {
-    highlightRows: boolean
-    placeholderRows: number
-    mode: 'Stacked' | 'Simple'
-    zebra: boolean
+interface SplitTableModel {
+
+    id: string
+
+    css: string,
+
+    row: RowModel
+
+    columns: ColumnModel[]
+
+    nestedField: string,
+
+    nested: SplitTableModel
+
+    summary: SplitTableSummaryModel | null
 }
 
-interface TableStructure {
-    columns: Column[]
+interface SplitTableSummaryModel {
+    title: string
+}
 
-    rowTmpl: string
-    layoutHtml: string
+interface RowModel {
+
+    css: string,
+
+    executable: string,
+
     dropdownTmpl: string
 
-    nestedField: string
-    nested: TableStructure | null
+    attrs: { [a: string]: string }
 }
 
-interface Column {
+interface ColumnModel {
+
+    uid: string
+
+    id: number | null
+
     index: number
+
+    parentUid: number | null
+
+    minWidth: number | null
+
+    width: number | null
+
     field: string
+
     title: string
 
+    css: string
+
     spreadIndex: number | null
-    spreadField: string
+
+    spreadField: string | null
+
+    executable: string
+
+    content: string | null
+
+    type: ColumnType
+
+    format: ColumnFormat
+
+    alignment: ColumnAsignment
+
+    sortedBy: ColumnSortOption | null
 
     totalable: boolean
-    sortable: string
 
-    sortedBy: 'Asc' | 'Desc' | null
-    hasDefaultSort: boolean
+    sortable: boolean
 
-    type: 'String' | 'Numeric' | 'Datetime' | 'Boolean'
-    format: 'Empty' | 'Currency' | 'Percentage' | 'Numeric' | 'DateTime'
+    filterable: boolean
 
-    parentIndex: number | null
-    width: number | null
-}
+    resizable: boolean
 
-interface FilterColumn {
-    column: Column
-    criteria: Set<string>
-    getter
-}
+    showMenu: boolean
 
+    hidden: boolean
 
+    isSorted: boolean
 
-interface IRowRenderer {
+    attrs: { [a: string]: string }
 
-    handleDataUpdated(): void
+    stacked: ColumnModel[]
 
-    restart(): void
+    specialColumnKind: SpecialColumnKind
+
+    summaryExpr: string
 
 }
+
+
+//#region options
+
+interface FormatOptions {
+
+    decimalScale: number
+
+}
+
+interface InfitniteScrollOptions {
+
+    chunkSize: number,
+
+    loadingRowsCount: number
+
+}
+
+interface GridUIOptions {
+
+    placeholderRows: number
+
+}
+
+type Aggregate = "sum" | "avg" | "min" | "max" | "count"
+
+//#endregion options
+
+//#region enums
+
+declare enum GridMode {
+
+    SubGrid,
+
+    Stacked
+
+}
+
+declare enum ColumnSortOption {
+
+    Asc,
+
+    Desc
+
+}
+
+declare enum ColumnType {
+
+    String,
+
+    Numeric,
+
+    Datetime,
+
+    Boolean
+
+}
+
+declare enum ColumnFormat {
+
+    Empty,
+
+    Currency,
+
+    Percentage,
+
+    Numeric,
+
+    DateTime
+
+}
+
+declare enum ColumnAsignment {
+
+    Left,
+
+    Right,
+
+    Center
+
+}
+
+declare enum SpecialColumnKind {
+
+    Expand,
+
+    Dropdown
+
+}
+
+//#endregion
+
+interface RenderingBehaviour {
+
+    reset(): void
+
+    handleDataChanged(): void
+
+}
+
+
+//#region menu
+
+interface MenuOptions {
+    items: MenuItem[]
+    onClick: (action?: string, subMenuAction?: string) => void
+    onClose: () => void
+    onOpen: () => void,
+
+    clickableInside: boolean,
+}
+
+interface MenuItem {
+    action?: string
+    subAction?: string
+
+    icon: string,
+    text: string,
+
+    isDivider: string
+    isDisabled: boolean
+
+    template: string
+
+    sideMenu?: MenuItem[]
+}
+
+//#endregion
+
+
+//#region filter
+
+interface FilterItem {
+    value: string
+    text: string
+    selected: boolean
+    visible: boolean
+}
+
+//#endregion

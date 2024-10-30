@@ -1,87 +1,124 @@
+
+
 class Splitter {
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { SplitPanelModel[] }
      */
-    $root
+    panelsModel
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { HTMLElement[] }
      */
-    $splitterElements
+    #panelElements = []
 
     /**
-     * @type { boolean }
+     * @type { HTMLElement[] }
      */
-    resizing
+    #dividerElements = []
 
     /**
-     * @type { {
-     *  rootOffest: number,
-     *  totalWidth: number,
-     *  splitterWidth: number,
-     *  elements: [left: HTMLElement, splitter: HTMLElement, right: HTMLElement],
-     *  resizeFn: () => void
-     * } }
+     * @type { HTMLElement }
      */
-    current
+    #root
 
-    /**
-     * @type { number | null }
-     */
-    raf
+    constructor(splits) {
+        this.panelsModel = splits
 
-    constructor(element, panels) {
-        this.$root = $(element)
-        this.$splitterElements = this.$root.children()
+        const container = document.createElement('div')
+        container.classList.add('splitter')
 
-        this.panels = panels
+        this.#root = container
 
-        this.initializeElements()
-    }
+        const equalsWidth = (100 / this.panelsModel.length).toFixed(2) + "%"
 
-    initializeElements() {
-        this.$root.data('splitter', this)
+        for (let i = 0; i < this.panelsModel.length; i++) {
+            const panel = this.panelsModel[i]
 
-        this.$root.children().each((order, el) => {
-            const $el = $(el)
+            const panelTag = this.#renderPanel(panel, equalsWidth)
+            this.#panelElements.push(panelTag)
 
-            const isDivider = $el.is('[data-divider]')
+            container.appendChild(panelTag)
 
-            $el.data('order', order);
+            if (i + 1 < this.panelsModel.length) {
+                const dividerTag = this.#renderDivider(i, i + 1)
+                this.#dividerElements.push(dividerTag)
 
-            if (isDivider) {
-                this.initializeDivider(order)
+                container.appendChild(dividerTag)
             }
-            else {
-                this.initializePanelElement(order)
+        }
+    }
+
+    appendTo(element) {
+        this.#connectScrolls()
+
+        element.appendChild(this.#root)
+    }
+
+    destroy() {
+        this.#disconnectScrolls()
+    }
+
+    getPanel(index) {
+        return this.#panelElements[index]
+    }
+
+
+    #connectScrolls() {
+        for (const panel of this.#panelElements) {
+            panel.addEventListener('scroll', this.#scrollHandler)
+        }
+    }
+
+    #disconnectScrolls() {
+        for (const panel of this.#panelElements) {
+            panel.removeEventListener('scroll', this.#scrollHandler)
+        }
+    }
+
+    /**
+     * @param { Event } ev
+     */
+    #scrollHandler = (ev) => {
+        const target = ev.target
+
+        for (const panel of this.#panelElements) {
+            if (panel.isSameNode(target)) {
+                continue
             }
+
+            panel.scrollTop = target.scrollTop
+        }
+    }
+
+
+    /**
+     * @param { SplitPanelModel } panelModel
+     * @returns { HTMLElement }
+     */
+    #renderPanel(panelModel, width) {
+        const panel = document.createElement('div')
+        panel.classList.add('panel')
+
+        panel.style.minWidth = panelModel.minWidth
+        panel.style.maxWidth = panelModel.maxWidth
+        panel.style.flexBasis = width
+
+        return panel
+    }
+
+    /**
+     * @returns { HTMLElement }
+     */
+    #renderDivider(left, right) {
+        const divider = document.createElement('div')
+        divider.classList.add('divider')
+
+        divider.addEventListener('mousedown', () => {
+            const resizer = new SplitterResizeHandler(this.#root, this.#panelElements[left], this.#panelElements[right], divider)
+            resizer.start()
         })
-    }
 
-    initializePanelElement(order) {
-        const panel = this.$splitterElements.eq(order)[0]
-
-        const countOfPanels = this.$splitterElements.filter('[data-split-panel]').length
-
-        panel.style.flexBasis = (100 / countOfPanels).toFixed(2) + "%"
-    }
-
-    initializeDivider(order) {
-        const $divider = this.$splitterElements.eq(order)
-
-        $divider.on('mousedown', () => {
-            this.#startResize(order)
-        })
-    }
-
-    #startResize(order) {
-        const $divider = this.$splitterElements.eq(order)
-        const $left = this.$splitterElements.eq(order - 1)
-        const $right = this.$splitterElements.eq(order + 1)
-
-        const handler = new SplitterResizingHandler(this, $left[0], $divider[0], $right[0])
-
-        SplitterResizingHandler.start(handler)
+        return divider
     }
 }

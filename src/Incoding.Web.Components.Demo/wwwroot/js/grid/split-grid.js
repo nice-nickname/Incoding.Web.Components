@@ -1,297 +1,138 @@
 
-class SplitGridController {
+class SplitGrid {
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { string }
      */
-    $root;
+    id
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { InfitniteScrollOptions | null }
      */
-    $empty;
+    infiniteScroll
 
     /**
-     * @type  { JQuery<HTMLElement> }
+     * @type { GridUIOptions }
      */
-    $content;
+    ui
 
     /**
-     * @type { JQuery<HTMLElement> }
+     * @type { GridMode }
      */
-    $scroller;
+    mode
 
     /**
-     * @type { JQuery<HTMLTableElement> }
+     * @type { SplitPanelModel[] }
      */
-    $tables;
+    splits
 
     /**
-     * @type { any[] }
+     * @type { TableSchema[] }
      */
-    data;
+    schema
 
     /**
-     * @type { any[] }
+     * @type { HTMLDivElement }
      */
-    originData
+    root
+
 
     /**
-     * @type { TableStructure[] }
+     * @type { Splitter }
      */
-    structure;
+    splitter
 
     /**
-     * @type { GridOptions }
+     * @type { Empty }
      */
-    options;
+    empty
+
 
     /**
-     * @type { IRowRenderer }
+     * @type { DataBinding }
      */
-    rowRenderer
+    rootBinding
 
     /**
-     * @type { boolean }
+     * @type { ServiceCollection }
      */
-    dataLoading
+    serviceCollection
 
-    /**
-     * @type { boolean }
-     */
-    scrolledToEnd
 
-    /**
-     * @type  { boolean }
-     */
-    scrollEnabled
+    constructor(grid) {
+        this.id = grid.id
+        this.infiniteScroll = grid.infiniteScroll
+        this.ui = grid.ui
+        this.mode = grid.mode
+        this.splits = grid.splits
 
-    /**
-     * @type { TableController[] }
-     */
-    tables
+        this.serviceCollection = new ServiceCollection()
+        this.serviceCollection.register(FormatService.name, new FormatService(grid.format))
 
-    constructor(element, options) {
-        this.$root = $(element)
-        this.$empty = this.$root.find('.grid-empty')
-        this.$content = this.$root.find('.grid-splitter')
 
-        this.$tables = this.$content.find('table');
+        this.schema = grid.tables.map(t => new TableSchema(t, this.serviceCollection, this.mode))
 
-        this.structure = options.structure;
-        this.options = options
+        this.root = document.getElementById(this.id)
+        this.#initializeRootTag(grid)
 
-        if (this.options.table.mode === 'Simple') {
-            for (const structure of this.structure) {
-                const columns = structure.columns
+        this.splitter = new Splitter(grid.splits)
+        this.splitter.appendTo(this.root)
 
-                this.#initializeSimpleColumns(structure, columns)
-            }
+        this.empty = new Empty(grid.emptyContent)
+        this.empty.appendTo(this.root)
+    }
+
+    render() {
+        const binding = new DataBinding()
+
+        if (this.infiniteScroll !== null) {
+            const scrollerEl = this.splitter.getPanel(0)
+
+            binding.setRenderer(new InfitniteScrollRenderingBehaviour(scrollerEl, this.infiniteScroll, binding))
+        } else {
+            binding.setRenderer(new ImmediateRenderingBehaviour(binding))
         }
 
-        this.data = []
-        this.originData = this.data
+        for (let i = 0; i < this.splits.length; i++) {
+            const panel = this.splitter.getPanel(i)
+            const schema = this.schema[i]
 
-        this.#initializeScroll()
-        this.#initializeRenderer()
-        this.#initializeTables()
+            const table = new SplitTable(schema, this.serviceCollection, binding, this.mode)
+            table.appendTo(panel)
 
-        this.enableScroll()
-        this.hide()
+            binding.addTable(table)
+        }
+
+        this.rootBinding = binding
+
+        $(this.root).data('splitGrid', this)
     }
 
-
-    initializeTables() { // m-debug rename
-        this.show()
-
-        this.data = []
-
-        this.tables.forEach(table => {
-            table.data = this.data
-            table.originData = this.data
-
-            table.removeAllRows()
-            table.renderPlaceholderRows()
-            table.hideTotals()
-
-            table.sortController.reset()
-            table.sortController.setDefaultSort()
-            table.filterController.resetAll()
-        })
-
-        this.rowRenderer.restart()
-    }
-
-    rerender() {
-        this.tables.forEach(table => {
-            table.removeAllRows()
-            table.renderPlaceholderRows()
-            table.hideTotals()
-        })
-
-        this.rowRenderer.restart()
-
-        if (!this.data || this.data.length !== 0)
-            this.rowRenderer.handleDataUpdated()
+    clearData() {
+        this.rootBinding.unbind()
     }
 
     appendData(data) {
         if (_.isString(data)) {
-            data = _.unescape(data)
-
             data = JSON.parse(data || "[]")
         }
 
-        if (!data) {
-            data = []
-        }
-
-        this.data.push(...data);
-
-        this.rowRenderer.handleDataUpdated()
-
-        if (this.data.length === 0) {
-            this.hide()
-        }
+        this.rootBinding.appendData(data)
     }
 
-    renderRows(start, end) {
-        const dataLoading = this.dataLoading
-        const scrolledToEnd = this.scrolledToEnd
-
-        const {
-            loadingRowCount
-        } = this.options
-
-        this.$tables.each(function() {
-            const controller = $(this).data('table')
-
-            controller.renderRows(start, end)
-
-            if (dataLoading || !scrolledToEnd) {
-                controller.renderPlaceholderRows(loadingRowCount)
-            }
-        })
-
-        if (!this.dataLoading) {
-            this.totals()
-        }
+    destroy() {
+        this.splitter.destroy()
+        this.root.remove()
     }
 
-    totals() {
-        this.tables.forEach(table => {
-            table.totals()
-            table.showTotals()
-        })
-    }
+    #initializeRootTag(grid) {
+        this.root.role = roles.grid
 
-    show() {
-        this.$empty.addClass('hidden')
-        this.$content.removeClass('hidden')
-    }
+        this.root.style.width = grid.width
+        this.root.style.height = grid.height
 
-    hide() {
-        this.$empty.removeClass('hidden')
-        this.$content.addClass('hidden')
-    }
-
-    showLoader() {
-        this.$content.addClass('loading')
-    }
-
-    hideLoader() {
-        this.$content.removeClass('loading')
-    }
-
-    enableScroll() {
-        this.$scroller.each(function() {
-            this.style.overflowY = 'auto'
-        })
-
-        this.scrollEnabled = true
-    }
-
-    disableScroll() {
-        this.$scroller.each(function() {
-            this.style.overflowY = 'hidden'
-        })
-
-        this.scrollEnabled = false
-    }
-
-    resetScroll() {
-        this.$scroller.scrollTop(0)
-    }
-
-    isScrollable() {
-        return this.$scroller.isScrollable()
-    }
-
-    enableSort() {
-        this.tables.forEach(table => {
-            table.sortController.enable()
-        })
-    }
-
-    disableSort() {
-        this.tables.forEach(table => {
-            table.sortController.disable()
-        })
-    }
-
-    enableFilter() {
-        this.tables.forEach(table => {
-            table.filterController.enable()
-        })
-    }
-
-    disableFilter() {
-        this.tables.forEach(table => {
-            table.filterController.disable()
-        })
-    }
-
-    #initializeTables() {
-        this.tables = []
-        const parentData = { siblings: [] }
-
-        this.$tables.each((i, table) => {
-            let controller = new TableController(table, this.structure[i], this.options.table, this.data, parentData)
-            controller.splitGrid = this
-
-            controller.data = this.data
-            controller.originData = this.data
-            controller.parent = parentData
-
-            parentData.siblings.push(controller)
-            this.tables.push(controller)
-        })
-    }
-
-    #initializeScroll() {
-        this.$scroller = this.$root.find('.splitter-pane');
-
-        this.$scroller.connectScrolls()
-    }
-
-    #initializeRenderer() {
-        const {
-            infiniteScroll,
-            scrollChunkSize
-        } = this.options
-
-        this.scrolledToEnd = !infiniteScroll
-
-        this.rowRenderer = infiniteScroll ?
-            new InfiniteScrollRowRenderer(this, scrollChunkSize) :
-            new ImmediateRowRenderer(this)
-    }
-
-    #initializeSimpleColumns(structure, columns) {
-        structure.columns = columns
-
-        if (structure.nested) {
-            this.#initializeSimpleColumns(structure.nested, columns)
-        }
+        this.root.classList.add('split-grid')
+        this.root.classList.add(`split-grid-${this.mode.toLowerCase()}`)
+        this.root.classList.add(...SplitGridHelpers.parseCss(grid.css))
     }
 }

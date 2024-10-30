@@ -1,0 +1,180 @@
+
+/* #region split-grid layout */
+
+.split-grid {
+
+}
+
+.split-grid .splitter {
+    display: flex;
+    height: 100%;
+
+    position: relative;
+}
+
+
+.split-grid .splitter .panel {
+    height: 100%;
+    overflow: auto;
+}
+
+.split-grid .splitter .panel.resizing {
+    pointer-events: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+.split-grid .splitter .divider {
+    width: 2px;
+
+    background: #eaeaea;
+
+    cursor: e-resize;
+}
+
+.split-grid .splitter .panel::-webkit-scrollbar {
+    width: 0;
+}
+
+.split-grid .splitter .panel:last-child::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.split-grid .empty {
+    width: 100%;
+    height: 100%;
+}
+
+/* #endregion */
+
+
+/* #region split-table */
+
+.split-table {
+    margin: 0;
+    padding: 0;
+
+    table-layout: fixed;
+
+    background: white;
+}
+
+.split-table td,
+.split-table th {
+    background: transparent;
+}
+
+.split-table tbody > tr.highlight {
+    background-color: rgb(222, 242, 250) !important;
+}
+
+.split-table .positive {
+    color: rgb(141, 255, 141);
+}
+
+.split-table .negative {
+    color: rgb(253, 129, 129);
+}
+
+.split-table tr > td > span {
+    display: block;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.split-table thead th.pinned,
+.split-table tbody td.pinned,
+.split-table tfoot td.pinned {
+    background: #fff;
+    position: sticky !important;
+    left: 0;
+    z-index: 10;
+}
+
+.split-table thead th.pinned-last,
+.split-table tbody td.pinned-last,
+.split-table tfoot td.pinned-last {
+    box-shadow: inset -2px 0px 0px 0px #d5d5d5;
+}
+
+
+/* #endregion */
+
+
+/* #region split-table header */
+
+.split-table.resizing {
+    user-select: none;
+}
+
+.split-table thead th {
+    position: relative;
+}
+
+.split-table thead th [role=sort] {
+    display: none;
+}
+
+.split-table thead th.sort-asc [role=sort] {
+    display: block;
+}
+
+.split-table thead th.sort-desc [role=sort] {
+    display: block;
+}
+
+
+.split-table thead th [role=menu] {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 4px;
+    height: 100%;
+}
+
+.split-table thead th:hover [role=menu],
+.split-table thead th.active [role=menu] {
+    display: block;
+}
+
+
+.split-table thead th [role=resize] {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 4px;
+    background: transparent;
+
+    height: 100%;
+}
+
+.split-table thead th [role=resize]:hover {
+    cursor: col-resize;
+}
+
+.split-table col.active-resize {
+    border-right: 2px solid red;
+}
+
+.split-table col.active-filter {
+    background: red;
+}
+
+.split-grid-stacked .split-table .table-container {
+    padding: 0;
+}
+
+/* #endregion */
+
+/* #region filter */
+
+.checkbox-menu {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-left: 5px;
+}
+
+/* #endregion filter*/
+

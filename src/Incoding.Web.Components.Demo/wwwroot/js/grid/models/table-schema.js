@@ -73,7 +73,7 @@ class TableSchema {
     pinColumn(uid, value) {
         const column = this.#getColumn(uid)
 
-        let pinPosition = value ? this.#getPinPosition() : this.#getPositionByIndex(column.index) - 1
+        const pinPosition = value ? this.#getPinPosition() : this.#getPositionByIndex(column.index) - 1
 
         column.setPin(value)
         if (this.#hasNestedAndSimple()) {
@@ -221,7 +221,7 @@ class TableSchema {
     #getPositionByIndex(index) {
         for (let pos = 0; pos < this.columns.length; pos++) {
             const column = this.columns[pos];
-            if (column.isPinned || column.isSpecialColumn()) continue;
+            if (column.isPinned || column.isControlColumn()) continue;
 
             if (column.index >= index) {
                 return pos
@@ -244,9 +244,9 @@ class TableSchema {
 
         let index = startIndex
         for (const column of columns) {
-            if (column.isPinned || column.isSpecialColumn()) continue;
+            if (column.isPinned || column.isControlColumn()) continue;
 
-            while (pinned.find(pin => pin === index))
+            while (pinned.find(pin => pin === index) !== undefined)
                 index++
 
             column.index = index

@@ -38,6 +38,10 @@ class FormatService {
     }
 
     dateTime(value) {
+        if (value == undefined) {
+            return ''
+        }
+
         if (_.isDate(value)) {
             return value.toLocaleDateString()
         }

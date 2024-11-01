@@ -31,8 +31,10 @@ class ColumnMenu {
 
     /**
      * @param { Column } column
+     * @param { number } top
+     * @param { number } left
      */
-    open(column) {
+    open(column, top, left) {
         const th = this.table.getColumnHeader(column)
         th.classList.add('active')
 
@@ -46,8 +48,7 @@ class ColumnMenu {
         this.#targetColumn = column
         this.#isOpen = true
 
-        const { bottom, left } = th.getBoundingClientRect()
-        this.#menu.show(bottom, left)
+        this.#menu.show(top, left)
     }
 
     close() {
@@ -76,24 +77,35 @@ class ColumnMenu {
      * @param { PointerEvent } ev
      */
     #handleClick = (ev) => {
-        const { target, button } = ev
+        const {
+            target,
+            button,
+            clientX: left,
+            clientY: top
+        } = ev
 
-        if (target.role === roles.menu || button === 2) {
+        const prevTarget = this.#targetColumn
+
+        if (this.#isOpen) {
+            this.close()
+        }
+
+        const isContextMenu = button === ExecutableHelper.MouseButtons.Right
+
+        if (target.role === roles.menu || isContextMenu) {
             const th = target.closest('th')
             const column = this.table.getColumn(th.dataset.uid)
-
-            if (!column || !column.showMenu) return
 
             ev.preventDefault()
             ev.stopPropagation()
 
-            if (this.#isOpen) {
-                const isSameColumn = this.#targetColumn === column
-                this.close()
-                if (isSameColumn) return
-            }
+            if (!column || !column.showMenu)
+                return
 
-            this.open(column)
+            if (!isContextMenu && prevTarget === column)
+                return
+
+            this.open(column, top, left)
         }
     }
 
@@ -104,18 +116,20 @@ class ColumnMenu {
     #getMenuItems(column) {
         return [
             { icon: 'ci-filter', text: 'Filter', action: 'Filter', isDisabled: !column.filterable },
-            { icon: 'ci-caret-up', text: 'Sort Asc', action: 'SortAsc', isDisabled: !column.sortable },
-            { icon: 'ci-caret-down', text: 'Sort Desc', action: 'SortDesc', isDisabled: !column.sortable },
+            { icon: 'ci-caret-down', text: 'Sort Asc', action: 'SortAsc', isDisabled: !column.sortable },
+            { icon: 'ci-caret-up', text: 'Sort Desc', action: 'SortDesc', isDisabled: !column.sortable },
 
             { isDivider: true },
 
             { text: 'Auto fit', action: 'AutoFit', isDisabled: !column.resizable },
 
-            { text: 'Move column to Start', action: 'MoveStart', isDisabled: column.hasStackedParent() || column.isPinned },
-            { text: 'Move column to End', action: 'MoveEnd', isDisabled: column.hasStackedParent() || column.isPinned },
-            this.#getMoveToMenuItems(column),
+            {
+                text: 'Move to',
+                isDisabled: column.hasStackedParent() || column.isPinned,
+                sideMenu: this.#getMoveToMenuItems(column)
+            },
 
-            this.#getPinMenuItem(column),
+            ...this.#getPinMenuItems(column),
 
             { icon: 'ci-pencil', text: 'Rename', action: 'Rename', isDisabled: column.isStacked() },
 
@@ -127,32 +141,43 @@ class ColumnMenu {
 
     /**
      * @param { Column } column
-     * @returns { MenuItem }
+     * @returns { MenuItem[] }
      */
-    #getPinMenuItem(column) {
+    #getPinMenuItems(column) {
+
         return column.isPinned ?
-            { icon: 'ci-hand', text: 'Unpin', action: 'Unpin', isDisabled: column.hasStackedParent() } :
-            { icon: 'ci-hand', text: 'Pin', action: 'Pin', isDisabled: column.hasStackedParent() }
+            [
+                { text: 'Unpin', action: 'Unpin' },
+                { text: 'Unpin all', action: 'UnpinAll' }
+            ] :
+            [
+                { text: 'Pin', action: 'Pin', isDisabled: column.hasStackedParent() },
+                { text: 'Pin to this', action: 'PinToThis', isDisabled: column.hasStackedParent() }
+            ]
     }
 
     /**
      * @param { Column } column
-     * @returns { MenuItem }
+     * @returns { MenuItem[] }
      */
     #getMoveToMenuItems(column) {
-        const availableColumns = this.table.columns.filter(
-            col => col != column && !col.isSpecialColumn() && !col.isPinned
-        );
+        const items = [
+            { text: 'Start', action: 'MoveStart' },
+            { text: 'End', action: 'MoveEnd' },
+        ]
 
-        return {
-            text: 'Move to',
-            isDisabled: column.hasStackedParent() || column.isPinned || availableColumns.length === 0,
-            sideMenu: availableColumns.map(subColumn => ({
-                text: subColumn.title,
-                action: 'MoveTo',
-                subAction: subColumn.uid,
-            }))
+        const columns = this.table.columns
+            .filter(col => col != column && !col.isControlColumn() && !col.isPinned)
+            .map(col => ({ text: col.title, action: 'MoveTo', subAction: col.uid }));
+
+        if (columns.length !== 0) {
+            items.push(
+                { isDivider: true },
+                ...columns
+            )
         }
+
+        return items
     }
 
 
@@ -176,8 +201,14 @@ class ColumnMenu {
             case 'Pin':
                 this.table.columnEdit.pin(column)
                 break;
+            case 'PinToThis':
+                this.table.columnEdit.pinUntil(column)
+                break;
             case 'Unpin':
                 this.table.columnEdit.unpin(column)
+                break;
+            case 'UnpinAll':
+                this.table.columnEdit.unpinAll()
                 break;
             case 'AutoFit':
                 this.table.columnResize.autoFit(column)
@@ -213,4 +244,3 @@ class ColumnMenu {
         th.classList.remove('active')
     }
 }
-

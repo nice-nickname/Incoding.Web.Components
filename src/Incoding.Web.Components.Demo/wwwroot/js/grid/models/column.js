@@ -8,7 +8,7 @@ class Column {
     id
 
     /**
-     * Unique id is used to search column is columns array
+     * Unique id is used to search column in columns array
      * @type { string }
      */
     uid
@@ -134,17 +134,17 @@ class Column {
     stacked
 
     /**
-     * @type { SpecialColumnKind | null }
+     * @type { ControlColumn | null }
      */
-    specialColumn
+    controlColumn
 
     /**
      * @type { string }
      */
     summaryExpr
 
-    isSpecialColumn() {
-        return this.specialColumn !== null
+    isControlColumn() {
+        return this.controlColumn !== null
     }
 
     isStacked() {
@@ -204,7 +204,7 @@ class Column {
         this.sortable = column.sortable
         this.isSorted = column.isSorted
         this.sortedBy = column.sortedBy
-        this.specialColumn = column.specialColumnKind
+        this.controlColumn = column.controlColumn
         this.summaryExpr = column.summaryExpr
 
         this.stacked = column.stacked.map(c => new Column(c, formatter))
@@ -216,6 +216,7 @@ class Column {
 
     setPin(value) {
         this.isPinned = value
+        this.resizable = !value
 
         if (this.isStacked()) {
             this.stacked.forEach(stacked =>
@@ -241,9 +242,15 @@ class Column {
      * @param { object } data
      */
     getValue(data) {
-        return this.spreadField ?
-                data[this.spreadField][this.spreadIndex][this.field] :
-                data[this.field]
+        var value = this.spreadField ?
+            data[this.spreadField][this.spreadIndex][this.field] :
+            data[this.field];
+
+        if (!value && this.type === ColumnType.String) {
+            return ''
+        }
+
+        return value
     }
 
 

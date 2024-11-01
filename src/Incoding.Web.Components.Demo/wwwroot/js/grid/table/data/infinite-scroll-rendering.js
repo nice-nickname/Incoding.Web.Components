@@ -60,6 +60,7 @@ class InfitniteScrollRenderingBehaviour {
 
     #handleScroll = (ev) => {
         const scroller = this.scroller
+        if (!$(scroller).isScrollable()) return
 
         const containerScroll = scroller.scrollHeight - scroller.clientHeight;
 
@@ -96,7 +97,7 @@ class InfitniteScrollRenderingBehaviour {
 
         this.tryRenderNextChunk();
 
-        if (!$(this.scroller).isScrollable() && this.#availableChunks > this.#currentChunk) {
+        if (!$(this.scroller).isScrollable() && !this.#nextChunkRequested) {
             this.#nextChunkRequested = true
 
             this.requestRender()

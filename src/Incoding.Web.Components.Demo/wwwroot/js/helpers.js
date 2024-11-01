@@ -1,34 +1,4 @@
 
-const ColumnFormat = {
-    DateTime: 'DateTime',
-    Percentage: 'Percentage',
-    Currency: 'Currency',
-    Numeric: 'Numeric',
-    Empty: 'Empty'
-};
-
-const ColumnType = {
-    String: 'String',
-    Numeric: 'Numeric',
-    Datetime: 'Datetime',
-    Boolean: 'Boolean'
-};
-
-const GridMode = {
-    SubGrid: 'SubGrid',
-    Stacked: 'Stacked'
-};
-
-const ColumnSortOption = {
-    Asc: 'Asc',
-    Desc: 'Desc'
-};
-
-const SpecialColumnKind = {
-    Expand: 'Expand',
-    Dropdown: 'Dropdown'
-}
-
 class SplitGridHelpers {
 
     static decodeTempalte(tmpl) {
@@ -40,4 +10,23 @@ class SplitGridHelpers {
     static parseCss(css) {
         return css?.split(' ').filter(s => !ExecutableHelper.IsNullOrEmpty(s)) || []
     }
-}
+};
+
+/**
+ * @enum { number }
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
+ */
+ExecutableHelper.MouseButtons = {
+
+    Left: 0, // Main button
+
+    Wheel: 1, // Auxiliary button
+
+    Right: 2, // Secondary button
+
+    BrowserBack: 3, // Fourth additional button
+
+    BrowserForward: 4, // Fifth additional button
+
+};
+

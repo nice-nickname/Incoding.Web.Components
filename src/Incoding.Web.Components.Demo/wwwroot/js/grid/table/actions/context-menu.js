@@ -98,14 +98,10 @@ class ContextMenu {
             { isDivider: true }
         ]
 
-        if (column.resizable) {
-            items.push({ icon: '', text: 'Auto fit', action: 'AutoFit' })
-        }
-
         if (column.sortable) {
             items.push(
-                { icon: '', text: 'Sort Asc', action: 'SortAsc' },
-                { icon: '', text: 'Sort Desc', action: 'SortDesc' }
+                { icon: 'ci-caret-down', text: 'Sort Asc', action: 'SortAsc' },
+                { icon: 'ci-caret-up', text: 'Sort Desc', action: 'SortDesc' }
             )
         }
 

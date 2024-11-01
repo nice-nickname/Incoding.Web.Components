@@ -1,4 +1,4 @@
-﻿namespace Incoding.Web.Components.Grid;
+namespace Incoding.Web.Components.Grid;
 
 #region << Using >>
 
@@ -14,10 +14,10 @@ public static class GridStyles
                                                       TableCss = "table table-bordered"
                                               };
 
-    public static Func<Style> Compact = () => new Style
+    public static Func<Style> Primary = () => new Style
                                               {
                                                       GridCss = "bg-white",
-                                                      TableCss = "table table-bordered"
+                                                      TableCss = "table table-bordered table-primary"
                                               };
 
     public record Style

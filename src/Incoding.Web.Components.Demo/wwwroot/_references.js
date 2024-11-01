@@ -29,11 +29,14 @@
 /// <reference path="js/grid/utils/filter-menu.js" />
 
 /// <reference path="js/grid/table/services/clipboard.js" />
+/// <reference path="js/grid/table/services/service-collection.js" />
+/// <reference path="js/grid/table/services/format.js" />
 
 /// <reference path="js/grid/table/actions/sort.js" />
 /// <reference path="js/grid/table/actions/filter.js" />
 /// <reference path="js/grid/table/actions/row-dropdown.js" />
 /// <reference path="js/grid/table/actions/column-resize.js" />
+/// <reference path="js/grid/table/actions/column-resize-handler.js" />
 /// <reference path="js/grid/table/actions/column-edit.js" />
 /// <reference path="js/grid/table/actions/column-menu.js" />
 /// <reference path="js/grid/table/actions/hover.js" />
@@ -47,8 +50,5 @@
 /// <reference path="js/grid/models/column.js" />
 /// <reference path="js/grid/models/row.js" />
 /// <reference path="js/grid/models/table-schema.js" />
-
-/// <reference path="js/grid/services/service-collection.js" />
-/// <reference path="js/grid/services/format.js" />
 
 /// <reference path="js/grid/split-grid.js" />

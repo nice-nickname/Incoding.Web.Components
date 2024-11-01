@@ -26,7 +26,7 @@ public static class ImlBinder
                     .AsHtmlAttributes()
                     .ToDictionary(s => s.Key, s => s.Value.ToString());
 
-        return TemplateEncoder.Encode(attrs["incoding"]);
+        return attrs["incoding"];
     }
 
     private static IIncodingMetaLanguageEventBuilderDsl Noop(IHtmlHelper html)

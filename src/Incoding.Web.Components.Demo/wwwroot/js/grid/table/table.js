@@ -6,7 +6,6 @@ class SplitTable {
      */
     id
 
-
     /**
      * @type { HTMLTableElement }
      */
@@ -61,7 +60,7 @@ class SplitTable {
     /**
      * @type { ServiceCollection }
      */
-    serviceCollection
+    services
 
 
     /**
@@ -174,7 +173,7 @@ class SplitTable {
 
         this.schema = table
 
-        this.serviceCollection = services
+        this.services = services
 
         this.dataBinding = binding
 
@@ -208,7 +207,7 @@ class SplitTable {
             this.rowDropdown = new RowDropdown(this)
         }
 
-        if (this.columns.some(column => column.specialColumn === SpecialColumnKind.Expand)) {
+        if (this.columns.some(column => column.controlColumn === ControlColumn.Expand)) {
             this.rowExpand = new RowExpand(this)
         }
 
@@ -283,7 +282,7 @@ class SplitTable {
         td.colSpan = this.getFlatColumns().length
         td.classList.add('table-container')
 
-        const nested = new SplitTable(this.nested, this.serviceCollection, dataBinding, this.mode)
+        const nested = new SplitTable(this.nested, this.services, dataBinding, this.mode)
         nested.appendTo(td)
 
         tr.append(td)
@@ -304,7 +303,7 @@ class SplitTable {
     }
 
     updateTotals() {
-        this.footer.updateTotals()
+        this.footer.update()
         this.summaryRenderer?.update()
     }
 
@@ -328,6 +327,10 @@ class SplitTable {
         }
 
         return columns
+    }
+
+    getPinnedColumns() {
+        return this.columns.filter(col => col.isPinned)
     }
 
     /**

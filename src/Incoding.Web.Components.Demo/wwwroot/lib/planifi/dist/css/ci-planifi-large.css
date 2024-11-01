@@ -1,0 +1,3173 @@
+﻿/* #region ===================================== Collection: Planifi large ======================================== */
+.ci-planifi-large {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    font-size: 1em;
+    opacity: 1;
+    position: relative;
+}
+
+    .ci-planifi-large:before {
+        top: 0px;
+        left: 0px;
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        background-image: url("../images/ci-planifi-large-base.svg");
+        background-repeat: no-repeat;
+        background-size: 20em 1em;
+        background-position: 0em 0em;
+        font-size: 1em;
+        opacity: 1;
+        position: absolute;
+    }
+    /* #region -------------------------------- Glyphs ---------------------------------- */
+    /* #region Regular */
+    .ci-planifi-large.ci-search:before, .ci-planifi-large.ci-glyph-search:before,
+    .ci-planifi-large.ci-xs-search:before, .ci-planifi-large.ci-xs-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-flags:before, .ci-planifi-large.ci-glyph-flags:before,
+    .ci-planifi-large.ci-xs-flags:before, .ci-planifi-large.ci-xs-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-flag-list:before, .ci-planifi-large.ci-glyph-flag-list:before,
+    .ci-planifi-large.ci-xs-flag-list:before, .ci-planifi-large.ci-xs-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-schedule:before, .ci-planifi-large.ci-glyph-schedule:before,
+    .ci-planifi-large.ci-xs-schedule:before, .ci-planifi-large.ci-xs-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-table-db:before, .ci-planifi-large.ci-glyph-table-db:before,
+    .ci-planifi-large.ci-xs-table-db:before, .ci-planifi-large.ci-xs-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-folder:before, .ci-planifi-large.ci-glyph-folder:before,
+    .ci-planifi-large.ci-xs-folder:before, .ci-planifi-large.ci-xs-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-pie-chart:before, .ci-planifi-large.ci-glyph-pie-chart:before,
+    .ci-planifi-large.ci-xs-pie-chart:before, .ci-planifi-large.ci-xs-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-bar-chart:before, .ci-planifi-large.ci-glyph-bar-chart:before,
+    .ci-planifi-large.ci-xs-bar-chart:before, .ci-planifi-large.ci-xs-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-line-chart:before, .ci-planifi-large.ci-glyph-line-chart:before,
+    .ci-planifi-large.ci-xs-line-chart:before, .ci-planifi-large.ci-xs-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-people:before, .ci-planifi-large.ci-glyph-people:before,
+    .ci-planifi-large.ci-xs-people:before, .ci-planifi-large.ci-xs-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-user-cog:before, .ci-planifi-large.ci-glyph-user-cog:before,
+    .ci-planifi-large.ci-xs-user-cog:before, .ci-planifi-large.ci-xs-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-user-plus:before, .ci-planifi-large.ci-glyph-user-plus:before,
+    .ci-planifi-large.ci-xs-user-plus:before, .ci-planifi-large.ci-xs-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-table-filter:before, .ci-planifi-large.ci-glyph-table-filter:before,
+    .ci-planifi-large.ci-xs-table-filter:before, .ci-planifi-large.ci-xs-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-temp-unavailable:before, .ci-planifi-large.ci-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-xs-temp-unavailable:before, .ci-planifi-large.ci-xs-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-x015:before, .ci-planifi-large.ci-glyph-x015:before,
+    .ci-planifi-large.ci-xs-x015:before, .ci-planifi-large.ci-xs-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-x016:before, .ci-planifi-large.ci-glyph-x016:before,
+    .ci-planifi-large.ci-xs-x016:before, .ci-planifi-large.ci-xs-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-x017:before, .ci-planifi-large.ci-glyph-x017:before,
+    .ci-planifi-large.ci-xs-x017:before, .ci-planifi-large.ci-xs-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-x018:before, .ci-planifi-large.ci-glyph-x018:before,
+    .ci-planifi-large.ci-xs-x018:before, .ci-planifi-large.ci-xs-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-x019:before, .ci-planifi-large.ci-glyph-x019:before,
+    .ci-planifi-large.ci-xs-x019:before, .ci-planifi-large.ci-xs-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-x020:before, .ci-planifi-large.ci-glyph-x020:before,
+    .ci-planifi-large.ci-xs-x020:before, .ci-planifi-large.ci-xs-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-a-glyph-search.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-search:before,
+    .ci-planifi-large.ci-xs-a-glyph-search.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-flags.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-flags:before,
+    .ci-planifi-large.ci-xs-a-glyph-flags.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-flag-list.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-flag-list:before,
+    .ci-planifi-large.ci-xs-a-glyph-flag-list.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-schedule.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-schedule:before,
+    .ci-planifi-large.ci-xs-a-glyph-schedule.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-table-db.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-table-db:before,
+    .ci-planifi-large.ci-xs-a-glyph-table-db.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-folder.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-folder:before,
+    .ci-planifi-large.ci-xs-a-glyph-folder.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-pie-chart.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-pie-chart:before,
+    .ci-planifi-large.ci-xs-a-glyph-pie-chart.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-bar-chart.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-bar-chart:before,
+    .ci-planifi-large.ci-xs-a-glyph-bar-chart.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-line-chart.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-line-chart:before,
+    .ci-planifi-large.ci-xs-a-glyph-line-chart.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-people.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-people:before,
+    .ci-planifi-large.ci-xs-a-glyph-people.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-user-cog.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-user-cog:before,
+    .ci-planifi-large.ci-xs-a-glyph-user-cog.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-user-plus.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-user-plus:before,
+    .ci-planifi-large.ci-xs-a-glyph-user-plus.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-table-filter.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-table-filter:before,
+    .ci-planifi-large.ci-xs-a-glyph-table-filter.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-temp-unavailable.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-xs-a-glyph-temp-unavailable.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x015.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x015:before,
+    .ci-planifi-large.ci-xs-a-glyph-x015.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x016.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x016:before,
+    .ci-planifi-large.ci-xs-a-glyph-x016.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x017.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x017:before,
+    .ci-planifi-large.ci-xs-a-glyph-x017.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x018.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x018:before,
+    .ci-planifi-large.ci-xs-a-glyph-x018.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x019.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x019:before,
+    .ci-planifi-large.ci-xs-a-glyph-x019.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-a-glyph-x020.active:before, .ci-element.active .ci-planifi-large.ci-a-glyph-x020:before,
+    .ci-planifi-large.ci-xs-a-glyph-x020.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-h-glyph-search:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-search:before,
+    .ci-planifi-large.ci-xs-h-glyph-search:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-flags:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-flags:before,
+    .ci-planifi-large.ci-xs-h-glyph-flags:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-flag-list:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-flag-list:before,
+    .ci-planifi-large.ci-xs-h-glyph-flag-list:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-schedule:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-schedule:before,
+    .ci-planifi-large.ci-xs-h-glyph-schedule:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-table-db:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-table-db:before,
+    .ci-planifi-large.ci-xs-h-glyph-table-db:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-folder:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-folder:before,
+    .ci-planifi-large.ci-xs-h-glyph-folder:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-pie-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-pie-chart:before,
+    .ci-planifi-large.ci-xs-h-glyph-pie-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-bar-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-bar-chart:before,
+    .ci-planifi-large.ci-xs-h-glyph-bar-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-line-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-line-chart:before,
+    .ci-planifi-large.ci-xs-h-glyph-line-chart:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-people:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-people:before,
+    .ci-planifi-large.ci-xs-h-glyph-people:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-user-cog:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-user-cog:before,
+    .ci-planifi-large.ci-xs-h-glyph-user-cog:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-user-plus:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-user-plus:before,
+    .ci-planifi-large.ci-xs-h-glyph-user-plus:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-table-filter:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-table-filter:before,
+    .ci-planifi-large.ci-xs-h-glyph-table-filter:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-temp-unavailable:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-xs-h-glyph-temp-unavailable:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x015:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x015:before,
+    .ci-planifi-large.ci-xs-h-glyph-x015:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x016:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x016:before,
+    .ci-planifi-large.ci-xs-h-glyph-x016:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x017:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x017:before,
+    .ci-planifi-large.ci-xs-h-glyph-x017:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x018:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x018:before,
+    .ci-planifi-large.ci-xs-h-glyph-x018:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x019:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x019:before,
+    .ci-planifi-large.ci-xs-h-glyph-x019:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-h-glyph-x020:hover:before, .ci-element:hover .ci-planifi-large.ci-h-glyph-x020:before,
+    .ci-planifi-large.ci-xs-h-glyph-x020:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-p-glyph-search:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-search:before,
+    .ci-planifi-large.ci-xs-p-glyph-search:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-flags:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-flags:before,
+    .ci-planifi-large.ci-xs-p-glyph-flags:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-flag-list:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-flag-list:before,
+    .ci-planifi-large.ci-xs-p-glyph-flag-list:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-schedule:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-schedule:before,
+    .ci-planifi-large.ci-xs-p-glyph-schedule:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-table-db:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-table-db:before,
+    .ci-planifi-large.ci-xs-p-glyph-table-db:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-folder:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-folder:before,
+    .ci-planifi-large.ci-xs-p-glyph-folder:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-pie-chart:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-pie-chart:before,
+    .ci-planifi-large.ci-xs-p-glyph-pie-chart:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-bar-chart:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-bar-chart:before,
+    .ci-planifi-large.ci-xs-p-glyph-bar-chart:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-line-chart:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-line-chart:before,
+    .ci-planifi-large.ci-xs-p-glyph-line-chart:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-people:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-people:before,
+    .ci-planifi-large.ci-xs-p-glyph-people:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-user-cog:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-user-cog:before,
+    .ci-planifi-large.ci-xs-p-glyph-user-cog:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-user-plus:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-user-plus:before,
+    .ci-planifi-large.ci-xs-p-glyph-user-plus:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-table-filter:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-table-filter:before,
+    .ci-planifi-large.ci-xs-p-glyph-table-filter:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-temp-unavailable:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-xs-p-glyph-temp-unavailable:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x015:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x015:before,
+    .ci-planifi-large.ci-xs-p-glyph-x015:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x016:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x016:before,
+    .ci-planifi-large.ci-xs-p-glyph-x016:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x017:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x017:before,
+    .ci-planifi-large.ci-xs-p-glyph-x017:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x018:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x018:before,
+    .ci-planifi-large.ci-xs-p-glyph-x018:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x019:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x019:before,
+    .ci-planifi-large.ci-xs-p-glyph-x019:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-p-glyph-x020:active:before, .ci-element:active .ci-planifi-large.ci-p-glyph-x020:before,
+    .ci-planifi-large.ci-xs-p-glyph-x020:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-d-glyph-search.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-search:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-search:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-search:before,
+    .ci-planifi-large.ci-d-glyph-search[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-search:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-search.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-search:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-search:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-search:before,
+    .ci-planifi-large.ci-xs-d-glyph-search[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-search:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-flags.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-flags:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-flags:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-flags:before,
+    .ci-planifi-large.ci-d-glyph-flags[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-flags:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-flags.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-flags:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-flags:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-flags:before,
+    .ci-planifi-large.ci-xs-d-glyph-flags[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-flags:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-flag-list.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-flag-list:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-flag-list:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-flag-list:before,
+    .ci-planifi-large.ci-d-glyph-flag-list[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-flag-list:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-flag-list.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-flag-list:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-flag-list:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-flag-list:before,
+    .ci-planifi-large.ci-xs-d-glyph-flag-list[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-flag-list:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-schedule.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-schedule:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-schedule:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-schedule:before,
+    .ci-planifi-large.ci-d-glyph-schedule[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-schedule:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-schedule.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-schedule:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-schedule:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-schedule:before,
+    .ci-planifi-large.ci-xs-d-glyph-schedule[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-schedule:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-table-db.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-table-db:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-table-db:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-table-db:before,
+    .ci-planifi-large.ci-d-glyph-table-db[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-table-db:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-table-db.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-table-db:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-table-db:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-table-db:before,
+    .ci-planifi-large.ci-xs-d-glyph-table-db[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-table-db:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-folder.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-folder:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-folder:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-folder:before,
+    .ci-planifi-large.ci-d-glyph-folder[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-folder:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-folder.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-folder:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-folder:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-folder:before,
+    .ci-planifi-large.ci-xs-d-glyph-folder[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-folder:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-pie-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-pie-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-pie-chart:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-pie-chart:before,
+    .ci-planifi-large.ci-d-glyph-pie-chart[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-pie-chart:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-pie-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-pie-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-pie-chart:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-pie-chart:before,
+    .ci-planifi-large.ci-xs-d-glyph-pie-chart[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-pie-chart:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-bar-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-bar-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-bar-chart:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-bar-chart:before,
+    .ci-planifi-large.ci-d-glyph-bar-chart[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-bar-chart:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-bar-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-bar-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-bar-chart:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-bar-chart:before,
+    .ci-planifi-large.ci-xs-d-glyph-bar-chart[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-bar-chart:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-line-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-line-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-line-chart:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-line-chart:before,
+    .ci-planifi-large.ci-d-glyph-line-chart[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-line-chart:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-line-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-line-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-line-chart:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-line-chart:before,
+    .ci-planifi-large.ci-xs-d-glyph-line-chart[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-line-chart:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-people.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-people:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-people:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-people:before,
+    .ci-planifi-large.ci-d-glyph-people[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-people:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-people.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-people:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-people:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-people:before,
+    .ci-planifi-large.ci-xs-d-glyph-people[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-people:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-user-cog.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-user-cog:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-user-cog:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-user-cog:before,
+    .ci-planifi-large.ci-d-glyph-user-cog[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-user-cog:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-user-cog.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-user-cog:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-user-cog:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-user-cog:before,
+    .ci-planifi-large.ci-xs-d-glyph-user-cog[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-user-cog:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-user-plus.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-user-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-user-plus:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-user-plus:before,
+    .ci-planifi-large.ci-d-glyph-user-plus[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-user-plus:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-user-plus.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-user-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-user-plus:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-user-plus:before,
+    .ci-planifi-large.ci-xs-d-glyph-user-plus[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-user-plus:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-table-filter.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-table-filter:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-table-filter:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-table-filter:before,
+    .ci-planifi-large.ci-d-glyph-table-filter[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-table-filter:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-table-filter.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-table-filter:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-table-filter:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-table-filter:before,
+    .ci-planifi-large.ci-xs-d-glyph-table-filter[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-table-filter:disabled:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-temp-unavailable.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-temp-unavailable:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-temp-unavailable:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-d-glyph-temp-unavailable[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-temp-unavailable:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-temp-unavailable.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-temp-unavailable:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-temp-unavailable:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-xs-d-glyph-temp-unavailable[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-temp-unavailable:disabled:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x015.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x015:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x015:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x015:before,
+    .ci-planifi-large.ci-d-glyph-x015[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x015:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x015.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x015:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x015:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x015:before,
+    .ci-planifi-large.ci-xs-d-glyph-x015[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x015:disabled:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x016.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x016:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x016:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x016:before,
+    .ci-planifi-large.ci-d-glyph-x016[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x016:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x016.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x016:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x016:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x016:before,
+    .ci-planifi-large.ci-xs-d-glyph-x016[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x016:disabled:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x017.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x017:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x017:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x017:before,
+    .ci-planifi-large.ci-d-glyph-x017[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x017:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x017.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x017:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x017:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x017:before,
+    .ci-planifi-large.ci-xs-d-glyph-x017[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x017:disabled:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x018.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x018:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x018:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x018:before,
+    .ci-planifi-large.ci-d-glyph-x018[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x018:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x018.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x018:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x018:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x018:before,
+    .ci-planifi-large.ci-xs-d-glyph-x018[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x018:disabled:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x019.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x019:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x019:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x019:before,
+    .ci-planifi-large.ci-d-glyph-x019[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x019:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x019.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x019:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x019:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x019:before,
+    .ci-planifi-large.ci-xs-d-glyph-x019[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x019:disabled:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-d-glyph-x020.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-glyph-x020:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-d-glyph-x020:before, .ci-element:disabled .ci-planifi-large.ci-d-glyph-x020:before,
+    .ci-planifi-large.ci-d-glyph-x020[disabled='disabled']:before, .ci-planifi-large.ci-d-glyph-x020:disabled:before,
+    .ci-planifi-large.ci-xs-d-glyph-x020.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-glyph-x020:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-glyph-x020:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-glyph-x020:before,
+    .ci-planifi-large.ci-xs-d-glyph-x020[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-glyph-x020:disabled:before {
+        background-position: -19em 0em;
+    }
+/* #endregion Disabled */
+@media (min-width: 768px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-sm-search:before,
+    .ci-planifi-large.ci-sm-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-flags:before,
+    .ci-planifi-large.ci-sm-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-flag-list:before,
+    .ci-planifi-large.ci-sm-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-schedule:before,
+    .ci-planifi-large.ci-sm-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-table-db:before,
+    .ci-planifi-large.ci-sm-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-folder:before,
+    .ci-planifi-large.ci-sm-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-pie-chart:before,
+    .ci-planifi-large.ci-sm-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-bar-chart:before,
+    .ci-planifi-large.ci-sm-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-line-chart:before,
+    .ci-planifi-large.ci-sm-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-people:before,
+    .ci-planifi-large.ci-sm-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-user-cog:before,
+    .ci-planifi-large.ci-sm-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-user-plus:before,
+    .ci-planifi-large.ci-sm-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-table-filter:before,
+    .ci-planifi-large.ci-sm-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-temp-unavailable:before,
+    .ci-planifi-large.ci-sm-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x015:before,
+    .ci-planifi-large.ci-sm-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x016:before,
+    .ci-planifi-large.ci-sm-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x017:before,
+    .ci-planifi-large.ci-sm-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x018:before,
+    .ci-planifi-large.ci-sm-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x019:before,
+    .ci-planifi-large.ci-sm-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-x020:before,
+    .ci-planifi-large.ci-sm-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-sm-a-glyph-search.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-flags.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-flag-list.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-schedule.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-table-db.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-folder.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-pie-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-bar-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-line-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-people.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-user-cog.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-user-plus.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-table-filter.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-temp-unavailable.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x015.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x016.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x017.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x018.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x019.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-a-glyph-x020.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-sm-h-glyph-search:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-flags:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-flag-list:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-schedule:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-table-db:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-folder:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-pie-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-bar-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-line-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-people:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-user-cog:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-user-plus:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-table-filter:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-temp-unavailable:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x015:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x016:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x017:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x018:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x019:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-h-glyph-x020:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-sm-p-glyph-search:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-flags:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-flag-list:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-schedule:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-table-db:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-folder:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-pie-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-bar-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-line-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-people:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-user-cog:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-user-plus:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-table-filter:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-temp-unavailable:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x015:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x016:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x017:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x018:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x019:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-p-glyph-x020:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-sm-d-glyph-search.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-search:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-search:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-search:before,
+    .ci-planifi-large.ci-sm-d-glyph-search[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-search:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-flags.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-flags:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-flags:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-flags:before,
+    .ci-planifi-large.ci-sm-d-glyph-flags[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-flags:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-flag-list.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-flag-list:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-flag-list:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-flag-list:before,
+    .ci-planifi-large.ci-sm-d-glyph-flag-list[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-flag-list:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-schedule.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-schedule:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-schedule:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-schedule:before,
+    .ci-planifi-large.ci-sm-d-glyph-schedule[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-schedule:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-table-db.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-table-db:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-table-db:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-table-db:before,
+    .ci-planifi-large.ci-sm-d-glyph-table-db[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-table-db:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-folder.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-folder:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-folder:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-folder:before,
+    .ci-planifi-large.ci-sm-d-glyph-folder[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-folder:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-pie-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-pie-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-pie-chart:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-pie-chart:before,
+    .ci-planifi-large.ci-sm-d-glyph-pie-chart[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-pie-chart:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-bar-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-bar-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-bar-chart:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-bar-chart:before,
+    .ci-planifi-large.ci-sm-d-glyph-bar-chart[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-bar-chart:disabled:before {
+        background-position: -7em 0em;
+    }
+    
+    .ci-planifi-large.ci-sm-d-glyph-line-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-line-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-line-chart:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-line-chart:before,
+    .ci-planifi-large.ci-sm-d-glyph-line-chart[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-line-chart:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-people.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-people:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-people:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-people:before,
+    .ci-planifi-large.ci-sm-d-glyph-people[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-people:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-user-cog.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-user-cog:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-user-cog:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-user-cog:before,
+    .ci-planifi-large.ci-sm-d-glyph-user-cog[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-user-cog:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-user-plus.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-user-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-user-plus:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-user-plus:before,
+    .ci-planifi-large.ci-sm-d-glyph-user-plus[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-user-plus:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-table-filter.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-table-filter:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-table-filter:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-table-filter:before,
+    .ci-planifi-large.ci-sm-d-glyph-table-filter[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-table-filter:disabled:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-temp-unavailable.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-temp-unavailable:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-temp-unavailable:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-sm-d-glyph-temp-unavailable[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-temp-unavailable:disabled:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-x015.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x015:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x015:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x015:before,
+    .ci-planifi-large.ci-sm-d-glyph-x015[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x015:disabled:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-x016.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x016:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x016:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x016:before,
+    .ci-planifi-large.ci-sm-d-glyph-x016[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x016:disabled:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-x017.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x017:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x017:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x017:before,
+    .ci-planifi-large.ci-sm-d-glyph-x017[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x017:disabled:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-x018.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x018:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x018:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x018:before,
+    .ci-planifi-large.ci-sm-d-glyph-x018[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x018:disabled:before {
+        background-position: -17em 0em;
+    }
+    
+    .ci-planifi-large.ci-sm-d-glyph-x019.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x019:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x019:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x019:before,
+    .ci-planifi-large.ci-sm-d-glyph-x019[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x019:disabled:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-sm-d-glyph-x020.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-glyph-x020:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-glyph-x020:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-glyph-x020:before,
+    .ci-planifi-large.ci-sm-d-glyph-x020[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-glyph-x020:disabled:before {
+        background-position: -19em 0em;
+    }
+
+    /* #endregion Disabled */
+}
+
+@media (min-width: 992px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-md-search:before,
+    .ci-planifi-large.ci-md-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-md-flags:before,
+    .ci-planifi-large.ci-md-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-md-flag-list:before,
+    .ci-planifi-large.ci-md-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-md-schedule:before,
+    .ci-planifi-large.ci-md-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-md-table-db:before,
+    .ci-planifi-large.ci-md-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-md-folder:before,
+    .ci-planifi-large.ci-md-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-md-pie-chart:before,
+    .ci-planifi-large.ci-md-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-md-bar-chart:before,
+    .ci-planifi-large.ci-md-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-md-line-chart:before,
+    .ci-planifi-large.ci-md-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-md-people:before,
+    .ci-planifi-large.ci-md-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-md-user-cog:before,
+    .ci-planifi-large.ci-md-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-md-user-plus:before,
+    .ci-planifi-large.ci-md-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-md-table-filter:before,
+    .ci-planifi-large.ci-md-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-md-temp-unavailable:before,
+    .ci-planifi-large.ci-md-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x015:before,
+    .ci-planifi-large.ci-md-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x016:before,
+    .ci-planifi-large.ci-md-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x017:before,
+    .ci-planifi-large.ci-md-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x018:before,
+    .ci-planifi-large.ci-md-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x019:before,
+    .ci-planifi-large.ci-md-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-md-x020:before,
+    .ci-planifi-large.ci-md-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-md-a-glyph-search.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-flags.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-flag-list.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-schedule.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-table-db.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-folder.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-pie-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-bar-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-line-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-people.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-user-cog.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-user-plus.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-table-filter.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-temp-unavailable.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x015.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x016.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x017.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x018.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x019.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-md-a-glyph-x020.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-md-h-glyph-search:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-flags:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-flag-list:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-schedule:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-table-db:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-folder:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-pie-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-bar-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-line-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-people:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-user-cog:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-user-plus:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-table-filter:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-temp-unavailable:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x015:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x016:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x017:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x018:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x019:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-md-h-glyph-x020:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-md-p-glyph-search:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-flags:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-flag-list:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-schedule:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-table-db:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-folder:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-pie-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-bar-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-line-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+   
+    .ci-planifi-large.ci-md-p-glyph-people:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-user-cog:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-user-plus:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-table-filter:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-temp-unavailable:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x015:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x016:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x017:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x018:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x019:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-md-p-glyph-x020:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-md-d-glyph-search.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-search:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-search:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-search:before,
+    .ci-planifi-large.ci-md-d-glyph-search[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-search:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-flags.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-flags:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-flags:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-flags:before,
+    .ci-planifi-large.ci-md-d-glyph-flags[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-flags:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-flag-list.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-flag-list:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-flag-list:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-flag-list:before,
+    .ci-planifi-large.ci-md-d-glyph-flag-list[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-flag-list:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-schedule.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-schedule:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-schedule:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-schedule:before,
+    .ci-planifi-large.ci-md-d-glyph-schedule[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-schedule:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-table-db.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-table-db:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-table-db:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-table-db:before,
+    .ci-planifi-large.ci-md-d-glyph-table-db[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-table-db:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-folder.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-folder:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-folder:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-folder:before,
+    .ci-planifi-large.ci-md-d-glyph-folder[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-folder:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-pie-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-pie-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-pie-chart:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-pie-chart:before,
+    .ci-planifi-large.ci-md-d-glyph-pie-chart[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-pie-chart:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-bar-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-bar-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-bar-chart:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-bar-chart:before,
+    .ci-planifi-large.ci-md-d-glyph-bar-chart[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-bar-chart:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-line-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-line-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-line-chart:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-line-chart:before,
+    .ci-planifi-large.ci-md-d-glyph-line-chart[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-line-chart:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-people.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-people:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-people:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-people:before,
+    .ci-planifi-large.ci-md-d-glyph-people[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-people:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-user-cog.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-user-cog:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-user-cog:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-user-cog:before,
+    .ci-planifi-large.ci-md-d-glyph-user-cog[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-user-cog:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-user-plus.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-user-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-user-plus:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-user-plus:before,
+    .ci-planifi-large.ci-md-d-glyph-user-plus[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-user-plus:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-table-filter.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-table-filter:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-table-filter:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-table-filter:before,
+    .ci-planifi-large.ci-md-d-glyph-table-filter[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-table-filter:disabled:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-temp-unavailable.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-temp-unavailable:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-temp-unavailable:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-md-d-glyph-temp-unavailable[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-temp-unavailable:disabled:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x015.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x015:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x015:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x015:before,
+    .ci-planifi-large.ci-md-d-glyph-x015[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x015:disabled:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x016.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x016:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x016:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x016:before,
+    .ci-planifi-large.ci-md-d-glyph-x016[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x016:disabled:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x017.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x017:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x017:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x017:before,
+    .ci-planifi-large.ci-md-d-glyph-x017[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x017:disabled:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x018.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x018:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x018:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x018:before,
+    .ci-planifi-large.ci-md-d-glyph-x018[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x018:disabled:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x019.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x019:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x019:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x019:before,
+    .ci-planifi-large.ci-md-d-glyph-x019[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x019:disabled:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-md-d-glyph-x020.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-glyph-x020:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-glyph-x020:before, .ci-element:disabled .ci-planifi-large.ci-md-d-glyph-x020:before,
+    .ci-planifi-large.ci-md-d-glyph-x020[disabled='disabled']:before, .ci-planifi-large.ci-md-d-glyph-x020:disabled:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Disabled */
+}
+
+@media (min-width: 1200px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-lg-search:before,
+    .ci-planifi-large.ci-lg-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-flags:before,
+    .ci-planifi-large.ci-lg-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-flag-list:before,
+    .ci-planifi-large.ci-lg-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-schedule:before,
+    .ci-planifi-large.ci-lg-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-table-db:before,
+    .ci-planifi-large.ci-lg-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-folder:before,
+    .ci-planifi-large.ci-lg-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-pie-chart:before,
+    .ci-planifi-large.ci-lg-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-bar-chart:before,
+    .ci-planifi-large.ci-lg-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-line-chart:before,
+    .ci-planifi-large.ci-lg-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-people:before,
+    .ci-planifi-large.ci-lg-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-user-cog:before,
+    .ci-planifi-large.ci-lg-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-user-plus:before,
+    .ci-planifi-large.ci-lg-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-table-filter:before,
+    .ci-planifi-large.ci-lg-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-temp-unavailable:before,
+    .ci-planifi-large.ci-lg-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x015:before,
+    .ci-planifi-large.ci-lg-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x016:before,
+    .ci-planifi-large.ci-lg-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x017:before,
+    .ci-planifi-large.ci-lg-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x018:before,
+    .ci-planifi-large.ci-lg-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x019:before,
+    .ci-planifi-large.ci-lg-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-x020:before,
+    .ci-planifi-large.ci-lg-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-lg-a-glyph-search.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-flags.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-flag-list.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-schedule.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-table-db.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-folder.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-pie-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-bar-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-line-chart.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-people.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-user-cog.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-user-plus.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-table-filter.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-temp-unavailable.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x015.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x016.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x017.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x018.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x019.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-a-glyph-x020.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-lg-h-glyph-search:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-flags:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-flag-list:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-schedule:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-table-db:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-folder:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-pie-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-bar-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-line-chart:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-people:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-user-cog:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-user-plus:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-table-filter:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-temp-unavailable:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x015:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x016:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x017:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x018:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x019:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-h-glyph-x020:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-lg-p-glyph-search:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-search:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-flags:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-flags:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-flag-list:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-flag-list:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-schedule:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-schedule:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-table-db:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-table-db:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-folder:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-folder:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-pie-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-pie-chart:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-bar-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-bar-chart:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-line-chart:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-line-chart:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-people:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-people:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-user-cog:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-user-cog:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-user-plus:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-user-plus:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-table-filter:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-table-filter:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-temp-unavailable:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-temp-unavailable:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x015:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x015:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x016:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x016:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x017:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x017:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x018:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x018:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x019:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x019:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-p-glyph-x020:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-glyph-x020:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-lg-d-glyph-search.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-search:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-search:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-search:before,
+    .ci-planifi-large.ci-lg-d-glyph-search[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-search:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-flags.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-flags:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-flags:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-flags:before,
+    .ci-planifi-large.ci-lg-d-glyph-flags[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-flags:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-flag-list.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-flag-list:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-flag-list:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-flag-list:before,
+    .ci-planifi-large.ci-lg-d-glyph-flag-list[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-flag-list:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-schedule.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-schedule:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-schedule:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-schedule:before,
+    .ci-planifi-large.ci-lg-d-glyph-schedule[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-schedule:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-table-db.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-table-db:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-table-db:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-table-db:before,
+    .ci-planifi-large.ci-lg-d-glyph-table-db[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-table-db:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-folder.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-folder:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-folder:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-folder:before,
+    .ci-planifi-large.ci-lg-d-glyph-folder[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-folder:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-pie-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-pie-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-pie-chart:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-pie-chart:before,
+    .ci-planifi-large.ci-lg-d-glyph-pie-chart[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-pie-chart:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-bar-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-bar-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-bar-chart:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-bar-chart:before,
+    .ci-planifi-large.ci-lg-d-glyph-bar-chart[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-bar-chart:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-line-chart.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-line-chart:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-line-chart:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-line-chart:before,
+    .ci-planifi-large.ci-lg-d-glyph-line-chart[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-line-chart:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-people.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-people:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-people:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-people:before,
+    .ci-planifi-large.ci-lg-d-glyph-people[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-people:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-user-cog.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-user-cog:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-user-cog:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-user-cog:before,
+    .ci-planifi-large.ci-lg-d-glyph-user-cog[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-user-cog:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-user-plus.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-user-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-user-plus:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-user-plus:before,
+    .ci-planifi-large.ci-lg-d-glyph-user-plus[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-user-plus:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-table-filter.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-table-filter:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-table-filter:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-table-filter:before,
+    .ci-planifi-large.ci-lg-d-glyph-table-filter[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-table-filter:disabled:before {
+        background-position: -12em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-temp-unavailable.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-temp-unavailable:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-temp-unavailable:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-temp-unavailable:before,
+    .ci-planifi-large.ci-lg-d-glyph-temp-unavailable[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-temp-unavailable:disabled:before {
+        background-position: -13em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x015.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x015:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x015:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x015:before,
+    .ci-planifi-large.ci-lg-d-glyph-x015[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x015:disabled:before {
+        background-position: -14em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x016.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x016:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x016:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x016:before,
+    .ci-planifi-large.ci-lg-d-glyph-x016[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x016:disabled:before {
+        background-position: -15em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x017.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x017:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x017:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x017:before,
+    .ci-planifi-large.ci-lg-d-glyph-x017[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x017:disabled:before {
+        background-position: -16em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x018.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x018:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x018:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x018:before,
+    .ci-planifi-large.ci-lg-d-glyph-x018[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x018:disabled:before {
+        background-position: -17em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x019.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x019:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x019:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x019:before,
+    .ci-planifi-large.ci-lg-d-glyph-x019[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x019:disabled:before {
+        background-position: -18em 0em;
+    }
+
+    .ci-planifi-large.ci-lg-d-glyph-x020.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-glyph-x020:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-glyph-x020:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-glyph-x020:before,
+    .ci-planifi-large.ci-lg-d-glyph-x020[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-glyph-x020:disabled:before {
+        background-position: -19em 0em;
+    }
+    /* #endregion Disabled */
+}
+/* #endregion ----------------------------- Glyphs ---------------------------------- */
+
+
+/* #region -------------------------------- Colors ---------------------------------- */
+/* #region Regular */
+.ci-planifi-large.ci-color-primary:before,
+.ci-planifi-large.ci-xs-color-primary:before {
+    background-image: url("../images/ci-planifi-large-primary.svg");
+}
+
+.ci-planifi-large.ci-color-secondary:before,
+.ci-planifi-large.ci-xs-color-secondary:before {
+    background-image: url("../images/ci-planifi-large-secondary.svg");
+}
+
+.ci-planifi-large.ci-color-heading:before,
+.ci-planifi-large.ci-xs-color-heading:before {
+    background-image: url("../images/ci-planifi-large-heading.svg");
+}
+
+.ci-planifi-large.ci-color-base:before,
+.ci-planifi-large.ci-xs-color-base:before {
+    background-image: url("../images/ci-planifi-large-base.svg");
+}
+
+.ci-planifi-large.ci-color-muted:before,
+.ci-planifi-large.ci-xs-color-muted:before {
+    background-image: url("../images/ci-planifi-large-muted.svg");
+}
+
+.ci-planifi-large.ci-color-alt:before,
+.ci-planifi-large.ci-xs-color-alt:before {
+    background-image: url("../images/ci-planifi-large-alt.svg");
+}
+
+.ci-planifi-large.ci-color-success:before,
+.ci-planifi-large.ci-xs-color-success:before {
+    background-image: url("../images/ci-planifi-large-success.svg");
+}
+
+.ci-planifi-large.ci-color-warning:before,
+.ci-planifi-large.ci-xs-color-warning:before {
+    background-image: url("../images/ci-planifi-large-warning.svg");
+}
+
+.ci-planifi-large.ci-color-danger:before,
+.ci-planifi-large.ci-xs-color-danger:before {
+    background-image: url("../images/ci-planifi-large-danger.svg");
+}
+/* #endregion Regular */
+/* #region Active */
+.ci-planifi-large.ci-a-color-primary.active:before, .ci-element.active .ci-planifi-large.ci-a-color-primary:before,
+.ci-planifi-large.ci-xs-a-color-primary.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-primary:before {
+    background-image: url("../images/ci-planifi-large-primary.svg");
+}
+
+.ci-planifi-large.ci-a-color-secondary.active:before, .ci-element.active .ci-planifi-large.ci-a-color-secondary:before,
+.ci-planifi-large.ci-xs-a-color-secondary.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-secondary:before {
+    background-image: url("../images/ci-planifi-large-secondary.svg");
+}
+
+.ci-planifi-large.ci-a-color-heading.active:before, .ci-element.active .ci-planifi-large.ci-a-color-heading:before,
+.ci-planifi-large.ci-xs-a-color-heading.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-heading:before {
+    background-image: url("../images/ci-planifi-large-heading.svg");
+}
+
+.ci-planifi-large.ci-a-color-base.active:before, .ci-element.active .ci-planifi-large.ci-a-color-base:before,
+.ci-planifi-large.ci-xs-a-color-base.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-base:before {
+    background-image: url("../images/ci-planifi-large-base.svg");
+}
+
+.ci-planifi-large.ci-a-color-muted.active:before, .ci-element.active .ci-planifi-large.ci-a-color-muted:before,
+.ci-planifi-large.ci-xs-a-color-muted.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-muted:before {
+    background-image: url("../images/ci-planifi-large-muted.svg");
+}
+
+.ci-planifi-large.ci-a-color-alt.active:before, .ci-element.active .ci-planifi-large.ci-a-color-alt:before,
+.ci-planifi-large.ci-xs-a-color-alt.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-alt:before {
+    background-image: url("../images/ci-planifi-large-alt.svg");
+}
+
+.ci-planifi-large.ci-a-color-success.active:before, .ci-element.active .ci-planifi-large.ci-a-color-success:before,
+.ci-planifi-large.ci-xs-a-color-success.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-success:before {
+    background-image: url("../images/ci-planifi-large-success.svg");
+}
+
+.ci-planifi-large.ci-a-color-warning.active:before, .ci-element.active .ci-planifi-large.ci-a-color-warning:before,
+.ci-planifi-large.ci-xs-a-color-warning.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-warning:before {
+    background-image: url("../images/ci-planifi-large-warning.svg");
+}
+
+.ci-planifi-large.ci-a-color-danger.active:before, .ci-element.active .ci-planifi-large.ci-a-color-danger:before,
+.ci-planifi-large.ci-xs-a-color-danger.active:before, .ci-element.active .ci-planifi-large.ci-xs-a-color-danger:before {
+    background-image: url("../images/ci-planifi-large-danger.svg");
+}
+/* #endregion Active */
+/* #region Hover */
+.ci-planifi-large.ci-h-color-primary:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-primary:before,
+.ci-planifi-large.ci-xs-h-color-primary:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-primary:before {
+    background-image: url("../images/ci-planifi-large-primary.svg");
+}
+
+.ci-planifi-large.ci-h-color-secondary:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-secondary:before,
+.ci-planifi-large.ci-xs-h-color-secondary:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-secondary:before {
+    background-image: url("../images/ci-planifi-large-secondary.svg");
+}
+
+.ci-planifi-large.ci-h-color-heading:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-heading:before,
+.ci-planifi-large.ci-xs-h-color-heading:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-heading:before {
+    background-image: url("../images/ci-planifi-large-heading.svg");
+}
+
+.ci-planifi-large.ci-h-color-base:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-base:before,
+.ci-planifi-large.ci-xs-h-color-base:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-base:before {
+    background-image: url("../images/ci-planifi-large-base.svg");
+}
+
+.ci-planifi-large.ci-h-color-muted:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-muted:before,
+.ci-planifi-large.ci-xs-h-color-muted:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-muted:before {
+    background-image: url("../images/ci-planifi-large-muted.svg");
+}
+
+.ci-planifi-large.ci-h-color-alt:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-alt:before,
+.ci-planifi-large.ci-xs-h-color-alt:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-alt:before {
+    background-image: url("../images/ci-planifi-large-alt.svg");
+}
+
+.ci-planifi-large.ci-h-color-success:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-success:before,
+.ci-planifi-large.ci-xs-h-color-success:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-success:before {
+    background-image: url("../images/ci-planifi-large-success.svg");
+}
+
+.ci-planifi-large.ci-h-color-warning:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-warning:before,
+.ci-planifi-large.ci-xs-h-color-warning:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-warning:before {
+    background-image: url("../images/ci-planifi-large-warning.svg");
+}
+
+.ci-planifi-large.ci-h-color-danger:hover:before, .ci-element:hover .ci-planifi-large.ci-h-color-danger:before,
+.ci-planifi-large.ci-xs-h-color-danger:hover:before, .ci-element:hover .ci-planifi-large.ci-xs-h-color-danger:before {
+    background-image: url("../images/ci-planifi-large-danger.svg");
+}
+/* #endregion Hover */
+/* #region Press */
+.ci-planifi-large.ci-p-color-primary:active:before, .ci-element:active .ci-planifi-large.ci-p-color-primary:before,
+.ci-planifi-large.ci-xs-p-color-primary:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-primary:before {
+    background-image: url("../images/ci-planifi-large-primary.svg");
+}
+
+.ci-planifi-large.ci-p-color-secondary:active:before, .ci-element:active .ci-planifi-large.ci-p-color-secondary:before,
+.ci-planifi-large.ci-xs-p-color-secondary:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-secondary:before {
+    background-image: url("../images/ci-planifi-large-secondary.svg");
+}
+
+.ci-planifi-large.ci-p-color-heading:active:before, .ci-element:active .ci-planifi-large.ci-p-color-heading:before,
+.ci-planifi-large.ci-xs-p-color-heading:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-heading:before {
+    background-image: url("../images/ci-planifi-large-heading.svg");
+}
+
+.ci-planifi-large.ci-p-color-base:active:before, .ci-element:active .ci-planifi-large.ci-p-color-base:before,
+.ci-planifi-large.ci-xs-p-color-base:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-base:before {
+    background-image: url("../images/ci-planifi-large-base.svg");
+}
+
+.ci-planifi-large.ci-p-color-muted:active:before, .ci-element:active .ci-planifi-large.ci-p-color-muted:before,
+.ci-planifi-large.ci-xs-p-color-muted:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-muted:before {
+    background-image: url("../images/ci-planifi-large-muted.svg");
+}
+
+.ci-planifi-large.ci-p-color-alt:active:before, .ci-element:active .ci-planifi-large.ci-p-color-alt:before,
+.ci-planifi-large.ci-xs-p-color-alt:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-alt:before {
+    background-image: url("../images/ci-planifi-large-alt.svg");
+}
+
+.ci-planifi-large.ci-p-color-success:active:before, .ci-element:active .ci-planifi-large.ci-p-color-success:before,
+.ci-planifi-large.ci-xs-p-color-success:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-success:before {
+    background-image: url("../images/ci-planifi-large-success.svg");
+}
+
+.ci-planifi-large.ci-p-color-warning:active:before, .ci-element:active .ci-planifi-large.ci-p-color-warning:before,
+.ci-planifi-large.ci-xs-p-color-warning:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-warning:before {
+    background-image: url("../images/ci-planifi-large-warning.svg");
+}
+
+.ci-planifi-large.ci-p-color-danger:active:before, .ci-element:active .ci-planifi-large.ci-p-color-danger:before,
+.ci-planifi-large.ci-xs-p-color-danger:active:before, .ci-element:active .ci-planifi-large.ci-xs-p-color-danger:before {
+    background-image: url("../images/ci-planifi-large-danger.svg");
+}
+/* #endregion Press */
+/* #region Disabled */
+.ci-planifi-large.ci-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-primary:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-primary:before, .ci-element:disabled .ci-planifi-large.ci-d-color-primary:before,
+.ci-planifi-large.ci-d-color-primary[disabled='disabled']:before, .ci-planifi-large.ci-d-color-primary:disabled:before,
+.ci-planifi-large.ci-xs-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-primary:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-primary:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-primary:before,
+.ci-planifi-large.ci-xs-d-color-primary[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-primary:disabled:before {
+    background-image: url("../images/ci-planifi-large-primary.svg");
+}
+
+.ci-planifi-large.ci-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-secondary:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-secondary:before, .ci-element:disabled .ci-planifi-large.ci-d-color-secondary:before,
+.ci-planifi-large.ci-d-color-secondary[disabled='disabled']:before, .ci-planifi-large.ci-d-color-secondary:disabled:before,
+.ci-planifi-large.ci-xs-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-secondary:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-secondary:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-secondary:before,
+.ci-planifi-large.ci-xs-d-color-secondary[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-secondary:disabled:before {
+    background-image: url("../images/ci-planifi-large-secondary.svg");
+}
+
+.ci-planifi-large.ci-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-heading:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-heading:before, .ci-element:disabled .ci-planifi-large.ci-d-color-heading:before,
+.ci-planifi-large.ci-d-color-heading[disabled='disabled']:before, .ci-planifi-large.ci-d-color-heading:disabled:before,
+.ci-planifi-large.ci-xs-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-heading:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-heading:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-heading:before,
+.ci-planifi-large.ci-xs-d-color-heading[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-heading:disabled:before {
+    background-image: url("../images/ci-planifi-large-heading.svg");
+}
+
+.ci-planifi-large.ci-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-base:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-d-color-base:before,
+.ci-planifi-large.ci-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-d-color-base:disabled:before,
+.ci-planifi-large.ci-xs-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-base:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-base:before,
+.ci-planifi-large.ci-xs-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-base:disabled:before {
+    background-image: url("../images/ci-planifi-large-base.svg");
+}
+
+.ci-planifi-large.ci-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-muted:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-muted:before, .ci-element:disabled .ci-planifi-large.ci-d-color-muted:before,
+.ci-planifi-large.ci-d-color-muted[disabled='disabled']:before, .ci-planifi-large.ci-d-color-muted:disabled:before,
+.ci-planifi-large.ci-xs-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-muted:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-muted:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-muted:before,
+.ci-planifi-large.ci-xs-d-color-muted[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-muted:disabled:before {
+    background-image: url("../images/ci-planifi-large-muted.svg");
+}
+
+.ci-planifi-large.ci-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-alt:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-alt:before, .ci-element:disabled .ci-planifi-large.ci-d-color-alt:before,
+.ci-planifi-large.ci-d-color-alt[disabled='disabled']:before, .ci-planifi-large.ci-d-color-alt:disabled:before,
+.ci-planifi-large.ci-xs-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-alt:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-alt:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-alt:before,
+.ci-planifi-large.ci-xs-d-color-alt[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-alt:disabled:before {
+    background-image: url("../images/ci-planifi-large-alt.svg");
+}
+
+.ci-planifi-large.ci-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-success:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-success:before, .ci-element:disabled .ci-planifi-large.ci-d-color-success:before,
+.ci-planifi-large.ci-d-color-success[disabled='disabled']:before, .ci-planifi-large.ci-d-color-success:disabled:before,
+.ci-planifi-large.ci-xs-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-success:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-success:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-success:before,
+.ci-planifi-large.ci-xs-d-color-success[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-success:disabled:before {
+    background-image: url("../images/ci-planifi-large-success.svg");
+}
+
+.ci-planifi-large.ci-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-warning:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-warning:before, .ci-element:disabled .ci-planifi-large.ci-d-color-warning:before,
+.ci-planifi-large.ci-d-color-warning[disabled='disabled']:before, .ci-planifi-large.ci-d-color-warning:disabled:before,
+.ci-planifi-large.ci-xs-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-warning:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-warning:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-warning:before,
+.ci-planifi-large.ci-xs-d-color-warning[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-warning:disabled:before {
+    background-image: url("../images/ci-planifi-large-warning.svg");
+}
+
+.ci-planifi-large.ci-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-large.ci-d-color-danger:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-d-color-danger:before, .ci-element:disabled .ci-planifi-large.ci-d-color-danger:before,
+.ci-planifi-large.ci-d-color-danger[disabled='disabled']:before, .ci-planifi-large.ci-d-color-danger:disabled:before,
+.ci-planifi-large.ci-xs-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-large.ci-xs-d-color-danger:before,
+.ci-element[disabled='disabled'] .ci-planifi-large.ci-xs-d-color-danger:before, .ci-element:disabled .ci-planifi-large.ci-xs-d-color-danger:before,
+.ci-planifi-large.ci-xs-d-color-danger[disabled='disabled']:before, .ci-planifi-large.ci-xs-d-color-danger:disabled:before {
+    background-image: url("../images/ci-planifi-large-danger.svg");
+}
+/* #endregion Disabled */
+
+@media (min-width: 768px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-sm-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-sm-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-sm-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-base.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-success.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-warning.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-sm-a-color-danger.active:before,
+    .ci-element.active .ci-planifi-large.ci-sm-a-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-sm-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-sm-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-sm-h-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-sm-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-base:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-success:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-warning:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-sm-p-color-danger:active:before,
+    .ci-element:active .ci-planifi-large.ci-sm-p-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-sm-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-primary:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-primary:before,
+    .ci-planifi-large.ci-sm-d-color-primary[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-secondary:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-secondary:before,
+    .ci-planifi-large.ci-sm-d-color-secondary[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-heading:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-heading:before,
+    .ci-planifi-large.ci-sm-d-color-heading[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-base:before,
+    .ci-planifi-large.ci-sm-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-muted:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-muted:before,
+    .ci-planifi-large.ci-sm-d-color-muted[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-alt:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-alt:before,
+    .ci-planifi-large.ci-sm-d-color-alt[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-success:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-success:before,
+    .ci-planifi-large.ci-sm-d-color-success[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-warning:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-warning:before,
+    .ci-planifi-large.ci-sm-d-color-warning[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-sm-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-large.ci-sm-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-sm-d-color-danger:before, .ci-element:disabled .ci-planifi-large.ci-sm-d-color-danger:before,
+    .ci-planifi-large.ci-sm-d-color-danger[disabled='disabled']:before, .ci-planifi-large.ci-sm-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+
+@media (min-width: 992px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-md-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-md-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-md-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-base.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-success.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-warning.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-md-a-color-danger.active:before,
+    .ci-element.active .ci-planifi-large.ci-md-a-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-md-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-md-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-md-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-md-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-md-p-color-base:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-md-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-md-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-large.ci-md-p-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-md-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-md-h-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-md-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-primary:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-primary:before,
+    .ci-planifi-large.ci-md-d-color-primary[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-secondary:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-secondary:before,
+    .ci-planifi-large.ci-md-d-color-secondary[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-heading:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-heading:before,
+    .ci-planifi-large.ci-md-d-color-heading[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-base:before,
+    .ci-planifi-large.ci-md-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-muted:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-muted:before,
+    .ci-planifi-large.ci-md-d-color-muted[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-alt:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-alt:before,
+    .ci-planifi-large.ci-md-d-color-alt[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-success:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-success:before,
+    .ci-planifi-large.ci-md-d-color-success[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-warning:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-warning:before,
+    .ci-planifi-large.ci-md-d-color-warning[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-md-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-large.ci-md-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-md-d-color-danger:before, .ci-element:disabled .ci-planifi-large.ci-md-d-color-danger:before,
+    .ci-planifi-large.ci-md-d-color-danger[disabled='disabled']:before, .ci-planifi-large.ci-md-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+
+@media (min-width: 1200px) {
+    /* #region Regular */
+    .ci-planifi-large.ci-lg-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-large.ci-lg-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-lg-a-color-base.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-lg-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-large.ci-lg-a-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-lg-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-large.ci-lg-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-lg-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-large.ci-lg-h-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-large.ci-lg-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-primary:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-heading:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-base:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-base:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-muted:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-alt:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-success:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-success:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-warning:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-warning:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-lg-p-color-danger:active:before,
+    .ci-element:active .ci-planifi-large.ci-lg-p-color-danger:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-large.ci-lg-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-primary:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-primary:before,
+    .ci-planifi-large.ci-lg-d-color-primary[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-large-primary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-secondary:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-secondary:before,
+    .ci-planifi-large.ci-lg-d-color-secondary[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-large-secondary.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-heading:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-heading:before,
+    .ci-planifi-large.ci-lg-d-color-heading[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-large-heading.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-base:before,
+    .ci-planifi-large.ci-lg-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-base:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-base:before,
+    .ci-planifi-large.ci-lg-d-color-base[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-large-base.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-muted:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-muted:before,
+    .ci-planifi-large.ci-lg-d-color-muted[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-large-muted.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-alt:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-alt:before,
+    .ci-planifi-large.ci-lg-d-color-alt[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-large-alt.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-success:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-success:before,
+    .ci-planifi-large.ci-lg-d-color-success[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-large-success.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-warning:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-warning:before,
+    .ci-planifi-large.ci-lg-d-color-warning[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-large-warning.svg");
+    }
+
+    .ci-planifi-large.ci-lg-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-large.ci-lg-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-large.ci-lg-d-color-danger:before, .ci-element:disabled .ci-planifi-large.ci-lg-d-color-danger:before,
+    .ci-planifi-large.ci-lg-d-color-danger[disabled='disabled']:before, .ci-planifi-large.ci-lg-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-large-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+/* #endregion ----------------------------- Colors ---------------------------------- */
+/* #endregion ================================== Collection: Planifi large ======================================== */
+

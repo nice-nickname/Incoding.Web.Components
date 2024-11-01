@@ -4,9 +4,7 @@ namespace Incoding.Web.Components.Grid;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text.RegularExpressions;
 using Incoding.Core.Extensions;
 using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +14,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 public class ColumnListBuilder<T>
 {
     public ITemplateSyntax<T> Template { get; set; }
+
+    public int? SpreadIndex { get; set; } = null;
+
+    public string SpreadField { get; set; } = null;
 
     public List<Column> Columns { get; }
 
@@ -34,7 +36,16 @@ public class ColumnListBuilder<T>
 
     public ColumnBuilder<T> Add()
     {
-        var columnBuilder = new ColumnBuilder<T>(Html, _currentIndex++) { Template = Template };
+        var columnBuilder = new ColumnBuilder<T>(Html, _currentIndex++)
+                            {
+                                    Template = Template,
+                            };
+
+        if (SpreadField != null)
+        {
+            columnBuilder.Column.SpreadField = SpreadField;
+            columnBuilder.Column.SpreadIndex = SpreadIndex;
+        }
 
         Columns.Add(columnBuilder.Column);
 
@@ -46,7 +57,13 @@ public class ColumnListBuilder<T>
         var header = new ColumnBuilder<T>(Html, _currentIndex) { Template = Template };
         stackedHeader(header);
 
-        var columns = new ColumnListBuilder<T>(Html, _currentIndex) { Template = Template };
+        var columns = new ColumnListBuilder<T>(Html, _currentIndex)
+                      {
+                              Template = Template,
+                              SpreadField = SpreadField,
+                              SpreadIndex = SpreadIndex
+                      };
+
         stackedColumns(columns);
 
         foreach (var stacked in columns.Columns)
@@ -69,49 +86,19 @@ public class ColumnListBuilder<T>
 
         var spreadFieldName = spreadField.GetMemberName();
 
-        var clb = new ColumnListBuilder<TSpread>(Html, _currentIndex) { Template = Template.ForEach(spreadField) };
-
         for (var i = 0; i < spreadCount; i++)
         {
+            var clb = new ColumnListBuilder<TSpread>(Html, _currentIndex)
+                      {
+                              Template = Template.ForEach(spreadField),
+                              SpreadField = spreadFieldName,
+                              SpreadIndex = i
+                      };
+
             spreadColumns(clb, i);
+            Columns.AddRange(clb.Columns);
 
-            var addedColumns = clb.Columns.Skip(i);
-
-            foreach (var column in addedColumns)
-            {
-                if (column.Stacked != null && column.Stacked.Count != 0)
-                {
-                    foreach (var stacked in column.Stacked)
-                    {
-                        SetSpreadColumn(stacked, spreadFieldName, i);
-                    }
-                }
-                else
-                {
-                    SetSpreadColumn(column, spreadFieldName, i);
-                }
-            }
-        }
-
-        Columns.AddRange(clb.Columns);
-
-        _currentIndex = clb._currentIndex;
-
-        void SetSpreadColumn(Column column, string spreadField, int spreadIndex)
-        {
-            column.SpreadField = spreadField;
-            column.SpreadIndex = spreadIndex;
-
-            if (!string.IsNullOrWhiteSpace(column.Content))
-            {
-                var shouldRemoveUps = !Regex.IsMatch(column.Content, @"\.\d\.");
-
-                while (Regex.IsMatch(column.Content, @"!-([^\./\d]*)-!"))
-                    column.Content = Regex.Replace(column.Content, @"!-([^\./\d]*)-!", "!-" + $"{spreadField}.{spreadIndex}." + "$1-!");
-
-                if (shouldRemoveUps)
-                    column.Content = column.Content.Replace("../", string.Empty);
-            }
+            _currentIndex = clb._currentIndex;
         }
     }
 }

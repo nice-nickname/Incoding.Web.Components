@@ -58,7 +58,8 @@ class Filter {
         const currentFilter = this.#getCurrentFilter(column)
 
         return [...this.#getFilterValues(column)].map(value => {
-            let text = value
+            let text = column.formatToString(value)
+
             if (column.type !== ColumnType.Numeric && value == null) {
                 text = '(Blank)'
             }

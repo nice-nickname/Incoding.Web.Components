@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="287.937px" height="24px" viewBox="0 0 287.937 24" enable-background="new 0 0 287.937 24" xml:space="preserve" preserveAspectRatio="none">
+<g id="drag-left-right">
+	<g>
+		<rect x="274" y="2" fill="#363E4A" width="4" height="4"/>
+		<rect x="274" y="10" fill="#363E4A" width="4" height="4"/>
+		<rect x="274" y="18" fill="#363E4A" width="4" height="4"/>
+	</g>
+</g>
+<g id="drag-up-down">
+	<g>
+		<rect x="258" y="10" fill="#363E4A" width="4" height="4"/>
+		<rect x="250" y="10" fill="#363E4A" width="4" height="4"/>
+		<rect x="242" y="10" fill="#363E4A" width="4" height="4"/>
+	</g>
+</g>
+<g id="drag-corner">
+	<g>
+		<rect x="234" y="18" fill="#363E4A" width="4" height="4"/>
+		<rect x="226" y="18" fill="#363E4A" width="4" height="4"/>
+		<rect x="234" y="10" fill="#363E4A" width="4" height="4"/>
+		<rect x="226" y="10" fill="#363E4A" width="4" height="4"/>
+		<rect x="234" y="2" fill="#363E4A" width="4" height="4"/>
+		<rect x="218" y="18" fill="#363E4A" width="4" height="4"/>
+	</g>
+</g>
+<g id="delete">
+	<polygon fill="#363E4A" points="212.472,6.364 209.644,3.536 203.987,9.193 198.33,3.536 195.501,6.364 201.159,12.021 
+		195.501,17.679 198.33,20.507 203.987,14.85 209.644,20.507 212.472,17.679 206.815,12.021 	"/>
+</g>
+<g id="ok">
+	<polygon fill="#363E4A" points="177.562,19.935 170.491,12.863 173.319,10.035 177.562,14.278 186.754,5.086 189.583,7.914 	"/>
+</g>
+<g id="minus">
+	<rect x="146" y="10" fill="#363E4A" width="20" height="4"/>
+</g>
+<g id="plus">
+	<polygon fill="#363E4A" points="142,10 134,10 134,2 130,2 130,10 122,10 122,14 130,14 130,22 134,22 134,14 142,14 	"/>
+</g>
+<g id="caret-up-down">
+	<g>
+		<polygon fill="#363E4A" points="108.016,21.841 113.19,14.078 102.839,14.078 		"/>
+		<polygon fill="#363E4A" points="108.014,2.323 102.839,10.086 113.19,10.086 		"/>
+	</g>
+</g>
+<g id="caret-down">
+	<polygon fill="#363E4A" points="74.34,5.578 84.015,20.091 93.691,5.578 	"/>
+</g>
+<g id="caret-up">
+	<polygon fill="#363E4A" points="60,3.939 50.323,18.452 69.675,18.452 	"/>
+</g>
+<g id="caret-right">
+	<polygon fill="#363E4A" points="29.547,2.323 29.547,21.675 44.06,11.999 	"/>
+</g>
+<g id="caret-left">
+	<polygon fill="#363E4A" points="3.94,12 18.453,21.676 18.453,2.324 	"/>
+</g>
+</svg>

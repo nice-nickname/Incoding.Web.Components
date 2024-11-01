@@ -6,15 +6,15 @@ public static class Bindings
     {
         public static class SignalR
         {
-            public const string Start = "splitGrid.signalr.start";
+            public const string Start = "splitGrid-signalr-start";
 
-            public const string Complete = "splitGrid.signalr.complete";
+            public const string Complete = "splitGrid-signalr-complete";
 
-            public const string Error = "splitGrid.signalr.error";
+            public const string Error = "splitGrid-signalr-error";
         }
 
-        internal const string DataSourceInit = "dataSourceInit";
+        internal const string DataSourceInit = "splitGrid-dataSourceInit";
 
-        public const string ColumnUpdate = "splitGrid.columnUpdate";
+        public const string ColumnUpdate = "splitGrid-columnUpdate";
     }
 }

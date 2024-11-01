@@ -4,8 +4,6 @@ function initializeSplitGrid(options) {
     grid.render()
 };
 
-
-
 (function($) {
 
     $.fn.isScrollable = function(axis = 'vertical') {
@@ -52,5 +50,7 @@ function initializeSplitGrid(options) {
 
         $(this).data('loader', loader)
     }
+
+    $.fn.signalr("/signals")
 
 } (jQuery))

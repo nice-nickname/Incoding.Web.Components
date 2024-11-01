@@ -72,6 +72,10 @@ class Menu {
         this.#element.style.visibility = 'visible'
     }
 
+    isOpen() {
+        return this.#element.classList.contains('show')
+    }
+
     hide() {
         this.#element.classList.remove('show')
         this.#onMenuClose()
@@ -102,7 +106,7 @@ class Menu {
             top -= menuHeight
         }
 
-        if (top + menuWidth > viewportWidth) {
+        if (left + menuWidth > viewportWidth) {
             left -= menuWidth
         }
 
@@ -120,11 +124,11 @@ class Menu {
     #addEventListeners() {
         this.#element.addEventListener('click', this.#handleClick)
         document.body.addEventListener('click', this.#handleGlobalClick, true)
-        document.body.addEventListener('contextmenu', this.#handleGlobalClick, true)
+        document.body.addEventListener('contextmenu', this.#handleGlobalContextMenu, true)
     }
 
     #removeEventListeners() {
-        document.body.removeEventListener('contextmenu', this.#handleGlobalClick, true)
+        document.body.removeEventListener('contextmenu', this.#handleGlobalContextMenu, true)
         document.body.removeEventListener('click', this.#handleGlobalClick, true)
         this.#element.removeEventListener('click', this.#handleClick)
     }
@@ -160,6 +164,7 @@ class Menu {
         } else {
             li.innerHTML = `<a class="dropdown-item ${item.isDisabled ? 'disabled' : ''}"
                                href="javascript:void(0)">
+                                ${item.icon ? `<i class="ci-planifi ${item.icon}"></i>` : ``}
                                 ${item.text}
                             </a>`
         }
@@ -193,9 +198,22 @@ class Menu {
         }
     }
 
+    /**
+     * @param { PointerEvent } ev
+     */
     #handleGlobalClick = (ev) => {
         if (!this.#element.contains(ev.target)) {
             this.hide()
+        }
+    }
+
+    /**
+     * @param { PointerEvent } ev
+     */
+    #handleGlobalContextMenu = (ev) => {
+        this.#handleGlobalClick(ev)
+        if (this.#element.contains(ev.target)) {
+            ev.preventDefault()
         }
     }
 

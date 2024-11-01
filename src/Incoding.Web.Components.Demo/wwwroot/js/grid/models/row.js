@@ -22,13 +22,23 @@ class Row {
     attrs
 
 
+    #executableTmpl
+
     /**
      * @param { RowModel } row
      */
     constructor(row) {
         this.css = SplitGridHelpers.parseCss(row.css)
-        this.executable = row.executable
         this.dropdownTmpl = SplitGridHelpers.decodeTempalte(row.dropdownTmpl)
         this.attrs = row.attrs
+
+        if (row.executable) {
+            this.executable = SplitGridHelpers.decodeTempalte(row.executable)
+            this.#executableTmpl = ExecutableInsert.Template.compile(this.executable)
+        }
+    }
+
+    getExecutableFn() {
+        return this.#executableTmpl
     }
 }

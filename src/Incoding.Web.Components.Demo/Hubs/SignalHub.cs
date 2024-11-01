@@ -32,8 +32,7 @@ namespace Incoding.Web.Components.Demo.Controllers
 
             var fakerPeriod = new Faker<SamplePeriod>()
                               .RuleFor(s => s.Hours, f => f.Random.Decimal(0, 100))
-                              .RuleFor(s => s.JTD, f => f.Random.Decimal(0, 100))
-                    ;
+                              .RuleFor(s => s.JTD, f => f.Random.Decimal(0, 100));
 
             var fakerData = new Faker<SampleData>()
                             .RuleFor(s => s.Id, s => s.Random.Guid().ToString())
@@ -76,6 +75,8 @@ namespace Incoding.Web.Components.Demo.Controllers
 
             while (currentPage < allPages && !token.IsCancellationRequested)
             {
+                await Task.Delay(5.Seconds(), token);
+
                 var items = Data(currentPage++, @params.ChunkSize);
 
                 if (currentPage == allPages)
@@ -88,8 +89,6 @@ namespace Incoding.Web.Components.Demo.Controllers
                                      Items = items,
                                      IsNext = currentPage != allPages
                              };
-
-                Thread.Sleep(5.Seconds());
             }
         }
 

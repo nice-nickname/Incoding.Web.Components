@@ -9,6 +9,7 @@ using Incoding.Web.MvcContrib;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 
 #endregion
 
@@ -188,13 +189,20 @@ public class SplitGridBuilder<T>
     {
         Css(GridStyle.GridCss);
 
+        var gridJson = JsonConvert.SerializeObject(Grid,
+                                                   new JsonSerializerSettings
+                                                   {
+                                                           Formatting = Formatting.None,
+                                                           DefaultValueHandling = DefaultValueHandling.Include,
+                                                           NullValueHandling = NullValueHandling.Include
+                                                   });
+
         var binds = Html.When(JqueryBind.InitIncoding)
-                        .OnBegin(dsl => dsl.Self().Call("initializeSplitGrid", Grid.ToJsonString()))
+                        .OnBegin(dsl => dsl.Self().Call("initializeSplitGrid", gridJson))
                         .OnSuccess(dsl => dsl.Self().Trigger.Invoke(Bindings.Grid.DataSourceInit));
 
         if (_binds != null)
             binds = _binds(binds);
-
 
         return binds.AsHtmlAttributes(new RouteValueDictionary
                                       {

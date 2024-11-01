@@ -31,6 +31,7 @@ class RowExpand {
         const target = ev.target
 
         if (target.role === 'expand') {
+            ev.stopPropagation()
             this.#toggleExpandCollapse(target)
         }
     }

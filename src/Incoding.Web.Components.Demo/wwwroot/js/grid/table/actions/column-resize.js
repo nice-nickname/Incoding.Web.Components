@@ -16,15 +16,6 @@ class ColumnResize {
         this.#removeEventListeners()
     }
 
-    autoFitTable() {
-        const columns = this.table.getFlatColumns()
-            .filter(column => !column.isSpecialColumn())
-
-        for (const column of columns) {
-            this.autoFit(column)
-        }
-    }
-
     /**
      * @param { Column } column
      */

@@ -218,7 +218,7 @@ class FilterMenu {
     #setSelected(index, value = undefined) {
         const item = this.#data[Number(index)]
 
-        if (!value) {
+        if (value === undefined) {
             value = !item.selected
         }
 

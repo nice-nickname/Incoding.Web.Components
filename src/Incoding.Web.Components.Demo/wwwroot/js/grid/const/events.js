@@ -3,14 +3,14 @@ const events = {
 
     signalr: {
 
-        start: 'splitGrid.signalr.start',
+        start: 'splitgrid-signalr-start',
 
-        error: 'splitGrid.signalr.error',
+        error: 'splitgrid-signalr-error',
 
-        complete: 'splitGrid.signalr.complete',
+        complete: 'splitgrid-signalr-complete',
 
     },
 
-    columnUpdate: 'splitGrid.columnUpdate'
+    columnUpdate: 'splitgrid-columnupdate'
 
 }

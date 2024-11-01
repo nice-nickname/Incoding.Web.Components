@@ -17,10 +17,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class TableBuilder<T>
 {
-    private readonly ITemplateSyntax<T> _template;
-
-    private readonly GridStyles.Style _gridStyle;
-
     public Table Table { get; }
 
     public IHtmlHelper Html { get; }
@@ -29,7 +25,9 @@ public class TableBuilder<T>
 
     public bool IsSimpleMode { get; set; }
 
-    public int MaxSpecialColumnsCount { get; set; }
+    private readonly ITemplateSyntax<T> _template;
+
+    private readonly GridStyles.Style _gridStyle;
 
     private bool _hasDropdownButton;
 
@@ -41,10 +39,10 @@ public class TableBuilder<T>
         _gridStyle = gridStyle;
         Table = new Table(id);
 
+        _template = IoCFactory.Instance.TryResolve<ITemplateFactory>().ForEach<T>(html);
+
         Css(_gridStyle.TableCss);
         Rows(row => row.Css(_gridStyle.RowCss));
-
-        _template = IoCFactory.Instance.TryResolve<ITemplateFactory>().ForEach<T>(html);
     }
 
     public TableBuilder<T> Css(string css)
@@ -65,14 +63,12 @@ public class TableBuilder<T>
 
         Table.Columns = clb.Columns;
 
-
-
         return this;
     }
 
     public TableBuilder<T> Rows(Action<RowBuilder<T>> rows)
     {
-        var rb = new RowBuilder<T>(Html) { Template = _template };
+        var rb = new RowBuilder<T>(Html, _template, Table.Row);
         rows(rb);
 
         Table.Row = rb.Row;
@@ -115,7 +111,7 @@ public class TableBuilder<T>
         var tableBuilder = new TableBuilder<TNested>(Html, Table.Id + "-nested", _gridStyle)
                            {
                                    RenderExpand = RenderExpand,
-                                   IsSimpleMode = true
+                                   IsSimpleMode = IsSimpleMode
                            };
 
         nestedTable(tableBuilder);
@@ -139,8 +135,8 @@ public class TableBuilder<T>
         {
             foreach (var (oColumn, nColumn) in original.Zip(nested))
             {
-                nColumn.Uid = oColumn.Uid;
-                if (nColumn.Stacked != null && nColumn.Stacked.Count != 0)
+                oColumn.Uid = nColumn.Uid;
+                if (oColumn.Stacked != null && oColumn.Stacked.Count != 0)
                 {
                     CopyUids(oColumn.Stacked, nColumn.Stacked);
                 }
@@ -150,17 +146,17 @@ public class TableBuilder<T>
 
     private void InsertExpandColumn()
     {
-        Table.Columns.Insert(0, new Column(SpecialColumnKind.Expand));
+        Table.Columns.Insert(0, new Column(ControlColumn.Expand));
         _hasExpandButton = true;
     }
 
     private void InsertDropdownColumn()
     {
-        var dropdownButtonIndex = 0;
-        if (Table.Columns.FirstOrDefault() is { SpecialColumnKind: SpecialColumnKind.Expand })
-            dropdownButtonIndex = 1;
+        var position = 0;
+        if (Table.Columns.FirstOrDefault() is { ControlColumn: ControlColumn.Expand })
+            position = 1;
 
-        Table.Columns.Insert(dropdownButtonIndex, new Column(SpecialColumnKind.Dropdown));
+        Table.Columns.Insert(position, new Column(ControlColumn.Dropdown));
         _hasDropdownButton = true;
     }
 }

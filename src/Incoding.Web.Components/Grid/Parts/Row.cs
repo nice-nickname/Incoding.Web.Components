@@ -17,5 +17,5 @@ public class Row
 
     public string DropdownTmpl { get; set; }
 
-    public IDictionary<string, string> Attr { get; } = new Dictionary<string, string>();
+    public IDictionary<string, string> Attrs { get; } = new Dictionary<string, string>();
 }

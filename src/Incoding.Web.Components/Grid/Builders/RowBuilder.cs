@@ -15,12 +15,13 @@ public class RowBuilder<T>
 
     public IHtmlHelper Html { get; }
 
-    public ITemplateSyntax<T> Template { get; set; }
+    public ITemplateSyntax<T> Template { get; }
 
-    public RowBuilder(IHtmlHelper html)
+    public RowBuilder(IHtmlHelper html, ITemplateSyntax<T> template, Row row)
     {
         Html = html;
-        Row = new Row();
+        Row = row;
+        Template = template;
     }
 
     public RowBuilder<T> Css(string css)
@@ -37,7 +38,7 @@ public class RowBuilder<T>
 
     public RowBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        Row.Attr[attr] = value(Template).HtmlContentToString();
+        Row.Attrs[attr] = TemplateEncoder.Encode(value(Template).HtmlContentToString());
 
         return this;
     }
@@ -51,7 +52,7 @@ public class RowBuilder<T>
 
     public RowBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        Row.Executable = ImlBinder.ToExecutable(Html, Template, binding);
+        Row.Executable = TemplateEncoder.Encode(ImlBinder.ToExecutable(Html, Template, binding));
 
         return this;
     }

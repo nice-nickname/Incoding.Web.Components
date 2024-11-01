@@ -14,7 +14,10 @@
                                                               .Attr("monkey", "type")
                                                               .Attr("data-value", tmpl => tmpl.For(s => s.Amount).ToHtmlString())
                                                               .IsAttr(tmpl => tmpl.Index, "ahaha")
-                                                              .NotAttr(tmpl => tmpl.Index, "hehehe");
+                                                              .NotAttr(tmpl => tmpl.Index, "hehehe")
+                                                              .Bind((iml, tmpl) => iml.When(JqueryBind.Click)
+                                                                                      .StopPropagation()
+                                                                                      .OnSuccess(dsl => dsl.Window.Alert(tmpl.For(s => s.AmountPercentage))));
 
                                                           cols.Stacked(s => s.Title("Dates"),
                                                                        stacked =>
@@ -51,7 +54,14 @@
                                                                                             stacked =>
                                                                                             {
                                                                                                 stacked.Add().Field(s => s.Hours).Totalable()
-                                                                                                       .Summary<SampleData>(s => s.Average(c => c.Period[i].Hours));
+                                                                                                       .Summary<SampleData>(s => s.Average(c => c.Period[i].Hours))
+                                                                                                       .Bind((iml, tmpl) => iml.When(JqueryBind.Click)
+                                                                                                                               .StopPropagation()
+                                                                                                                               .OnSuccess(dsl =>
+                                                                                                                                          {
+                                                                                                                                              dsl.Window.Alert(tmpl.For(s => s.Hours));
+                                                                                                                                              dsl.Window.Alert(tmpl.Up().For(nameof(SampleData.Index)));
+                                                                                                                                          }));
 
                                                                                                 stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable()
                                                                                                        .Summary($"SUM(Period.{i}.JTD)");
@@ -68,10 +78,7 @@
                                                                                                   builder.Stacked(s => s.Title(i.ToString()),
                                                                                                                   stacked =>
                                                                                                                   {
-                                                                                                                      stacked.Add().Field(s => s.Hours).Totalable().Content(@<text>
-                                                                                                                                                                                 <input value="@item.For(s => s.Hours)" title="@item.For(s => s.Hours)" />
-                                                                                                                                                                                 <span>@item.Up().For("Amount")</span>
-                                                                                                                                                                             </text>);
+                                                                                                                      stacked.Add().Field(s => s.Hours).Totalable();
                                                                                                                       stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable();
                                                                                                                   });
                                                                                               });

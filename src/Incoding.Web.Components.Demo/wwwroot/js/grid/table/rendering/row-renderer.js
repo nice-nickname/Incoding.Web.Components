@@ -65,9 +65,35 @@ class RowRenderer {
         tr.dataset.index = this.#lastRowIndex++
         tr.role = roles.row
 
+        if (row.executable) {
+            tr.setAttribute('incoding',
+                ExecutableInsert.Template.render(row.getExecutableFn(), data)
+            )
+        }
+
+        for (let [attr, value] of Object.entries(row.attrs ?? {})) {
+            if (attr.includes('!-')) {
+                attr = ExecutableInsert.Template.render(
+                    ExecutableInsert.Template.compile(SplitGridHelpers.decodeTempalte(attr)),
+                    data
+                )
+            }
+
+            if (value.includes('!-')) {
+                value = ExecutableInsert.Template.render(
+                    ExecutableInsert.Template.compile(SplitGridHelpers.decodeTempalte(value)),
+                    data
+                )
+            }
+
+            if (!ExecutableHelper.IsNullOrEmpty(attr)) {
+                tr.setAttribute(attr, value)
+            }
+        }
+
         for (const column of columns) {
-            const td = column.isSpecialColumn() ?
-                this.#renderSpecialColumnCell(column, data) :
+            const td = column.isControlColumn() ?
+                this.#renderControlCell(column, data) :
                 this.#renderCell(column, data)
 
             if (column.isPinned) {
@@ -155,14 +181,17 @@ class RowRenderer {
     /**
      * @param { Column } column
      */
-    #renderSpecialColumnCell(column, data) {
+    #renderControlCell(column, data) {
         const td = document.createElement('td')
+        td.classList.add(...column.css)
 
-        if (column.specialColumn === SpecialColumnKind.Expand && data[this.table.nestedField] != null) {
+        if (column.controlColumn === ControlColumn.Expand &&
+             data[this.table.nestedField] != null &&
+             data[this.table.nestedField]?.length !== 0) {
             td.innerHTML = '<button role="expand" class="collapsed"></button>'
         }
 
-        if (column.specialColumn === SpecialColumnKind.Dropdown && this.table.row.dropdownTmpl) {
+        if (column.controlColumn === ControlColumn.Dropdown && this.table.row.dropdownTmpl) {
             td.innerHTML = '<button role="dropdown"></button>'
         }
 

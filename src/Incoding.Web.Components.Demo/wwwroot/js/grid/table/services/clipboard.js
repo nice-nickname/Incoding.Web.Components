@@ -10,14 +10,14 @@ class ClipboardService {
         this.#table = table
     }
 
-    copyRow(data, withHeading = false) {
+    async copyRow(data, withHeading = false) {
         let result = ''
         if (withHeading) {
             result += this.#getHeaderRows()
         }
         result += this.#getDataRow(data)
 
-        this.#copy(result)
+        await this.#copy(result)
     }
 
     async #copy(str) {
@@ -56,7 +56,7 @@ class ClipboardService {
     #getHeaderRow(columns, depth) {
         let row = ''
         for (const column of columns) {
-            if (column.isSpecialColumn()) continue
+            if (column.isControlColumn()) continue
 
             if (depth === 0) {
                 row += column.title + '\t'

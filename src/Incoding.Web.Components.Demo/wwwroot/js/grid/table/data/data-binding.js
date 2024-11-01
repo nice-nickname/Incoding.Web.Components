@@ -68,6 +68,7 @@ class DataBinding {
 
         for (const table of this.#tables) {
             table.removeRows()
+            table.setFooterLoading()
 
             if (this.#isDataLoading) {
                 table.appendPlaceholderRows()
@@ -119,6 +120,13 @@ class DataBinding {
             table.colGroup.render()
 
             table.removeRows()
+
+            if (this.#isDataLoading) {
+                table.setFooterLoading()
+                table.appendPlaceholderRows()
+            } else {
+                table.updateTotals()
+            }
         }
 
         this.#renderer.handleDataChanged()
@@ -134,16 +142,16 @@ class DataBinding {
 
         for (const table of this.#tables) {
             table.removeRows()
+
+            if (this.#isDataLoading) {
+                table.setFooterLoading()
+                table.appendPlaceholderRows()
+            } else {
+                table.updateTotals()
+            }
         }
 
         this.#renderer.handleDataChanged()
-    }
-
-    totalsUpdated() {
-        for (const table of this.#tables) {
-            table.removePlaceholders()
-            table.updateTotals()
-        }
     }
 
     setDataLoading(value) {
@@ -230,11 +238,11 @@ class DataBinding {
             return
         }
 
-        this.#visibleData = this.#data.filter(item => {
+        this.#visibleData = this.#data.filter(rowData => {
             let isVisible = true
 
             for (const { column, criteria } of this.#filters) {
-                const value = column.getValue(item)
+                const value = column.getValue(rowData)
                 isVisible = criteria.has(value)
 
                 if (!isVisible) break

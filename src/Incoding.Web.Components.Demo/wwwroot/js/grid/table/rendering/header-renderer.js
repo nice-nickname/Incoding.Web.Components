@@ -1,4 +1,114 @@
 
+class HeaderRenderer {
+
+    /**
+     * @type { SplitTable }
+     */
+    #parent
+
+    /**
+     * @type { HTMLDivElement }
+     */
+    #panel
+
+    /**
+     * @type { HTMLTableElement }
+     */
+    #table
+
+    constructor(table) {
+        this.#parent = table
+    }
+
+    render() {
+        const panel = document.createElement('div')
+        panel.classList.add('table-header')
+
+        const table = document.createElement('table')
+        table.classList.add('split-table')
+        table.classList.add(...this.#parent.schema.css)
+        table.id = this.#parent.schema + '-header'
+        table.innerHTML = '<thead>'
+
+        panel.appendChild(table)
+
+        this.#table = table
+        this.#panel = panel
+    }
+
+    refresh() {
+        const thead = document.createElement('thead')
+
+        const columns = this.#parent.columns
+        for (let level = 0; level < 2; level++) {
+            const tr = this.#createHeaderRow(columns, level)
+            thead.appendChild(tr)
+
+            columns = columns.flatMap(col => col.stacked)
+        }
+
+        const oldThead = this.#table.querySelector('thead')
+
+        oldThead.replaceWith(thead)
+    }
+
+    /**
+     * @param { string } uid
+     */
+    refreshColumn(uid) {
+
+    }
+
+    destroy() {
+        this.#panel.remove()
+    }
+
+    /**
+     * @param { Column[] } columns
+     * @param { number } level
+     */
+    #createHeaderRow(columns, level) {
+        const tr = document.createElement('tr')
+
+        for (const column of columns) {
+            const colSpan = column.isStacked() ? column.stacked.length : 1
+            const rowSpan = column.isStacked() ? 1 : 2
+
+            const th = this.#createCell(column)
+            th.colSpan = colSpan
+            th.rowSpan = rowSpan
+            tr.appendChild(th)
+        }
+
+        return tr
+    }
+
+    /**
+     * @param { Column } column
+     * @returns { HTMLTableCellElement }
+     */
+    #createCell(column) {
+        const th = document.createElement('th')
+        th.classList.add(...column.css)
+        th.dataset.index = column.index
+        th.dataset.uid = column.uid
+
+        if (column.sortable) {
+            th.classList.add('sortable')
+        }
+
+        if (column.showMenu) {
+            th.classList.add('menuable')
+        }
+
+        if (column.resizable) {
+            th.classList.add('resizalbe')
+        }
+
+        th.innerText = column.title
+    }
+}
+
 class TableHeaderRenderer {
 
     /**
@@ -40,10 +150,18 @@ class TableHeaderRenderer {
         thead.replaceChildren(...trs)
     }
 
-    destroy() {
+    updatePinOffsets() {
+        const columns = this.table.getFlatColumns()
+            .filter(column => column.isPinned)
 
+        let offset = 0
+        for (const column of columns) {
+            const cell = this.table.getColumnHeader(column)
+
+            cell.style.left = offset + 'px'
+            offset += column.width
+        }
     }
-
 
     /**
      * @param { Column[] } columns

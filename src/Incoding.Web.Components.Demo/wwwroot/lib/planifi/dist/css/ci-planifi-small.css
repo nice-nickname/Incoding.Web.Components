@@ -1,0 +1,2334 @@
+﻿/* #region ===================================== Collection: Planifi Small ======================================== */
+.ci-planifi-small {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    font-size: 1em;
+    opacity: 1;
+    position: relative;
+}
+
+    .ci-planifi-small:before {
+        top: 0px;
+        left: 0px;
+        content: '';
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        background-image: url("../images/ci-planifi-small-base.svg");
+        background-repeat: no-repeat;
+        background-size: 12em 1em;
+        background-position: 0em 0em;
+        font-size: 1em;
+        opacity: 1;
+        position: absolute;
+    }
+    /* #region -------------------------------- Glyphs ---------------------------------- */
+    /* #region Regular */
+    .ci-planifi-small.ci-caret-left:before, .ci-planifi-small.ci-glyph-caret-left:before,
+    .ci-planifi-small.ci-xs-caret-left:before, .ci-planifi-small.ci-xs-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-caret-right:before, .ci-planifi-small.ci-glyph-caret-right:before,
+    .ci-planifi-small.ci-xs-caret-right:before, .ci-planifi-small.ci-xs-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-caret-up:before, .ci-planifi-small.ci-glyph-caret-up:before,
+    .ci-planifi-small.ci-xs-caret-up:before, .ci-planifi-small.ci-xs-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-caret-down:before, .ci-planifi-small.ci-glyph-caret-down:before,
+    .ci-planifi-small.ci-xs-caret-down:before, .ci-planifi-small.ci-xs-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-caret-up-down:before, .ci-planifi-small.ci-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-xs-caret-up-down:before, .ci-planifi-small.ci-xs-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-plus:before, .ci-planifi-small.ci-glyph-plus:before,
+    .ci-planifi-small.ci-xs-plus:before, .ci-planifi-small.ci-xs-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-minus:before, .ci-planifi-small.ci-glyph-minus:before,
+    .ci-planifi-small.ci-xs-minus:before, .ci-planifi-small.ci-xs-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-ok:before, .ci-planifi-small.ci-glyph-ok:before,
+    .ci-planifi-small.ci-xs-ok:before, .ci-planifi-small.ci-xs-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-delete:before, .ci-planifi-small.ci-glyph-delete:before,
+    .ci-planifi-small.ci-xs-delete:before, .ci-planifi-small.ci-xs-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-corner:before, .ci-planifi-small.ci-glyph-corner:before,
+    .ci-planifi-small.ci-xs-corner:before, .ci-planifi-small.ci-xs-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+    
+    .ci-planifi-small.ci-dots-horizontal:before, .ci-planifi-small.ci-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-xs-dots-horizontal:before, .ci-planifi-small.ci-xs-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-dots-vertical:before, .ci-planifi-small.ci-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-xs-dots-vertical:before, .ci-planifi-small.ci-xs-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-a-glyph-caret-left.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-caret-left:before,
+    .ci-planifi-small.ci-xs-a-glyph-caret-left.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-caret-right.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-caret-right:before,
+    .ci-planifi-small.ci-xs-a-glyph-caret-right.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-caret-up.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-caret-up:before,
+    .ci-planifi-small.ci-xs-a-glyph-caret-up.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-caret-down.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-caret-down:before,
+    .ci-planifi-small.ci-xs-a-glyph-caret-down.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-caret-up-down.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-xs-a-glyph-caret-up-down.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-plus.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-plus:before,
+    .ci-planifi-small.ci-xs-a-glyph-plus.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-minus.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-minus:before,
+    .ci-planifi-small.ci-xs-a-glyph-minus.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-ok.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-ok:before,
+    .ci-planifi-small.ci-xs-a-glyph-ok.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-delete.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-delete:before,
+    .ci-planifi-small.ci-xs-a-glyph-delete.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-corner.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-corner:before,
+    .ci-planifi-small.ci-xs-a-glyph-corner.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-dots-horizontal.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-xs-a-glyph-dots-horizontal.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-a-glyph-dots-vertical.active:before, .ci-element.active .ci-planifi-small.ci-a-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-xs-a-glyph-dots-vertical.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-h-glyph-caret-left:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-caret-left:before,
+    .ci-planifi-small.ci-xs-h-glyph-caret-left:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-caret-right:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-caret-right:before,
+    .ci-planifi-small.ci-xs-h-glyph-caret-right:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-caret-up:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-caret-up:before,
+    .ci-planifi-small.ci-xs-h-glyph-caret-up:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-caret-down:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-caret-down:before,
+    .ci-planifi-small.ci-xs-h-glyph-caret-down:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-caret-up-down:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-xs-h-glyph-caret-up-down:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-plus:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-plus:before,
+    .ci-planifi-small.ci-xs-h-glyph-plus:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-minus:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-minus:before,
+    .ci-planifi-small.ci-xs-h-glyph-minus:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-ok:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-ok:before,
+    .ci-planifi-small.ci-xs-h-glyph-ok:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-delete:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-delete:before,
+    .ci-planifi-small.ci-xs-h-glyph-delete:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-corner:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-corner:before,
+    .ci-planifi-small.ci-xs-h-glyph-corner:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-dots-horizontal:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-xs-h-glyph-dots-horizontal:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-h-glyph-dots-vertical:hover:before, .ci-element:hover .ci-planifi-small.ci-h-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-xs-h-glyph-dots-vertical:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-p-glyph-caret-left:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-caret-left:before,
+    .ci-planifi-small.ci-xs-p-glyph-caret-left:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-caret-right:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-caret-right:before,
+    .ci-planifi-small.ci-xs-p-glyph-caret-right:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-caret-up:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-caret-up:before,
+    .ci-planifi-small.ci-xs-p-glyph-caret-up:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-caret-down:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-caret-down:before,
+    .ci-planifi-small.ci-xs-p-glyph-caret-down:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-caret-up-down:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-xs-p-glyph-caret-up-down:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-plus:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-plus:before,
+    .ci-planifi-small.ci-xs-p-glyph-plus:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-minus:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-minus:before,
+    .ci-planifi-small.ci-xs-p-glyph-minus:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-ok:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-ok:before,
+    .ci-planifi-small.ci-xs-p-glyph-ok:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-delete:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-delete:before,
+    .ci-planifi-small.ci-xs-p-glyph-delete:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-corner:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-corner:before,
+    .ci-planifi-small.ci-xs-p-glyph-corner:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-dots-horizontal:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-xs-p-glyph-dots-horizontal:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-p-glyph-dots-vertical:active:before, .ci-element:active .ci-planifi-small.ci-p-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-xs-p-glyph-dots-vertical:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-d-glyph-caret-left.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-caret-left:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-caret-left:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-caret-left:before,
+    .ci-planifi-small.ci-d-glyph-caret-left[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-caret-left:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-left.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-caret-left:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-caret-left:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-caret-left:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-left[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-caret-left:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-caret-right.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-caret-right:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-caret-right:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-caret-right:before,
+    .ci-planifi-small.ci-d-glyph-caret-right[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-caret-right:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-right.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-caret-right:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-caret-right:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-caret-right:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-right[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-caret-right:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-caret-up.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-caret-up:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-caret-up:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-caret-up:before,
+    .ci-planifi-small.ci-d-glyph-caret-up[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-caret-up:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-up.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-caret-up:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-caret-up:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-caret-up:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-up[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-caret-up:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-caret-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-caret-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-caret-down:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-caret-down:before,
+    .ci-planifi-small.ci-d-glyph-caret-down[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-caret-down:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-caret-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-caret-down:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-caret-down:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-down[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-caret-down:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-caret-up-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-caret-up-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-caret-up-down:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-d-glyph-caret-up-down[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-caret-up-down:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-up-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-caret-up-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-caret-up-down:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-xs-d-glyph-caret-up-down[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-caret-up-down:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-plus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-plus:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-plus:before,
+    .ci-planifi-small.ci-d-glyph-plus[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-plus:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-plus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-plus:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-plus:before,
+    .ci-planifi-small.ci-xs-d-glyph-plus[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-plus:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-minus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-minus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-minus:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-minus:before,
+    .ci-planifi-small.ci-d-glyph-minus[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-minus:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-minus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-minus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-minus:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-minus:before,
+    .ci-planifi-small.ci-xs-d-glyph-minus[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-minus:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-ok.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-ok:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-ok:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-ok:before,
+    .ci-planifi-small.ci-d-glyph-ok[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-ok:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-ok.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-ok:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-ok:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-ok:before,
+    .ci-planifi-small.ci-xs-d-glyph-ok[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-ok:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-delete.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-delete:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-delete:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-delete:before,
+    .ci-planifi-small.ci-d-glyph-delete[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-delete:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-delete.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-delete:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-delete:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-delete:before,
+    .ci-planifi-small.ci-xs-d-glyph-delete[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-delete:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-corner.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-corner:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-corner:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-corner:before,
+    .ci-planifi-small.ci-d-glyph-corner[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-corner:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-corner.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-corner:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-corner:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-corner:before,
+    .ci-planifi-small.ci-xs-d-glyph-corner[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-corner:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-dots-horizontal.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-dots-horizontal:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-dots-horizontal:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-d-glyph-dots-horizontal[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-dots-horizontal:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-dots-horizontal.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-dots-horizontal:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-dots-horizontal:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-xs-d-glyph-dots-horizontal[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-dots-horizontal:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-d-glyph-dots-vertical.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-glyph-dots-vertical:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-d-glyph-dots-vertical:before, .ci-element:disabled .ci-planifi-small.ci-d-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-d-glyph-dots-vertical[disabled='disabled']:before, .ci-planifi-small.ci-d-glyph-dots-vertical:disabled:before,
+    .ci-planifi-small.ci-xs-d-glyph-dots-vertical.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-glyph-dots-vertical:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-glyph-dots-vertical:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-xs-d-glyph-dots-vertical[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-glyph-dots-vertical:disabled:before {
+        background-position: -11em 0em;
+    }
+    
+/* #endregion Disabled */
+@media (min-width: 768px) {
+    /* #region Regular */
+    .ci-planifi-small.ci-sm-caret-left:before,
+    .ci-planifi-small.ci-sm-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-caret-right:before,
+    .ci-planifi-small.ci-sm-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-caret-up:before,
+    .ci-planifi-small.ci-sm-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-caret-down:before,
+    .ci-planifi-small.ci-sm-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-caret-up-down:before,
+    .ci-planifi-small.ci-sm-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-plus:before,
+    .ci-planifi-small.ci-sm-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-minus:before,
+    .ci-planifi-small.ci-sm-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-ok:before,
+    .ci-planifi-small.ci-sm-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-delete:before,
+    .ci-planifi-small.ci-sm-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-corner:before,
+    .ci-planifi-small.ci-sm-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-dots-horizontal:before,
+    .ci-planifi-small.ci-sm-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-dots-vertical:before,
+    .ci-planifi-small.ci-sm-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-sm-a-glyph-caret-left.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-caret-right.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-caret-up.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-caret-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-caret-up-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-plus.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-minus.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-ok.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-delete.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-corner.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-dots-horizontal.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-a-glyph-dots-vertical.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-sm-h-glyph-caret-left:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-caret-right:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-caret-up:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-caret-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-caret-up-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-plus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-minus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-minus:before {
+        background-position: -6em 0em;
+    } 
+
+    .ci-planifi-small.ci-sm-h-glyph-ok:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-delete:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-corner:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-dots-horizontal:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-h-glyph-dots-vertical:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-sm-p-glyph-caret-left:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-caret-right:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-caret-up:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-caret-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-caret-up-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-plus:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-minus:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-ok:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+    
+    .ci-planifi-small.ci-sm-p-glyph-delete:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-corner:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-dots-horizontal:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-p-glyph-dots-vertical:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-sm-d-glyph-caret-left.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-caret-left:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-caret-left:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-caret-left:before,
+    .ci-planifi-small.ci-sm-d-glyph-caret-left[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-caret-left:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-caret-right.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-caret-right:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-caret-right:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-caret-right:before,
+    .ci-planifi-small.ci-sm-d-glyph-caret-right[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-caret-right:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-caret-up.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-caret-up:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-caret-up:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-caret-up:before,
+    .ci-planifi-small.ci-sm-d-glyph-caret-up[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-caret-up:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-caret-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-caret-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-caret-down:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-caret-down:before,
+    .ci-planifi-small.ci-sm-d-glyph-caret-down[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-caret-down:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-caret-up-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-caret-up-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-caret-up-down:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-sm-d-glyph-caret-up-down[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-caret-up-down:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-plus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-plus:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-plus:before,
+    .ci-planifi-small.ci-sm-d-glyph-plus[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-plus:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-minus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-minus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-minus:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-minus:before,
+    .ci-planifi-small.ci-sm-d-glyph-minus[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-minus:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-ok.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-ok:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-ok:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-ok:before,
+    .ci-planifi-small.ci-sm-d-glyph-ok[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-ok:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-delete.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-delete:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-delete:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-delete:before,
+    .ci-planifi-small.ci-sm-d-glyph-delete[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-delete:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-corner.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-corner:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-corner:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-corner:before,
+    .ci-planifi-small.ci-sm-d-glyph-corner[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-corner:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-dots-horizontal.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-dots-horizontal:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-dots-horizontal:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-sm-d-glyph-dots-horizontal[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-dots-horizontal:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-sm-d-glyph-dots-vertical.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-glyph-dots-vertical:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-glyph-dots-vertical:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-sm-d-glyph-dots-vertical[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-glyph-dots-vertical:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Disabled */
+}
+
+@media (min-width: 992px) {
+   /* #region Regular */
+    .ci-planifi-small.ci-md-caret-left:before,
+    .ci-planifi-small.ci-md-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-md-caret-right:before,
+    .ci-planifi-small.ci-md-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-md-caret-up:before,
+    .ci-planifi-small.ci-md-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-md-caret-down:before,
+    .ci-planifi-small.ci-md-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-md-caret-up-down:before,
+    .ci-planifi-small.ci-md-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-md-plus:before,
+    .ci-planifi-small.ci-md-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-md-minus:before,
+    .ci-planifi-small.ci-md-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-md-ok:before,
+    .ci-planifi-small.ci-md-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-md-delete:before,
+    .ci-planifi-small.ci-md-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-md-corner:before,
+    .ci-planifi-small.ci-md-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-md-dots-horizontal:before,
+    .ci-planifi-small.ci-md-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-md-dots-vertical:before,
+    .ci-planifi-small.ci-md-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-md-a-glyph-caret-left.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-caret-right.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-caret-up.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-caret-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-caret-up-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-plus.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-minus.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-ok.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-delete.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-corner.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-dots-horizontal.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-md-a-glyph-dots-vertical.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-md-h-glyph-caret-left:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-caret-right:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-caret-up:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-caret-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-caret-up-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-plus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-minus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-ok:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-delete:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-corner:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-dots-horizontal:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-md-h-glyph-dots-vertical:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-md-p-glyph-caret-left:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-caret-right:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-caret-up:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-caret-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-caret-up-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-plus:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-minus:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-ok:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-delete:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-corner:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-dots-horizontal:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-md-p-glyph-dots-vertical:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-md-d-glyph-caret-left.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-caret-left:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-caret-left:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-caret-left:before,
+    .ci-planifi-small.ci-md-d-glyph-caret-left[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-caret-left:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-caret-right.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-caret-right:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-caret-right:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-caret-right:before,
+    .ci-planifi-small.ci-md-d-glyph-caret-right[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-caret-right:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-caret-up.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-caret-up:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-caret-up:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-caret-up:before,
+    .ci-planifi-small.ci-md-d-glyph-caret-up[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-caret-up:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-caret-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-caret-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-caret-down:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-caret-down:before,
+    .ci-planifi-small.ci-md-d-glyph-caret-down[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-caret-down:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-caret-up-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-caret-up-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-caret-up-down:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-md-d-glyph-caret-up-down[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-caret-up-down:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-plus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-plus:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-plus:before,
+    .ci-planifi-small.ci-md-d-glyph-plus[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-plus:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-minus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-minus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-minus:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-minus:before,
+    .ci-planifi-small.ci-md-d-glyph-minus[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-minus:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-ok.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-ok:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-ok:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-ok:before,
+    .ci-planifi-small.ci-md-d-glyph-ok[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-ok:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-delete.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-delete:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-delete:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-delete:before,
+    .ci-planifi-small.ci-md-d-glyph-delete[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-delete:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-corner.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-corner:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-corner:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-corner:before,
+    .ci-planifi-small.ci-md-d-glyph-corner[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-corner:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-dots-horizontal.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-dots-horizontal:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-dots-horizontal:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-md-d-glyph-dots-horizontal[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-dots-horizontal:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-md-d-glyph-dots-vertical.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-glyph-dots-vertical:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-glyph-dots-vertical:before, .ci-element:disabled .ci-planifi-small.ci-md-d-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-md-d-glyph-dots-vertical[disabled='disabled']:before, .ci-planifi-small.ci-md-d-glyph-dots-vertical:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Disabled */
+}
+
+@media (min-width: 1200px) {
+   /* #region Regular */
+    .ci-planifi-small.ci-lg-caret-left:before,
+    .ci-planifi-small.ci-lg-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-caret-right:before,
+    .ci-planifi-small.ci-lg-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-caret-up:before,
+    .ci-planifi-small.ci-lg-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-caret-down:before,
+    .ci-planifi-small.ci-lg-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-caret-up-down:before,
+    .ci-planifi-small.ci-lg-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-plus:before,
+    .ci-planifi-small.ci-lg-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-minus:before,
+    .ci-planifi-small.ci-lg-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-ok:before,
+    .ci-planifi-small.ci-lg-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-delete:before,
+    .ci-planifi-small.ci-lg-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-corner:before,
+    .ci-planifi-small.ci-lg-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-dots-horizontal:before,
+    .ci-planifi-small.ci-lg-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-dots-vertical:before,
+    .ci-planifi-small.ci-lg-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-lg-a-glyph-caret-left.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-caret-right.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-caret-up.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-caret-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-caret-up-down.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-plus.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-minus.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-ok.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-delete.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-corner.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-dots-horizontal.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-a-glyph-dots-vertical.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-lg-h-glyph-caret-left:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-caret-right:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-caret-up:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-caret-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-caret-up-down:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-plus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-minus:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-ok:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-delete:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-corner:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-dots-horizontal:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-h-glyph-dots-vertical:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-lg-p-glyph-caret-left:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-caret-left:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-caret-right:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-caret-right:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-caret-up:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-caret-up:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-caret-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-caret-down:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-caret-up-down:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-caret-up-down:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-plus:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-plus:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-minus:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-minus:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-ok:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-ok:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-delete:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-delete:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-corner:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-corner:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-dots-horizontal:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-dots-horizontal:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-p-glyph-dots-vertical:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-glyph-dots-vertical:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-lg-d-glyph-caret-left.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-caret-left:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-caret-left:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-caret-left:before,
+    .ci-planifi-small.ci-lg-d-glyph-caret-left[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-caret-left:disabled:before {
+        background-position: 0em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-caret-right.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-caret-right:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-caret-right:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-caret-right:before,
+    .ci-planifi-small.ci-lg-d-glyph-caret-right[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-caret-right:disabled:before {
+        background-position: -1em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-caret-up.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-caret-up:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-caret-up:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-caret-up:before,
+    .ci-planifi-small.ci-lg-d-glyph-caret-up[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-caret-up:disabled:before {
+        background-position: -2em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-caret-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-caret-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-caret-down:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-caret-down:before,
+    .ci-planifi-small.ci-lg-d-glyph-caret-down[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-caret-down:disabled:before {
+        background-position: -3em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-caret-up-down.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-caret-up-down:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-caret-up-down:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-caret-up-down:before,
+    .ci-planifi-small.ci-lg-d-glyph-caret-up-down[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-caret-up-down:disabled:before {
+        background-position: -4em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-plus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-plus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-plus:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-plus:before,
+    .ci-planifi-small.ci-lg-d-glyph-plus[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-plus:disabled:before {
+        background-position: -5em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-minus.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-minus:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-minus:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-minus:before,
+    .ci-planifi-small.ci-lg-d-glyph-minus[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-minus:disabled:before {
+        background-position: -6em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-ok.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-ok:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-ok:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-ok:before,
+    .ci-planifi-small.ci-lg-d-glyph-ok[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-ok:disabled:before {
+        background-position: -7em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-delete.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-delete:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-delete:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-delete:before,
+    .ci-planifi-small.ci-lg-d-glyph-delete[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-delete:disabled:before {
+        background-position: -8em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-corner.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-corner:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-corner:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-corner:before,
+    .ci-planifi-small.ci-lg-d-glyph-corner[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-corner:disabled:before {
+        background-position: -9em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-dots-horizontal.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-dots-horizontal:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-dots-horizontal:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-dots-horizontal:before,
+    .ci-planifi-small.ci-lg-d-glyph-dots-horizontal[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-dots-horizontal:disabled:before {
+        background-position: -10em 0em;
+    }
+
+    .ci-planifi-small.ci-lg-d-glyph-dots-vertical.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-glyph-dots-vertical:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-glyph-dots-vertical:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-glyph-dots-vertical:before,
+    .ci-planifi-small.ci-lg-d-glyph-dots-vertical[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-glyph-dots-vertical:disabled:before {
+        background-position: -11em 0em;
+    }
+
+    /* #endregion Disabled */
+}
+/* #endregion ----------------------------- Glyphs ---------------------------------- */
+
+
+/* #region -------------------------------- Colors ---------------------------------- */
+/* #region Regular */
+.ci-planifi-small.ci-color-primary:before,
+.ci-planifi-small.ci-xs-color-primary:before {
+    background-image: url("../images/ci-planifi-small-primary.svg");
+}
+
+.ci-planifi-small.ci-color-secondary:before,
+.ci-planifi-small.ci-xs-color-secondary:before {
+    background-image: url("../images/ci-planifi-small-secondary.svg");
+}
+
+.ci-planifi-small.ci-color-heading:before,
+.ci-planifi-small.ci-xs-color-heading:before {
+    background-image: url("../images/ci-planifi-small-heading.svg");
+}
+
+.ci-planifi-small.ci-color-base:before,
+.ci-planifi-small.ci-xs-color-base:before {
+    background-image: url("../images/ci-planifi-small-base.svg");
+}
+
+.ci-planifi-small.ci-color-muted:before,
+.ci-planifi-small.ci-xs-color-muted:before {
+    background-image: url("../images/ci-planifi-small-muted.svg");
+}
+
+.ci-planifi-small.ci-color-alt:before,
+.ci-planifi-small.ci-xs-color-alt:before {
+    background-image: url("../images/ci-planifi-small-alt.svg");
+}
+
+.ci-planifi-small.ci-color-success:before,
+.ci-planifi-small.ci-xs-color-success:before {
+    background-image: url("../images/ci-planifi-small-success.svg");
+}
+
+.ci-planifi-small.ci-color-warning:before,
+.ci-planifi-small.ci-xs-color-warning:before {
+    background-image: url("../images/ci-planifi-small-warning.svg");
+}
+
+.ci-planifi-small.ci-color-danger:before,
+.ci-planifi-small.ci-xs-color-danger:before {
+    background-image: url("../images/ci-planifi-small-danger.svg");
+}
+/* #endregion Regular */
+/* #region Active */
+.ci-planifi-small.ci-a-color-primary.active:before, .ci-element.active .ci-planifi-small.ci-a-color-primary:before,
+.ci-planifi-small.ci-xs-a-color-primary.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-primary:before {
+    background-image: url("../images/ci-planifi-small-primary.svg");
+}
+
+.ci-planifi-small.ci-a-color-secondary.active:before, .ci-element.active .ci-planifi-small.ci-a-color-secondary:before,
+.ci-planifi-small.ci-xs-a-color-secondary.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-secondary:before {
+    background-image: url("../images/ci-planifi-small-secondary.svg");
+}
+
+.ci-planifi-small.ci-a-color-heading.active:before, .ci-element.active .ci-planifi-small.ci-a-color-heading:before,
+.ci-planifi-small.ci-xs-a-color-heading.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-heading:before {
+    background-image: url("../images/ci-planifi-small-heading.svg");
+}
+
+.ci-planifi-small.ci-a-color-base.active:before, .ci-element.active .ci-planifi-small.ci-a-color-base:before,
+.ci-planifi-small.ci-xs-a-color-base.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-base:before {
+    background-image: url("../images/ci-planifi-small-base.svg");
+}
+
+.ci-planifi-small.ci-a-color-muted.active:before, .ci-element.active .ci-planifi-small.ci-a-color-muted:before,
+.ci-planifi-small.ci-xs-a-color-muted.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-muted:before {
+    background-image: url("../images/ci-planifi-small-muted.svg");
+}
+
+.ci-planifi-small.ci-a-color-alt.active:before, .ci-element.active .ci-planifi-small.ci-a-color-alt:before,
+.ci-planifi-small.ci-xs-a-color-alt.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-alt:before {
+    background-image: url("../images/ci-planifi-small-alt.svg");
+}
+
+.ci-planifi-small.ci-a-color-success.active:before, .ci-element.active .ci-planifi-small.ci-a-color-success:before,
+.ci-planifi-small.ci-xs-a-color-success.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-success:before {
+    background-image: url("../images/ci-planifi-small-success.svg");
+}
+
+.ci-planifi-small.ci-a-color-warning.active:before, .ci-element.active .ci-planifi-small.ci-a-color-warning:before,
+.ci-planifi-small.ci-xs-a-color-warning.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-warning:before {
+    background-image: url("../images/ci-planifi-small-warning.svg");
+}
+
+.ci-planifi-small.ci-a-color-danger.active:before, .ci-element.active .ci-planifi-small.ci-a-color-danger:before,
+.ci-planifi-small.ci-xs-a-color-danger.active:before, .ci-element.active .ci-planifi-small.ci-xs-a-color-danger:before {
+    background-image: url("../images/ci-planifi-small-danger.svg");
+}
+/* #endregion Active */
+/* #region Hover */
+.ci-planifi-small.ci-h-color-primary:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-primary:before,
+.ci-planifi-small.ci-xs-h-color-primary:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-primary:before {
+    background-image: url("../images/ci-planifi-small-primary.svg");
+}
+
+.ci-planifi-small.ci-h-color-secondary:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-secondary:before,
+.ci-planifi-small.ci-xs-h-color-secondary:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-secondary:before {
+    background-image: url("../images/ci-planifi-small-secondary.svg");
+}
+
+.ci-planifi-small.ci-h-color-heading:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-heading:before,
+.ci-planifi-small.ci-xs-h-color-heading:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-heading:before {
+    background-image: url("../images/ci-planifi-small-heading.svg");
+}
+
+.ci-planifi-small.ci-h-color-base:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-base:before,
+.ci-planifi-small.ci-xs-h-color-base:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-base:before {
+    background-image: url("../images/ci-planifi-small-base.svg");
+}
+
+.ci-planifi-small.ci-h-color-muted:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-muted:before,
+.ci-planifi-small.ci-xs-h-color-muted:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-muted:before {
+    background-image: url("../images/ci-planifi-small-muted.svg");
+}
+
+.ci-planifi-small.ci-h-color-alt:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-alt:before,
+.ci-planifi-small.ci-xs-h-color-alt:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-alt:before {
+    background-image: url("../images/ci-planifi-small-alt.svg");
+}
+
+.ci-planifi-small.ci-h-color-success:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-success:before,
+.ci-planifi-small.ci-xs-h-color-success:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-success:before {
+    background-image: url("../images/ci-planifi-small-success.svg");
+}
+
+.ci-planifi-small.ci-h-color-warning:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-warning:before,
+.ci-planifi-small.ci-xs-h-color-warning:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-warning:before {
+    background-image: url("../images/ci-planifi-small-warning.svg");
+}
+
+.ci-planifi-small.ci-h-color-danger:hover:before, .ci-element:hover .ci-planifi-small.ci-h-color-danger:before,
+.ci-planifi-small.ci-xs-h-color-danger:hover:before, .ci-element:hover .ci-planifi-small.ci-xs-h-color-danger:before {
+    background-image: url("../images/ci-planifi-small-danger.svg");
+}
+/* #endregion Hover */
+/* #region Press */
+.ci-planifi-small.ci-p-color-primary:active:before, .ci-element:active .ci-planifi-small.ci-p-color-primary:before,
+.ci-planifi-small.ci-xs-p-color-primary:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-primary:before {
+    background-image: url("../images/ci-planifi-small-primary.svg");
+}
+
+.ci-planifi-small.ci-p-color-secondary:active:before, .ci-element:active .ci-planifi-small.ci-p-color-secondary:before,
+.ci-planifi-small.ci-xs-p-color-secondary:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-secondary:before {
+    background-image: url("../images/ci-planifi-small-secondary.svg");
+}
+
+.ci-planifi-small.ci-p-color-heading:active:before, .ci-element:active .ci-planifi-small.ci-p-color-heading:before,
+.ci-planifi-small.ci-xs-p-color-heading:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-heading:before {
+    background-image: url("../images/ci-planifi-small-heading.svg");
+}
+
+.ci-planifi-small.ci-p-color-base:active:before, .ci-element:active .ci-planifi-small.ci-p-color-base:before,
+.ci-planifi-small.ci-xs-p-color-base:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-base:before {
+    background-image: url("../images/ci-planifi-small-base.svg");
+}
+
+.ci-planifi-small.ci-p-color-muted:active:before, .ci-element:active .ci-planifi-small.ci-p-color-muted:before,
+.ci-planifi-small.ci-xs-p-color-muted:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-muted:before {
+    background-image: url("../images/ci-planifi-small-muted.svg");
+}
+
+.ci-planifi-small.ci-p-color-alt:active:before, .ci-element:active .ci-planifi-small.ci-p-color-alt:before,
+.ci-planifi-small.ci-xs-p-color-alt:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-alt:before {
+    background-image: url("../images/ci-planifi-small-alt.svg");
+}
+
+.ci-planifi-small.ci-p-color-success:active:before, .ci-element:active .ci-planifi-small.ci-p-color-success:before,
+.ci-planifi-small.ci-xs-p-color-success:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-success:before {
+    background-image: url("../images/ci-planifi-small-success.svg");
+}
+
+.ci-planifi-small.ci-p-color-warning:active:before, .ci-element:active .ci-planifi-small.ci-p-color-warning:before,
+.ci-planifi-small.ci-xs-p-color-warning:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-warning:before {
+    background-image: url("../images/ci-planifi-small-warning.svg");
+}
+
+.ci-planifi-small.ci-p-color-danger:active:before, .ci-element:active .ci-planifi-small.ci-p-color-danger:before,
+.ci-planifi-small.ci-xs-p-color-danger:active:before, .ci-element:active .ci-planifi-small.ci-xs-p-color-danger:before {
+    background-image: url("../images/ci-planifi-small-danger.svg");
+}
+/* #endregion Press */
+/* #region Disabled */
+.ci-planifi-small.ci-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-primary:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-primary:before, .ci-element:disabled .ci-planifi-small.ci-d-color-primary:before,
+.ci-planifi-small.ci-d-color-primary[disabled='disabled']:before, .ci-planifi-small.ci-d-color-primary:disabled:before,
+.ci-planifi-small.ci-xs-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-primary:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-primary:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-primary:before,
+.ci-planifi-small.ci-xs-d-color-primary[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-primary:disabled:before {
+    background-image: url("../images/ci-planifi-small-primary.svg");
+}
+
+.ci-planifi-small.ci-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-secondary:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-secondary:before, .ci-element:disabled .ci-planifi-small.ci-d-color-secondary:before,
+.ci-planifi-small.ci-d-color-secondary[disabled='disabled']:before, .ci-planifi-small.ci-d-color-secondary:disabled:before,
+.ci-planifi-small.ci-xs-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-secondary:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-secondary:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-secondary:before,
+.ci-planifi-small.ci-xs-d-color-secondary[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-secondary:disabled:before {
+    background-image: url("../images/ci-planifi-small-secondary.svg");
+}
+
+.ci-planifi-small.ci-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-heading:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-heading:before, .ci-element:disabled .ci-planifi-small.ci-d-color-heading:before,
+.ci-planifi-small.ci-d-color-heading[disabled='disabled']:before, .ci-planifi-small.ci-d-color-heading:disabled:before,
+.ci-planifi-small.ci-xs-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-heading:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-heading:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-heading:before,
+.ci-planifi-small.ci-xs-d-color-heading[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-heading:disabled:before {
+    background-image: url("../images/ci-planifi-small-heading.svg");
+}
+
+.ci-planifi-small.ci-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-base:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-d-color-base:before,
+.ci-planifi-small.ci-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-d-color-base:disabled:before,
+.ci-planifi-small.ci-xs-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-base:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-base:before,
+.ci-planifi-small.ci-xs-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-base:disabled:before {
+    background-image: url("../images/ci-planifi-small-base.svg");
+}
+
+.ci-planifi-small.ci-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-muted:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-muted:before, .ci-element:disabled .ci-planifi-small.ci-d-color-muted:before,
+.ci-planifi-small.ci-d-color-muted[disabled='disabled']:before, .ci-planifi-small.ci-d-color-muted:disabled:before,
+.ci-planifi-small.ci-xs-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-muted:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-muted:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-muted:before,
+.ci-planifi-small.ci-xs-d-color-muted[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-muted:disabled:before {
+    background-image: url("../images/ci-planifi-small-muted.svg");
+}
+
+.ci-planifi-small.ci-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-alt:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-alt:before, .ci-element:disabled .ci-planifi-small.ci-d-color-alt:before,
+.ci-planifi-small.ci-d-color-alt[disabled='disabled']:before, .ci-planifi-small.ci-d-color-alt:disabled:before,
+.ci-planifi-small.ci-xs-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-alt:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-alt:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-alt:before,
+.ci-planifi-small.ci-xs-d-color-alt[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-alt:disabled:before {
+    background-image: url("../images/ci-planifi-small-alt.svg");
+}
+
+.ci-planifi-small.ci-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-success:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-success:before, .ci-element:disabled .ci-planifi-small.ci-d-color-success:before,
+.ci-planifi-small.ci-d-color-success[disabled='disabled']:before, .ci-planifi-small.ci-d-color-success:disabled:before,
+.ci-planifi-small.ci-xs-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-success:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-success:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-success:before,
+.ci-planifi-small.ci-xs-d-color-success[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-success:disabled:before {
+    background-image: url("../images/ci-planifi-small-success.svg");
+}
+
+.ci-planifi-small.ci-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-warning:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-warning:before, .ci-element:disabled .ci-planifi-small.ci-d-color-warning:before,
+.ci-planifi-small.ci-d-color-warning[disabled='disabled']:before, .ci-planifi-small.ci-d-color-warning:disabled:before,
+.ci-planifi-small.ci-xs-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-warning:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-warning:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-warning:before,
+.ci-planifi-small.ci-xs-d-color-warning[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-warning:disabled:before {
+    background-image: url("../images/ci-planifi-small-warning.svg");
+}
+
+.ci-planifi-small.ci-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-small.ci-d-color-danger:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-d-color-danger:before, .ci-element:disabled .ci-planifi-small.ci-d-color-danger:before,
+.ci-planifi-small.ci-d-color-danger[disabled='disabled']:before, .ci-planifi-small.ci-d-color-danger:disabled:before,
+.ci-planifi-small.ci-xs-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-small.ci-xs-d-color-danger:before,
+.ci-element[disabled='disabled'] .ci-planifi-small.ci-xs-d-color-danger:before, .ci-element:disabled .ci-planifi-small.ci-xs-d-color-danger:before,
+.ci-planifi-small.ci-xs-d-color-danger[disabled='disabled']:before, .ci-planifi-small.ci-xs-d-color-danger:disabled:before {
+    background-image: url("../images/ci-planifi-small-danger.svg");
+}
+/* #endregion Disabled */
+
+@media (min-width: 768px) {
+    /* #region Regular */
+    .ci-planifi-small.ci-sm-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-sm-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-sm-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-base.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-success.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-warning.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-sm-a-color-danger.active:before,
+    .ci-element.active .ci-planifi-small.ci-sm-a-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-sm-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-sm-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }   
+
+    .ci-planifi-small.ci-sm-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    } 
+
+    .ci-planifi-small.ci-sm-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-sm-h-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    } 
+    /* #endregion Hover */
+    /* #region Press */    
+    .ci-planifi-small.ci-sm-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+    
+    .ci-planifi-small.ci-sm-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-base:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-success:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-warning:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-sm-p-color-danger:active:before,
+    .ci-element:active .ci-planifi-small.ci-sm-p-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-sm-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-primary:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-primary:before,
+    .ci-planifi-small.ci-sm-d-color-primary[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-secondary:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-secondary:before,
+    .ci-planifi-small.ci-sm-d-color-secondary[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-heading:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-heading:before,
+    .ci-planifi-small.ci-sm-d-color-heading[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-base:before,
+    .ci-planifi-small.ci-sm-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-muted:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-muted:before,
+    .ci-planifi-small.ci-sm-d-color-muted[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-alt:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-alt:before,
+    .ci-planifi-small.ci-sm-d-color-alt[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-success:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-success:before,
+    .ci-planifi-small.ci-sm-d-color-success[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-warning:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-warning:before,
+    .ci-planifi-small.ci-sm-d-color-warning[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-sm-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-small.ci-sm-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-sm-d-color-danger:before, .ci-element:disabled .ci-planifi-small.ci-sm-d-color-danger:before,
+    .ci-planifi-small.ci-sm-d-color-danger[disabled='disabled']:before, .ci-planifi-small.ci-sm-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+
+@media (min-width: 992px) {
+    /* #region Regular */
+    .ci-planifi-small.ci-md-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-md-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-md-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-base.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-success.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-warning.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-md-a-color-danger.active:before,
+    .ci-element.active .ci-planifi-small.ci-md-a-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-md-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-md-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-md-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+    
+    .ci-planifi-small.ci-md-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-md-p-color-base:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-md-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-md-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-small.ci-md-p-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-md-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-md-h-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */
+    .ci-planifi-small.ci-md-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-primary:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-primary:before,
+    .ci-planifi-small.ci-md-d-color-primary[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-secondary:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-secondary:before,
+    .ci-planifi-small.ci-md-d-color-secondary[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-heading:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-heading:before,
+    .ci-planifi-small.ci-md-d-color-heading[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-base:before,
+    .ci-planifi-small.ci-md-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-muted:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-muted:before,
+    .ci-planifi-small.ci-md-d-color-muted[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-alt:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-alt:before,
+    .ci-planifi-small.ci-md-d-color-alt[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-success:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-success:before,
+    .ci-planifi-small.ci-md-d-color-success[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-warning:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-warning:before,
+    .ci-planifi-small.ci-md-d-color-warning[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-md-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-small.ci-md-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-md-d-color-danger:before, .ci-element:disabled .ci-planifi-small.ci-md-d-color-danger:before,
+    .ci-planifi-small.ci-md-d-color-danger[disabled='disabled']:before, .ci-planifi-small.ci-md-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+
+@media (min-width: 1200px) {
+    /* #region Regular */
+    .ci-planifi-small.ci-lg-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Regular */
+    /* #region Active */
+    .ci-planifi-small.ci-lg-a-color-primary.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-a-color-secondary.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-a-color-heading.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-lg-a-color-base.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-a-color-muted.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-lg-a-color-alt.active:before,
+    .ci-element.active .ci-planifi-small.ci-lg-a-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-lg-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Active */
+    /* #region Hover */
+    .ci-planifi-small.ci-lg-h-color-primary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-secondary:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-heading:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-base:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-muted:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-alt:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-success:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-warning:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-lg-h-color-danger:hover:before,
+    .ci-element:hover .ci-planifi-small.ci-lg-h-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Hover */
+    /* #region Press */
+    .ci-planifi-small.ci-lg-p-color-primary:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-primary:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-secondary:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-secondary:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-heading:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-heading:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-base:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-base:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-muted:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-muted:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-alt:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-alt:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-success:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-success:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-warning:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-warning:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-lg-p-color-danger:active:before,
+    .ci-element:active .ci-planifi-small.ci-lg-p-color-danger:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Press */
+    /* #region Disabled */    
+    .ci-planifi-small.ci-lg-d-color-primary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-primary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-primary:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-primary:before,
+    .ci-planifi-small.ci-lg-d-color-primary[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-primary:disabled:before {
+        background-image: url("../images/ci-planifi-small-primary.svg");
+    }
+    
+    .ci-planifi-small.ci-lg-d-color-secondary.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-secondary:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-secondary:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-secondary:before,
+    .ci-planifi-small.ci-lg-d-color-secondary[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-secondary:disabled:before {
+        background-image: url("../images/ci-planifi-small-secondary.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-heading.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-heading:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-heading:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-heading:before,
+    .ci-planifi-small.ci-lg-d-color-heading[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-heading:disabled:before {
+        background-image: url("../images/ci-planifi-small-heading.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-base:before,
+    .ci-planifi-small.ci-lg-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-base.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-base:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-base:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-base:before,
+    .ci-planifi-small.ci-lg-d-color-base[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-base:disabled:before {
+        background-image: url("../images/ci-planifi-small-base.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-muted.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-muted:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-muted:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-muted:before,
+    .ci-planifi-small.ci-lg-d-color-muted[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-muted:disabled:before {
+        background-image: url("../images/ci-planifi-small-muted.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-alt.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-alt:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-alt:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-alt:before,
+    .ci-planifi-small.ci-lg-d-color-alt[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-alt:disabled:before {
+        background-image: url("../images/ci-planifi-small-alt.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-success.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-success:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-success:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-success:before,
+    .ci-planifi-small.ci-lg-d-color-success[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-success:disabled:before {
+        background-image: url("../images/ci-planifi-small-success.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-warning.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-warning:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-warning:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-warning:before,
+    .ci-planifi-small.ci-lg-d-color-warning[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-warning:disabled:before {
+        background-image: url("../images/ci-planifi-small-warning.svg");
+    }
+
+    .ci-planifi-small.ci-lg-d-color-danger.disabled:before, .ci-element.disabled .ci-planifi-small.ci-lg-d-color-danger:before,
+    .ci-element[disabled='disabled'] .ci-planifi-small.ci-lg-d-color-danger:before, .ci-element:disabled .ci-planifi-small.ci-lg-d-color-danger:before,
+    .ci-planifi-small.ci-lg-d-color-danger[disabled='disabled']:before, .ci-planifi-small.ci-lg-d-color-danger:disabled:before {
+        background-image: url("../images/ci-planifi-small-danger.svg");
+    }
+    /* #endregion Disabled */
+}
+/* #endregion ----------------------------- Colors ---------------------------------- */
+/* #endregion ================================== Collection: Planifi Small ======================================== */
+

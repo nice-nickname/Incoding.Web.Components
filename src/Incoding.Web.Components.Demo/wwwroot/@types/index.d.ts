@@ -93,7 +93,7 @@ interface ColumnModel {
 
     stacked: ColumnModel[]
 
-    specialColumnKind: SpecialColumnKind
+    controlColumn: ControlColumn
 
     summaryExpr: string
 
@@ -180,7 +180,7 @@ declare enum ColumnAsignment {
 
 }
 
-declare enum SpecialColumnKind {
+declare enum ControlColumn {
 
     Expand,
 

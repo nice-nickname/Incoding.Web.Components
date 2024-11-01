@@ -56,7 +56,7 @@ class SplitGrid {
     /**
      * @type { ServiceCollection }
      */
-    serviceCollection
+    services
 
 
     constructor(grid) {
@@ -66,11 +66,10 @@ class SplitGrid {
         this.mode = grid.mode
         this.splits = grid.splits
 
-        this.serviceCollection = new ServiceCollection()
-        this.serviceCollection.register(FormatService.name, new FormatService(grid.format))
+        this.services = new ServiceCollection()
+        this.services.register(FormatService.name, new FormatService(grid.format))
 
-
-        this.schema = grid.tables.map(t => new TableSchema(t, this.serviceCollection, this.mode))
+        this.schema = grid.tables.map(t => new TableSchema(t, this.services, this.mode))
 
         this.root = document.getElementById(this.id)
         this.#initializeRootTag(grid)
@@ -97,7 +96,7 @@ class SplitGrid {
             const panel = this.splitter.getPanel(i)
             const schema = this.schema[i]
 
-            const table = new SplitTable(schema, this.serviceCollection, binding, this.mode)
+            const table = new SplitTable(schema, this.services, binding, this.mode)
             table.appendTo(panel)
 
             binding.addTable(table)

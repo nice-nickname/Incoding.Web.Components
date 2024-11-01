@@ -3,9 +3,9 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Incoding.Core.Extensions;
 using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
@@ -92,7 +92,7 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Attr(string attr, TemplateContent<T> value)
     {
-        Column.Attrs[attr] = TemplateEncoder.Encode(value(Template).HtmlContentToString());
+        Column.Attrs[attr] = EncodeTemplate(value);
 
         return this;
     }
@@ -100,7 +100,7 @@ public class ColumnBuilder<T>
     public ColumnBuilder<T> IsAttr(Expression<Func<T, object>> isField, string attr)
     {
         var isAttr = Template.IsInline(isField, attr).HtmlContentToString();
-        Column.Attrs[TemplateEncoder.Encode(isAttr)] = attr;
+        Column.Attrs[EncodeTemplate(isAttr)] = attr;
 
         return this;
     }
@@ -108,7 +108,7 @@ public class ColumnBuilder<T>
     public ColumnBuilder<T> NotAttr(Expression<Func<T, object>> notField, string attr)
     {
         var notAttr = Template.NotInline(notField, attr).HtmlContentToString();
-        Column.Attrs[TemplateEncoder.Encode(notAttr)] = attr;
+        Column.Attrs[EncodeTemplate(notAttr)] = attr;
 
         return this;
     }
@@ -217,7 +217,7 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Content(TemplateContent<T> contentLambda)
     {
-        Column.Content = TemplateEncoder.Encode(contentLambda(Template).HtmlContentToString().Trim());
+        Column.Content = EncodeTemplate(contentLambda);
 
         return this;
     }
@@ -231,7 +231,7 @@ public class ColumnBuilder<T>
 
     public ColumnBuilder<T> Bind(ImlTemplateBinding<T> binding)
     {
-        Column.Executable = ImlBinder.ToExecutable(Html, Template, binding);
+        Column.Executable = EncodeTemplate(ImlBinder.ToExecutable(Html, Template, binding));
 
         return this;
     }
@@ -266,5 +266,30 @@ public class ColumnBuilder<T>
     public ColumnBuilder<T> Summary(Expression<Func<IEnumerable<T>, object>> expression)
     {
         return Summary<T>(expression);
+    }
+
+    private string EncodeTemplate(TemplateContent<T> tmpl)
+    {
+        var content = tmpl(Template).HtmlContentToString();
+
+        return EncodeTemplate(content);
+    }
+
+    private string EncodeTemplate(string content)
+    {
+        if (Column.SpreadField != null)
+        {
+            content = ReplaceSpreadedField(content);
+        }
+
+        return TemplateEncoder.Encode(content);
+    }
+
+    private string ReplaceSpreadedField(string content)
+    {
+        var spreadField = Column.SpreadField;
+        var spreadIndex = Column.SpreadIndex;
+
+        return "{{#with " + $"{spreadField}.[{spreadIndex}]" + "}}" + content + "{{/with}}";
     }
 }

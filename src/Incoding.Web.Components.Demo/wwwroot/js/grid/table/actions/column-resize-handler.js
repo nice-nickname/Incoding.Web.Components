@@ -27,6 +27,7 @@ class ColumnResizeHandler {
 
         document.addEventListener('mouseup', this.stop, { passive: true })
         document.addEventListener('mousemove', this.resize, { passive: true })
+        document.addEventListener('click', this.cancelClickAfterStop, true)
     }
 
     /**
@@ -64,5 +65,16 @@ class ColumnResizeHandler {
 
         this.table.columnResize.resize(this.column.uid, this.column.width)
         this.table.columnChanged(this.column)
+
+        requestAnimationFrame(() => {
+            document.removeEventListener('click', this.cancelClickAfterStop, true)
+        })
+    }
+
+    /**
+     * @param { PointerEvent } ev
+     */
+    cancelClickAfterStop = (ev) => {
+        ev.stopPropagation()
     }
 }

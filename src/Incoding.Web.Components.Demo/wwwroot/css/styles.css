@@ -49,3 +49,13 @@ ul.dropdown-menu .sidemenu {
     top: 0;
     left: 100%;
 }
+
+button.ci-planifi {
+    all: unset;
+    box-sizing: border-box;
+}
+
+button.icon-button {
+    all: unset;
+    box-sizing: border-box;
+}

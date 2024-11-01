@@ -26,6 +26,7 @@
 
 .split-grid .splitter .divider {
     width: 2px;
+    height: 100%;
 
     background: #eaeaea;
 
@@ -99,6 +100,9 @@
     box-shadow: inset -2px 0px 0px 0px #d5d5d5;
 }
 
+.split-table .pinned-last + :is(td, th) {
+    border-left: 0;
+}
 
 /* #endregion */
 
@@ -113,16 +117,33 @@
     position: relative;
 }
 
+.split-table thead .icon-button {
+    font-size: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2px;
+}
+
 .split-table thead th [role=sort] {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 4px;
 }
 
-.split-table thead th.sort-asc [role=sort] {
-    display: block;
+.split-table thead th.sorted [role=sort] {
+    display: inline-block;
 }
 
-.split-table thead th.sort-desc [role=sort] {
-    display: block;
+.split-table thead th.sorted.sorted-asc [role=sort]::before {
+    background-position: -2em 0;
+}
+
+.split-table thead th.sorted.sorted-desc [role=sort]::before {
+    background-position: -3em 0;
 }
 
 
@@ -131,12 +152,11 @@
     position: absolute;
     top: 0;
     right: 4px;
-    height: 100%;
 }
 
 .split-table thead th:hover [role=menu],
 .split-table thead th.active [role=menu] {
-    display: block;
+    display: inline-block;
 }
 
 
@@ -150,20 +170,26 @@
     height: 100%;
 }
 
-.split-table thead th [role=resize]:hover {
+.split-table:not(.resizing) thead th [role=resize]:hover {
     cursor: col-resize;
+    border-right: 2px solid red;
 }
 
 .split-table col.active-resize {
     border-right: 2px solid red;
 }
 
-.split-table col.active-filter {
+.split-table th.active-filter,
+.split-table td.active-filter {
     background: red;
 }
 
 .split-grid-stacked .split-table .table-container {
     padding: 0;
+}
+
+.split-grid-stacked .table-container .split-table thead {
+    visibility: collapse;
 }
 
 /* #endregion */

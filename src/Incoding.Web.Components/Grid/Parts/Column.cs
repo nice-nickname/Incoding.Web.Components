@@ -56,7 +56,7 @@ public class Column
     public SortOrder? SortedBy { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public SpecialColumnKind? SpecialColumnKind { get; set; }
+    public ControlColumn? ControlColumn { get; set; }
 
     public bool Totalable { get; set; }
 
@@ -79,9 +79,9 @@ public class Column
         Uid = Guid.NewGuid().ToString()[..10];
     }
 
-    public Column(SpecialColumnKind specialColumn) : this()
+    public Column(ControlColumn controlColumn) : this()
     {
-        SpecialColumnKind = specialColumn;
+        ControlColumn = controlColumn;
 
         Totalable = false;
         Filterable = false;

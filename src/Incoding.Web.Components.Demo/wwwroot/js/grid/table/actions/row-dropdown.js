@@ -6,6 +6,11 @@ class RowDropdown {
      */
     table
 
+    /**
+     * @type { Menu }
+     */
+    #menu
+
     #dropdownTmpl
 
     /**
@@ -16,25 +21,10 @@ class RowDropdown {
     constructor(table) {
         this.table = table
 
+        this.#menu = null
         this.#dropdownTmpl = ExecutableInsert.Template.compile(table.row.dropdownTmpl)
 
         this.#addEventListeners()
-    }
-
-    show(top, left) {
-        const rowData = this.#targetRowData
-
-        const template = document.createElement('template')
-        template.innerHTML = ExecutableInsert.Template.render(this.#dropdownTmpl, rowData)
-
-        const dropdown = template.content.children.item(0)
-        IncodingEngine.Current.parse(dropdown)
-
-        const menu = Menu.fromElement(dropdown, {
-            onClose: () => { this.#targetRowData = null }
-        })
-
-        menu.show(top, left)
     }
 
     destroy() {
@@ -54,17 +44,41 @@ class RowDropdown {
      */
     #handleClick = (ev) => {
         const target = ev.target
-        const coords = target.getBoundingClientRect()
 
         if (target.role === 'dropdown') {
-            const row = target.closest('tr')
-            const rowIndex = row.dataset.index
+            ev.stopPropagation()
 
-            const data = this.table.getData()
+            this.#targetRowData = this.#getRowDataFromTarget(target)
 
-            this.#targetRowData = data[rowIndex]
+            if (this.#menu) {
+                this.#menu.hide()
+                this.#menu = null
+            } else {
+                const { bottom, left } = target.getBoundingClientRect()
 
-            this.show(coords.bottom, coords.left)
+                this.#menu = this.#createMenu()
+                this.#menu.show(bottom, left)
+            }
         }
+    }
+
+    #createMenu() {
+        const rowData = this.#targetRowData
+
+        const template = document.createElement('template')
+        template.innerHTML = ExecutableInsert.Template.render(this.#dropdownTmpl, rowData)
+
+        const dropdown = template.content.children.item(0)
+        IncodingEngine.Current.parse(dropdown)
+
+        return Menu.fromElement(dropdown, { })
+    }
+
+    #getRowDataFromTarget(target) {
+        const row = target.closest('tr')
+        const rowIndex = row.dataset.index
+        const data = this.table.getData().at(rowIndex)
+
+        return data
     }
 }

@@ -1,6 +1,6 @@
 namespace Incoding.Web.Components.Grid;
 
-public enum SpecialColumnKind
+public enum ControlColumn
 {
     Expand,
 

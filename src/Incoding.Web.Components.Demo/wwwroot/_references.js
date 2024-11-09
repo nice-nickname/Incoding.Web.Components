@@ -12,6 +12,7 @@
 
 /// <reference path="js/grid/const/roles.js" />
 /// <reference path="js/grid/const/events.js" />
+/// <reference path="js/grid/const/classes.js" />
 
 /// <reference path="js/grid/table/table.js" />
 /// <reference path="js/grid/table/data/data-binding.js" />
@@ -24,7 +25,6 @@
 /// <reference path="js/grid/table/rendering/colgroup-renderer.js" />
 /// <reference path="js/grid/table/rendering/summary-renderer.js" />
 
-/// <reference path="js/grid/utils/empty.js" />
 /// <reference path="js/grid/utils/menu.js" />
 /// <reference path="js/grid/utils/filter-menu.js" />
 

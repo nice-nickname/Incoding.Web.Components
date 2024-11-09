@@ -35,7 +35,7 @@ public class SplitGridBuilder<T>
                {
                        Width = "100%",
                        Height = "100%",
-                       Format = FormatOptions.Default()
+                       Format = FormatOptions.Default(html)
                };
 
     }

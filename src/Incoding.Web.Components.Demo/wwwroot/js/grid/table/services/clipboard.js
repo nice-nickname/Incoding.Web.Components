@@ -79,10 +79,8 @@ class ClipboardService {
         const columns = this.#table.getFlatColumns()
             .filter(column => column.field)
 
-    return columns
-            .map(column => column.formatToString(
-                column.getValue(data)
-            ))
-            .join('\t')
+        return columns
+                .map(column => column.formatToString(column.getValue(data)))
+                .join('\t')
     }
 }

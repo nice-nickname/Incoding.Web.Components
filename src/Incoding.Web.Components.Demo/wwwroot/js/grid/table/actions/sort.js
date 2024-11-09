@@ -18,7 +18,7 @@ class Sort {
 
     /**
      * @param { Column } column
-     * @param { ColumnSortOption } direction
+     * @param { ColumnSortOrder } direction
      */
     sortColumn(column, direction) {
         column.sortedBy = direction
@@ -42,15 +42,19 @@ class Sort {
     #setSortIcon(column) {
         const th = this.table.getColumnHeader(column)
 
-        th.classList.remove('sorted-asc', 'sorted-desc')
-        th.classList.add('sorted', `sorted-${column.sortedBy.toString().toLowerCase()}`)
+        const { sorted, sortedAsc, sortedDesc } = classes
+
+        th.classList.remove(sortedAsc, sortedDesc)
+        th.classList.add(sorted, `sorted-${column.sortedBy.toString().toLowerCase()}`)
     }
 
     #removeSortIcons() {
         const thead = this.table.thead
 
-        if (thead.querySelector('.sorted')) {
-            thead.querySelector('.sorted').classList.remove('sorted', 'sorted-asc', 'sorted-desc')
+        const { sorted, sortedAsc, sortedDesc } = classes
+
+        if (thead.querySelector(`.${sorted}`)) {
+            thead.querySelector(`.${sorted}`).classList.remove(sorted, sortedAsc, sortedDesc)
         }
     }
 
@@ -86,12 +90,12 @@ class Sort {
     #invokeSort(column) {
         let direction = column.sortedBy
 
-        if (direction === null) {
-            direction = ColumnSortOption.Asc
+        if (direction) {
+            direction = direction === ColumnSortOrder.Asc ?
+                ColumnSortOrder.Desc :
+                ColumnSortOrder.Asc
         } else {
-            direction = direction === ColumnSortOption.Asc ?
-                ColumnSortOption.Desc :
-                ColumnSortOption.Asc
+            direction = ColumnSortOrder.Asc
         }
 
         this.sortColumn(column, direction)

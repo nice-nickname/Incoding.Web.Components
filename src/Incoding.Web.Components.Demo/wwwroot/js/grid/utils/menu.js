@@ -63,7 +63,7 @@ class Menu {
 
         this.#element.style.position = 'absolute'
         this.#element.style.visibility = 'hidden'
-        this.#element.classList.add('show')
+        this.#element.classList.add(classes.dropdownShow)
 
         const position = this.#calculatePosition(top, left)
 
@@ -73,11 +73,11 @@ class Menu {
     }
 
     isOpen() {
-        return this.#element.classList.contains('show')
+        return this.#element.classList.contains(classes.dropdownShow)
     }
 
     hide() {
-        this.#element.classList.remove('show')
+        this.#element.classList.remove(classes.dropdownShow)
         this.#onMenuClose()
         this.destroy()
     }
@@ -138,7 +138,7 @@ class Menu {
      */
     #createMenuElement(items) {
         const ul = document.createElement('ul')
-        ul.classList.add('dropdown-menu')
+        ul.classList.add(classes.dropdownMenu)
 
         for (const item of items) {
             const li = this.#createMenuItem(item)
@@ -160,13 +160,21 @@ class Menu {
         if (item.template) {
             li.innerHTML = item.template
         } else if (item.isDivider) {
-            li.innerHTML = '<hr class="dropdown-divider">'
+            li.innerHTML = `<hr class="${classes.dropdownDivider}">`
         } else {
-            li.innerHTML = `<a class="dropdown-item ${item.isDisabled ? 'disabled' : ''}"
-                               href="javascript:void(0)">
-                                ${item.icon ? `<i class="ci-planifi ${item.icon}"></i>` : ``}
-                                ${item.text}
-                            </a>`
+            const a = document.createElement('a')
+            a.classList.add(classes.dropdownItem)
+            a.href = 'javascript:void(0)'
+
+            if (item.icon) {
+                const icon = document.createElement('i')
+                icon.classList.add(classes.baseIcon, item.icon)
+                a.appendChild(icon)
+            }
+
+            a.append(item.text)
+
+            li.appendChild(a)
         }
 
         li.dataset.action = item.action || ''
@@ -174,7 +182,7 @@ class Menu {
 
         if (item.sideMenu) {
             const sideMenu = this.#createMenuElement(item.sideMenu)
-            li.classList.add('sidemenu')
+            li.classList.add(classes.dropdownSideMenu)
             li.append(sideMenu)
         }
 

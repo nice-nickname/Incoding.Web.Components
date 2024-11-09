@@ -73,7 +73,7 @@ interface ColumnModel {
 
     alignment: ColumnAsignment
 
-    sortedBy: ColumnSortOption | null
+    sortedBy: ColumnSortOrder | null
 
     totalable: boolean
 
@@ -84,6 +84,8 @@ interface ColumnModel {
     resizable: boolean
 
     showMenu: boolean
+
+    allowEdit: boolean,
 
     hidden: boolean
 
@@ -136,7 +138,7 @@ declare enum GridMode {
 
 }
 
-declare enum ColumnSortOption {
+declare enum ColumnSortOrder {
 
     Asc,
 

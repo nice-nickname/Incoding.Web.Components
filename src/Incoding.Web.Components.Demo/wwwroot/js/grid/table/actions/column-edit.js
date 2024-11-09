@@ -16,7 +16,7 @@ class ColumnEdit {
      */
     rename(column, name) {
         this.table.schema.rename(column.uid, name)
-        this.table.header.render()
+        this.table.refreshHeader()
     }
 
     /**
@@ -49,7 +49,8 @@ class ColumnEdit {
      */
     unpin(column) {
         this.table.schema.pinColumn(column.uid, false)
-        if (this.shouldUnpinControlColumns()) {
+
+        if (this.#shouldUnpinControlColumns()) {
             this.#setPinToControlColumns(false)
         }
         this.table.dataBinding.schemaUpdated()
@@ -72,7 +73,6 @@ class ColumnEdit {
     moveToStart(column) {
         this.table.schema.moveColumn(column.uid, 'first')
         this.table.dataBinding.schemaUpdated()
-        this.#notifyColumnUpdated(column)
     }
 
     /**
@@ -81,7 +81,6 @@ class ColumnEdit {
     moveToEnd(column) {
         this.table.schema.moveColumn(column.uid, 'last')
         this.table.dataBinding.schemaUpdated()
-        this.#notifyColumnUpdated(column)
     }
 
 
@@ -92,7 +91,6 @@ class ColumnEdit {
     moveBefore(column, beforeColumn) {
         this.table.schema.moveColumn(column.uid, beforeColumn.uid)
         this.table.dataBinding.schemaUpdated()
-        this.#notifyColumnUpdated(column)
     }
 
     /**
@@ -100,8 +98,12 @@ class ColumnEdit {
      */
     remove(column) {
         this.table.schema.remove(column.uid)
+
+        if (this.#shouldUnpinControlColumns()) {
+            this.#setPinToControlColumns(false)
+        }
+
         this.table.dataBinding.schemaUpdated()
-        this.#notifyColumnUpdated(column)
     }
 
     /**
@@ -116,7 +118,7 @@ class ColumnEdit {
         }
     }
 
-    shouldUnpinControlColumns() {
+    #shouldUnpinControlColumns() {
         const pinned = this.table.columns
             .filter(column => column.isPinned)
 
@@ -129,9 +131,5 @@ class ColumnEdit {
         }
 
         return regularPinned === 0 && controlsPinned !== 0
-    }
-
-    #notifyColumnUpdated(column) {
-        this.table.columnChanged(column)
     }
 }

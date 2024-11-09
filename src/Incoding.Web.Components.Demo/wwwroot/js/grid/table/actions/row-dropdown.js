@@ -16,7 +16,7 @@ class RowDropdown {
     /**
      * @type { object }
      */
-    #targetRowData
+    #rowData
 
     constructor(table) {
         this.table = table
@@ -45,28 +45,32 @@ class RowDropdown {
     #handleClick = (ev) => {
         const target = ev.target
 
-        if (target.role === 'dropdown') {
+        if (target.role === roles.dropdown) {
             ev.stopPropagation()
 
-            this.#targetRowData = this.#getRowDataFromTarget(target)
+            const prevRowData = this.#rowData
+            const rowData = this.#getRowDataFromTarget(target)
 
             if (this.#menu) {
                 this.#menu.hide()
                 this.#menu = null
-            } else {
-                const { bottom, left } = target.getBoundingClientRect()
 
-                this.#menu = this.#createMenu()
-                this.#menu.show(bottom, left)
+                if (prevRowData === rowData) {
+                    return
+                }
             }
+
+            const { bottom, left } = target.getBoundingClientRect()
+
+            this.#menu = this.#createMenu(rowData)
+            this.#menu.show(bottom, left)
+            this.#rowData = rowData
         }
     }
 
-    #createMenu() {
-        const rowData = this.#targetRowData
-
+    #createMenu(data) {
         const template = document.createElement('template')
-        template.innerHTML = ExecutableInsert.Template.render(this.#dropdownTmpl, rowData)
+        template.innerHTML = ExecutableInsert.Template.render(this.#dropdownTmpl, data)
 
         const dropdown = template.content.children.item(0)
         IncodingEngine.Current.parse(dropdown)

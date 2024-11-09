@@ -13,6 +13,10 @@ const roles = {
 
     resize: 'resize',
 
-    temp: 'temp'
+    expand: 'expand',
+
+    dropdown: 'dropdown',
+
+    temp: 'temp',
 
 }

@@ -43,7 +43,7 @@ class SplitGrid {
     splitter
 
     /**
-     * @type { Empty }
+     * @type { HTMLElement }
      */
     empty
 
@@ -77,14 +77,16 @@ class SplitGrid {
         this.splitter = new Splitter(grid.splits)
         this.splitter.appendTo(this.root)
 
-        this.empty = new Empty(grid.emptyContent)
-        this.empty.appendTo(this.root)
+        this.empty = document.createElement('div')
+        this.empty.classList.add(classes.empty, classes.hidden)
+        this.empty.innerHTML = grid.emptyContent
+        this.root.appendChild(this.empty)
     }
 
     render() {
         const binding = new DataBinding()
 
-        if (this.infiniteScroll !== null) {
+        if (this.infiniteScroll) {
             const scrollerEl = this.splitter.getPanel(0)
 
             binding.setRenderer(new InfitniteScrollRenderingBehaviour(scrollerEl, this.infiniteScroll, binding))
@@ -108,7 +110,7 @@ class SplitGrid {
     }
 
     clearData() {
-        this.rootBinding.unbind()
+        this.rootBinding.clearData()
     }
 
     appendData(data) {
@@ -117,6 +119,24 @@ class SplitGrid {
         }
 
         this.rootBinding.appendData(data)
+    }
+
+    show() {
+        this.empty.classList.add(classes.hidden)
+        this.splitter.root.classList.remove(classes.hidden)
+    }
+
+    hide() {
+        this.empty.classList.remove(classes.hidden)
+        this.splitter.root.classList.add(classes.hidden)
+    }
+
+    showLoader() {
+        this.root.classList.add(classes.loading)
+    }
+
+    removeLoader() {
+        this.root.classList.remove(classes.loading)
     }
 
     destroy() {
@@ -130,8 +150,9 @@ class SplitGrid {
         this.root.style.width = grid.width
         this.root.style.height = grid.height
 
-        this.root.classList.add('split-grid')
+        this.root.classList.add(classes.splitGrid)
         this.root.classList.add(`split-grid-${this.mode.toLowerCase()}`)
+        this.root.classList.add(classes.loader)
         this.root.classList.add(...SplitGridHelpers.parseCss(grid.css))
     }
 }

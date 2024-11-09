@@ -155,6 +155,13 @@ public class ColumnBuilder<T>
         return this;
     }
 
+    public ColumnBuilder<T> AllowEdit(bool value = true)
+    {
+        Column.AllowEdit = value;
+
+        return this;
+    }
+
     public ColumnBuilder<T> Field(string field)
     {
         Column.Field = field;

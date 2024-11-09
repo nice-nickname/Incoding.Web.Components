@@ -45,7 +45,7 @@ class ColgroupRenderer {
      * @param { Column } column
      */
     setResizingBorder(column) {
-        this.#cols[column.index].classList.add('active-resize')
+        this.#cols[column.index].classList.add(classes.colResizing)
     }
 
     /**
@@ -59,17 +59,17 @@ class ColgroupRenderer {
      * @param { Column } column
      */
     removeResizingBorder(column) {
-        this.#cols[column.index].classList.remove('active-resize')
+        this.#cols[column.index].classList.remove(classes.colResizing)
     }
 
     /**
      * @param { Column } column
      */
     setFilterColumn(column) {
-        this.#cols[column.index].classList.add('active-filter')
+        this.#cols[column.index].classList.add(classes.colFiltered)
     }
 
     removeFilterColumn(column) {
-        this.#cols[column.index].classList.remove('active-filter')
+        this.#cols[column.index].classList.remove(classes.colFiltered)
     }
 }

@@ -36,7 +36,7 @@ class ColumnMenu {
      */
     open(column, top, left) {
         const th = this.table.getColumnHeader(column)
-        th.classList.add('active')
+        th.classList.add(classes.active)
 
         this.#menu = new Menu({
             items: this.#getMenuItems(column),
@@ -114,70 +114,82 @@ class ColumnMenu {
      * @return { MenuItem[] }
      */
     #getMenuItems(column) {
-        return [
-            { icon: 'ci-filter', text: 'Filter', action: 'Filter', isDisabled: !column.filterable },
-            { icon: 'ci-caret-down', text: 'Sort Asc', action: 'SortAsc', isDisabled: !column.sortable },
-            { icon: 'ci-caret-up', text: 'Sort Desc', action: 'SortDesc', isDisabled: !column.sortable },
+        const items = [];
 
-            { isDivider: true },
+        this.#addFilterItem(items, column);
+        this.#addSortItems(items, column);
+        this.#addEditItems(items, column);
 
-            { text: 'Auto fit', action: 'AutoFit', isDisabled: !column.resizable },
-
-            {
-                text: 'Move to',
-                isDisabled: column.hasStackedParent() || column.isPinned,
-                sideMenu: this.#getMoveToMenuItems(column)
-            },
-
-            ...this.#getPinMenuItems(column),
-
-            { icon: 'ci-pencil', text: 'Rename', action: 'Rename', isDisabled: column.isStacked() },
-
-            { isDivider: true },
-
-            { icon: 'ci-trashcan', text: 'Remove', action: 'Remove' }
-        ]
+        return items;
     }
 
-    /**
-     * @param { Column } column
-     * @returns { MenuItem[] }
-     */
-    #getPinMenuItems(column) {
-
-        return column.isPinned ?
-            [
-                { text: 'Unpin', action: 'Unpin' },
-                { text: 'Unpin all', action: 'UnpinAll' }
-            ] :
-            [
-                { text: 'Pin', action: 'Pin', isDisabled: column.hasStackedParent() },
-                { text: 'Pin to this', action: 'PinToThis', isDisabled: column.hasStackedParent() }
-            ]
+    #addFilterItem(items, column) {
+        if (column.filterable) {
+            items.push({ icon: 'ci-filter', text: 'Filter', action: 'Filter' });
+        }
     }
 
-    /**
-     * @param { Column } column
-     * @returns { MenuItem[] }
-     */
-    #getMoveToMenuItems(column) {
-        const items = [
-            { text: 'Start', action: 'MoveStart' },
-            { text: 'End', action: 'MoveEnd' },
-        ]
-
-        const columns = this.table.columns
-            .filter(col => col != column && !col.isControlColumn() && !col.isPinned)
-            .map(col => ({ text: col.title, action: 'MoveTo', subAction: col.uid }));
-
-        if (columns.length !== 0) {
+    #addSortItems(items, column) {
+        if (column.sortable) {
             items.push(
-                { isDivider: true },
-                ...columns
-            )
+                { icon: 'ci-caret-down', text: 'Sort Asc', action: 'SortAsc' },
+                { icon: 'ci-caret-up', text: 'Sort Desc', action: 'SortDesc' }
+            );
+        }
+    }
+
+    #addEditItems(items, column) {
+        if (!column.allowEdit) return;
+
+        if (column.filterable || column.sortable) {
+            items.push({ isDivider: true });
         }
 
-        return items
+        if (column.resizable) {
+            items.push({ text: 'Auto fit', action: 'AutoFit' });
+        }
+
+        if (!column.hasStackedParent() || !column.isPinned) {
+            const moveOptions = this.#getAvailableMoveOptions(column)
+
+            items.push({
+                text: 'Move to',
+                sideMenu: [
+                    { text: 'Start', action: 'MoveStart' },
+                    { text: 'End', action: 'MoveEnd' },
+                    { isDivider: true },
+                    ...moveOptions
+                ],
+            });
+        }
+
+        if (!column.hasStackedParent()) {
+            items.push(...column.isPinned ?
+                [
+                    { text: 'Unpin', action: 'Unpin' },
+                    { text: 'Unpin all', action: 'UnpinAll' }
+                ] :
+                [
+                    { text: 'Pin', action: 'Pin', isDisabled: column.hasStackedParent() },
+                    { text: 'Pin to this', action: 'PinToThis', isDisabled: column.hasStackedParent() }
+                ]);
+        }
+
+        items.push(
+            { icon: 'ci-pencil', text: 'Rename', action: 'Rename' },
+            { isDivider: true },
+            { icon: 'ci-trashcan', text: 'Remove', action: 'Remove' }
+        );
+    }
+
+    /**
+     * @param { Column } column
+     * @returns { MenuItem[] }
+     */
+    #getAvailableMoveOptions(column) {
+        return this.table.columns
+            .filter(col => col != column && !col.isControlColumn() && !col.isPinned)
+            .map(col => ({ text: col.title, action: 'MoveTo', subAction: col.uid }))
     }
 
 
@@ -190,10 +202,10 @@ class ColumnMenu {
 
         switch (action) {
             case 'SortAsc':
-                this.table.sort.sortColumn(column, ColumnSortOption.Asc)
+                this.table.sort.sortColumn(column, ColumnSortOrder.Asc)
                 break;
             case 'SortDesc':
-                this.table.sort.sortColumn(column, ColumnSortOption.Desc)
+                this.table.sort.sortColumn(column, ColumnSortOrder.Desc)
                 break;
             case 'Filter':
                 this.table.filter.createMenu(column)
@@ -237,10 +249,10 @@ class ColumnMenu {
     }
 
     #onMenuOpen(th) {
-        th.classList.add('active')
+        th.classList.add(classes.active)
     }
 
     #onMenuClose(th) {
-        th.classList.remove('active')
+        th.classList.remove(classes.active)
     }
 }

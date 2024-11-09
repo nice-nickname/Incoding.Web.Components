@@ -1,87 +1,4 @@
 
-class FooterRenderer {
-
-    /**
-     * @type { SplitTable }
-     */
-    #parent
-
-    /**
-     * @type { HTMLDivElement }
-     */
-    #panel
-
-    /**
-     * @type { HTMLTableElement }
-     */
-    #table
-
-    constructor(table) {
-        this.#parent = table
-    }
-
-    render() {
-        const panel = document.createElement('div')
-        panel.classList.add('table-footer')
-
-        const table = document.createElement('table')
-        table.classList.add('split-table')
-        table.classList.add(...this.#parent.schema.css)
-        table.id = this.#parent.schema.id + '-footer'
-        table.innerHTML = '<tfoot>'
-
-        panel.appendChild(table)
-
-        this.#panel = panel
-        this.#table = table
-    }
-
-    refresh() {
-        const tfoot = document.createElement('tfoot')
-        const tr = document.createElement('tr')
-
-        const data = this.#parent.getData()
-
-        const columns = this.#parent.getFlatColumns()
-        for (const column of columns) {
-            const td = document.createElement('td')
-            td.classList.add(...column.css)
-
-            const contentEl = document.createElement('span')
-            if (column.totalable) {
-                const value = this.#calculateTotal(data, column)
-                column.formatElement(value, contentEl)
-            } else {
-                contentEl.innerHTML = '&nbsp;'
-            }
-
-            td.appendChild(contentEl)
-            tr.appendChild(td)
-        }
-        tfoot.appendChild(tr)
-
-        const oldTfoor = this.#table.querySelector('tfoot')
-        oldTfoor.replaceWith(tfoot)
-    }
-
-    setLoading() {
-        const cells = this.#table.querySelectorAll('td > span')
-        cells.forEach(cell => cell.classList.add('loading'))
-    }
-
-    /**
-     * @param { object[] } data
-     * @param { Column } column
-     */
-    #calculateTotal(data, column) {
-        const field = column.spreadField ?
-            `${column.spreadField}.${column.spreadIndex}.${column.field}` :
-            column.field
-
-        return DataUtil.aggregate(data, field, 'sum')
-    }
-}
-
 class TableFooterRenderer {
 
     /**
@@ -173,3 +90,87 @@ class TableFooterRenderer {
         return DataUtil.aggregate(data, field, 'sum')
     }
 }
+
+// class FooterRenderer {
+
+//     /**
+//      * @type { SplitTable }
+//      */
+//     #parent
+
+//     /**
+//      * @type { HTMLDivElement }
+//      */
+//     #panel
+
+//     /**
+//      * @type { HTMLTableElement }
+//      */
+//     #table
+
+//     constructor(table) {
+//         this.#parent = table
+//     }
+
+//     render() {
+//         const panel = document.createElement('div')
+//         panel.classList.add('table-footer')
+
+//         const table = document.createElement('table')
+//         table.classList.add('split-table')
+//         table.classList.add(...this.#parent.schema.css)
+//         table.id = this.#parent.schema.id + '-footer'
+//         table.innerHTML = '<tfoot>'
+
+//         panel.appendChild(table)
+
+//         this.#panel = panel
+//         this.#table = table
+//     }
+
+//     refresh() {
+//         const tfoot = document.createElement('tfoot')
+//         const tr = document.createElement('tr')
+
+//         const data = this.#parent.getData()
+
+//         const columns = this.#parent.getFlatColumns()
+//         for (const column of columns) {
+//             const td = document.createElement('td')
+//             td.classList.add(...column.css)
+
+//             const contentEl = document.createElement('span')
+//             if (column.totalable) {
+//                 const value = this.#calculateTotal(data, column)
+//                 column.formatElement(value, contentEl)
+//             } else {
+//                 contentEl.innerHTML = '&nbsp;'
+//             }
+
+//             td.appendChild(contentEl)
+//             tr.appendChild(td)
+//         }
+//         tfoot.appendChild(tr)
+
+//         const oldTfoor = this.#table.querySelector('tfoot')
+//         oldTfoor.replaceWith(tfoot)
+//     }
+
+//     setLoading() {
+//         const cells = this.#table.querySelectorAll('td > span')
+//         cells.forEach(cell => cell.classList.add(classes.loadingPlaceholder))
+//     }
+
+//     removeLoading() {
+//         const cells = this.#table.querySelectorAll('td > span')
+//         cells.forEach(cell => cell.classList.remove(classes.loadingPlaceholder))
+//     }
+
+//     /**
+//      * @param { object[] } data
+//      * @param { Column } column
+//      */
+//     #calculateTotal(data, column) {
+//         return DataUtil.aggregate(data, column.getField(), 'sum')
+//     }
+// }

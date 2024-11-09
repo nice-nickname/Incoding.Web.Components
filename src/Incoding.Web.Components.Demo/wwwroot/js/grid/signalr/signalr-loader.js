@@ -80,7 +80,7 @@ class SignalRLoader {
 
     #onStart = () => {
         this.#dataBinding.setDataLoading(true)
-        this.#dataBinding.unbind()
+        this.#dataBinding.clearData()
 
         this.#root.dispatchEvent(new Event(events.signalr.start))
     }

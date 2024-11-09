@@ -1,7 +1,6 @@
 
 class DataUtil {
 
-
     /**
      * @param { object[] } data
      * @param { string } field
@@ -41,7 +40,10 @@ class DataUtil {
         }
     }
 
-
+    /**
+     * @param { object } obj
+     * @param { string } field
+     */
     static getValue(obj, field) {
         return field.split('.').reduce((acc, part) => acc && acc[part], obj) || 0;
     }
@@ -49,17 +51,16 @@ class DataUtil {
 
 class AggregateUtil {
 
-
     /**
      * @param { object[] } data
      * @param { string } formula
      */
     static executeFormula(data, formula) {
-        const entries = this.parseFormula(formula)
-        const executed = this.executeAggregate(data, entries)
+        const entries = this.#parseFormula(formula)
+        const values = this.#executeAggregate(data, entries)
 
-        for (const { variable, operation } of entries) {
-            const value = executed[variable]
+        for (const { argument, operation } of entries) {
+            const value = values[argument]
             formula = formula.replace(operation, value)
         }
 
@@ -69,19 +70,19 @@ class AggregateUtil {
     /**
      * @param { string } formula
      */
-    static parseFormula(formula) {
+    static #parseFormula(formula) {
         const operationRegex = /(SUM|AVERAGE|MIN|MAX|COUNT)\((.*?)\)/gm
 
         const result = []
 
         for (const operation of formula.match(operationRegex)) {
             const operator = operation.slice(0, operation.indexOf('(')).toLowerCase()
-            const variable = operation.slice(
+            const argument = operation.slice(
                 operation.indexOf('(') + 1,
                 operation.indexOf(')')
             )
 
-            result.push({ operator, variable, operation })
+            result.push({ operator, argument, operation })
         }
 
         return result
@@ -91,13 +92,13 @@ class AggregateUtil {
      * @param { object[] } data
      * @param { any[] } entries
      */
-    static executeAggregate(data, entries) {
-        const vars = { }
+    static #executeAggregate(data, entries) {
+        const values = { }
 
-        for (const { variable, operator } of entries) {
-            vars[variable] = DataUtil.aggregate(data, variable, operator)
+        for (const { argument, operator } of entries) {
+            values[argument] = DataUtil.aggregate(data, argument, operator)
         }
 
-        return vars
+        return values
     }
 }

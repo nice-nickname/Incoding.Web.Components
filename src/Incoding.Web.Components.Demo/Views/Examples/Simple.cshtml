@@ -26,7 +26,7 @@
                                                                            stacked.Add().Field(s => s.End).Resizable();
                                                                        });
                                                       })
-                                             .DropdownTmpl(async tmpl => await Html.PartialAsync("~/Views/Shared/Dropdown.cshtml", tmpl))
+                                             .DropdownTmpl("~/Views/Shared/Dropdown.cshtml")
                                              .Nested(s => s.Children,
                                                      table => table.Columns(cols =>
                                                                             {
@@ -53,7 +53,7 @@
                                                                             builder.Stacked(s => s.Title(i.ToString()),
                                                                                             stacked =>
                                                                                             {
-                                                                                                stacked.Add().Field(s => s.Hours).Totalable()
+                                                                                                stacked.Add().Field(s => s.Hours).Totalable().AllowEdit(false)
                                                                                                        .Summary<SampleData>(s => s.Average(c => c.Period[i].Hours))
                                                                                                        .Bind((iml, tmpl) => iml.When(JqueryBind.Click)
                                                                                                                                .StopPropagation()
@@ -63,7 +63,7 @@
                                                                                                                                               dsl.Window.Alert(tmpl.Up().For(nameof(SampleData.Index)));
                                                                                                                                           }));
 
-                                                                                                stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable()
+                                                                                                stacked.Add().Field(s => s.JTD).Format(ColumnFormat.Currency).Totalable().AllowEdit(false)
                                                                                                        .Summary($"SUM(Period.{i}.JTD)");
                                                                                             });
                                                                         });
@@ -85,11 +85,11 @@
                                                                             })));
              })
       .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
-      .InfiniteScrolling()
       .DataSource(new DataSource.SignalR
                   {
                           Event = JqueryBind.None,
                           ChunkSize = 40,
                           Method = nameof(SignalHub.StreamData_Many_Floating)
                   })
+      .InfiniteScrolling()
       .Render())

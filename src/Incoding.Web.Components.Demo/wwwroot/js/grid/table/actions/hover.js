@@ -53,11 +53,11 @@ class Hover {
             const prevRow = table.getRow(this.#prevRowIndex)
 
             if (prevRow) {
-                prevRow.classList.remove('highlight')
+                prevRow.classList.remove(classes.hover)
             }
 
             if (isNeedHighlight) {
-                currentRow.classList.add('highlight')
+                currentRow.classList.add(classes.hover)
             }
         }
 
@@ -76,7 +76,7 @@ class Hover {
             const prevRow = table.getRow(this.#prevRowIndex)
 
             if (prevRow) {
-                prevRow.classList.remove('highlight')
+                prevRow.classList.remove(classes.hover)
             }
         }
     }

@@ -8,6 +8,11 @@ class Splitter {
     panelsModel
 
     /**
+     * @type { HTMLElement }
+     */
+    root
+
+    /**
      * @type { HTMLElement[] }
      */
     #panelElements = []
@@ -17,18 +22,11 @@ class Splitter {
      */
     #dividerElements = []
 
-    /**
-     * @type { HTMLElement }
-     */
-    #root
-
     constructor(splits) {
         this.panelsModel = splits
 
-        const container = document.createElement('div')
-        container.classList.add('splitter')
-
-        this.#root = container
+        this.root = document.createElement('div')
+        this.root.classList.add('splitter')
 
         const equalsWidth = (100 / this.panelsModel.length).toFixed(2) + "%"
 
@@ -38,13 +36,13 @@ class Splitter {
             const panelTag = this.#renderPanel(panel, equalsWidth)
             this.#panelElements.push(panelTag)
 
-            container.appendChild(panelTag)
+            this.root.appendChild(panelTag)
 
             if (i + 1 < this.panelsModel.length) {
                 const dividerTag = this.#renderDivider(i, i + 1)
                 this.#dividerElements.push(dividerTag)
 
-                container.appendChild(dividerTag)
+                this.root.appendChild(dividerTag)
             }
         }
     }
@@ -52,7 +50,7 @@ class Splitter {
     appendTo(element) {
         this.#connectScrolls()
 
-        element.appendChild(this.#root)
+        element.appendChild(this.root)
     }
 
     destroy() {
@@ -115,7 +113,7 @@ class Splitter {
         divider.classList.add('divider')
 
         divider.addEventListener('mousedown', () => {
-            const resizer = new SplitterResizeHandler(this.#root, this.#panelElements[left], this.#panelElements[right], divider)
+            const resizer = new SplitterResizeHandler(this.root, this.#panelElements[left], this.#panelElements[right], divider)
             resizer.start()
         })
 

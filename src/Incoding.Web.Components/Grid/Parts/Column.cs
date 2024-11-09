@@ -68,6 +68,8 @@ public class Column
 
     public bool ShowMenu { get; set; } = true;
 
+    public bool AllowEdit { get; set; } = true;
+
     public bool Hidden { get; set; }
 
     public bool IsSorted => SortedBy.HasValue;

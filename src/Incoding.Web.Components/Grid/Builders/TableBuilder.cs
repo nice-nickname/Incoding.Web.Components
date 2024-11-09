@@ -11,6 +11,7 @@ using Incoding.Core.Extensions;
 using Incoding.Web.Components.Grid.Rendering;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 #endregion
@@ -92,6 +93,11 @@ public class TableBuilder<T>
                                                        .GetResult());
 
         return this;
+    }
+
+    public TableBuilder<T> DropdownTmpl([AspMvcPartialView] string view)
+    {
+        return DropdownTmpl(async tmpl => await Html.PartialAsync(view, tmpl));
     }
 
     public TableBuilder<T> Summary(Action<TableSummary> tableSummary)

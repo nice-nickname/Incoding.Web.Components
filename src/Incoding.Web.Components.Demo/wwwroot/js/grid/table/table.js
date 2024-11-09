@@ -251,6 +251,10 @@ class SplitTable {
         this.root.remove()
     }
 
+    refreshHeader() {
+        this.header.render()
+    }
+
     /**
      * @param { object[] } data
      */
@@ -418,7 +422,7 @@ class SplitTable {
         this.root.role = roles.table
 
         this.root.id = table.id
-        this.root.classList.add('split-table')
+        this.root.classList.add(classes.splitTable)
         this.root.classList.add(...table.css)
     }
 }

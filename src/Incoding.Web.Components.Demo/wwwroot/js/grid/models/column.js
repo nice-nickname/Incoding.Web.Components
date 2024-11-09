@@ -2,7 +2,7 @@
 class Column {
 
     /**
-     * Id is used to push changes to actual column on server
+     * Id is used to push changes to Schema on server
      * @type { number | null }
      */
     id
@@ -84,7 +84,7 @@ class Column {
     alignment
 
     /**
-     * @type { ColumnSortOption | null }
+     * @type { ColumnSortOrder | null }
      */
     sortedBy
 
@@ -116,6 +116,11 @@ class Column {
     /**
      * @type { boolean }
      */
+    allowEdit
+
+    /**
+     * @type { boolean }
+     */
     hidden
 
     /**
@@ -143,23 +148,18 @@ class Column {
      */
     summaryExpr
 
-    isControlColumn() {
-        return this.controlColumn !== null
-    }
-
-    isStacked() {
-        return this.stacked.length !== 0
-    }
-
-    hasStackedParent() {
-        return this.parentUid != null
-    }
-
-
     /**
      * @type { boolean }
      */
     isPinned
+
+    #contentTmpl
+    #executableTmpl
+
+    /**
+     * @type { FormatService }
+     */
+    #formatter
 
 
     /**
@@ -198,6 +198,7 @@ class Column {
         this.hidden = column.hidden
 
         this.showMenu = column.showMenu
+        this.allowEdit = column.allowEdit
         this.totalable = column.totalable
         this.filterable = column.filterable
         this.resizable = column.resizable
@@ -214,29 +215,25 @@ class Column {
         this.#formatter = formatter
     }
 
-    setPin(value) {
-        this.isPinned = value
-        this.resizable = !value
-
-        if (this.isStacked()) {
-            this.stacked.forEach(stacked =>
-                stacked.setPin(value))
-        }
+    isControlColumn() {
+        return this.controlColumn !== null
     }
 
-    #contentTmpl
+    isStacked() {
+        return this.stacked.length !== 0
+    }
+
+    hasStackedParent() {
+        return this.parentUid != null
+    }
 
     getTempalteFn() {
         return this.#contentTmpl
     }
 
-
-    #executableTmpl
-
     getExecutableFn() {
         return this.#executableTmpl
     }
-
 
     /**
      * @param { object } data
@@ -253,12 +250,27 @@ class Column {
         return value
     }
 
+    getField() {
+        return this.spreadField ?
+            `${this.spreadField}.${this.spreadIndex}.${this.field}` :
+            this.field
+    }
+
+    setPin(value) {
+        this.isPinned = value
+        this.resizable = !value
+
+        if (this.isStacked()) {
+            this.stacked.forEach(stacked =>
+                stacked.setPin(value))
+        }
+    }
+
 
     /**
-     * @type { FormatService }
+     * @param { any } value
+     * @returns { string }
      */
-    #formatter
-
     formatToString(value) {
         switch (this.format) {
             case ColumnFormat.DateTime:
@@ -275,7 +287,7 @@ class Column {
 
             case ColumnFormat.Empty:
             default:
-                return value
+                return String(value)
         }
     }
 
@@ -303,7 +315,13 @@ class Column {
         if (this.type === ColumnType.String) {
             return (a, b) => a.localeCompare(b)
         }
+
+        if (this.type === ColumnType.Boolean) {
+            return (a, b) => a ? 1 : -1
+        }
     }
 
     static defaultMinWidth = 50
+
+    static defaultMaxWidth = 700
 }

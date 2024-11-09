@@ -38,7 +38,7 @@ class FormatService {
     }
 
     dateTime(value) {
-        if (value == undefined) {
+        if (!value) {
             return ''
         }
 

@@ -49,7 +49,7 @@ class ContextMenu {
         const cell = target.closest('td')
         const targetColumn = this.#table.getColumn(cell.dataset.uid)
 
-        if (targetColumn == null || !targetColumn.showMenu) {
+        if (!targetColumn || !targetColumn.showMenu) {
             return
         }
 
@@ -95,18 +95,14 @@ class ContextMenu {
         const items = [
             { icon: '', text: 'Copy', action: 'Copy' },
             { icon: '', text: 'Copy with heading', action: 'CopyWithHeading' },
-            { isDivider: true }
         ]
 
         if (column.sortable) {
             items.push(
+                { isDivider: true },
                 { icon: 'ci-caret-down', text: 'Sort Asc', action: 'SortAsc' },
                 { icon: 'ci-caret-up', text: 'Sort Desc', action: 'SortDesc' }
             )
-        }
-
-        if (items.length === 3) {
-            items.pop()
         }
 
         return items
@@ -128,16 +124,12 @@ class ContextMenu {
                 clipboard.copyRow(this.target.rowData, true)
                 break;
 
-            case 'AutoFit':
-                table.columnResize.autoFit(this.target.column)
-                break;
-
             case 'SortAsc':
-                table.sort.sortColumn(this.target.column, ColumnSortOption.Asc)
+                table.sort.sortColumn(this.target.column, ColumnSortOrder.Asc)
                 break;
 
             case 'SortDesc':
-                table.sort.sortColumn(this.target.column, ColumnSortOption.Desc)
+                table.sort.sortColumn(this.target.column, ColumnSortOrder.Desc)
                 break;
 
             default:

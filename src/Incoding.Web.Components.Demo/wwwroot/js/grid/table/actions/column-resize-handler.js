@@ -25,8 +25,8 @@ class ColumnResizeHandler {
         this.table.root.classList.add('resizing')
         this.table.colGroup.setResizingBorder(this.column)
 
-        document.addEventListener('mouseup', this.stop, { passive: true })
-        document.addEventListener('mousemove', this.resize, { passive: true })
+        document.addEventListener('mouseup', this.stop)
+        document.addEventListener('mousemove', this.resize)
         document.addEventListener('click', this.cancelClickAfterStop, true)
     }
 
@@ -54,6 +54,7 @@ class ColumnResizeHandler {
     stop = (ev) => {
         document.removeEventListener('mousemove', this.resize)
         document.removeEventListener('mouseup', this.stop)
+        requestAnimationFrame(() =>  document.removeEventListener('click', this.cancelClickAfterStop, true))
 
         if (this.#waitNextFrame) {
             cancelAnimationFrame(this.#waitNextFrame)
@@ -65,10 +66,6 @@ class ColumnResizeHandler {
 
         this.table.columnResize.resize(this.column.uid, this.column.width)
         this.table.columnChanged(this.column)
-
-        requestAnimationFrame(() => {
-            document.removeEventListener('click', this.cancelClickAfterStop, true)
-        })
     }
 
     /**

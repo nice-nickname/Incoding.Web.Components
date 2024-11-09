@@ -44,10 +44,9 @@ class Filter {
     createMenu(column) {
         const th = this.table.getColumnHeader(column)
         const { bottom, left } = th.getBoundingClientRect()
-
         const filterData = this.#getFilterData(column)
-        const filter = new FilterMenu(this, column, filterData)
-        filter.render(bottom, left)
+
+        new FilterMenu(this, column, filterData).render(bottom, left)
     }
 
     /**
@@ -56,18 +55,26 @@ class Filter {
      */
     #getFilterData(column) {
         const currentFilter = this.#getCurrentFilter(column)
+        const filterValues = this.#getFilterValues(column)
 
-        return [...this.#getFilterValues(column)].map(value => {
-            let text = column.formatToString(value)
+        return [...filterValues]
+            .map(value => ({
+                value,
+                text: this.#formatFilterValue(column, value),
+                selected: !currentFilter || currentFilter.criteria.has(value),
+                visible: true
+            }))
+    }
 
-            if (column.type !== ColumnType.Numeric && value == null) {
-                text = '(Blank)'
-            }
-
-            let isSelected = !currentFilter || currentFilter.criteria.has(value)
-
-            return { value, text, selected: isSelected, visible: true }
-        })
+    /**
+     * @param { Column } column
+     * @param { any } value
+     */
+    #formatFilterValue(column, value) {
+        if (column.type !== ColumnType.Numeric && ExecutableHelper.IsNullOrEmpty(value)) {
+            return '(Blank)';
+        }
+        return column.formatToString(value);
     }
 
     /**
@@ -80,12 +87,12 @@ class Filter {
 
         const result = new Set()
         for (const rowData of data) {
-            if (prevFilters.length === 0 || prevFilters.every(({ column: filterColumn, criteria }) => {
-                const value = filterColumn.getValue(rowData)
-                return criteria.has(value)
-            })) {
-                const value = column.getValue(rowData)
-                result.add(value)
+            const isVisible = prevFilters.length === 0 ||
+                prevFilters.every(({ column: filterColumn, criteria }) =>
+                    criteria.has(filterColumn.getValue(rowData)))
+
+            if (isVisible) {
+                result.add(column.getValue(rowData))
             }
         }
 
@@ -97,11 +104,10 @@ class Filter {
      */
     #getPreviousFilters(column) {
         const filters = this.table.dataBinding.getFilters()
-
         const result = []
+
         for (const filter of filters) {
             if (filter.column.uid === column.uid) break
-
             result.push(filter)
         }
 

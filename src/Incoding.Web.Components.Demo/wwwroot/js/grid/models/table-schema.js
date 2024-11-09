@@ -131,7 +131,10 @@ class TableSchema {
      */
     resizeColumn(uid, width) {
         const column = this.#getColumn(uid)
-        column.width = Math.max(width, column.minWidth)
+        column.width = Math.min(
+            Math.max(width, column.minWidth),
+            Column.defaultMaxWidth
+        )
 
         if (this.#hasNestedAndSimple()) {
             this.nested.resizeColumn(uid, width)
@@ -246,7 +249,7 @@ class TableSchema {
         for (const column of columns) {
             if (column.isPinned || column.isControlColumn()) continue;
 
-            while (pinned.find(pin => pin === index) !== undefined)
+            while (pinned.includes(index))
                 index++
 
             column.index = index

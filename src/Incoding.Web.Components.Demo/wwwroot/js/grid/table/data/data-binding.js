@@ -62,7 +62,7 @@ class DataBinding {
         this.#tables.push(table)
     }
 
-    unbind() {
+    clearData() {
         this.#data = []
         this.#visibleData = this.#data
 
@@ -83,6 +83,8 @@ class DataBinding {
      */
     appendData(data) {
         this.#data.push(...data)
+
+        this.#applyFilters()
 
         for (const table of this.#tables) {
             if (this.#isDataLoading) {
@@ -254,11 +256,10 @@ class DataBinding {
 
 
     #applySort() {
-        if (this.#sortedColumn == null) {
+        if (this.#sortedColumn == null)
             return
-        }
 
-        const sortData = (data, cmp, sortedBy) => {
+        const sortData = (data, comparatorFn, orderBy) => {
             if (!data || data.length === 0)
                 return
 
@@ -266,26 +267,26 @@ class DataBinding {
                 const left = column.getValue(a)
                 const right = column.getValue(b)
 
-                if (left == null) return sortedBy === ColumnSortOption.Asc ? -1 : 1
-                if (right == null) return sortedBy === ColumnSortOption.Asc ? 1 : -1
+                if (left == null) return orderBy === ColumnSortOrder.Asc ? -1 : 1
+                if (right == null) return orderBy === ColumnSortOrder.Asc ? 1 : -1
                 if (left == right) return 0
 
-                return sortedBy === ColumnSortOption.Asc ?
-                    cmp(left, right) :
-                    -cmp(left, right)
+                return orderBy === ColumnSortOrder.Asc ?
+                    comparatorFn(left, right) :
+                    -comparatorFn(left, right)
             })
         }
 
         const data = this.#visibleData
         const column = this.#sortedColumn
-        const sortFn = column.getSortComparator()
+        const comparatorFn = column.getSortComparator()
 
-        sortData(data, sortFn, column.sortedBy)
+        sortData(data, comparatorFn, column.sortedBy)
 
         if (this.getTables()[0].isSimpleMode()) {
             const nestedField = this.getTables()[0].nestedField
             data.forEach(item => {
-                sortData(item[nestedField], sortFn, column.sortedBy)
+                sortData(item[nestedField], comparatorFn, column.sortedBy)
             })
         }
     }

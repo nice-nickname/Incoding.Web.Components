@@ -109,9 +109,9 @@ class FilterMenu {
             const isVisible = isSearchEmpty || checkbox.value.toLowerCase().indexOf(search) !== -1
 
             if (isVisible) {
-                item.classList.remove('hidden')
+                item.classList.remove(classes.hidden)
             } else {
-                item.classList.add('hidden')
+                item.classList.add(classes.hidden)
             }
 
             this.#setVisible(checkbox.dataset.index, isVisible)
@@ -153,9 +153,9 @@ class FilterMenu {
         const button = this.#applyBtn
 
         if (this.#data.some(s => s.selected)) {
-            button.classList.remove('disabled')
+            button.classList.remove(classes.disabled)
         } else {
-            button.classList.add('disabled')
+            button.classList.add(classes.disabled)
         }
     }
 

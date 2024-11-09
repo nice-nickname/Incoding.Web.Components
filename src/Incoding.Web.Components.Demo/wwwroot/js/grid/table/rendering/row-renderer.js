@@ -188,11 +188,11 @@ class RowRenderer {
         if (column.controlColumn === ControlColumn.Expand &&
              data[this.table.nestedField] != null &&
              data[this.table.nestedField]?.length !== 0) {
-            td.innerHTML = '<button role="expand" class="collapsed"></button>'
+            td.innerHTML = `<button role="${roles.expand}" class="${classes.collapsed}"></button>`
         }
 
         if (column.controlColumn === ControlColumn.Dropdown && this.table.row.dropdownTmpl) {
-            td.innerHTML = '<button role="dropdown"></button>'
+            td.innerHTML = `<button role="${roles.dropdown}"></button>`
         }
 
         return td

@@ -32,6 +32,8 @@ const classes = {
 
     hidden: 'hidden',
 
+    resizing: 'resizing',
+
 
     dropdownMenu: 'dropdown-menu',
 

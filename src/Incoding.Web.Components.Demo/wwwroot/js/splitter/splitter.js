@@ -33,13 +33,13 @@ class Splitter {
         for (let i = 0; i < this.panelsModel.length; i++) {
             const panel = this.panelsModel[i]
 
-            const panelTag = this.#renderPanel(panel, equalsWidth)
+            const panelTag = this.#createPanel(panel, equalsWidth)
             this.#panelElements.push(panelTag)
 
             this.root.appendChild(panelTag)
 
             if (i + 1 < this.panelsModel.length) {
-                const dividerTag = this.#renderDivider(i, i + 1)
+                const dividerTag = this.#createDivider(i, i + 1)
                 this.#dividerElements.push(dividerTag)
 
                 this.root.appendChild(dividerTag)
@@ -55,46 +55,18 @@ class Splitter {
 
     destroy() {
         this.#disconnectScrolls()
+        this.root.remove()
     }
 
     getPanel(index) {
         return this.#panelElements[index]
     }
 
-
-    #connectScrolls() {
-        for (const panel of this.#panelElements) {
-            panel.addEventListener('scroll', this.#scrollHandler)
-        }
-    }
-
-    #disconnectScrolls() {
-        for (const panel of this.#panelElements) {
-            panel.removeEventListener('scroll', this.#scrollHandler)
-        }
-    }
-
-    /**
-     * @param { Event } ev
-     */
-    #scrollHandler = (ev) => {
-        const target = ev.target
-
-        for (const panel of this.#panelElements) {
-            if (panel.isSameNode(target)) {
-                continue
-            }
-
-            panel.scrollTop = target.scrollTop
-        }
-    }
-
-
     /**
      * @param { SplitPanelModel } panelModel
      * @returns { HTMLElement }
      */
-    #renderPanel(panelModel, width) {
+    #createPanel(panelModel, width) {
         const panel = document.createElement('div')
         panel.classList.add('panel')
 
@@ -108,7 +80,7 @@ class Splitter {
     /**
      * @returns { HTMLElement }
      */
-    #renderDivider(left, right) {
+    #createDivider(left, right) {
         const divider = document.createElement('div')
         divider.classList.add('divider')
 
@@ -118,5 +90,32 @@ class Splitter {
         })
 
         return divider
+    }
+
+    #connectScrolls() {
+        for (const panel of this.#panelElements) {
+            panel.addEventListener('scroll', this.#handleScroll)
+        }
+    }
+
+    #disconnectScrolls() {
+        for (const panel of this.#panelElements) {
+            panel.removeEventListener('scroll', this.#handleScroll)
+        }
+    }
+
+    /**
+     * @param { Event } ev
+     */
+    #handleScroll = (ev) => {
+        const target = ev.target
+
+        for (const panel of this.#panelElements) {
+            if (panel.isSameNode(target)) {
+                continue
+            }
+
+            panel.scrollTop = target.scrollTop
+        }
     }
 }

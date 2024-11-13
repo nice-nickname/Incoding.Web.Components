@@ -149,7 +149,7 @@ class ColumnMenu {
             items.push({ text: 'Auto fit', action: 'AutoFit' });
         }
 
-        if (!column.hasStackedParent() || !column.isPinned) {
+        if (!column.hasStackedParent() && !column.isPinned) {
             const moveOptions = this.#getAvailableMoveOptions(column)
 
             items.push({

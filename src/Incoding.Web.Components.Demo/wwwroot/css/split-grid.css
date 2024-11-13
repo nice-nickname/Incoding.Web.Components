@@ -2,7 +2,7 @@
 /* #region split-grid layout */
 
 .split-grid {
-
+    position: relative;
 }
 
 .split-grid .splitter {

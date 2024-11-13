@@ -13,26 +13,29 @@ class SplitterResizeHandler {
     /**
      * @type { HTMLElement }
      */
-    splitterElement
+    divider
 
-    rootOffset
+    containerOffset
 
-    splitterWidth
+    containerWidth
 
-    #waitNextFrame = null
+    dividerWidth
 
-    constructor(container, left, right, splitter) {
+    #resizeAnimationFrame = null
+
+    constructor(container, left, right, divider) {
         this.leftPanel = left
         this.rightPanel = right
-        this.splitterElement = splitter
+        this.divider = divider
 
-        this.rootOffset = $(container).offset().left
-        this.splitterWidth = $(splitter).width()
+        this.containerOffset = $(container).offset().left
+        this.containerWidth = $(container).width()
+        this.dividerWidth = $(divider).width()
     }
 
     start = () => {
-        this.leftPanel.classList.add('resizing')
-        this.rightPanel.classList.add('resizing')
+        this.leftPanel.classList.add(classes.resizing)
+        this.rightPanel.classList.add(classes.resizing)
 
         document.addEventListener('mousemove', this.resize)
         document.addEventListener('mouseup', this.stop)
@@ -42,34 +45,39 @@ class SplitterResizeHandler {
      * @param { MouseEvent } event
      */
     resize = (event) => {
-        if (this.#waitNextFrame)
+        if (this.#resizeAnimationFrame)
             return;
 
-        const leftOffset = event.clientX - this.rootOffset;
-        const diff = leftOffset - this.splitterElement.offsetLeft;
+        const leftOffset = event.clientX - this.containerOffset;
+        const diff = leftOffset - this.divider.offsetLeft;
 
         const left = this.leftPanel.offsetWidth + diff;
         const right = this.rightPanel.offsetWidth - diff;
 
         if (this.#isValidPanelSizes(left, right)) {
-            this.#waitNextFrame = requestAnimationFrame(() => {
-                this.leftPanel.style.flexBasis = left + 'px';
-                this.rightPanel.style.flexBasis = right + 'px';
+            this.#resizeAnimationFrame = requestAnimationFrame(() => {
+                this.leftPanel.style.flexBasis = (left * 100 / this.containerWidth) + '%';
+                this.rightPanel.style.flexBasis = (right * 100 / this.containerWidth) + '%';
 
-                this.#waitNextFrame = null;
+                this.#resizeAnimationFrame = null;
             });
         }
     }
 
     stop = () => {
-        this.leftPanel.classList.remove('resizing')
-        this.rightPanel.classList.remove('resizing')
+        this.leftPanel.classList.remove(classes.resizing)
+        this.rightPanel.classList.remove(classes.resizing)
 
         document.removeEventListener('mousemove', this.resize)
         document.removeEventListener('mouseup', this.stop)
+
+        if (this.#resizeAnimationFrame) {
+            cancelAnimationFrame(this.#resizeAnimationFrame)
+            this.#resizeAnimationFrame = null
+        }
     }
 
     #isValidPanelSizes(left, right) {
-        return left - this.splitterWidth >= 0 && right + this.splitterWidth >= 0;
+        return left - this.dividerWidth >= 0 && right + this.dividerWidth >= 0;
     }
 }

@@ -3,6 +3,7 @@ namespace Incoding.Web.Components.Grid;
 #region << Using >>
 
 using System;
+using System.Collections.Generic;
 using Incoding.Core.Extensions;
 using Incoding.Web.Extensions;
 using Incoding.Web.MvcContrib;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 #endregion
 
@@ -194,7 +197,12 @@ public class SplitGridBuilder<T>
                                                    {
                                                            Formatting = Formatting.None,
                                                            DefaultValueHandling = DefaultValueHandling.Include,
-                                                           NullValueHandling = NullValueHandling.Include
+                                                           NullValueHandling = NullValueHandling.Include,
+                                                           ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                                                           Converters = new List<JsonConverter>
+                                                                        {
+                                                                                new StringEnumConverter()
+                                                                        }
                                                    });
 
         var binds = Html.When(JqueryBind.InitIncoding)

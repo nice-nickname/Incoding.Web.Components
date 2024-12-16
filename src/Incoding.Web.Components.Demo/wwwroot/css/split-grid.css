@@ -49,6 +49,30 @@
 
 /* #endregion */
 
+.splitter > .panel > .split-table-container {
+    overflow-x: scroll;
+}
+
+.split-table-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.split-table-container .split-table-header {
+    flex: 0 1;
+}
+
+.split-table-container .split-table-content {
+    flex: 1 0;
+}
+
+.split-table-container .split-table-footer {
+    flex: 0 1;
+}
+
+
 
 /* #region split-table */
 

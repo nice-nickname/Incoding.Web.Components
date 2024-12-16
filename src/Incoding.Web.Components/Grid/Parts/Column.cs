@@ -10,7 +10,7 @@ using Newtonsoft.Json.Serialization;
 
 #endregion
 
-[JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+[JsonObject]
 public class Column
 {
     public string Uid { get; set; }

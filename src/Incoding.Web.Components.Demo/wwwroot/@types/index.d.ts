@@ -1,5 +1,5 @@
 
-interface SplitPanelModel {
+interface ISplitPanel {
 
     minWidth: string | null,
 
@@ -7,28 +7,28 @@ interface SplitPanelModel {
 
 }
 
-interface SplitTableModel {
+interface ISplitTable {
 
     id: string
 
     css: string,
 
-    row: RowModel
+    row: IRow
 
-    columns: ColumnModel[]
+    columns: IColumn[]
 
     nestedField: string,
 
-    nested: SplitTableModel
+    nested: ISplitTable
 
-    summary: SplitTableSummaryModel | null
+    summary: ISplitTableSummary | null
 }
 
-interface SplitTableSummaryModel {
+interface ISplitTableSummary {
     title: string
 }
 
-interface RowModel {
+interface IRow {
 
     css: string,
 
@@ -39,7 +39,7 @@ interface RowModel {
     attrs: { [a: string]: string }
 }
 
-interface ColumnModel {
+interface IColumn {
 
     uid: string
 
@@ -93,7 +93,7 @@ interface ColumnModel {
 
     attrs: { [a: string]: string }
 
-    stacked: ColumnModel[]
+    stacked: IColumn[]
 
     controlColumn: ControlColumn
 
@@ -104,13 +104,13 @@ interface ColumnModel {
 
 //#region options
 
-interface FormatOptions {
+interface IFormatOptions {
 
     decimalScale: number
 
 }
 
-interface InfitniteScrollOptions {
+interface IInfitniteScrollOptions {
 
     chunkSize: number,
 
@@ -118,7 +118,7 @@ interface InfitniteScrollOptions {
 
 }
 
-interface GridUIOptions {
+interface IUIOptions {
 
     placeholderRows: number
 

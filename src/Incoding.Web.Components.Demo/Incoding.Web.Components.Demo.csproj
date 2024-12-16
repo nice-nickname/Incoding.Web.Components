@@ -22,4 +22,45 @@
     <ProjectReference Include="..\Incoding.Web.Components\Incoding.Web.Components.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\const\classes.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\const\events.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\const\roles.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\models\column.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\models\enums.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\models\row.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\models\table-schema.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\signalr\signalr-loader.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\split-grid.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\column-edit.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\column-menu.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\column-resize-handler.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\column-resize.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\context-menu.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\filter.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\hover.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\row-dropdown.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\row-expand.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\actions\sort.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\data\data-binding.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\data\immediate-rendering.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\data\infinite-scroll-rendering.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\data\util.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\rendering\colgroup-renderer.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\rendering\footer-renderer.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\rendering\header-renderer.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\rendering\row-renderer.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\rendering\summary-renderer.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\services\clipboard.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\services\format.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\services\service-collection.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\table\table.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\utils\filter-menu.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\grid\utils\menu.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\_grid\table\actions\" />
+  </ItemGroup>
+
 </Project>

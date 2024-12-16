@@ -8,6 +8,9 @@ SplitGrid
   - [+] Nested
   - [+] Menu
   - [+] Context menu
+    - clipboard
+      - copy row
+      - copy with header
   - [+] Expand/collapse
     - [+] not render if does not have nested data
   - [+] Totals

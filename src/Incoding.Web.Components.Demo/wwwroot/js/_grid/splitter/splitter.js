@@ -47,12 +47,9 @@ class SplitLayout {
                 this.root.appendChild(dividerTag)
             }
         }
-
-        this.#connectScrolls()
     }
 
     destroy() {
-        this.#disconnectScrolls()
         this.root.remove()
     }
 
@@ -94,32 +91,5 @@ class SplitLayout {
         })
 
         return divider
-    }
-
-    #connectScrolls() {
-        for (const panel of this.#panelElements) {
-            panel.addEventListener('scroll', this.#handleScroll)
-        }
-    }
-
-    #disconnectScrolls() {
-        for (const panel of this.#panelElements) {
-            panel.removeEventListener('scroll', this.#handleScroll)
-        }
-    }
-
-    /**
-     * @param { Event } ev
-     */
-    #handleScroll = (ev) => {
-        const target = ev.target
-
-        for (const panel of this.#panelElements) {
-            if (panel.isSameNode(target)) {
-                continue
-            }
-
-            panel.scrollTop = target.scrollTop
-        }
     }
 }

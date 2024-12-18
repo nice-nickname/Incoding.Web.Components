@@ -20,15 +20,22 @@ class SignalRLoader {
      */
     #chunkSize
 
+
     /**
      * @type { SplitGrid }
      */
     #splitGrid
 
     /**
-     * @type { DataBinding }
+     * @type { SplitTable }
      */
-    #dataBinding
+    #splitTable
+
+    /**
+     * @type { DataSource }
+     */
+    #dataSource
+
 
     /**
      * @type { HTMLElement }
@@ -43,9 +50,10 @@ class SignalRLoader {
         this.#chunkSize = options.chunkSize
 
         this.#splitGrid = $(el).data('splitGrid')
-        this.#dataBinding = this.#splitGrid.rootBinding
+        this.#splitTable = this.#splitGrid.splitTable
+        this.#dataSource = this.#splitTable.dataSource
 
-        this.connection = $.fn.signalr("/grid")
+        this.connection = $.fn.signalr("/signals")
     }
 
     start(params) {
@@ -61,11 +69,11 @@ class SignalRLoader {
             .stream(this.#method, { ChunkSize: this.#chunkSize, Query: params })
             .subscribe({
                 next: (data) => {
+                    this.#onDataChunk(data)
+
                     if (!data.IsNext) {
                         this.#onComplete()
                     }
-
-                    this.#onDataChunk(data)
                 },
                 error: (err) => {
                     this.#onError(err)
@@ -84,27 +92,37 @@ class SignalRLoader {
     }
 
     #onStart = () => {
-        this.#dataBinding.setDataLoading(true)
+        this.#dataSource.isDataLoading = true
+
         this.#splitGrid.clearData()
         this.#splitGrid.show()
+
+        this.#splitTable.contentRenderer.hideNoRows()
+        this.#splitTable.contentRenderer.showLoadingRows()
 
         this.#root.dispatchEvent(new Event(events.signalr.start))
     }
 
     #onDataChunk = (data) => {
-        this.#dataBinding.appendData(data.Items)
+        this.#splitTable.contentRenderer.hideLoadingRows()
+        this.#splitGrid.appendData(data.Items)
+        this.#splitTable.contentRenderer.showLoadingRows()
     }
 
     #onError = (error) => {
         console.error(error)
 
-        this.#dataBinding.setDataLoading(false)
+        this.#dataSource.isDataLoading = false
+
         this.#root.dispatchEvent(new Event(events.signalr.error))
         this.#streamStatus = "stopped"
     }
 
     #onComplete = () => {
-        this.#dataBinding.setDataLoading(false)
+        this.#dataSource.isDataLoading = false
+
+        this.#splitTable.contentRenderer.hideLoadingRows()
+        this.#splitTable.footerRenderer.render()
 
         this.#root.dispatchEvent(new Event(events.signalr.complete))
         this.#streamStatus = "stopped"

@@ -10,12 +10,12 @@ class SplitGrid {
     id
 
     /**
-     * @type { InfitniteScrollOptions }
+     * @type { IInfitniteScrollOptions }
      */
     infiniteScroll
 
     /**
-     * @type { UIOptions }
+     * @type { IUIOptions }
      */
     ui
 
@@ -68,21 +68,25 @@ class SplitGrid {
         this.services.register(SplitGrid.NAME, this)
         this.services.register(FormatService.NAME, new FormatService(options.format))
 
+        this.dataSource = new DataSource([])
+
         this.schemaModel = options.tables.map(table => new TablePanelModel(table, this.services))
 
         this.#createElements(options)
 
+        const panels = this.splitLayout.getPanels()
+        this.splitTable = new SplitTable(this.dataSource, this.schemaModel, panels, this.services)
+
         this.renderingStrategy = this.infiniteScroll
-            ? new InfiniteScrollStrategy(this.dataSource, this.infiniteScroll, this.splitLayout.getPanels()[0])
-            : new RenderingStrategy(this.dataSource)
+            ? new InfiniteScrollStrategy(this.splitTable, this.dataSource, this.infiniteScroll, this.splitTable.contentRenderer.elements[0])
+            : new RenderingStrategy(this.splitTable, this.dataSource)
+
+        this.#connectPanelsScroll()
 
         this.show()
     }
 
     render() {
-        const panels = this.splitLayout.getPanels()
-
-        this.splitTable = new SplitTable(this.dataSource, this.schemaModel, panels, this.services)
         this.splitTable.render()
     }
 
@@ -110,9 +114,34 @@ class SplitGrid {
         this.rootElement.classList.remove(classes.loading)
     }
 
+
+    clearData() {
+        this.renderingStrategy.reset()
+        this.dataSource.clear()
+
+        this.splitTable.clearData()
+    }
+
+    /**
+     * @param { Object[] | string } data
+     */
+    appendData(data) {
+        if (data === undefined || data === null) {
+            data = []
+        }
+
+        if (_.isString(data)) {
+            data = JSON.parse(data || "[]")
+        }
+
+        this.dataSource.appendData(data)
+        this.renderingStrategy.handleDataChanged()
+    }
+
+
     #createElements(options) {
         this.rootElement = document.getElementById(this.id)
-        this.rootElement.classList.add(classes.splitGrid)
+        this.rootElement.classList.add(classes.splitGrid, classes.loader)
         this.rootElement.classList.add(`split-grid-${this.mode.toString().toLowerCase()}`)
         this.rootElement.style.width = options.width
         this.rootElement.style.height = options.height
@@ -131,5 +160,21 @@ class SplitGrid {
         )
 
         $(this.rootElement).data('splitGrid', this)
+    }
+
+    #connectPanelsScroll() {
+        const scrollablePanels = this.splitTable.contentRenderer.elements
+
+        const handleScroll = (ev) => {
+            scrollablePanels.forEach(panel => {
+                if (!panel.isSameNode(ev.target)) {
+                    panel.scrollTop = ev.target.scrollTop
+                }
+            })
+        }
+
+        for (const panel of scrollablePanels) {
+            panel.addEventListener('scroll', handleScroll)
+        }
     }
 }

@@ -44,7 +44,7 @@ class ColumnModel {
     title
 
     /**
-     * @type { string[] }
+     * @type { string }
      */
     css
 
@@ -196,7 +196,7 @@ class ColumnModel {
 
         this.alignment = column.alignment
         this.attrs = column.attrs
-        this.css = SplitGridHelpers.parseCss(column.css)
+        this.css = column.css
 
         this.executable = SplitGridHelpers.decodeTempalte(column.executable)
         if (this.executable) {

@@ -75,7 +75,7 @@ namespace Incoding.Web.Components.Demo.Controllers
 
             while (currentPage < allPages && !token.IsCancellationRequested)
             {
-                await Task.Delay(5.Seconds(), token);
+                await Task.Delay(1.Seconds(), token);
 
                 var items = Data(currentPage++, @params.ChunkSize);
 

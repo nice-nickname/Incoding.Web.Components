@@ -34,7 +34,11 @@ namespace Incoding.Web.Components.Demo
                                                  pipeline.MinifyCssFiles(new CssSettings());
 
                                                  pipeline.AddJavaScriptBundle("js/_libs.js", "lib/jquery.min.js", "lib/underscore-min.js", "lib/*.js");
-                                                 pipeline.AddJavaScriptBundle("js/_scripts.js", "js/**/*.js");
+
+                                                 pipeline.AddJavaScriptBundle("js/_scripts.js",
+                                                                              "js/_grid/table/rendering/panel-renderer.js",
+                                                                              "js/**/*.js");
+
                                                  pipeline.AddCssBundle("css/_styles.css", "css/**/*.css");
                                                  pipeline.AddCssBundle("css/planifi.css", "lib/**/*.css");
                                              },

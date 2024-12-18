@@ -10,7 +10,7 @@ class TablePanelModel {
     /** @type { RowModel } */
     row
 
-    /** @type { string[] } */
+    /** @type { string } */
     css
 
 
@@ -27,11 +27,51 @@ class TablePanelModel {
         this.id = table.id
         this.columns = table.columns.map(col => new ColumnModel(col, formatter));
         this.row = new RowModel(table.row)
-        this.css = SplitGridHelpers.parseCss(table.css)
+        this.css = table.css
 
         if (table.nested) {
             this.nested = new TablePanelModel(table.nested, services)
         }
+    }
+
+    getFlatColumns() {
+        const columns = []
+
+        for (const column of this.columns) {
+            if (column.stacked.length) {
+                columns.push(...column.stacked)
+            } else {
+                columns.push(column)
+            }
+        }
+
+        return columns
+    }
+
+    /**
+     * @param { string } uid
+     * @returns { ColumnModel | null }
+     */
+    getColumn(uid) {
+        const searchColumn = (columns) => {
+            for (const column of columns) {
+                if (column.uid === uid) {
+                    return column
+                }
+
+                if (column.isStacked()) {
+                    let stacked = searchColumn(column.stacked, uid)
+
+                    if (stacked) {
+                        return stacked
+                    }
+                }
+            }
+
+            return null
+        }
+
+        return searchColumn(this.columns)
     }
 
 }

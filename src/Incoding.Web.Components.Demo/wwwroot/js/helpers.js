@@ -7,9 +7,6 @@ class SplitGridHelpers {
         return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
     }
 
-    static parseCss(css) {
-        return css?.split(' ').filter(s => !ExecutableHelper.IsNullOrEmpty(s)) || []
-    }
 };
 
 /**

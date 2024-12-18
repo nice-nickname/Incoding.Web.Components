@@ -15,7 +15,7 @@
 
 .split-grid .splitter .panel {
     height: 100%;
-    overflow: auto;
+    overflow-x: scroll;
 }
 
 .split-grid .splitter .panel.resizing {
@@ -49,32 +49,45 @@
 
 /* #endregion */
 
-.splitter > .panel > .split-table-container {
-    overflow-x: scroll;
+
+/* #region split-table */
+
+.split-grid .splitter .panel .split-table-panel .split-table-content::-webkit-scrollbar {
+    width: 0;
 }
 
-.split-table-container {
+.split-grid .splitter .panel:last-child .split-table-panel .split-table-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.split-table-panel {
     height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.split-table-container .split-table-header {
-    flex: 0 1;
+.split-table-panel .split-table-header { }
+
+.split-table-panel .split-table-content {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
-.split-table-container .split-table-content {
-    flex: 1 0;
+.split-table-panel .split-table-content .rows-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.split-table-container .split-table-footer {
-    flex: 0 1;
+.split-table-panel .split-table-content .rows-placeholder > span {
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin: 10px;
 }
 
-
-
-/* #region split-table */
+.split-table-panel .split-table-footer { }
 
 .split-table {
     margin: 0;

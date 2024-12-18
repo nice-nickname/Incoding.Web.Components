@@ -11,20 +11,20 @@ class DataSource {
     #visibleData
 
 
-    constructor() {
-        this.#data = []
-        this.#visibleData = []
+    constructor(data = []) {
+        this.#data = data
+        this.#visibleData = [...data]
     }
 
     getData() {
-        return this.#visibleData
+        return this.#data
     }
 
     appendData(data) {
         this.#data.push(...data)
     }
 
-    clearData() {
+    clear() {
         this.#data = []
         this.#visibleData = []
     }

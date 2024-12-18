@@ -1,7 +1,7 @@
 ﻿
 declare interface IRowRenderStrategy {
 
-    renderRows(): void
+    handleDataChanged(): void
 
     reset(): void
 

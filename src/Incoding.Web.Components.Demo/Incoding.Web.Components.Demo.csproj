@@ -59,8 +59,4 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\grid\utils\menu.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\js\_grid\table\actions\" />
-  </ItemGroup>
-
 </Project>

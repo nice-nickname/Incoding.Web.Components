@@ -209,7 +209,8 @@ interface MenuOptions {
     onClose: () => void
     onOpen: () => void,
 
-    clickableInside: boolean,
+    clickableInside?: boolean,
+    keepOnClose?: boolean
 }
 
 interface MenuItem {

@@ -17,6 +17,8 @@ const roles = {
 
     dropdown: 'dropdown',
 
+    rowDropdown: 'row-dropdown',
+
     temp: 'temp',
 
 }

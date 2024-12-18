@@ -4,6 +4,9 @@
  */
 class InfiniteScrollStrategy {
 
+    /** @type { SplitTable } */
+    splitTable
+
     /** @type { DataSource } */
     dataSource
 
@@ -14,20 +17,16 @@ class InfiniteScrollStrategy {
     options
 
 
-    /** @type { number } */
     #prevScrollTop = 0
 
-    /** @type { number } */
     #currentChunk = 0
-
-    /** @type { number } */
     #availableChunks = 0
 
-    /** @type { boolean } */
-    #nextChunkRequested = false
+    #nextChunkRequested = true
 
 
-    constructor(dataSource, options, scrollElement) {
+    constructor(splitTable, dataSource, options, scrollElement) {
+        this.splitTable = splitTable;
         this.dataSource = dataSource;
         this.scroller = scrollElement;
         this.options = options;
@@ -35,7 +34,7 @@ class InfiniteScrollStrategy {
         this.scroller.addEventListener('scroll', this.#handleScroll)
     }
 
-    renderRows() {
+    handleDataChanged() {
         this.#availableChunks = this.#getAvailableChunks()
 
         this.requestRender()
@@ -46,7 +45,7 @@ class InfiniteScrollStrategy {
         this.#currentChunk = 0
         this.#availableChunks = this.#getAvailableChunks()
 
-        this.nextChunkRequested = true
+        this.#nextChunkRequested = true
     }
 
     requestRender() {
@@ -56,8 +55,8 @@ class InfiniteScrollStrategy {
 
         this.tryRenderNextChunk()
 
-        if (!this.#isScrollable() && !this.nextChunkRequested) {
-            this.nextChunkRequested = true
+        if (!this.#isScrollable() && !this.#nextChunkRequested) {
+            this.#nextChunkRequested = true
 
             this.requestRender()
         }
@@ -73,7 +72,12 @@ class InfiniteScrollStrategy {
         const start = chunk * this.options.chunkSize
         const end = start + this.options.chunkSize
 
-        // ...
+        const data = this.dataSource
+            .getData()
+            .slice(start, end)
+
+        this.splitTable.appendData(data)
+
 
         this.#nextChunkRequested = false
         this.#currentChunk++
@@ -105,7 +109,11 @@ class InfiniteScrollStrategy {
         const hasScrollerDown = scrollTop >= this.#prevScrollTop
         const isScrollNearBottom = scrollSize < InfiniteScrollStrategy.SCROLL_AT_BOTTOM_OFFSET
 
+        this.#prevScrollTop = scrollTop
+
         this.#nextChunkRequested = hasScrollerDown && isScrollNearBottom
+
+        this.requestRender()
     }
 
     static SCROLL_AT_BOTTOM_OFFSET = 50

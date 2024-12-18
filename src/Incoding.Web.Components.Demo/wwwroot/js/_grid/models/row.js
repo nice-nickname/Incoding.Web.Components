@@ -2,7 +2,7 @@
 class RowModel {
 
     /**
-     * @type { string[] }
+     * @type { string }
      */
     css
 
@@ -28,7 +28,7 @@ class RowModel {
      * @param { IRow } row
      */
     constructor(row) {
-        this.css = SplitGridHelpers.parseCss(row.css)
+        this.css = row.css
         this.dropdownTmpl = SplitGridHelpers.decodeTempalte(row.dropdownTmpl)
         this.attrs = row.attrs
 

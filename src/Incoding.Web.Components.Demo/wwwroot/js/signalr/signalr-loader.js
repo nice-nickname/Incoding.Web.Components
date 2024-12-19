@@ -99,6 +99,7 @@ class SignalRLoader {
 
         this.#splitTable.contentRenderer.hideNoRows()
         this.#splitTable.contentRenderer.showLoadingRows()
+        this.#splitTable.footerRenderer.setLoading()
 
         this.#root.dispatchEvent(new Event(events.signalr.start))
     }

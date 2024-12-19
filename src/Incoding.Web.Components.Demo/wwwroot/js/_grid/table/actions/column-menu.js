@@ -241,7 +241,7 @@ class ColumnMenu {
                 })
                 break;
             case 'GroupBy':
-                this.table.groupModel.column = column
+                this.table.group.groupBy(column)
                 break;
             case 'MoveStart':
                 this.table.columnEdit.moveToStart(column)

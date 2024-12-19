@@ -39,6 +39,11 @@ class SplitTable {
      */
     contentRenderer
 
+    /**
+     * @type { ColgroupRenderer }
+     */
+    colgroupsRenderer
+
 
     /**
      * @type { {
@@ -76,8 +81,13 @@ class SplitTable {
         this.footerRenderer = new TableFooterRenderer(this)
         this.footerRenderer.renderPanels(this.panelElements)
 
+        this.colgroupsRenderer = new ColgroupRenderer(this)
+        this.colgroupsRenderer.render()
 
         this.#abort = new AbortController()
+
+        this.columnMenu = new ColumnMenu(this);
+        this.group = new ColumnGroup(this)
     }
 
     render() {

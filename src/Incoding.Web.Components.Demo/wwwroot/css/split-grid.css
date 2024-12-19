@@ -15,7 +15,6 @@
 
 .split-grid .splitter .panel {
     height: 100%;
-    overflow-x: scroll;
 }
 
 .split-grid .splitter .panel.resizing {
@@ -60,6 +59,16 @@
     width: 8px;
 }
 
+.split-grid .splitter .panel > .split-table-panel {
+    overflow-y: auto;
+    overflow-x: scroll;
+}
+
+.split-grid .splitter .panel > .split-table-panel > .split-table-content {
+    position: sticky;
+    left: 0;
+}
+
 .split-table-panel {
     height: 100%;
     display: flex;
@@ -71,6 +80,7 @@
 .split-table-panel .split-table-content {
     flex-grow: 1;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .split-table-panel .split-table-content .rows-placeholder {

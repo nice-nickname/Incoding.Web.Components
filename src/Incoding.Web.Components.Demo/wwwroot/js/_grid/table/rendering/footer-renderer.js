@@ -49,6 +49,8 @@ class TableFooterRenderer extends TablePanelRendererBase {
             tr.append(td)
         })
 
+        tr.append(new DummyCellRenderer().render())
+
         tfoot.replaceChildren(tr)
     }
 
@@ -64,7 +66,11 @@ class TableFooterRenderer extends TablePanelRendererBase {
      * @param { ColumnModel } column
      */
     #calculateTotal(column) {
-        const data = this.parent.dataSource.getData()
+        let data = this.parent.dataSource.getData()
+
+        if (this.parent.rowGroup.isGrouped()) {
+            data = data.map(rowData => rowData["Group"])
+        }
 
         const field = column.getField()
 

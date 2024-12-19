@@ -30,12 +30,16 @@ class TableHeaderRenderer extends TablePanelRendererBase {
 
         const cells = this.#createCells([], panelModel.columns)
 
-        const trs = cells.map((row) => {
+        const trs = cells.map((row, i) => {
             const tr = document.createElement('tr')
 
             row.forEach((cell) => {
                 tr.append(cell.element)
             })
+
+            if (i === 0) {
+                tr.append(new DummyCellRenderer('th').render())
+            }
 
             return tr
         })

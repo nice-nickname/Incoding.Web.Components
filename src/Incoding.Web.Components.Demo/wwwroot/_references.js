@@ -37,9 +37,16 @@
 /// <reference path="js/_grid/table/rendering/content-renderer.js" />
 /// <reference path="js/_grid/table/rendering/footer-renderer.js" />
 /// <reference path="js/_grid/table/rendering/panel-renderer.js" />
+/// <reference path="js/_grid/table/rendering/colgroup-renderer.js" />
+/// <reference path="js/_grid/table/rendering/row-renderer.js" />
 
 /// <reference path="js/_grid/table/cell/cell-renderer.js" />
+/// <reference path="js/_grid/table/cell/group-cell-renderer.js" />
 /// <reference path="js/_grid/table/cell/header-cell-renderer.js" />
+
+
+/// <reference path="js/_grid/table/actions/column-menu.js" />
+/// <reference path="js/_grid/table/actions/row-group.js" />
 
 
 /// <reference path="js/_grid/const/classes.js" />

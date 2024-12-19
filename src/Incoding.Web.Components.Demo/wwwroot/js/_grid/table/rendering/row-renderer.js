@@ -6,32 +6,58 @@ class RowRenderer {
      */
     splitTable
 
-    constructor(elements) {
+    #cellRenderer
+    #dummyRenderer
+
+    constructor(splitTable) {
         this.splitTable = splitTable
-    }
 
-    render() {
-        const trs = []
-
-        for (const tableModel of this.splitTable.schemaModel) {
-            trs.push(this.renderPanel(tableModel))
-        }
-
-        return trs
+        this.#cellRenderer = new CellRenderer()
+        this.#dummyRenderer = new DummyCellRenderer()
     }
 
     /**
-     * @param { TablePanelModel } tableModel
+     * @param { RowModel } row
+     * @param { ColumnModel[] } columns
+     * @param { number } rowIndex
      */
-    renderPanel(tableModel) {
-        const tr = document.createElement('tr')
+    render(row, columns, rowIndex) {
+        const data = this.splitTable.dataSource.getData()
 
-        tableModel.columns.forEach((column) => {
+        const rowData = data[rowIndex]
 
-        })
+        const tr = this.#createRow()
+
+        const dummyRenderer = new DummyCellRenderer()
+        const cellRenderer = this.splitTable.rowGroup.isGrouped()
+            ? new GroupCellRenderer(this.splitTable.rowGroup)
+            : new CellRenderer()
+
+        for (const column of columns) {
+            const td = cellRenderer.render(column, rowData)
+            td.dataset.rowIndex = rowIndex
+
+            cellRenderer.render(column, rowData)
+
+            tr.append(td)
+        }
+
+        tr.append(dummyRenderer.render())
 
         return tr
     }
 
+    #createRow() {
+        const tr = document.createElement("tr")
+
+        return tr
+    }
+
+    /**
+     * @param { ColumnModel } column
+     */
+    #createCell(column) {
+
+    }
 
 }

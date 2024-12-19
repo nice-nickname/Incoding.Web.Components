@@ -16,6 +16,11 @@ class DataSource {
         this.#visibleData = [...data]
     }
 
+    setData(data) {
+        this.#data = data
+        this.#visibleData = [...data]
+    }
+
     getData() {
         return this.#data
     }

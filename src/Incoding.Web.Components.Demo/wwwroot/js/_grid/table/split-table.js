@@ -45,13 +45,6 @@ class SplitTable {
     colgroupsRenderer
 
 
-    /**
-     * @type { {
-     *     column: ColumnModel | null
-     * } }
-     */
-    groupModel = { column: null }
-
 
     /**
      * Calling .abort() of this controller will remove
@@ -77,6 +70,7 @@ class SplitTable {
 
         this.contentRenderer = new TableContentRenderer(this)
         this.contentRenderer.renderPanels(this.panelElements)
+        this.contentRenderer.showNoRows()
 
         this.footerRenderer = new TableFooterRenderer(this)
         this.footerRenderer.renderPanels(this.panelElements)
@@ -87,7 +81,7 @@ class SplitTable {
         this.#abort = new AbortController()
 
         this.columnMenu = new ColumnMenu(this);
-        this.group = new ColumnGroup(this)
+        this.rowGroup = new RowGroup(this);
     }
 
     render() {
@@ -104,7 +98,6 @@ class SplitTable {
     }
 
 
-
     clearData() {
         this.contentRenderer.showNoRows()
         this.contentRenderer.removeRows()
@@ -118,6 +111,19 @@ class SplitTable {
         } else {
             this.footerRenderer.render()
         }
+    }
+
+
+    refresh() {
+        this.headerRenderer.render()
+        this.footerRenderer.render()
+
+        this.contentRenderer.removeRows()
+        this.contentRenderer.renderRows(this.dataSource.getData())
+    }
+
+    refreshRows() {
+
     }
 
 

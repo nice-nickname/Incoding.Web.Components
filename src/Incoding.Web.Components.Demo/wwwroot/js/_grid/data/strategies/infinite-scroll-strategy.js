@@ -35,15 +35,12 @@ class InfiniteScrollStrategy {
     }
 
     handleDataChanged() {
-        this.#availableChunks = this.#getAvailableChunks()
-
         this.requestRender()
     }
 
     reset() {
         this.#prevScrollTop = 0
         this.#currentChunk = 0
-        this.#availableChunks = this.#getAvailableChunks()
 
         this.#nextChunkRequested = true
     }
@@ -65,7 +62,7 @@ class InfiniteScrollStrategy {
     tryRenderNextChunk() {
         const chunk = this.#currentChunk
 
-        if (chunk >= this.#availableChunks) {
+        if (chunk >= this.#getAvailableChunks()) {
             return
         }
 
@@ -112,6 +109,9 @@ class InfiniteScrollStrategy {
         this.#prevScrollTop = scrollTop
 
         this.#nextChunkRequested = hasScrollerDown && isScrollNearBottom
+
+        console.log(hasScrollerDown, isScrollNearBottom);
+
 
         this.requestRender()
     }

@@ -29,6 +29,7 @@ class CellRenderer {
             if (formatElement) {
                 column.formatElement(column.getValue(data), formatElement)
             }
+
             return td;
         }
 
@@ -59,5 +60,19 @@ class CellRenderer {
        return buttonElement
     }
 
+}
+
+class DummyCellRenderer {
+
+    constructor(tag = 'td') {
+        this.tag = tag
+    }
+
+    render() {
+        const td = document.createElement(this.tag)
+        td.className = 'dummy'
+
+        return td
+    }
 
 }

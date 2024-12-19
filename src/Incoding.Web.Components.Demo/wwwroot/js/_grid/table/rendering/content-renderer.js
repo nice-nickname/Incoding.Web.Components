@@ -31,8 +31,6 @@ class TableContentRenderer extends TablePanelRendererBase {
             this.placeholders.push(placeholder)
             element.append(placeholder)
         })
-
-        this.showNoRows()
     }
 
     renderRows(data) {
@@ -102,7 +100,11 @@ class TableContentRenderer extends TablePanelRendererBase {
         const row = panelModel.row
         const columns = panelModel.getFlatColumns()
 
-        const cellRenderer = new CellRenderer()
+        const cellRenderer = this.parent.rowGroup.isGrouped()
+            ? new GroupCellRenderer(this.parent.rowGroup)
+            : new CellRenderer()
+
+        const dummyRenderer = new DummyCellRenderer()
 
         const tr = document.createElement('tr')
         tr.className = row.css
@@ -112,6 +114,8 @@ class TableContentRenderer extends TablePanelRendererBase {
             const td = cellRenderer.render(column, rowData)
             tr.append(td)
         })
+
+        tr.append(dummyRenderer.render())
 
         return tr
     }
@@ -123,7 +127,7 @@ class TableContentRenderer extends TablePanelRendererBase {
         const tr = document.createElement('tr')
         tr.role = roles.temp
 
-        for (const column of panelModel.getFlatColumns()) {
+        for (let i = 0; i < panelModel.getFlatColumns().length + 1; i++) {
             const td = document.createElement('td')
             td.innerHTML = '<span class="table-placeholder">&nbsp;</span>'
 

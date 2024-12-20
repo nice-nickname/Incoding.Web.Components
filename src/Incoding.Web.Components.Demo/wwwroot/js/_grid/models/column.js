@@ -315,7 +315,7 @@ class ColumnModel {
         }
     }
 
-    getSortComparator() {
+    getAscSortComparator() {
         if (this.type === ColumnType.Numeric) {
             return (a, b) => a - b
         }

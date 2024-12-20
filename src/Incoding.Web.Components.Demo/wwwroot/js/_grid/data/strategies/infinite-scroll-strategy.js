@@ -97,9 +97,7 @@ class InfiniteScrollStrategy {
             return
         }
 
-        const {
-            scrollTop, scrollHeight, clientHeight
-        } = this.scroller
+        const { scrollTop, scrollHeight, clientHeight } = this.scroller
 
         const scrollSize = scrollHeight - clientHeight - scrollTop
 
@@ -109,10 +107,6 @@ class InfiniteScrollStrategy {
         this.#prevScrollTop = scrollTop
 
         this.#nextChunkRequested = hasScrollerDown && isScrollNearBottom
-
-        console.log(hasScrollerDown, isScrollNearBottom);
-
-
         this.requestRender()
     }
 

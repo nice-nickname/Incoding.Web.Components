@@ -11,6 +11,8 @@ class TableContentRenderer extends TablePanelRendererBase {
      */
     placeholders
 
+    #rowIndex = 0
+
     constructor(parent) {
         super(parent)
         this.tbodies = []
@@ -37,14 +39,18 @@ class TableContentRenderer extends TablePanelRendererBase {
         this.hideNoRows()
         this.hideLoadingRows()
 
-        for (let i = 0; i < this.tbodies.length; i++) {
-            const panelModel = this.parent.schemaModel[i]
-            const tbody = this.tbodies[i]
+        const rowRenderer = new RowRenderer(this.parent)
 
-            for (const rowData of data) {
-                const tr = this.#renderRow(panelModel, rowData)
+        for (const rowData of data) {
+            for (let i = 0; i < this.tbodies.length; i++) {
+                const panelModel = this.parent.schemaModel[i]
+                const tbody = this.tbodies[i]
+
+                const tr = rowRenderer.render(panelModel, this.#rowIndex)
                 tbody.append(tr)
             }
+
+            this.#rowIndex++
         }
     }
 
@@ -56,6 +62,7 @@ class TableContentRenderer extends TablePanelRendererBase {
         for (const tbody of this.tbodies) {
             tbody.innerHTML = ''
         }
+        this.#rowIndex = 0
     }
 
 
@@ -75,11 +82,13 @@ class TableContentRenderer extends TablePanelRendererBase {
 
 
     showLoadingRows() {
+        const rowRenderer = new RowRenderer(this.parent)
+
         for (let i = 0; i < this.tbodies.length; i++) {
             const panelModel = this.parent.schemaModel[i]
             const tbody = this.tbodies[i]
 
-            const trs = Array.from({ length: 3 }, () => this.#renderLoadingRow(panelModel))
+            const trs = Array.from({ length: 3 }, () => rowRenderer.renderLoadingRow(panelModel))
             tbody.append(...trs)
         }
     }
@@ -94,47 +103,18 @@ class TableContentRenderer extends TablePanelRendererBase {
 
     /**
      * @param { TablePanelModel } panelModel
-     * @param { object } rowData
+     * @param { number } rowIndex
      */
-    #renderRow(panelModel, rowData) {
-        const row = panelModel.row
-        const columns = panelModel.getFlatColumns()
+    #renderRow(panelModel, rowIndex) {
 
-        const cellRenderer = this.parent.rowGroup.isGrouped()
-            ? new GroupCellRenderer(this.parent.rowGroup)
-            : new CellRenderer()
-
-        const dummyRenderer = new DummyCellRenderer()
-
-        const tr = document.createElement('tr')
-        tr.className = row.css
-        tr.role = roles.row
-
-        columns.forEach(column => {
-            const td = cellRenderer.render(column, rowData)
-            tr.append(td)
-        })
-
-        tr.append(dummyRenderer.render())
-
-        return tr
+        return rowRenderer.render(panelModel.row, panelModel.getFlatColumns(), rowIndex)
     }
 
     /**
      * @param { TablePanelModel } panelModel
      */
     #renderLoadingRow(panelModel) {
-        const tr = document.createElement('tr')
-        tr.role = roles.temp
 
-        for (let i = 0; i < panelModel.getFlatColumns().length + 1; i++) {
-            const td = document.createElement('td')
-            td.innerHTML = '<span class="table-placeholder">&nbsp;</span>'
-
-            tr.append(td)
-        }
-
-        return tr
     }
 
 }

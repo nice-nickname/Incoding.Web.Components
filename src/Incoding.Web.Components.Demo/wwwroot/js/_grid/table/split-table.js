@@ -82,14 +82,23 @@ class SplitTable {
 
         this.columnMenu = new ColumnMenu(this);
         this.rowGroup = new RowGroup(this);
+        this.sort = new Sort(this);
     }
 
     render() {
         this.headerRenderer.render()
         this.footerRenderer.render()
+
+        if (this.dataSource.getData().length !== 0) {
+            this.appendData(this.dataSource.getData())
+        }
     }
 
     destroy() {
+        this.sort.destroy()
+        this.columnMenu.destroy()
+        this.rowGroup.destroy()
+
         this.#abort.abort()
 
         this.headerRenderer.destroy()
@@ -123,7 +132,49 @@ class SplitTable {
     }
 
     refreshRows() {
+        this.contentRenderer.removeRows()
+        this.contentRenderer.renderRows(this.dataSource.getData())
+    }
 
+
+    renderNested(rowIndex) {
+        const data = this.dataSource.getData()[rowIndex]
+
+        const tds = []
+
+        this.contentRenderer.tbodies.forEach((tbody) => {
+            const tr = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
+
+            const nestedTr = document.createElement('tr')
+
+            const td = document.createElement('td')
+            td.colSpan = 228
+
+            nestedTr.append(td)
+
+            nestedTr.append(td)
+            tr.after(nestedTr)
+
+            tds.push(td)
+        })
+
+        const nestedDataSource = new DataSource(data["Children"])
+        const nestedSchema = this.schemaModel.map(s => s.nested)
+
+        const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
+        nested.render()
+    }
+
+    removeNested(rowIndex) {
+        this.contentRenderer.tbodies.forEach((tbody) => {
+            const tr = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
+
+            const nextTr = tr.nextSibling
+
+            if (nextTr.role !== roles.row) {
+                nextTr.remove()
+            }
+        })
     }
 
 

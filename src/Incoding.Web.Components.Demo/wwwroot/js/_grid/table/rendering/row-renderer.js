@@ -17,16 +17,17 @@ class RowRenderer {
     }
 
     /**
-     * @param { RowModel } row
-     * @param { ColumnModel[] } columns
+     * @param { TablePanelModel } panelModel
      * @param { number } rowIndex
      */
-    render(row, columns, rowIndex) {
-        const data = this.splitTable.dataSource.getData()
+    render(panelModel, rowIndex) {
+        const row = panelModel.row
+        const columns = panelModel.getFlatColumns()
 
+        const data = this.splitTable.dataSource.getData()
         const rowData = data[rowIndex]
 
-        const tr = this.#createRow()
+        const tr = this.#createRow(panelModel.row, rowIndex)
 
         const dummyRenderer = new DummyCellRenderer()
         const cellRenderer = this.splitTable.rowGroup.isGrouped()
@@ -47,17 +48,31 @@ class RowRenderer {
         return tr
     }
 
-    #createRow() {
-        const tr = document.createElement("tr")
+    /**
+     * @param { TablePanelModel } panelModel
+     */
+    renderLoadingRow(panelModel) {
+        const tr = document.createElement('tr')
+        tr.role = roles.temp
+
+        for (let i = 0; i < panelModel.getFlatColumns().length + 1; i++) {
+            const td = document.createElement('td')
+            td.innerHTML = '<span class="table-placeholder">&nbsp;</span>'
+
+            tr.append(td)
+        }
 
         return tr
     }
 
     /**
-     * @param { ColumnModel } column
+     * @param { RowModel } row
      */
-    #createCell(column) {
+    #createRow(row, rowIndex) {
+        const tr = document.createElement("tr")
+        tr.dataset.rowIndex = rowIndex
 
+        return tr
     }
 
 }

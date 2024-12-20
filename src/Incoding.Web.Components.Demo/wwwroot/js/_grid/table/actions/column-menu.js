@@ -4,7 +4,7 @@ class ColumnMenu {
     /**
      * @type { SplitTable }
      */
-    table
+    splitTable
 
     /**
      * @type { Menu }
@@ -27,13 +27,13 @@ class ColumnMenu {
     #isOpen
 
     constructor(table) {
-        this.table = table
+        this.splitTable = table
         this.#targetColumn = null
         this.#position = { }
         this.#isOpen = false
 
-        this.table.addManagedEventListener('header', 'click', this.#handleClick)
-        this.table.addManagedEventListener('header', 'contextmenu', this.#handleClick)
+        this.splitTable.addManagedEventListener('header', 'click', this.#handleClick)
+        this.splitTable.addManagedEventListener('header', 'contextmenu', this.#handleClick)
     }
 
     /**
@@ -42,7 +42,7 @@ class ColumnMenu {
      * @param { number } left
      */
     open(panelModel, column, top, left) {
-        const th = this.table.getColumnHeader(column.uid)
+        const th = this.splitTable.getColumnHeader(column.uid)
         th.classList.add(classes.active)
 
         this.#menu = new Menu({
@@ -145,10 +145,15 @@ class ColumnMenu {
 
     #addEditItems(panelModel, items, column) {
         if (!column.isStacked() && !column.isPinned) {
-            items.push({
-                text: 'Group By',
-                action: 'GroupBy'
-            });
+            items.push(this.splitTable.rowGroup.isGrouped()
+                ? {
+                    text: 'Ungroup',
+                    action: 'Ungroup'
+                }
+                : {
+                    text: 'Group By',
+                    action: 'GroupBy'
+                });
         }
 
         if (!column.hasStackedParent() && !column.isPinned) {
@@ -207,54 +212,57 @@ class ColumnMenu {
 
         switch (action) {
             case 'SortAsc':
-                this.table.sort.sortColumn(column, ColumnSortOrder.Asc)
+                this.splitTable.sort.sortColumn(column, ColumnSortOrder.Asc)
                 break;
             case 'SortDesc':
-                this.table.sort.sortColumn(column, ColumnSortOrder.Desc)
+                this.splitTable.sort.sortColumn(column, ColumnSortOrder.Desc)
                 break;
             case 'Filter':
-                this.table.filter.createMenu(column, this.#position.top, this.#position.left)
+                this.splitTable.filter.createMenu(column, this.#position.top, this.#position.left)
                 break
             case 'Pin':
-                this.table.columnEdit.pin(column)
+                this.splitTable.columnEdit.pin(column)
                 break;
             case 'PinToThis':
-                this.table.columnEdit.pinUntil(column)
+                this.splitTable.columnEdit.pinUntil(column)
                 break;
             case 'Unpin':
-                this.table.columnEdit.unpin(column)
+                this.splitTable.columnEdit.unpin(column)
                 break;
             case 'UnpinAll':
-                this.table.columnEdit.unpinAll()
+                this.splitTable.columnEdit.unpinAll()
                 break;
             case 'AutoFit':
-                this.table.columnResize.autoFit(column)
+                this.splitTable.columnResize.autoFit(column)
                 break;
             case 'AutoFitAll':
-                this.table.columnResize.autoFitAll()
+                this.splitTable.columnResize.autoFitAll()
                 break;
             case 'Rename':
                 $(cell).popupInput({ placeholder: column.title, value: column.title })
                 $(cell).off('change').on('change', (ev, { value }) => {
-                    this.table.columnEdit.rename(column, value)
+                    this.splitTable.columnEdit.rename(column, value)
                     $(cell).off('change')
                 })
                 break;
             case 'GroupBy':
-                this.table.rowGroup.groupBy(column)
+                this.splitTable.rowGroup.groupBy(column)
+                break;
+            case 'Ungroup':
+                this.splitTable.rowGroup.ungroup()
                 break;
             case 'MoveStart':
-                this.table.columnEdit.moveToStart(column)
+                this.splitTable.columnEdit.moveToStart(column)
                 break;
             case 'MoveEnd':
-                this.table.columnEdit.moveToEnd(column)
-                break;
-            case 'MoveTo':
-                const beforeColumn = this.table.getColumn(subAction)
-                this.table.columnEdit.moveBefore(column, beforeColumn)
+                this.splitTable.columnEdit.moveToEnd(column)
+            case 'MoveTo':                break;
+
+                const beforeColumn = this.splitTable.getColumn(subAction)
+                this.splitTable.columnEdit.moveBefore(column, beforeColumn)
                 break;
             case 'Remove':
-                this.table.columnEdit.remove(column)
+                this.splitTable.columnEdit.remove(column)
                 break;
             default:
                 break;

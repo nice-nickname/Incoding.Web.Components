@@ -17,6 +17,9 @@ class TablePanelModel {
     /** @type { TablePanelModel } */
     nested
 
+    /** @type { string } */
+    nestedField
+
     /**
      * @param { ISplitTable } table
      * @param { ServiceCollection } services
@@ -31,6 +34,7 @@ class TablePanelModel {
 
         if (table.nested) {
             this.nested = new TablePanelModel(table.nested, services)
+            this.nestedField = table.nestedField
         }
     }
 

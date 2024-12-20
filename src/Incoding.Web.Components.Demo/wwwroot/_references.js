@@ -47,6 +47,7 @@
 
 /// <reference path="js/_grid/table/actions/column-menu.js" />
 /// <reference path="js/_grid/table/actions/row-group.js" />
+/// <reference path="js/_grid/table/actions/sort.js" />
 
 
 /// <reference path="js/_grid/const/classes.js" />

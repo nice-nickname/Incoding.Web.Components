@@ -42,7 +42,8 @@
       .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
       .DataSource(new DataSource.SignalR
                   {
-                          Event = JqueryBind.Load,
-                          Method = nameof(SignalHub.StreamData_Many),
+                          Event = JqueryBind.None,
+                          ChunkSize = 40,
+                          Method = nameof(SignalHub.StreamData_Many_Floating)
                   })
       .Render())

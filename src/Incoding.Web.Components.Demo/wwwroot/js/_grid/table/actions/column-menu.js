@@ -37,12 +37,13 @@ class ColumnMenu {
     }
 
     /**
+     * @param { TablePanelModel } panelModel
      * @param { ColumnModel } column
      * @param { number } top
      * @param { number } left
      */
     open(panelModel, column, top, left) {
-        const th = this.splitTable.getColumnHeader(column.uid)
+        const th = this.splitTable.getHeaderCell(column.uid)
         th.classList.add(classes.active)
 
         this.#menu = new Menu({

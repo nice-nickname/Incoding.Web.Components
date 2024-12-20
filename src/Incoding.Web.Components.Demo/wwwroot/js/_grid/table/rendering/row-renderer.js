@@ -70,6 +70,7 @@ class RowRenderer {
      */
     #createRow(row, rowIndex) {
         const tr = document.createElement("tr")
+        tr.role = roles.row
         tr.dataset.rowIndex = rowIndex
 
         return tr

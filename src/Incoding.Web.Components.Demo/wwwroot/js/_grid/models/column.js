@@ -333,6 +333,43 @@ class ColumnModel {
         }
     }
 
+    clone() {
+        return new ColumnModel({
+            id: this.id,
+            uid: this.uid,
+            index: this.index,
+            parentUid: this.parentUid,
+            minWidth: this.minWidth,
+            width: this.width,
+            field: this.field,
+            title: this.title,
+            css: this.css,
+            spreadIndex: this.spreadIndex,
+            spreadField: this.spreadField,
+            executable: this.executable,
+            content: this.content,
+            type: this.type,
+            format: this.format,
+            alignment: this.alignment,
+            sortedBy: this.sortedBy,
+
+            totalable: this.totalable,
+            sortable: this.sortable,
+            filterable: this.filterable,
+            showMenu: this.showMenu,
+            resizable: this.resizable,
+
+            allowEdit: this.allowEdit,
+            hidden: this.hidden,
+            attrs: this.attrs,
+            isSorted: this.isSorted,
+
+            stacked: this.stacked.map(column => column.clone()),
+            controlColumn: this.controlColumn,
+            summaryExpr: this.summaryExpr,
+        }, this.#formatter)
+    }
+
     static DEFAULT_MIN_WIDTH = 50
 
     static MAX_WIDTH = 700

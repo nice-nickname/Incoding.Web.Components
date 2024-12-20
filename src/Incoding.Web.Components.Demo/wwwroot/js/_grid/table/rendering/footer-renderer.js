@@ -43,6 +43,8 @@ class TableFooterRenderer extends TablePanelRendererBase {
             if (column.totalable) {
                 const totalValue = this.#calculateTotal(column)
                 column.formatElement(totalValue, span)
+            } else {
+              span.innerHTML = '&nbsp;'
             }
 
             td.append(span)

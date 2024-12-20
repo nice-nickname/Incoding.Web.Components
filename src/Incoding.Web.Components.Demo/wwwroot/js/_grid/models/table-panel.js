@@ -78,4 +78,19 @@ class TablePanelModel {
         return searchColumn(this.columns)
     }
 
+    clone(services) {
+        const table = new TablePanelModel(
+            {
+                id: this.id,
+                css: this.css,
+                row: this.row.clone(),
+                columns: [],
+            },
+            services)
+
+        table.columns = this.columns.map(column => column.clone())
+
+        return table
+    }
+
 }

@@ -232,7 +232,7 @@
 }
 
 .split-grid-stacked .split-table .table-container {
-    padding: 0;
+    padding: 10px 0;
 }
 
 .split-grid-stacked .table-container .split-table thead {

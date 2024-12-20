@@ -9,12 +9,12 @@ class RowModel {
     /**
      * @type { string }
      */
-    executable
+    executableTmpl = null
 
     /**
      * @type { string }
      */
-    dropdownTmpl
+    dropdownTmpl = null
 
     /**
      * @type { { [a: string]: string } }
@@ -22,23 +22,32 @@ class RowModel {
     attrs
 
 
-    #executableTmpl
-
     /**
      * @param { IRow } row
      */
     constructor(row) {
         this.css = row.css
-        this.dropdownTmpl = SplitGridHelpers.decodeTempalte(row.dropdownTmpl)
         this.attrs = row.attrs
 
+        if (row.dropdownTmpl) {
+            const dropdown = SplitGridHelpers.decodeTempalte(row.dropdownTmpl)
+            this.dropdownTmpl = ExecutableInsert.Template.compile(dropdown)
+        }
+
         if (row.executable) {
-            this.executable = SplitGridHelpers.decodeTempalte(row.executable)
-            this.#executableTmpl = ExecutableInsert.Template.compile(this.executable)
+            const executable = SplitGridHelpers.decodeTempalte(row.executable)
+            this.executableTmpl = ExecutableInsert.Template.compile(executable)
         }
     }
 
-    getExecutableFn() {
-        return this.#executableTmpl
+    clone() {
+        const row = new RowModel({
+            css: this.css,
+            attrs: this.attrs
+        })
+        row.executableTmpl = this.executableTmpl
+        row.dropdownTmpl = this.dropdownTmpl
+
+        return row
     }
 }

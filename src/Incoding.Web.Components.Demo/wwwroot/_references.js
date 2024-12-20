@@ -46,7 +46,12 @@
 
 
 /// <reference path="js/_grid/table/actions/column-menu.js" />
+/// <reference path="js/_grid/table/actions/context-menu.js" />
+/// <reference path="js/_grid/table/actions/filter.js" />
+/// <reference path="js/_grid/table/actions/row-dropdown.js" />
+/// <reference path="js/_grid/table/actions/row-expand.js" />
 /// <reference path="js/_grid/table/actions/row-group.js" />
+/// <reference path="js/_grid/table/actions/row-hover.js" />
 /// <reference path="js/_grid/table/actions/sort.js" />
 
 

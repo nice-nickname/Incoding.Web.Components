@@ -53,6 +53,9 @@ const classes = {
     splitTable: 'split-table',
 
 
-    baseIcon: 'ci-planifi'
+    baseIcon: 'ci-planifi',
+
+
+    nestedTableContainer: 'table-container'
 
 }

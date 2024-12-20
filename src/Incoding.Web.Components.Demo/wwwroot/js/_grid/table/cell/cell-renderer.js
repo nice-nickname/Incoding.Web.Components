@@ -47,7 +47,7 @@ class CellRenderer {
      */
     #renderControlColumn(column, data) {
        const elementsMap = {
-           [ControlColumn.Expand]: { role: roles.expand, css: `${classes.expanded} ci-planifi ci-color-muted ci-h-color-base ci-d-color-base` },
+           [ControlColumn.Expand]: { role: roles.expand, css: `${classes.collapsed} ci-planifi ci-color-muted ci-h-color-base ci-d-color-base` },
            [ControlColumn.Dropdown]: { role: roles.rowDropdown, css: `ci-planifi ci-dots-horizontal ci-color-muted ci-h-color-primary` },
        }
 

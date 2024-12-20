@@ -19,6 +19,12 @@ class SplitTable {
 
 
     /**
+     * @type { GridMode }
+     */
+    mode
+
+
+    /**
      *  @type { ServiceCollection }
      */
     services
@@ -53,7 +59,7 @@ class SplitTable {
      */
     #abort
 
-    constructor(dataSource, schemaModel, panels, services) {
+    constructor(dataSource, schemaModel, panels, mode, services) {
         this.dataSource = dataSource
         this.schemaModel = schemaModel
         this.panelElements = panels.map(panel => {
@@ -63,6 +69,9 @@ class SplitTable {
             panel.append(tableContainer)
             return tableContainer
         })
+
+        this.mode = mode
+
         this.services = services
 
         this.headerRenderer = new TableHeaderRenderer(this)
@@ -83,6 +92,10 @@ class SplitTable {
         this.columnMenu = new ColumnMenu(this);
         this.rowGroup = new RowGroup(this);
         this.sort = new Sort(this);
+        this.rowDropdown = new RowDropdown(this);
+        this.rowExpand = new RowExpand(this);
+        this.contextMenu = new ContextMenu(this);
+        this.rowHover = new RowHover(this);
     }
 
     render() {
@@ -95,6 +108,10 @@ class SplitTable {
     }
 
     destroy() {
+        this.rowHover.destroy()
+        this.contextMenu.destroy()
+        this.rowExpand.destroy()
+        this.rowDropdown.destroy()
         this.sort.destroy()
         this.columnMenu.destroy()
         this.rowGroup.destroy()
@@ -148,6 +165,7 @@ class SplitTable {
             const nestedTr = document.createElement('tr')
 
             const td = document.createElement('td')
+            td.classList.add(classes.nestedTableContainer)
             td.colSpan = 228
 
             nestedTr.append(td)
@@ -158,7 +176,7 @@ class SplitTable {
             tds.push(td)
         })
 
-        const nestedDataSource = new DataSource(data["Children"])
+        const nestedDataSource = new DataSource(this.rowGroup.isGrouped() ? data["Group"] : data["Children"])
         const nestedSchema = this.schemaModel.map(s => s.nested)
 
         const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
@@ -182,7 +200,7 @@ class SplitTable {
      * m-debug rename
      * @param { string } uid
      */
-    getColumnHeader(uid) {
+    getHeaderCell(uid) {
         for (const thead of this.headerRenderer.theads) {
             const th = thead.querySelector(`th[data-uid="${uid}"]`)
 
@@ -190,6 +208,28 @@ class SplitTable {
                 return th
             }
         }
+    }
+
+    getPanelModelByColumn(column) {
+        for (const panelModel of this.schemaModel) {
+            if (panelModel.getColumn(column.uid)) {
+                return panelModel
+            }
+        }
+
+        return null
+    }
+
+    getAllColumns() {
+        return this.schemaModel.flatMap(panel => {
+            return panel.columns
+        })
+    }
+
+    getAllFlatColumns() {
+        return this.schemaModel.flatMap(panel => {
+            return panel.getFlatColumns()
+        })
     }
 
 
@@ -221,6 +261,10 @@ class SplitTable {
 
             }, { signal: this.#abort.signal })
         })
+    }
+
+    isStackedMode() {
+        return this.mode === GridMode.Stacked
     }
 
 }

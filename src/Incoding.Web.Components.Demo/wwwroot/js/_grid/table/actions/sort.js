@@ -43,7 +43,7 @@ class Sort {
     destroy() { }
 
     #setSortIcon(column, isSorted) {
-        const th = this.splitTable.getColumnHeader(column.uid)
+        const th = this.splitTable.getHeaderCell(column.uid)
 
         th.classList.remove(classes.sorted, classes.sortedAsc, classes.sortedDesc)
 

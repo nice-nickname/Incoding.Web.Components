@@ -19,6 +19,11 @@ class GroupCellRenderer {
 
         const td = document.createElement('td')
 
+        if (column.isControlColumn()) {
+            td.append(this.#renderControlColumn(column, data))
+            return td;
+        }
+
         let value = ''
         if (column.field === groupColumn.field) {
             value = data["Key"]
@@ -35,6 +40,25 @@ class GroupCellRenderer {
 
         td.append(span)
         return td
+    }
+
+    /**
+     * @param { ColumnModel } column
+     * @param { Object } data
+     */
+    #renderControlColumn(column, data) {
+        const elementsMap = {
+            [ControlColumn.Expand]: { role: roles.expand, css: `${classes.collapsed} ci-planifi ci-color-muted ci-h-color-base ci-d-color-base` },
+            [ControlColumn.Dropdown]: { role: roles.rowDropdown, css: `ci-planifi ci-dots-horizontal ci-color-muted ci-h-color-primary` },
+        }
+
+        const { role, css } = elementsMap[column.controlColumn]
+        const buttonElement = document.createElement('button');
+
+        buttonElement.className = css
+        buttonElement.role = role
+
+        return buttonElement
     }
 
 }

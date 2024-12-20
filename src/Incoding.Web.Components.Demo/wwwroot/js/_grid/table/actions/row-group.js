@@ -25,16 +25,14 @@ class RowGroup {
      * @param { ColumnModel } groupColumn
      */
     groupBy(groupColumn) {
-        this.groupedColumn =  groupColumn
-
-        let data = this.splitTable.dataSource.getData()
-        if (this.isGrouped()) {
-            data = this.#getUngroupedData()
-        }
-
         const newData = this.#getGroupedData(groupColumn.getField())
+        const newSchema = this.#getGroupedSchema()
 
         this.splitTable.dataSource.setData(newData)
+        this.splitTable.schemaModel = newSchema
+
+        this.groupedColumn = groupColumn
+
         this.splitTable.refresh()
     }
 
@@ -48,7 +46,10 @@ class RowGroup {
     destroy() { }
 
     #getGroupedData(groupField) {
-        const data = this.splitTable.dataSource.getData()
+        let data = this.splitTable.dataSource.getData()
+        if (this.isGrouped()) {
+            data = this.#getUngroupedData()
+        }
 
         const groupObj = Object.groupBy(data, item => item[groupField])
 
@@ -64,6 +65,30 @@ class RowGroup {
         const data = this.splitTable.dataSource.getData()
 
         return data.flatMap(item => item['Group'])
+    }
+
+    #getGroupedSchema() {
+        let schemas = this.splitTable.schemaModel
+        if (this.isGrouped()) {
+            schemas = this.#getUngroupedSchema()
+        }
+
+        const newSchema = schemas.map(panel => panel.clone(this.splitTable.services))
+
+        for (let i = 0; i < newSchema.length; i++) {
+            const newPanel = newSchema[i]
+            const oldPanel = schemas[i]
+
+            newPanel.nestedField = "Group"
+            newPanel.nested = oldPanel
+        }
+
+        return newSchema
+    }
+
+    #getUngroupedSchema() {
+        return this.splitTable.schemaModel
+            .map(panel => panel.nested)
     }
 
 }

@@ -22,30 +22,13 @@ class RowHover {
         this.#prevRowIndex = null
     }
 
-    /**
-     * @param { PointerEvent } ev
-     */
-    #handleMouseOver = (ev) => {
-        ev.stopPropagation()
+    hoverRow(rowIndex) {
+        if (this.#prevRowIndex !== null) {
+            this.#setHoverClass(this.#prevRowIndex, false)
+        }
 
-        const tr = ev.target.closest("tr")
-        const rowIndex = Number(tr.dataset.rowIndex)
-
-        const isNeedHighlight = tr.role === roles.row
-
-        for (const tbody of this.splitTable.contentRenderer.tbodies) {
-            if (this.#prevRowIndex !== null) {
-                const prevRow = tbody.querySelector(`[data-row-index="${this.#prevRowIndex}"]`)
-
-                if (prevRow) {
-                    prevRow.classList.remove(classes.hover)
-                }
-            }
-
-            if (isNeedHighlight) {
-                const thisRow = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
-                thisRow.classList.add(classes.hover)
-            }
+        if (rowIndex) {
+            this.#setHoverClass(rowIndex, true)
         }
 
         this.#prevRowIndex = rowIndex
@@ -54,15 +37,56 @@ class RowHover {
     /**
      * @param { PointerEvent } ev
      */
+    #handleMouseOver = (ev) => {
+        if (ev.target.closest(".split-table-panel").dataset.id !== this.splitTable.id) {
+            this.#hoverInNestedTable(ev)
+            return
+        }
+
+        this.#hoverInCurrentTable(ev)
+    }
+
+    #hoverInCurrentTable(ev) {
+        const tr = ev.target.closest("tr")
+        const rowIndex = Number(tr.dataset.rowIndex)
+
+        this.hoverRow(rowIndex)
+    }
+
+    /**
+     * @param { PointerEvent } ev
+     */
+    #hoverInNestedTable(ev) {
+        const container = ev.target.closest(`.${classes.nestedTableContainer}`)
+
+        let tr = container.closest('tr')
+        while (tr) {
+            if (tr.tagName === 'TR') {
+                const rowIndex = Number(tr.previousSibling.dataset.rowIndex)
+                this.hoverRow(rowIndex)
+            }
+            tr = tr.parentNode
+        }
+    }
+
+    /**
+     * @param { PointerEvent } ev
+     */
     #handleMouseLeave = (ev) => {
         ev.stopPropagation()
 
-        for (const tbody of this.splitTable.contentRenderer.tbodies) {
-            const prevRow = tbody.querySelector(`[data-row-index="${this.#prevRowIndex}"]`)
+        this.#setHoverClass(this.#prevRowIndex, false)
+    }
 
-            if (prevRow) {
-                prevRow.classList.remove(classes.hover)
-            }
-        }
+    #setHoverClass(rowIndex, state) {
+        this.splitTable
+            .getTrs(rowIndex)
+            .forEach(tr => {
+                if (state) {
+                    tr.classList.add(classes.hover)
+                } else {
+                    tr.classList.remove(classes.hover)
+                }
+            })
     }
 }

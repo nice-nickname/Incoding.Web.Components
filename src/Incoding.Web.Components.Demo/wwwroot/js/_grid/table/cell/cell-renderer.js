@@ -2,6 +2,15 @@
 class CellRenderer {
 
     /**
+     * @type { SplitTable }
+     */
+    splitTable
+
+    constructor(splitTable) {
+        this.splitTable = splitTable
+    }
+
+    /**
      * @param { ColumnModel } column
      * @param { Object } data
      * @returns { HTMLElement }
@@ -16,8 +25,11 @@ class CellRenderer {
 
         td.style.textAlign = column.alignment.toString().toLowerCase()
 
-        if (column.isControlColumn()) {
-            td.append(this.#renderControlColumn(column, data))
+        if (column.isControlColumn() ) {
+            const btn = this.#renderControlColumn(column, data)
+            if (btn) {
+                td.append(btn)
+            }
             return td;
         }
 
@@ -49,6 +61,13 @@ class CellRenderer {
        const elementsMap = {
            [ControlColumn.Expand]: { role: roles.expand, css: `${classes.collapsed} ci-planifi ci-color-muted ci-h-color-base ci-d-color-base` },
            [ControlColumn.Dropdown]: { role: roles.rowDropdown, css: `ci-planifi ci-dots-horizontal ci-color-muted ci-h-color-primary` },
+       }
+
+       const nestedField = this.splitTable.getNestedField()
+
+       if (column.controlColumn === ControlColumn.Expand &&
+           (data[nestedField]?.length === undefined || data[nestedField].length === 0)) {
+           return null;
        }
 
        const { role, css } = elementsMap[column.controlColumn]

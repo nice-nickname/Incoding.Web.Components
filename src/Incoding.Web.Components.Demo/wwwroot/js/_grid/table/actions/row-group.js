@@ -1,6 +1,10 @@
 ﻿
 class RowGroup {
 
+    static GROUP_FIELD = 'Group'
+
+    static KEY_FIELD = 'Key'
+
     /**
      * @type { SplitTable }
      */
@@ -55,16 +59,19 @@ class RowGroup {
 
         return Object
             .entries(groupObj)
-            .map(([key, value]) => ({
-                'Key': key,
-                "Group": value
-            }))
+            .map(([key, value]) => {
+                const item = { }
+                item[RowGroup.KEY_FIELD] = key
+                item[RowGroup.GROUP_FIELD] = value
+
+                return item
+            })
     }
 
     #getUngroupedData() {
         const data = this.splitTable.dataSource.getData()
 
-        return data.flatMap(item => item['Group'])
+        return data.flatMap(item => item[RowGroup.GROUP_FIELD])
     }
 
     #getGroupedSchema() {
@@ -79,7 +86,7 @@ class RowGroup {
             const newPanel = newSchema[i]
             const oldPanel = schemas[i]
 
-            newPanel.nestedField = "Group"
+            newPanel.nestedField = RowGroup.GROUP_FIELD
             newPanel.nested = oldPanel
         }
 

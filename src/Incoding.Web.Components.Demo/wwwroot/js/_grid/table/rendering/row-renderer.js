@@ -32,7 +32,7 @@ class RowRenderer {
         const dummyRenderer = new DummyCellRenderer()
         const cellRenderer = this.splitTable.rowGroup.isGrouped()
             ? new GroupCellRenderer(this.splitTable.rowGroup)
-            : new CellRenderer()
+            : new CellRenderer(this.splitTable)
 
         for (const column of columns) {
             const td = cellRenderer.render(column, rowData)

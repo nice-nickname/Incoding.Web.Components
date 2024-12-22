@@ -51,6 +51,10 @@ class SplitTable {
     colgroupsRenderer
 
 
+    /**
+     * @type { string }
+     */
+    id
 
     /**
      * Calling .abort() of this controller will remove
@@ -60,11 +64,14 @@ class SplitTable {
     #abort
 
     constructor(dataSource, schemaModel, panels, mode, services) {
+        this.id = createGuid()
+
         this.dataSource = dataSource
         this.schemaModel = schemaModel
         this.panelElements = panels.map(panel => {
             const tableContainer = document.createElement('div')
             tableContainer.classList.add('split-table-panel')
+            tableContainer.dataset.id = this.id
 
             panel.append(tableContainer)
             return tableContainer
@@ -159,14 +166,16 @@ class SplitTable {
 
         const tds = []
 
-        this.contentRenderer.tbodies.forEach((tbody) => {
+        this.schemaModel.forEach((panelModel, i) => {
+            const tbody = this.contentRenderer.tbodies[i]
+
             const tr = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
 
             const nestedTr = document.createElement('tr')
 
             const td = document.createElement('td')
             td.classList.add(classes.nestedTableContainer)
-            td.colSpan = 228
+            td.colSpan = panelModel.getFlatColumns().length + 1
 
             nestedTr.append(td)
 
@@ -175,8 +184,13 @@ class SplitTable {
 
             tds.push(td)
         })
+        this.contentRenderer.tbodies.forEach((tbody) => {
 
-        const nestedDataSource = new DataSource(this.rowGroup.isGrouped() ? data["Group"] : data["Children"])
+        })
+
+        const nestedField = this.getNestedField()
+
+        const nestedDataSource = new DataSource(this.rowGroup.isGrouped() ? data[RowGroup.GROUP_FIELD] : data[nestedField])
         const nestedSchema = this.schemaModel.map(s => s.nested)
 
         const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
@@ -197,7 +211,6 @@ class SplitTable {
 
 
     /**
-     * m-debug rename
      * @param { string } uid
      */
     getHeaderCell(uid) {
@@ -208,6 +221,20 @@ class SplitTable {
                 return th
             }
         }
+    }
+
+    getTrs(index) {
+        const trs = []
+        for (const tbody of this.contentRenderer.tbodies) {
+            for (const tr of tbody.rows) {
+                if (tr.dataset.rowIndex !== undefined && tr.dataset.rowIndex == index) {
+                    trs.push(tr)
+                    break
+                }
+            }
+        }
+
+        return trs
     }
 
     getPanelModelByColumn(column) {
@@ -230,6 +257,10 @@ class SplitTable {
         return this.schemaModel.flatMap(panel => {
             return panel.getFlatColumns()
         })
+    }
+
+    getNestedField() {
+        return this.schemaModel[0].nestedField
     }
 
 

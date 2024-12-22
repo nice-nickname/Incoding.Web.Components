@@ -2,7 +2,7 @@
 class TableContentRenderer extends TablePanelRendererBase {
 
     /**
-     * @type { HTMLElement[] }
+     * @type { HTMLTableSectionElement[] }
      */
     tbodies
 

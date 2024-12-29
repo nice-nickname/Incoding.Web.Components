@@ -83,11 +83,12 @@ class TablePanelModel {
             {
                 id: this.id,
                 css: this.css,
-                row: this.row.clone(),
+                row: { },
                 columns: [],
             },
             services)
 
+        table.row = this.row.clone()
         table.columns = this.columns.map(column => column.clone())
 
         return table

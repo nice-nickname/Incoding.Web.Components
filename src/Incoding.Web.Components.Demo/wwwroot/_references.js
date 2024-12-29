@@ -43,8 +43,11 @@
 /// <reference path="js/_grid/table/cell/cell-renderer.js" />
 /// <reference path="js/_grid/table/cell/group-cell-renderer.js" />
 /// <reference path="js/_grid/table/cell/header-cell-renderer.js" />
+/// <reference path="js/_grid/table/cell/dummy-cell-renderer.js" />
 
 
+/// <reference path="js/_grid/table/actions/column-edit.js" />
+/// <reference path="js/_grid/table/actions/column-resize.js" />
 /// <reference path="js/_grid/table/actions/column-menu.js" />
 /// <reference path="js/_grid/table/actions/context-menu.js" />
 /// <reference path="js/_grid/table/actions/filter.js" />
@@ -60,6 +63,7 @@
 /// <reference path="js/_grid/const/roles.js" />
 
 /// <reference path="js/_grid/services/format.js" />
+/// <reference path="js/_grid/services/clipboard.js" />
 /// <reference path="js/_grid/services/service-collection.js" />
 
 

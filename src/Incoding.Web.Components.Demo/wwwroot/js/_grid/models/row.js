@@ -30,12 +30,12 @@ class RowModel {
         this.attrs = row.attrs
 
         if (row.dropdownTmpl) {
-            const dropdown = SplitGridHelpers.decodeTempalte(row.dropdownTmpl)
+            const dropdown = TemplateHelper.decodeTempalte(row.dropdownTmpl)
             this.dropdownTmpl = ExecutableInsert.Template.compile(dropdown)
         }
 
         if (row.executable) {
-            const executable = SplitGridHelpers.decodeTempalte(row.executable)
+            const executable = TemplateHelper.decodeTempalte(row.executable)
             this.executableTmpl = ExecutableInsert.Template.compile(executable)
         }
     }

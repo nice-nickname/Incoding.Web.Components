@@ -1,4 +1,5 @@
-﻿class HeaderCellComponent {
+﻿
+class HeaderCellComponent {
 
     /**
      * @type { ColumnModel }

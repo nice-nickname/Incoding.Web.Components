@@ -198,12 +198,12 @@ class ColumnModel {
         this.attrs = column.attrs
         this.css = column.css
 
-        this.executable = SplitGridHelpers.decodeTempalte(column.executable)
+        this.executable = TemplateHelper.decodeTempalte(column.executable)
         if (this.executable) {
             this.#executableTmpl = ExecutableInsert.Template.compile(this.executable)
         }
 
-        this.content = SplitGridHelpers.decodeTempalte(column.content)
+        this.content = TemplateHelper.decodeTempalte(column.content)
         if (this.content) {
             this.#contentTmpl = ExecutableInsert.Template.compile(this.content)
         }
@@ -334,7 +334,7 @@ class ColumnModel {
     }
 
     clone() {
-        return new ColumnModel({
+        const column = new ColumnModel({
             id: this.id,
             uid: this.uid,
             index: this.index,
@@ -364,10 +364,14 @@ class ColumnModel {
             attrs: this.attrs,
             isSorted: this.isSorted,
 
-            stacked: this.stacked.map(column => column.clone()),
+            stacked: [],
             controlColumn: this.controlColumn,
             summaryExpr: this.summaryExpr,
         }, this.#formatter)
+
+        column.stacked = this.stacked.map(s => s.clone())
+
+        return column
     }
 
     static DEFAULT_MIN_WIDTH = 50

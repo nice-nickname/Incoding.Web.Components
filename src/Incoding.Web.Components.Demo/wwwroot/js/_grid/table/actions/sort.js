@@ -16,7 +16,7 @@ class Sort {
     constructor(splitTable) {
         this.splitTable = splitTable;
 
-        this.splitTable.addManagedEventListener("header", "click", this.#handleClick)
+        this.splitTable.addManagedEventListener("header", "click", this.#handleHeaderClick)
     }
 
     isSorted() {
@@ -37,7 +37,7 @@ class Sort {
         this.#setSortIcon(this.sortedColumn, true)
 
         this.#sortData()
-        this.splitTable.refresh()
+        this.splitTable.refreshRows()
     }
 
     destroy() { }
@@ -48,11 +48,11 @@ class Sort {
         th.classList.remove(classes.sorted, classes.sortedAsc, classes.sortedDesc)
 
         if (isSorted) {
-            const sortOrderClass = column.sortedBy === ColumnSortOrder.Asc
+            const sortClass = column.sortedBy === ColumnSortOrder.Asc
                 ? classes.sortedDesc
                 : classes.sortedAsc
 
-            th.classList.add(classes.sorted, sortOrderClass)
+            th.classList.add(classes.sorted, sortClass)
         }
     }
 
@@ -61,17 +61,15 @@ class Sort {
      * @param { PointerEvent } ev
      * @param { TablePanelModel } panelModel
      */
-    #handleClick = (ev, panelModel) => {
+    #handleHeaderClick = (ev, panelModel) => {
         const { target } = ev
 
-        if (target.role !== roles.sort && target.tagName !== 'TH') {
-            return
+        if (target.role === roles.sort || target.tagName === 'TH') {
+            const th = target.closest('th')
+            const column = panelModel.getColumn(th.dataset.uid)
+
+            this.#invokeSort(column)
         }
-
-        const th = target.closest('th')
-        const column = panelModel.getColumn(th.dataset.uid)
-
-        this.#invokeSort(column)
     }
 
     /**
@@ -95,9 +93,9 @@ class Sort {
         const order = this.sortedColumn.sortedBy
         const cmp = this.sortedColumn.getAscSortComparator()
 
-        let newData = data.sort((a, b) => {
-            const l = this.sortedColumn.getValue(a)
-            const r = this.sortedColumn.getValue(b)
+        const sortedData = data.sort((left, right) => {
+            const l = this.sortedColumn.getValue(left)
+            const r = this.sortedColumn.getValue(right)
 
             if (l == null) return order === ColumnSortOrder.Asc ? -1 : 1;
             if (r == null) return order === ColumnSortOrder.Desc ? 1 : -1;
@@ -108,6 +106,6 @@ class Sort {
                 : -cmp(l, r)
         })
 
-        this.splitTable.dataSource.setData(newData)
+        this.splitTable.dataSource.setData(sortedData)
     }
 }

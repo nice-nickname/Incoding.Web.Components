@@ -24,7 +24,6 @@ class RowDropdown {
     }
 
     destroy() {
-        this.#menu.hide()
         this.#menu?.destroy()
     }
 

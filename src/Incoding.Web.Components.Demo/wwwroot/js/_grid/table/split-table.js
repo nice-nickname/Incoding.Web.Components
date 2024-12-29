@@ -68,14 +68,7 @@ class SplitTable {
 
         this.dataSource = dataSource
         this.schemaModel = schemaModel
-        this.panelElements = panels.map(panel => {
-            const tableContainer = document.createElement('div')
-            tableContainer.classList.add('split-table-panel')
-            tableContainer.dataset.id = this.id
-
-            panel.append(tableContainer)
-            return tableContainer
-        })
+        this.panelElements = this.#createPanels(panels)
 
         this.mode = mode
 
@@ -103,6 +96,8 @@ class SplitTable {
         this.rowExpand = new RowExpand(this);
         this.contextMenu = new ContextMenu(this);
         this.rowHover = new RowHover(this);
+        this.columnEdit = new ColumnEdit(this);
+        this.columnResize = new ColumnResize(this);
     }
 
     render() {
@@ -115,6 +110,8 @@ class SplitTable {
     }
 
     destroy() {
+        this.columnResize.destroy()
+        this.columnEdit.destroy()
         this.rowHover.destroy()
         this.contextMenu.destroy()
         this.rowExpand.destroy()
@@ -148,11 +145,17 @@ class SplitTable {
 
 
     refresh() {
-        this.headerRenderer.render()
-        this.footerRenderer.render()
+        this.refreshHeader()
+        this.refreshFooter()
+        this.refreshRows()
+    }
 
-        this.contentRenderer.removeRows()
-        this.contentRenderer.renderRows(this.dataSource.getData())
+    refreshHeader() {
+        this.headerRenderer.render()
+    }
+
+    refreshFooter() {
+        this.footerRenderer.render()
     }
 
     refreshRows() {
@@ -184,13 +187,14 @@ class SplitTable {
 
             tds.push(td)
         })
-        this.contentRenderer.tbodies.forEach((tbody) => {
-
-        })
 
         const nestedField = this.getNestedField()
 
-        const nestedDataSource = new DataSource(this.rowGroup.isGrouped() ? data[RowGroup.GROUP_FIELD] : data[nestedField])
+        const nestedData = this.rowGroup.isGrouped()
+            ? data[RowGroup.GROUP_FIELD] 
+            : data[nestedField]
+
+        const nestedDataSource = new DataSource(nestedData)
         const nestedSchema = this.schemaModel.map(s => s.nested)
 
         const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
@@ -267,7 +271,7 @@ class SplitTable {
     /**
      * @param { "header" | "body" } target
      * @param {  keyof HTMLElementEventMap } eventStr
-     * @param { (event: Event, model: TablePanelModel) => void } callback
+     * @param { (event: Event, model: TablePanelModel, index: number) => void } callback
      */
     addManagedEventListener(target, eventStr, callback) {
         const targetElements = []
@@ -288,7 +292,7 @@ class SplitTable {
         targetElements.forEach((element, i) => {
             element.addEventListener(eventStr, event => {
 
-                callback(event, this.schemaModel[i])
+                callback(event, this.schemaModel[i], i)
 
             }, { signal: this.#abort.signal })
         })
@@ -296,6 +300,17 @@ class SplitTable {
 
     isStackedMode() {
         return this.mode === GridMode.Stacked
+    }
+
+    #createPanels(panels) {
+        return panels.map(panel => {
+            const tableContainer = document.createElement('div')
+            tableContainer.classList.add('split-table-panel')
+            tableContainer.dataset.id = this.id
+
+            panel.append(tableContainer)
+            return tableContainer
+        })
     }
 
 }

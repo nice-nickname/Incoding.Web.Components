@@ -20,10 +20,6 @@ class ClipboardService {
         await this.#copy(result)
     }
 
-    async #copy(str) {
-        await navigator.clipboard.writeText(str)
-    }
-
     #getHeaderRows() {
         const columns = this.splitTable.getAllColumns()
         const maxDepth = this.#getMaxDepth(columns)
@@ -56,8 +52,6 @@ class ClipboardService {
     #getHeaderRow(columns, depth) {
         let row = ''
         for (const column of columns) {
-            if (column.isControlColumn()) continue
-
             if (depth === 0) {
                 row += column.title + '\t'
                 if (column.isStacked()) {
@@ -84,4 +78,9 @@ class ClipboardService {
             .map(column => column.formatToString(column.getValue(data)))
             .join('\t')
     }
+
+    async #copy(str) {
+        await navigator.clipboard.writeText(str)
+    }
+
 }

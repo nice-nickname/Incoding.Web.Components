@@ -7,18 +7,12 @@ class DataSource {
     /** @type { object[] } */
     #data
 
-    /** @type { object[] } */
-    #visibleData
-
-
     constructor(data = []) {
         this.#data = data
-        this.#visibleData = [...data]
     }
 
     setData(data) {
         this.#data = data
-        this.#visibleData = [...data]
     }
 
     getData() {
@@ -31,7 +25,6 @@ class DataSource {
 
     clear() {
         this.#data = []
-        this.#visibleData = []
     }
 
 }

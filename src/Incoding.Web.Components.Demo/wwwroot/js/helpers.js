@@ -1,10 +1,18 @@
 
-class SplitGridHelpers {
+class TemplateHelper {
 
     static decodeTempalte(tmpl) {
-        if (!tmpl) return null
-
         return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
+    }
+
+    static renderToElement(tmpl, data) {
+        const template = document.createElement('template')
+        template.innerHTML = ExecutableInsert.Template.render(tmpl, data)
+
+        const element = template.content.children.item(0)
+        IncodingEngine.Current.parse(element)
+
+        return element
     }
 
 };

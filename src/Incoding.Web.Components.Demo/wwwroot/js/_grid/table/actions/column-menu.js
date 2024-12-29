@@ -6,34 +6,37 @@ class ColumnMenu {
      */
     splitTable
 
+    
     /**
-     * @type { Menu }
+     * @type { Menu | null }
      */
-    #menu
+    #menu = null
 
     /**
      * @type { ColumnModel | null }
      */
-    #targetColumn
+    #targetColumn = null
+
+    /**
+     * @type { TablePanelModel | null }
+     */
+    #targetPanel = null
 
     /**
      * @type { { top: number, left: number } }
      */
-    #position
+    #position = { }
 
     /**
      * @type { boolean }
      */
-    #isOpen
+    #isOpen = false
 
     constructor(table) {
         this.splitTable = table
-        this.#targetColumn = null
-        this.#position = { }
-        this.#isOpen = false
 
-        this.splitTable.addManagedEventListener('header', 'click', this.#handleClick)
-        this.splitTable.addManagedEventListener('header', 'contextmenu', this.#handleClick)
+        this.splitTable.addManagedEventListener('header', 'click', this.#handleHeaderClick)
+        this.splitTable.addManagedEventListener('header', 'contextmenu', this.#handleHeaderClick)
     }
 
     /**
@@ -54,6 +57,7 @@ class ColumnMenu {
         })
 
         this.#targetColumn = column
+        this.#targetPanel = panelModel
         this.#position = { top, left }
         this.#isOpen = true
 
@@ -64,6 +68,7 @@ class ColumnMenu {
         this.#menu?.hide()
         this.#menu = null
         this.#targetColumn = null
+        this.#targetPanel = null
         this.#isOpen = false
     }
 
@@ -75,7 +80,7 @@ class ColumnMenu {
      * @param { PointerEvent } ev
      * @param { TablePanelModel } panelModel
      */
-    #handleClick = (ev, panelModel) => {
+    #handleHeaderClick = (ev, panelModel) => {
         const {
             target,
             button,
@@ -209,6 +214,7 @@ class ColumnMenu {
      */
     #onMenuClick = (action, subAction) => {
         const column = this.#targetColumn
+        const panel = this.#targetPanel
         // const cell = this.table.getColumnHeader(column)
 
         switch (action) {
@@ -219,7 +225,7 @@ class ColumnMenu {
                 this.splitTable.sort.sortColumn(column, ColumnSortOrder.Desc)
                 break;
             case 'Filter':
-                this.splitTable.filter.createMenu(column, this.#position.top, this.#position.left)
+                // this.splitTable.filter.createMenu(column, this.#position.top, this.#position.left)
                 break
             case 'Pin':
                 this.splitTable.columnEdit.pin(column)
@@ -237,14 +243,14 @@ class ColumnMenu {
                 this.splitTable.columnResize.autoFit(column)
                 break;
             case 'AutoFitAll':
-                this.splitTable.columnResize.autoFitAll()
+                this.splitTable.columnResize.autoFitAll(panel)
                 break;
             case 'Rename':
-                $(cell).popupInput({ placeholder: column.title, value: column.title })
-                $(cell).off('change').on('change', (ev, { value }) => {
-                    this.splitTable.columnEdit.rename(column, value)
-                    $(cell).off('change')
-                })
+                // $(cell).popupInput({ placeholder: column.title, value: column.title })
+                // $(cell).off('change').on('change', (ev, { value }) => {
+                //     this.splitTable.columnEdit.rename(column, value)
+                //     $(cell).off('change')
+                // })
                 break;
             case 'GroupBy':
                 this.splitTable.rowGroup.groupBy(column)
@@ -257,8 +263,7 @@ class ColumnMenu {
                 break;
             case 'MoveEnd':
                 this.splitTable.columnEdit.moveToEnd(column)
-            case 'MoveTo':                break;
-
+            case 'MoveTo':
                 const beforeColumn = this.splitTable.getColumn(subAction)
                 this.splitTable.columnEdit.moveBefore(column, beforeColumn)
                 break;

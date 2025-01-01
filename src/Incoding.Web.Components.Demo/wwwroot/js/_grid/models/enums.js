@@ -19,7 +19,7 @@ const GridMode = {
     Stacked: 'Stacked'
 };
 
-const ColumnSortOrder = {
+const SortOrder = {
     Asc: 'Asc',
     Desc: 'Desc'
 };

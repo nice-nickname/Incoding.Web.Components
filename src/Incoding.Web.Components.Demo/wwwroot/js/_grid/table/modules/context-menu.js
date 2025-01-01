@@ -111,11 +111,11 @@ class ContextMenu {
                 break;
 
             case 'SortAsc':
-                splitTable.sort.sortColumn(column, ColumnSortOrder.Asc)
+                splitTable.sort.sortColumn(column, SortOrder.Asc)
                 break;
 
             case 'SortDesc':
-                splitTable.sort.sortColumn(column, ColumnSortOrder.Desc)
+                splitTable.sort.sortColumn(column, SortOrder.Desc)
                 break;
 
             default:

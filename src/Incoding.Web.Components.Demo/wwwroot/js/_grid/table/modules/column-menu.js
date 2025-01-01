@@ -6,7 +6,7 @@ class ColumnMenu {
      */
     splitTable
 
-    
+
     /**
      * @type { Menu | null }
      */
@@ -219,10 +219,10 @@ class ColumnMenu {
 
         switch (action) {
             case 'SortAsc':
-                this.splitTable.sort.sortColumn(column, ColumnSortOrder.Asc)
+                this.splitTable.sort.sortColumn(column, SortOrder.Asc)
                 break;
             case 'SortDesc':
-                this.splitTable.sort.sortColumn(column, ColumnSortOrder.Desc)
+                this.splitTable.sort.sortColumn(column, SortOrder.Desc)
                 break;
             case 'Filter':
                 // this.splitTable.filter.createMenu(column, this.#position.top, this.#position.left)

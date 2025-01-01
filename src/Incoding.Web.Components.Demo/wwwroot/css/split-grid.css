@@ -181,6 +181,10 @@
     left: 4px;
 }
 
+.split-table thead th.sortable {
+    cursor: pointer;
+}
+
 .split-table thead th.sorted [role=sort] {
     display: inline-block;
 }

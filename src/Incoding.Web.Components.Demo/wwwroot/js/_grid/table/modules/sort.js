@@ -25,7 +25,7 @@ class Sort {
 
     /**
      * @param { ColumnModel } column
-     * @param { ColumnSortOrder } order
+     * @param { SortOrder } order
      */
     sortColumn(column, order) {
         if (this.isSorted()) {
@@ -48,7 +48,7 @@ class Sort {
         th.classList.remove(classes.sorted, classes.sortedAsc, classes.sortedDesc)
 
         if (isSorted) {
-            const sortClass = column.sortedBy === ColumnSortOrder.Asc
+            const sortClass = column.sortedBy === SortOrder.Asc
                 ? classes.sortedDesc
                 : classes.sortedAsc
 
@@ -79,9 +79,9 @@ class Sort {
         let direction = column.sortedBy
 
         if (direction) {
-            direction = direction === ColumnSortOrder.Asc ? ColumnSortOrder.Desc : ColumnSortOrder.Asc
+            direction = direction === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc
         } else {
-            direction = ColumnSortOrder.Asc
+            direction = SortOrder.Asc
         }
 
         this.sortColumn(column, direction)
@@ -97,11 +97,11 @@ class Sort {
             const l = this.sortedColumn.getValue(left)
             const r = this.sortedColumn.getValue(right)
 
-            if (l == null) return order === ColumnSortOrder.Asc ? -1 : 1;
-            if (r == null) return order === ColumnSortOrder.Desc ? 1 : -1;
+            if (l == null) return order === SortOrder.Asc ? -1 : 1;
+            if (r == null) return order === SortOrder.Desc ? 1 : -1;
             if (l === r) return 0;
 
-            return order === ColumnSortOrder.Asc
+            return order === SortOrder.Asc
                 ? cmp(l, r)
                 : -cmp(l, r)
         })

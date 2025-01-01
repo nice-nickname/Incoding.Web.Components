@@ -84,7 +84,7 @@ class ColumnModel {
     alignment
 
     /**
-     * @type { ColumnSortOrder | null }
+     * @type { SortOrder | null }
      */
     sortedBy
 
@@ -198,13 +198,13 @@ class ColumnModel {
         this.attrs = column.attrs
         this.css = column.css
 
-        this.executable = TemplateHelper.decodeTempalte(column.executable)
-        if (this.executable) {
+        if (column.executable) {
+            this.executable = TemplateHelper.decodeTempalte(column.executable)
             this.#executableTmpl = ExecutableInsert.Template.compile(this.executable)
         }
 
-        this.content = TemplateHelper.decodeTempalte(column.content)
-        if (this.content) {
+        if (column.content) {
+            this.content = TemplateHelper.decodeTempalte(column.content)
             this.#contentTmpl = ExecutableInsert.Template.compile(this.content)
         }
 

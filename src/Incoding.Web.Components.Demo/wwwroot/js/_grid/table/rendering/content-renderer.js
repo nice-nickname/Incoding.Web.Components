@@ -100,21 +100,4 @@ class TableContentRenderer extends TablePanelRendererBase {
         }
     }
 
-
-    /**
-     * @param { TablePanelModel } panelModel
-     * @param { number } rowIndex
-     */
-    #renderRow(panelModel, rowIndex) {
-
-        return rowRenderer.render(panelModel.row, panelModel.getFlatColumns(), rowIndex)
-    }
-
-    /**
-     * @param { TablePanelModel } panelModel
-     */
-    #renderLoadingRow(panelModel) {
-
-    }
-
 }

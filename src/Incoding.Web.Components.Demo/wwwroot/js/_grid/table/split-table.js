@@ -63,6 +63,11 @@ class SplitTable {
      */
     #abort
 
+    /**
+     * @type { { [rowId: string]: SplitTable } }
+     */
+    #nested = { }
+
     constructor(dataSource, schemaModel, panels, mode, services) {
         this.id = createGuid()
 
@@ -127,7 +132,6 @@ class SplitTable {
         this.contentRenderer.destroy()
     }
 
-
     clearData() {
         this.contentRenderer.showNoRows()
         this.contentRenderer.removeRows()
@@ -165,14 +169,15 @@ class SplitTable {
 
 
     renderNested(rowIndex) {
-        const data = this.dataSource.getData()[rowIndex]
+        const rowData = this.dataSource.getData()[rowIndex]
+        const rowId = rowData["RowId"]
 
         const tds = []
 
-        this.schemaModel.forEach((panelModel, i) => {
-            const tbody = this.contentRenderer.tbodies[i]
+        const trs = this.getTrs(rowIndex)
 
-            const tr = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
+        this.schemaModel.forEach((panelModel, i) => {
+            const tr = trs[i]
 
             const nestedTr = document.createElement('tr')
 
@@ -191,17 +196,28 @@ class SplitTable {
         const nestedField = this.getNestedField()
 
         const nestedData = this.rowGroup.isGrouped()
-            ? data[RowGroup.GROUP_FIELD] 
-            : data[nestedField]
+            ? rowData[RowGroup.GROUP_FIELD]
+            : rowData[nestedField]
 
         const nestedDataSource = new DataSource(nestedData)
         const nestedSchema = this.schemaModel.map(s => s.nested)
 
         const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
         nested.render()
+
+        if (this.isStackedMode() && this.sort.isSorted()) {
+            const sortedColumn = this.sort.sortedColumn
+
+            nested.sort.sortColumn(sortedColumn, sortedColumn.sortedBy)
+        }
+
+        this.#nested[rowId] = nested
     }
 
     removeNested(rowIndex) {
+        const rowData = this.dataSource.getData()[rowIndex]
+        const rowId = rowData["RowId"]
+
         this.contentRenderer.tbodies.forEach((tbody) => {
             const tr = tbody.querySelector(`[data-row-index="${rowIndex}"]`)
 
@@ -211,12 +227,11 @@ class SplitTable {
                 nextTr.remove()
             }
         })
+
+        this.#nested[rowId].destroy()
     }
 
 
-    /**
-     * @param { string } uid
-     */
     getHeaderCell(uid) {
         for (const thead of this.headerRenderer.theads) {
             const th = thead.querySelector(`th[data-uid="${uid}"]`)
@@ -312,5 +327,4 @@ class SplitTable {
             return tableContainer
         })
     }
-
 }

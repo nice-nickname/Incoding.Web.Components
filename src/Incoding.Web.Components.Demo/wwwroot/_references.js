@@ -46,17 +46,17 @@
 /// <reference path="js/_grid/table/cell/dummy-cell-renderer.js" />
 
 
-/// <reference path="js/_grid/table/actions/column-edit.js" />
-/// <reference path="js/_grid/table/actions/column-resize.js" />
-/// <reference path="js/_grid/table/actions/column-menu.js" />
-/// <reference path="js/_grid/table/actions/context-menu.js" />
-/// <reference path="js/_grid/table/actions/filter.js" />
-/// <reference path="js/_grid/table/actions/row-dropdown.js" />
-/// <reference path="js/_grid/table/actions/row-expand.js" />
-/// <reference path="js/_grid/table/actions/row-group.js" />
-/// <reference path="js/_grid/table/actions/row-hover.js" />
-/// <reference path="js/_grid/table/actions/sort.js" />
-
+/// <reference path="js/_grid/table/modules/column-edit.js" />
+/// <reference path="js/_grid/table/modules/column-resize.js" />
+/// <reference path="js/_grid/table/modules/column-menu.js" />
+/// <reference path="js/_grid/table/modules/context-menu.js" />
+/// <reference path="js/_grid/table/modules/filter.js" />
+/// <reference path="js/_grid/table/modules/row-dropdown.js" />
+/// <reference path="js/_grid/table/modules/row-expand.js" />
+/// <reference path="js/_grid/table/modules/row-group.js" />
+/// <reference path="js/_grid/table/modules/row-hover.js" />
+/// <reference path="js/_grid/table/modules/sort.js" />
+    
 
 /// <reference path="js/_grid/const/classes.js" />
 /// <reference path="js/_grid/const/events.js" />

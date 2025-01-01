@@ -26,8 +26,9 @@ class RowRenderer {
 
         const data = this.splitTable.dataSource.getData()
         const rowData = data[rowIndex]
+        const rowId = rowData["RowId"]
 
-        const tr = this.#createRow(panelModel.row, rowIndex)
+        const tr = this.#createRow(panelModel.row, rowIndex, rowId)
 
         const dummyRenderer = new DummyCellRenderer()
         const cellRenderer = this.splitTable.rowGroup.isGrouped()
@@ -68,10 +69,11 @@ class RowRenderer {
     /**
      * @param { RowModel } row
      */
-    #createRow(row, rowIndex) {
+    #createRow(row, rowIndex, rowId) {
         const tr = document.createElement("tr")
         tr.role = roles.row
         tr.dataset.rowIndex = rowIndex
+        tr.dataset.rowId = rowId
 
         return tr
     }

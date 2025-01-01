@@ -73,7 +73,7 @@ interface IColumn {
 
     alignment: ColumnAsignment
 
-    sortedBy: ColumnSortOrder | null
+    sortedBy: SortOrder | null
 
     totalable: boolean
 
@@ -138,7 +138,7 @@ declare enum GridMode {
 
 }
 
-declare enum ColumnSortOrder {
+declare enum SortOrder {
 
     Asc,
 

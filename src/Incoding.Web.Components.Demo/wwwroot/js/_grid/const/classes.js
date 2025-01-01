@@ -13,6 +13,8 @@ const classes = {
     loadingPlaceholder: 'table-placeholder',
 
 
+    sortable: 'sortable',
+
     sorted: 'sorted',
 
     sortedAsc: 'sorted-asc',

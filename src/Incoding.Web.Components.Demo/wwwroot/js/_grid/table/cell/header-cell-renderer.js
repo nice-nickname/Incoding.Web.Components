@@ -40,6 +40,8 @@ class HeaderCellComponent {
         }
 
         if (column.sortable) {
+            this.element.classList.add(classes.sortable)
+
             const sortButton = document.createElement('div')
             sortButton.role = roles.sort
 

@@ -20,7 +20,7 @@ class FilterMenu {
     /**
      * @type { HTMLElement }
      */
-    #applyBtn
+    #applyButton
 
     /**
      * @type { HTMLInputElement }
@@ -44,17 +44,21 @@ class FilterMenu {
         this.#data = data
     }
 
-    render(top, left) {
+
+    /**
+     * @param { IPosition } position
+     */
+    render(position) {
         const menu = this.#createMenu()
 
-        this.#applyBtn = menu.getElementByQuery('[data-action=Apply] > a')
+        this.#applyButton = menu.getElementByQuery('[data-action=Apply] > a')
         this.#checkboxMenu = menu.getElementByQuery('.checkbox-menu')
         this.#selectAllCheckBox = menu.getElementByQuery('[role="select-all"]')
         this.#searchInput = menu.getElementByQuery('[role="search"]')
 
         this.#addEventListeners()
 
-        menu.show(top, left)
+        menu.show(position.top, position.left)
 
         this.#updateApplyButton()
         this.#updateSelectAll()
@@ -144,7 +148,7 @@ class FilterMenu {
     }
 
     #updateApplyButton() {
-        const button = this.#applyBtn
+        const button = this.#applyButton
 
         if (this.#data.some(s => s.selected)) {
             button.removeAttribute('disabled')

@@ -2,9 +2,20 @@
 class Menu {
 
     /**
+     * @type { string }
+     */
+    #id
+
+    /**
      * @type { HTMLElement }
      */
     #element
+
+    /**
+     * @type { IPosition }
+     */
+    #position
+
 
     /**
      * @type { MenuItem[] }
@@ -32,11 +43,6 @@ class Menu {
     #clickableInside
 
     /**
-     * @type { string }
-     */
-    #id
-
-    /**
      * @param { MenuOptions } options
      */
     constructor(options) {
@@ -58,6 +64,14 @@ class Menu {
         return this.#element.querySelector(selector)
     }
 
+    get position() {
+        return this.#position
+    }
+
+    /**
+     * @param { number } top
+     * @param { number } left
+     */
     show(top, left) {
         this.#onMenuOpen()
 
@@ -65,10 +79,10 @@ class Menu {
         this.#element.style.visibility = 'hidden'
         this.#element.classList.add(classes.dropdownShow)
 
-        const position = this.#calculatePosition(top, left)
+        this.#position = this.#calculateViewportPosition(top, left)
 
-        this.#element.style.top = position.top + 'px'
-        this.#element.style.left = position.left + 'px'
+        this.#element.style.top = this.#position.top + 'px'
+        this.#element.style.left = this.#position.left + 'px'
         this.#element.style.visibility = 'visible'
     }
 
@@ -87,11 +101,7 @@ class Menu {
         this.#element.remove()
     }
 
-    /**
-     * @param { number } top
-     * @param { number } left
-     */
-    #calculatePosition(top, left) {
+    #calculateViewportPosition(top, left) {
         const {
             width: menuWidth,
             height: menuHeight

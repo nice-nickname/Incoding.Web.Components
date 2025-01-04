@@ -23,11 +23,6 @@ class ColumnMenu {
     #targetPanel = null
 
     /**
-     * @type { { top: number, left: number } }
-     */
-    #position = { }
-
-    /**
      * @type { boolean }
      */
     #isOpen = false
@@ -58,7 +53,6 @@ class ColumnMenu {
 
         this.#targetColumn = column
         this.#targetPanel = panelModel
-        this.#position = { top, left }
         this.#isOpen = true
 
         this.#menu.show(top, left)
@@ -134,12 +128,11 @@ class ColumnMenu {
         }
 
         if (column.resizable) {
-            items.push(...[
+            items.push(
                 { icon: 'ci-fit', text: 'Auto fit', action: 'AutoFit' },
-                { icon: 'ci-fit', text: 'Auto fit All', action: 'AutoFitAll' }
-            ]);
-
-            items.push({ isDivider: true });
+                { icon: 'ci-fit', text: 'Auto fit All', action: 'AutoFitAll' },
+                { isDivider: true }
+            );
         }
 
         if (column.allowEdit) {
@@ -184,8 +177,8 @@ class ColumnMenu {
                     { icon: 'ci-unpin', text: 'Unpin all', action: 'UnpinAll' }
                 ]
                 : [
-                    { icon: 'ci-pin',text: 'Pin', action: 'Pin', isDisabled: column.hasStackedParent() },
-                    { icon: 'ci-pin-before',text: 'Pin to this', action: 'PinToThis', isDisabled: column.hasStackedParent() }
+                    { icon: 'ci-pin', text: 'Pin', action: 'Pin' },
+                    { icon: 'ci-pin-before', text: 'Pin to this', action: 'PinToThis' }
                 ]);
         }
 
@@ -227,7 +220,7 @@ class ColumnMenu {
                 this.splitTable.sort.sortColumn(column, SortOrder.Desc)
                 break;
             case 'Filter':
-                this.splitTable.filter.showFilterMenu(column, this.#position.top, this.#position.left)
+                this.splitTable.filter.showFilterMenu(column, this.#menu.position)
                 break
             case 'Pin':
                 this.splitTable.columnEdit.pin(column)

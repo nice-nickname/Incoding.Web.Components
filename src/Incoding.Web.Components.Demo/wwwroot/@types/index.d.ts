@@ -200,15 +200,6 @@ declare enum ControlColumn {
 
 //#endregion
 
-interface RenderingBehaviour {
-
-    reset(): void
-
-    handleDataChanged(): void
-
-}
-
-
 //#region menu
 
 interface MenuOptions {
@@ -238,7 +229,6 @@ interface MenuItem {
 
 //#endregion
 
-
 //#region filter
 
 interface FilterItem {
@@ -246,6 +236,15 @@ interface FilterItem {
     text: string
     selected: boolean
     visible: boolean
+}
+
+//#endregion
+
+//#region mics
+
+interface IPosition {
+    top: number,
+    left: number
 }
 
 //#endregion

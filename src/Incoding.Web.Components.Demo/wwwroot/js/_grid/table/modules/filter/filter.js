@@ -45,9 +45,9 @@ class Filter {
         this.splitTable.refreshRows()
     }
 
-    showFilterMenu(column, top, left) {
+    showFilterMenu(column, position) {
         new FilterMenu(this.splitTable, column, this.getFilterData(column))
-            .render(top, left)
+            .render(position)
     }
 
     destroy() {

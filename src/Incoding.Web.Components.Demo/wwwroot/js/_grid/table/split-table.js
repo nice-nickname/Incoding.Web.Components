@@ -258,6 +258,18 @@ class SplitTable {
         return trs
     }
 
+    getHeaderTable(panelIndex) {
+        return this.headerRenderer.tables[panelIndex]
+    }
+
+    getBodyTable(panelIndex) {
+        return this.contentRenderer.tables[panelIndex]
+    }
+
+    getFooterTable(panelIndex) {
+        return this.footerRenderer.tables[panelIndex]
+    }
+
     getPanelModelByColumn(column) {
         for (const panelModel of this.schemaModel) {
             if (panelModel.getColumn(column.uid)) {

@@ -42,4 +42,20 @@ class ColgroupRenderer {
 
         return colgroup
     }
+
+    updateColumn(panelIndex, column) {
+        const tables = [
+            this.parent.headerRenderer.tables[panelIndex],
+            this.parent.contentRenderer.tables[panelIndex],
+            this.parent.footerRenderer.tables[panelIndex]
+        ]
+
+        tables.forEach(table => {
+            const colgroup = table.querySelector('colgroup')
+
+            const col = colgroup.querySelector(`col[data-uid="${column.uid}"]`)
+
+            col.style.width = column.width + 'px'
+        })
+    }
 }

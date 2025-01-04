@@ -215,6 +215,8 @@ class ColumnMenu {
     #onMenuClick = (action, subAction) => {
         const column = this.#targetColumn
         const panel = this.#targetPanel
+        const panelIndex = this.splitTable.schemaModel.indexOf(panel)
+
         // const cell = this.table.getColumnHeader(column)
 
         switch (action) {
@@ -240,10 +242,10 @@ class ColumnMenu {
                 this.splitTable.columnEdit.unpinAll()
                 break;
             case 'AutoFit':
-                this.splitTable.columnResize.autoFit(column)
+                this.splitTable.columnResize.autoFit(panelIndex, column)
                 break;
             case 'AutoFitAll':
-                this.splitTable.columnResize.autoFitAll(panel)
+                this.splitTable.columnResize.autoFitAll(panelIndex)
                 break;
             case 'Rename':
                 // $(cell).popupInput({ placeholder: column.title, value: column.title })

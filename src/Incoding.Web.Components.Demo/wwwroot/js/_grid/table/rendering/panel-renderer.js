@@ -47,4 +47,15 @@ class TablePanelRendererBase {
         }
     }
 
+    querySelectorAll(query) {
+        const result = []
+
+        for (const table of this.tables) {
+            const elements = table.querySelectorAll(query)
+            result.push(...elements)
+        }
+
+        return result
+    }
+
 }

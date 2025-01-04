@@ -29,6 +29,7 @@
 
 /// <reference path="js/_grid/models/column.js" />
 /// <reference path="js/_grid/models/row.js" />
+/// <reference path="js/_grid/models/row.js" />
 /// <reference path="js/_grid/models/enums.js" />
 /// <reference path="js/_grid/models/table-panel.js" />
 
@@ -47,7 +48,8 @@
 
 
 /// <reference path="js/_grid/table/modules/column-edit.js" />
-/// <reference path="js/_grid/table/modules/column-resize.js" />
+/// <reference path="js/_grid/table/modules/column-resize/column-resize.js" />
+/// <reference path="js/_grid/table/modules/column-resize/column-resize-handler.js" />
 /// <reference path="js/_grid/table/modules/column-menu.js" />
 /// <reference path="js/_grid/table/modules/context-menu.js" />
 /// <reference path="js/_grid/table/modules/filter/filter.js" />

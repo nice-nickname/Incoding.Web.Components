@@ -97,6 +97,7 @@ class SplitTable {
         this.columnMenu = new ColumnMenu(this);
         this.rowGroup = new RowGroup(this);
         this.sort = new Sort(this);
+        this.filter = new Filter(this);
         this.rowDropdown = new RowDropdown(this);
         this.rowExpand = new RowExpand(this);
         this.contextMenu = new ContextMenu(this);
@@ -121,6 +122,7 @@ class SplitTable {
         this.contextMenu.destroy()
         this.rowExpand.destroy()
         this.rowDropdown.destroy()
+        this.filter.destroy()
         this.sort.destroy()
         this.columnMenu.destroy()
         this.rowGroup.destroy()

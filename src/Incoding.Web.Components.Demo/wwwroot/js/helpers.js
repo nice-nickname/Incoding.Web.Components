@@ -1,4 +1,26 @@
 
+Array.prototype.remove = function(item) {
+    const index = this.indexOf(item)
+
+    if (index >= 0) {
+        this.splice(index, 1)
+    }
+
+    return this;
+}
+
+Array.prototype.removeBy = function(predicate) {
+    const index = this.findIndex(predicate)
+
+    if (index >= 0) {
+        this.splice(index, 1)
+    }
+
+    return this;
+}
+
+
+
 class TemplateHelper {
 
     static decodeTempalte(tmpl) {
@@ -13,6 +35,11 @@ class TemplateHelper {
         IncodingEngine.Current.parse(element)
 
         return element
+    }
+
+    static renderToHtml(tmpl, data) {
+        const compiledTmpl = ExecutableInsert.Template.compile(tmpl)
+        return ExecutableInsert.Template.render(compiledTmpl, data)
     }
 
 };

@@ -225,7 +225,7 @@ class ColumnMenu {
                 this.splitTable.sort.sortColumn(column, SortOrder.Desc)
                 break;
             case 'Filter':
-                // this.splitTable.filter.createMenu(column, this.#position.top, this.#position.left)
+                this.splitTable.filter.showFilterMenu(column, this.#position.top, this.#position.left)
                 break
             case 'Pin':
                 this.splitTable.columnEdit.pin(column)

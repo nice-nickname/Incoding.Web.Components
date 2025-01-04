@@ -1,4 +1,12 @@
 
+declare interface Array<T> {
+
+    remove(item: T): T[]
+
+    removeBy(predicate: (value: T, index: number, obj: T[]) => boolean): T[]
+
+}
+
 interface ISplitPanel {
 
     minWidth: string | null,

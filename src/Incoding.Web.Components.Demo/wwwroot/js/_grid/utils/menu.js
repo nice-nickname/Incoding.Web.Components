@@ -153,27 +153,35 @@ class Menu {
      */
     #createMenuItem(item) {
         const li = document.createElement('li')
+        li.classList.add(classes.dropdownItem)
+
         if (item.isDisabled) {
             li.setAttribute('disabled', '')
         }
 
+        if (item.isDivider) {
+            li.classList.add(classes.dropdownDivider)
+        }
+
         if (item.template) {
             li.innerHTML = item.template
-        } else if (item.isDivider) {
-            li.innerHTML = `<hr class="${classes.dropdownDivider}">`
-        } else {
+        }
+
+        if (item.text) {
             const a = document.createElement('a')
-            a.classList.add(classes.dropdownItem)
             a.href = 'javascript:void(0)'
 
             if (item.icon) {
                 const icon = document.createElement('i')
-                icon.classList.add(classes.baseIcon, item.icon)
+                icon.classList.add(classes.baseIconSize, classes.baseIcon, item.icon)
                 a.appendChild(icon)
             }
 
-            a.append(item.text)
+            const span = document.createElement('span')
+            span.classList.add('ci-width-full')
+            span.innerText = item.text
 
+            a.appendChild(span)
             li.appendChild(a)
         }
 
@@ -182,7 +190,14 @@ class Menu {
 
         if (item.sideMenu) {
             const sideMenu = this.#createMenuElement(item.sideMenu)
+            sideMenu.classList.add('overflow-y-auto')
+
+            const pointer = document.createElement('span')
+            pointer.classList.add('pointer-right')
+            pointer.innerHTML = '»'
+
             li.classList.add(classes.dropdownSideMenu)
+            li.querySelector('a').append(pointer)
             li.append(sideMenu)
         }
 

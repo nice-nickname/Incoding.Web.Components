@@ -50,13 +50,13 @@
 /// <reference path="js/_grid/table/modules/column-resize.js" />
 /// <reference path="js/_grid/table/modules/column-menu.js" />
 /// <reference path="js/_grid/table/modules/context-menu.js" />
-/// <reference path="js/_grid/table/modules/filter.js" />
+/// <reference path="js/_grid/table/modules/filter/filter.js" />
 /// <reference path="js/_grid/table/modules/row-dropdown.js" />
 /// <reference path="js/_grid/table/modules/row-expand.js" />
 /// <reference path="js/_grid/table/modules/row-group.js" />
 /// <reference path="js/_grid/table/modules/row-hover.js" />
 /// <reference path="js/_grid/table/modules/sort.js" />
-    
+
 
 /// <reference path="js/_grid/const/classes.js" />
 /// <reference path="js/_grid/const/events.js" />

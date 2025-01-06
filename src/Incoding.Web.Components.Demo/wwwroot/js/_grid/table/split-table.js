@@ -102,7 +102,6 @@ class SplitTable {
         this.rowExpand = new RowExpand(this);
         this.contextMenu = new ContextMenu(this);
         this.rowHover = new RowHover(this);
-        this.columnEdit = new ColumnEdit(this);
         this.columnResize = new ColumnResize(this);
     }
 
@@ -117,7 +116,6 @@ class SplitTable {
 
     destroy() {
         this.columnResize.destroy()
-        this.columnEdit.destroy()
         this.rowHover.destroy()
         this.contextMenu.destroy()
         this.rowExpand.destroy()
@@ -154,6 +152,7 @@ class SplitTable {
         this.refreshHeader()
         this.refreshFooter()
         this.refreshRows()
+        this.colgroupsRenderer.refresh()
     }
 
     refreshHeader() {
@@ -270,15 +269,6 @@ class SplitTable {
         return this.footerRenderer.tables[panelIndex]
     }
 
-    getPanelModelByColumn(column) {
-        for (const panelModel of this.schemaModel) {
-            if (panelModel.getColumn(column.uid)) {
-                return panelModel
-            }
-        }
-
-        return null
-    }
 
     getAllColumns() {
         return this.schemaModel.flatMap(panel => {
@@ -294,6 +284,11 @@ class SplitTable {
 
     getNestedField() {
         return this.schemaModel[0].nestedField
+    }
+
+
+    getColumnEditModule(panelIndex) {
+        return new ColumnEdit(this, this.schemaModel[panelIndex])
     }
 
 

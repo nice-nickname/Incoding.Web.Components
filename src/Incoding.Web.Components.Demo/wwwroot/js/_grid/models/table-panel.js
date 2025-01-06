@@ -20,11 +20,21 @@ class TablePanelModel {
     /** @type { string } */
     nestedField
 
+
+    /** @type { GridMode } */
+    mode
+
+
+    /** @type { TablePanelEditor } */
+    #editor
+
+
     /**
      * @param { ISplitTable } table
      * @param { ServiceCollection } services
+     * @param { GridMode } mode
      */
-    constructor(table, services) {
+    constructor(table, services, mode = GridMode.SubGrid) {
         const formatter = services.get(FormatService.NAME)
 
         this.id = table.id
@@ -32,10 +42,14 @@ class TablePanelModel {
         this.row = new RowModel(table.row)
         this.css = table.css
 
+        this.mode = mode
+
         if (table.nested) {
             this.nested = new TablePanelModel(table.nested, services)
             this.nestedField = table.nestedField
         }
+
+        this.#editor = new TablePanelEditor(this)
     }
 
     getFlatColumns() {
@@ -50,6 +64,10 @@ class TablePanelModel {
         }
 
         return columns
+    }
+
+    getControlColumns() {
+        return this.columns.filter(column => column.isControlColumn());
     }
 
     /**
@@ -78,6 +96,17 @@ class TablePanelModel {
         return searchColumn(this.columns)
     }
 
+    /**
+     * @param { (editor: TablePanelEditor) => void } callback
+     */
+    edit(callback) {
+        callback(this.#editor)
+
+        if (this.mode === GridMode.Stacked && this.nested) {
+            this.nested.edit(callback)
+        }
+    }
+
     clone(services) {
         const table = new TablePanelModel(
             {
@@ -86,7 +115,7 @@ class TablePanelModel {
                 row: { },
                 columns: [],
             },
-            services)
+            services, this.mode)
 
         table.row = this.row.clone()
         table.columns = this.columns.map(column => column.clone())

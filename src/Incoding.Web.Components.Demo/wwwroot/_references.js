@@ -32,6 +32,7 @@
 /// <reference path="js/_grid/models/row.js" />
 /// <reference path="js/_grid/models/enums.js" />
 /// <reference path="js/_grid/models/table-panel.js" />
+/// <reference path="js/_grid/models/table-panel-editor.js" />
 
 /// <reference path="js/_grid/table/split-table.js" />
 /// <reference path="js/_grid/table/rendering/header-renderer.js" />

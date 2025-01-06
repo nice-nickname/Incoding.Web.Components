@@ -58,4 +58,19 @@ class ColgroupRenderer {
             col.style.width = column.width + 'px'
         })
     }
+
+
+    refresh() {
+        for (let i = 0; i < this.parent.schemaModel.length; i++) {
+            const headerTable = this.parent.headerRenderer.tables[i],
+                bodyTable = this.parent.contentRenderer.tables[i],
+                footerTable = this.parent.footerRenderer.tables[i];
+
+            const colgroup = this.#createColgroup(i)
+
+            headerTable.lastChild.replaceWith(colgroup)
+            bodyTable.lastChild.replaceWith(colgroup.cloneNode(true))
+            footerTable.lastChild.replaceWith(colgroup.cloneNode(true))
+        }
+    }
 }

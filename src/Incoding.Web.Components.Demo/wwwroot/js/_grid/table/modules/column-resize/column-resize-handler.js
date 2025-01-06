@@ -13,6 +13,8 @@ class ColumnResizeHandler {
 
     #panelIndex
 
+    #panelModel
+
     #rootOffset
 
     #waitNextFrame
@@ -22,6 +24,7 @@ class ColumnResizeHandler {
         this.column = column
 
         this.#panelIndex = panelIndex
+        this.#panelModel = splitTable.schemaModel[panelIndex]
         this.#rootOffset = target.getBoundingClientRect().left
     }
 
@@ -42,9 +45,9 @@ class ColumnResizeHandler {
         const width = Math.round(ev.clientX - this.#rootOffset)
 
         if (width >= this.column.minWidth) {
-            this.column.width = width
-
             this.#waitNextFrame = requestAnimationFrame(() => {
+                this.#panelModel.edit(editor => editor.resize(this.column.uid, width))
+
                 this.splitTable.colgroupsRenderer.updateColumn(this.#panelIndex, this.column)
                 this.#waitNextFrame = null
             })

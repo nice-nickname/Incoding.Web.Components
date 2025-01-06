@@ -210,6 +210,8 @@ class ColumnMenu {
         const panel = this.#targetPanel
         const panelIndex = this.splitTable.schemaModel.indexOf(panel)
 
+        const columnEdit = this.splitTable.getColumnEditModule(panelIndex)
+
         // const cell = this.table.getColumnHeader(column)
 
         switch (action) {
@@ -223,16 +225,16 @@ class ColumnMenu {
                 this.splitTable.filter.showFilterMenu(column, this.#menu.position)
                 break
             case 'Pin':
-                this.splitTable.columnEdit.pin(column)
+                columnEdit.pin(column)
                 break;
             case 'PinToThis':
-                this.splitTable.columnEdit.pinUntil(column)
+                columnEdit.pinUntil(column)
                 break;
             case 'Unpin':
-                this.splitTable.columnEdit.unpin(column)
+                columnEdit.unpin(column)
                 break;
             case 'UnpinAll':
-                this.splitTable.columnEdit.unpinAll()
+                columnEdit.unpinAll()
                 break;
             case 'AutoFit':
                 this.splitTable.columnResize.autoFit(panelIndex, column)
@@ -254,16 +256,16 @@ class ColumnMenu {
                 this.splitTable.rowGroup.ungroup()
                 break;
             case 'MoveStart':
-                this.splitTable.columnEdit.moveToStart(column)
+                columnEdit.moveToStart(column)
                 break;
             case 'MoveEnd':
-                this.splitTable.columnEdit.moveToEnd(column)
+                columnEdit.moveToEnd(column)
+                break;
             case 'MoveTo':
-                const beforeColumn = this.splitTable.getColumn(subAction)
-                this.splitTable.columnEdit.moveBefore(column, beforeColumn)
+                columnEdit.moveBefore(column, subAction)
                 break;
             case 'Remove':
-                this.splitTable.columnEdit.remove(column)
+                columnEdit.remove(column)
                 break;
             default:
                 break;

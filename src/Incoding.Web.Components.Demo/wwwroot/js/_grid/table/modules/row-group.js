@@ -30,12 +30,13 @@ class RowGroup {
      */
     groupBy(groupColumn) {
         const newData = this.#getGroupedData(groupColumn.getField())
-        const newSchema = this.#getGroupedSchema()
+        const newSchema = this.#getGroupedSchema(groupColumn)
+
+        this.groupedColumn = groupColumn
+
 
         this.splitTable.dataSource.setData(newData)
         this.splitTable.schemaModel = newSchema
-
-        this.groupedColumn = groupColumn
 
         this.splitTable.refresh()
     }
@@ -74,17 +75,20 @@ class RowGroup {
         return data.flatMap(item => item[RowGroup.GROUP_FIELD])
     }
 
-    #getGroupedSchema() {
+    #getGroupedSchema(groupColumn) {
         let schemas = this.splitTable.schemaModel
         if (this.isGrouped()) {
             schemas = this.#getUngroupedSchema()
         }
-
         const newSchema = schemas.map(panel => panel.clone(this.splitTable.services))
 
         for (let i = 0; i < newSchema.length; i++) {
             const newPanel = newSchema[i]
             const oldPanel = schemas[i]
+
+            if (oldPanel.columns.indexOf(groupColumn) !== -1) {
+                newPanel.edit(edit => edit.moveColumn(groupColumn.uid, 0))
+            }
 
             newPanel.nestedField = RowGroup.GROUP_FIELD
             newPanel.nested = oldPanel

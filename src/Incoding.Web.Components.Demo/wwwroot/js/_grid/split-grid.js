@@ -70,7 +70,7 @@ class SplitGrid {
 
         this.dataSource = new DataSource([])
 
-        this.schemaModel = options.tables.map(table => new TablePanelModel(table, this.services))
+        this.schemaModel = options.tables.map(table => new TablePanelModel(table, this.services, this.mode))
 
         this.#createElements(options)
 

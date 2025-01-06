@@ -142,6 +142,7 @@ public class TableBuilder<T>
             foreach (var (oColumn, nColumn) in original.Zip(nested))
             {
                 oColumn.Uid = nColumn.Uid;
+                oColumn.ParentUid = nColumn.ParentUid;
                 if (oColumn.Stacked != null && oColumn.Stacked.Count != 0)
                 {
                     CopyUids(oColumn.Stacked, nColumn.Stacked);

@@ -38,13 +38,15 @@ class TableFooterRenderer extends TablePanelRendererBase {
 
         column.forEach((column) => {
             const td = document.createElement('td')
+            td.style.textAlign = column.alignment;
+
             const span = document.createElement('span')
 
             if (column.totalable) {
                 const totalValue = this.#calculateTotal(column)
                 column.formatElement(totalValue, span)
             } else {
-              span.innerHTML = '&nbsp;'
+                span.innerHTML = '&nbsp;'
             }
 
             td.append(span)

@@ -68,9 +68,9 @@ class ColgroupRenderer {
 
             const colgroup = this.#createColgroup(i)
 
-            headerTable.lastChild.replaceWith(colgroup)
-            bodyTable.lastChild.replaceWith(colgroup.cloneNode(true))
-            footerTable.lastChild.replaceWith(colgroup.cloneNode(true))
+            headerTable.querySelector('colgroup').replaceWith(colgroup)
+            bodyTable.querySelector('colgroup').replaceWith(colgroup.cloneNode(true))
+            footerTable.querySelector('colgroup').replaceWith(colgroup.cloneNode(true))
         }
     }
 }

@@ -20,6 +20,11 @@ class TablePanelModel {
     /** @type { string } */
     nestedField
 
+    /**
+     * @type { ISplitTableSummary? }
+     */
+    summary
+
 
     /** @type { GridMode } */
     mode
@@ -43,6 +48,8 @@ class TablePanelModel {
         this.css = table.css
 
         this.mode = mode
+
+        this.summary = table.summary
 
         if (table.nested) {
             this.nested = new TablePanelModel(table.nested, services)

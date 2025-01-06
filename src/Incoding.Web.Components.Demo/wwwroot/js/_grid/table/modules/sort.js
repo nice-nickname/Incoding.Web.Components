@@ -63,12 +63,14 @@ class Sort {
      */
     #handleHeaderClick = (ev, panelModel) => {
         const { target } = ev
+        const th = target.closest('th')
 
-        if (target.role === roles.sort || target.tagName === 'TH') {
-            const th = target.closest('th')
+        if (target.role === roles.sort || th !== null) {
             const column = panelModel.getColumn(th.dataset.uid)
 
-            this.#invokeSort(column)
+            if (column.sortable) {
+                this.#invokeSort(column)
+            }
         }
     }
 

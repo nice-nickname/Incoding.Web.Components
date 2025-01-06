@@ -1,5 +1,4 @@
 ﻿
-
 class SplitGrid {
 
     static NAME = 'split-grid'

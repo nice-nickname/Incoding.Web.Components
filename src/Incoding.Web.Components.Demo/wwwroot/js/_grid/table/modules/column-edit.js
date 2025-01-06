@@ -29,7 +29,7 @@ class ColumnEdit {
             editor.resize(column.uid, width)
         })
 
-        this.splitTable.refreshHeader()
+        this.splitTable.refresh()
     }
 
     remove(column) {

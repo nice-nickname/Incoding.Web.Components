@@ -39,6 +39,7 @@
 /// <reference path="js/_grid/table/rendering/content-renderer.js" />
 /// <reference path="js/_grid/table/rendering/footer-renderer.js" />
 /// <reference path="js/_grid/table/rendering/panel-renderer.js" />
+/// <reference path="js/_grid/table/rendering/summary-renderer.js" />
 /// <reference path="js/_grid/table/rendering/colgroup-renderer.js" />
 /// <reference path="js/_grid/table/rendering/row-renderer.js" />
 

@@ -31,7 +31,7 @@ class TablePanelEditor {
     resize(uid, width) {
         const column = this.panelModel.getColumn(uid);
         column.width = Math.min(
-            Math.max(width, column.width),
+            Math.max(width, column.minWidth),
             ColumnModel.MAX_WIDTH
         );
     }

@@ -92,6 +92,9 @@ class SplitTable {
         this.colgroupsRenderer = new ColgroupRenderer(this)
         this.colgroupsRenderer.render()
 
+        this.summaryRenderer = new SummaryRenderer(this)
+        this.summaryRenderer.render()
+
         this.#abort = new AbortController()
 
         this.columnMenu = new ColumnMenu(this);
@@ -142,8 +145,10 @@ class SplitTable {
 
         if (this.dataSource.isDataLoading) {
             this.footerRenderer.setLoading()
+            this.summaryRenderer.setLoading()
         } else {
             this.footerRenderer.render()
+            this.summaryRenderer.render()
         }
     }
 
@@ -304,10 +309,10 @@ class SplitTable {
             let selector
             switch (target) {
                 case "body":
-                    selector = 'tbody'
+                    selector = '.split-table-content tbody'
                     break;
                 case "header":
-                    selector = 'thead'
+                    selector = '.split-table-header thead'
                     break
             }
             targetElements.push(panel.querySelector(selector))

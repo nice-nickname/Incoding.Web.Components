@@ -93,7 +93,7 @@ class ColumnMenu {
             const column = panelModel.getColumn(th.dataset.uid)
 
             ev.preventDefault()
-            ev.stopPropagation()
+            ev.stopImmediatePropagation()
 
             if (!column || !column.showMenu)
                 return

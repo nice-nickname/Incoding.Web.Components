@@ -58,6 +58,11 @@ const classes = {
     baseIcon: 'ci-planifi',
 
 
-    nestedTableContainer: 'table-container'
+    nestedTableContainer: 'table-container',
+
+
+    summaryRow: 'summary-row',
+
+    summaryCell: 'sumamry-cell',
 
 }

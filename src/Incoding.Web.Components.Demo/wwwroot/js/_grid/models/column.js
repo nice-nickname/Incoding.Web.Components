@@ -374,7 +374,7 @@ class ColumnModel {
         return column
     }
 
-    static DEFAULT_MIN_WIDTH = 50
+    static DEFAULT_MIN_WIDTH = 70
 
     static MAX_WIDTH = 700
 }

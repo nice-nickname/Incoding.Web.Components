@@ -139,6 +139,16 @@ class SplitGrid {
     }
 
 
+    /**
+     * @param { IRecalculateData[] } data
+     */
+    recalculate(data) {
+        this.splitTable.recalculate(data)
+
+        IncodingEngine.Current.parse(this.rootElement)
+    }
+
+
     #createElements(options) {
         this.rootElement = document.getElementById(this.id)
         this.rootElement.classList.add(classes.splitGrid, classes.loader)

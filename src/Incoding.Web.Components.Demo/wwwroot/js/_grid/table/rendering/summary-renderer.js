@@ -92,7 +92,6 @@ class SummaryRenderer {
     }
 
     /**
-     *
      * @param { ColumnModel } column
      * @param { object[] } data
      */

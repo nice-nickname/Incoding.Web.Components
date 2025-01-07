@@ -152,6 +152,39 @@ class SplitTable {
         }
     }
 
+    /**
+     * @param { IRecalculateData[] } updates
+     */
+    recalculate(updates) {
+        const updateRequest = updates.shift()
+
+        if (updateRequest.WithChildren) {
+            this.refresh()
+        } else {
+            const data = this.dataSource.getData();
+
+            const index = data.findIndex(item => item.RowId === updateRequest.Data.RowId)
+            data[index] = updateRequest.Data
+
+            const trs = this.getTrsByRowId(updateRequest.Data.RowId)
+
+            const rowRenderer = new RowRenderer(this)
+            trs.forEach((tr, i) => {
+                const panel = this.schemaModel[i]
+
+                const newTr = rowRenderer.render(panel, tr.dataset.rowIndex)
+
+                tr.replaceChildren(...newTr.children)
+            })
+        }
+
+
+        if (updates.length !== 0) {
+            this.#nested[updateRequest.Data.RowId]?.recalculate(updates)
+        }
+
+    }
+
 
     refresh() {
         this.refreshHeader()
@@ -256,6 +289,19 @@ class SplitTable {
                     trs.push(tr)
                     break
                 }
+            }
+        }
+
+        return trs
+    }
+
+    getTrsByRowId(rowId) {
+        const trs = []
+        for (const tbody of this.contentRenderer.tbodies) {
+            const tr = tbody.querySelector(`[role="${roles.row}"][data-row-id="${rowId}"]`)
+
+            if (tr) {
+                trs.push(tr)
             }
         }
 

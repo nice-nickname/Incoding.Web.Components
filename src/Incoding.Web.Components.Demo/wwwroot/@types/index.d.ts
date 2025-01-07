@@ -247,4 +247,12 @@ interface IPosition {
     left: number
 }
 
+interface IRecalculateData {
+    Data: {
+        RowId: number,
+        [key: string]: any
+    }
+    WithChildren: boolean,
+}
+
 //#endregion

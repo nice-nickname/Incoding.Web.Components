@@ -208,11 +208,4 @@ class CellRenderer {
         return elements
     }
 
-    static dummy() {
-        const td = document.createElement("td");
-        td.className = 'dummy';
-
-        return td;
-    }
-
 }

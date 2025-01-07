@@ -35,8 +35,6 @@ class RowRenderer {
             tr.append(td)
         }
 
-        tr.append(CellRenderer.dummy())
-
         return tr
     }
 

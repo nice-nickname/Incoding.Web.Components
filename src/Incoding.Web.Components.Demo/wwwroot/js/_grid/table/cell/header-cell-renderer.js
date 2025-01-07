@@ -68,4 +68,12 @@ class HeaderCellComponent {
     destroy() {
         this.element.remove()
     }
+
+    static dummy() {
+        const th = document.createElement("th")
+        th.classList.add('dummy')
+        th.rowSpan = 1000
+
+        return th
+    }
 }

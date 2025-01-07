@@ -70,7 +70,7 @@ class SummaryRenderer {
     #createEmptyCells(panelModel) {
         const td = document.createElement('td')
         td.classList.add(classes.summaryCell)
-        td.colSpan = panelModel.getFlatColumns().length + 1
+        td.colSpan = panelModel.getFlatColumns().length
 
         td.innerHTML = panelModel.summary
             ? panelModel.summary.title

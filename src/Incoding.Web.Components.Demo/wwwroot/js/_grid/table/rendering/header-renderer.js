@@ -38,10 +38,7 @@ class TableHeaderRenderer extends TablePanelRendererBase {
             })
 
             if (i === 0) {
-                const dummy = new DummyCellRenderer('th').render()
-                dummy.rowSpan = 1000
-                
-                tr.append(dummy)
+                tr.append(HeaderCellComponent.dummy())
             }
 
             return tr

@@ -39,22 +39,24 @@ class ColumnResize {
     autoFit(panelIndex, column) {
         const panelModel = this.splitTable.schemaModel[panelIndex]
 
-        const headerCells = this.splitTable.getHeaderTable(panelIndex).querySelectorAll(`th[data-uid="${column.uid}"]`)
-        const contentCells = this.splitTable.getBodyTable(panelIndex).querySelectorAll(`td[data-uid="${column.uid}"]`)
-        const footerCells = this.splitTable.getFooterTable(panelIndex).querySelectorAll(`td[data-uid="${column.uid}"]`)
+        const headerTable = this.splitTable.getHeaderTable(panelIndex)
+        const contentTable = this.splitTable.getContentTable(panelIndex)
 
-        const headerWidth = this.#calculateAutoFitTable(panelModel, headerCells, "thead")
-        const contentWidth = this.#calculateAutoFitTable(panelModel, contentCells, "tbody")
-        const footerWidth = this.#calculateAutoFitTable(panelModel, footerCells, "tfoot")
+        const headerCells = headerTable.querySelectorAll(`th[data-uid="${column.uid}"]`)
+        const contentCells = contentTable.querySelectorAll(`tbody td[data-uid="${column.uid}"]`)
+        const footerCells = contentTable.querySelectorAll(`tfoot td[data-uid="${column.uid}"]`)
+
+        const headerWidth = this.#calculateAutoFitTable(headerTable, headerCells, "thead")
+        const contentWidth = this.#calculateAutoFitTable(contentTable, contentCells, "tbody")
+        const footerWidth = this.#calculateAutoFitTable(contentTable, footerCells, "tfoot")
 
         const newWidth = Math.max(headerWidth, contentWidth, footerWidth)
 
         this.resize(panelIndex, column, newWidth)
     }
 
-    #calculateAutoFitTable(panelModel, cells, tagName) {
-        const autoFitTable = document.createElement("table")
-        autoFitTable.className = `${classes.splitTable} ${panelModel.css}`
+    #calculateAutoFitTable(table, cells, tagName) {
+        const autoFitTable = table.cloneNode()
         autoFitTable.style.cssText = 'table-layout: auto;width: auto;'
 
         const autoFitBody = document.createElement(tagName)

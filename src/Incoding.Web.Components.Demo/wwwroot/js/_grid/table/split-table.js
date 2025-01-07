@@ -87,7 +87,7 @@ class SplitTable {
         this.contentRenderer.showNoRows()
 
         this.footerRenderer = new TableFooterRenderer(this)
-        this.footerRenderer.renderPanels(this.panelElements)
+        this.footerRenderer.render()
 
         this.colgroupsRenderer = new ColgroupRenderer(this)
         this.colgroupsRenderer.render()
@@ -108,6 +108,8 @@ class SplitTable {
         this.contextMenu = new ContextMenu(this);
         this.rowHover = new RowHover(this);
         this.columnResize = new ColumnResize(this);
+
+        this.#connectHorizontalTableBodyScroll()
     }
 
     render() {
@@ -343,12 +345,8 @@ class SplitTable {
         return this.headerRenderer.tables[panelIndex]
     }
 
-    getBodyTable(panelIndex) {
+    getContentTable(panelIndex) {
         return this.contentRenderer.tables[panelIndex]
-    }
-
-    getFooterTable(panelIndex) {
-        return this.footerRenderer.tables[panelIndex]
     }
 
 
@@ -421,5 +419,19 @@ class SplitTable {
             panel.append(tableContainer)
             return tableContainer
         })
+    }
+
+    #connectHorizontalTableBodyScroll() {
+        for (let i = 0; i < this.panelElements.length; i++) {
+            const headerPanel = this.headerRenderer.elements[i]
+            const contentPanel = this.contentRenderer.elements[i]
+
+            const scroll = (left, right) => {
+                right.scrollLeft = left.scrollLeft
+            }
+
+            headerPanel.addEventListener('scroll', (ev) => scroll(headerPanel, contentPanel))
+            contentPanel.addEventListener('scroll', (ev) => scroll(contentPanel, headerPanel))
+        }
     }
 }

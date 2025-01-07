@@ -1,5 +1,10 @@
 ﻿
-class TableFooterRenderer extends TablePanelRendererBase {
+class TableFooterRenderer {
+
+    /**
+     * @type { SplitTable }
+     */
+    parent
 
     /**
      * @type { HTMLElement[] }
@@ -7,15 +12,15 @@ class TableFooterRenderer extends TablePanelRendererBase {
     tfoots
 
     constructor(parent) {
-        super(parent);
-        this.tfoots = []
-    }
+        this.parent = parent
 
-    /**
-     * @param { HTMLElement[] } panelsContainers
-     */
-    renderPanels(panelsContainers) {
-        super.renderPanels(panelsContainers, 'split-table-footer', 'tfoot', 'tfoots');
+        this.tfoots = this.parent.contentRenderer.tables.map(table => {
+            const tfoot = document.createElement("tfoot")
+            tfoot.classList.add('split-table-footer')
+            table.appendChild(tfoot)
+
+            return tfoot
+        })
     }
 
     render() {
@@ -53,13 +58,11 @@ class TableFooterRenderer extends TablePanelRendererBase {
             tr.append(td)
         })
 
-        tr.append(new DummyCellRenderer().render())
-
         tfoot.replaceChildren(tr)
     }
 
     setLoading() {
-        for (const element of this.elements) {
+        for (const element of this.tfoots) {
             element
                 .querySelectorAll('td > span')
                 .forEach((td) => td.classList.add(classes.loadingPlaceholder))
@@ -72,7 +75,7 @@ class TableFooterRenderer extends TablePanelRendererBase {
     #calculateTotal(column) {
         let data = this.parent.dataSource.getData()
 
-        if (this.parent.rowGroup.isGrouped()) {
+        if (this.parent.rowGroup?.isGrouped()) {
             data = data.flatMap(rowData => rowData[RowGroup.GROUP_FIELD])
         }
 

@@ -18,14 +18,12 @@ class ColgroupRenderer {
 
     renderPanel(index) {
         const headerTable = this.parent.headerRenderer.tables[index],
-            bodyTable = this.parent.contentRenderer.tables[index],
-            footerTable = this.parent.footerRenderer.tables[index];
+            contentTable = this.parent.contentRenderer.tables[index];
 
         const colgroup = this.#createColgroup(index)
 
         headerTable.append(colgroup)
-        bodyTable.append(colgroup.cloneNode(true))
-        footerTable.append(colgroup.cloneNode(true))
+        contentTable.append(colgroup.cloneNode(true))
     }
 
     #createColgroup(panelIndex) {
@@ -46,8 +44,7 @@ class ColgroupRenderer {
     updateColumn(panelIndex, column) {
         const tables = [
             this.parent.headerRenderer.tables[panelIndex],
-            this.parent.contentRenderer.tables[panelIndex],
-            this.parent.footerRenderer.tables[panelIndex]
+            this.parent.contentRenderer.tables[panelIndex]
         ]
 
         tables.forEach(table => {
@@ -63,14 +60,12 @@ class ColgroupRenderer {
     refresh() {
         for (let i = 0; i < this.parent.schemaModel.length; i++) {
             const headerTable = this.parent.headerRenderer.tables[i],
-                bodyTable = this.parent.contentRenderer.tables[i],
-                footerTable = this.parent.footerRenderer.tables[i];
+                contentTable = this.parent.contentRenderer.tables[i];
 
             const colgroup = this.#createColgroup(i)
 
             headerTable.querySelector('colgroup').replaceWith(colgroup)
-            bodyTable.querySelector('colgroup').replaceWith(colgroup.cloneNode(true))
-            footerTable.querySelector('colgroup').replaceWith(colgroup.cloneNode(true))
+            contentTable.querySelector('colgroup').replaceWith(colgroup.cloneNode(true))
         }
     }
 }

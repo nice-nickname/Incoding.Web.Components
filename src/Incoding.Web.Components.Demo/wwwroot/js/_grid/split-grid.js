@@ -81,7 +81,6 @@ class SplitGrid {
             : new RenderingStrategy(this.splitTable, this.dataSource)
 
         this.#connectVerticalPanelsScroll()
-        this.#connectHorizontalTableBodyScroll()
 
         this.show()
     }
@@ -185,20 +184,6 @@ class SplitGrid {
 
         for (const panel of scrollablePanels) {
             panel.addEventListener('scroll', handleScroll)
-        }
-    }
-
-    #connectHorizontalTableBodyScroll() {
-        const scrollablePanels = this.splitTable.panelElements
-        const bodyElements = this.splitTable.contentRenderer.elements
-
-        for (let i = 0; i < scrollablePanels.length; i++) {
-            const panel = scrollablePanels[i]
-            const body = bodyElements[i]
-
-            panel.addEventListener('scroll', (ev) => {
-                body.scrollLeft = panel.scrollLeft
-            })
         }
     }
 }

@@ -46,7 +46,6 @@
 /// <reference path="js/_grid/table/cell/cell-renderer.js" />
 /// <reference path="js/_grid/table/cell/group-cell-renderer.js" />
 /// <reference path="js/_grid/table/cell/header-cell-renderer.js" />
-/// <reference path="js/_grid/table/cell/dummy-cell-renderer.js" />
 
 
 /// <reference path="js/_grid/table/modules/column-edit.js" />

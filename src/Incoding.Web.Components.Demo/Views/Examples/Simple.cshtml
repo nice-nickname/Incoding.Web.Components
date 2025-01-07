@@ -8,7 +8,6 @@
                  splitting.Add("regular",
                                table => table.Columns(cols =>
                                                       {
-                                                          Selector.Jquery.EndsWith(HtmlAttribute.Class, "-filter");
                                                           cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable().Totalable();
                                                           cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable().Totalable().Filterable();
                                                           cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %")

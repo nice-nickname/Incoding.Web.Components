@@ -27,9 +27,7 @@ class RowHover {
             this.#setHoverClass(this.#prevRowIndex, false)
         }
 
-        if (rowIndex) {
-            this.#setHoverClass(rowIndex, true)
-        }
+        this.#setHoverClass(rowIndex, true)
 
         this.#prevRowIndex = rowIndex
     }

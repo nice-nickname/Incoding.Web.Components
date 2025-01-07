@@ -374,6 +374,10 @@ class ColumnModel {
         return column
     }
 
+    equals(other) {
+        return this.uid === other.uid
+    }
+
     static DEFAULT_MIN_WIDTH = 70
 
     static MAX_WIDTH = 700

@@ -32,7 +32,6 @@ class TemplateHelper {
         template.innerHTML = ExecutableInsert.Template.render(tmpl, data)
 
         const element = template.content.children.item(0)
-        IncodingEngine.Current.parse(element)
 
         return element
     }

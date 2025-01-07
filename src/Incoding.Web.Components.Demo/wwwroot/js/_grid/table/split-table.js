@@ -92,8 +92,10 @@ class SplitTable {
         this.colgroupsRenderer = new ColgroupRenderer(this)
         this.colgroupsRenderer.render()
 
-        this.summaryRenderer = new SummaryRenderer(this)
-        this.summaryRenderer.render()
+        if (this.schemaModel.some(panel => panel.getFlatColumns().some(c => c.summaryExpr))) {
+            this.summaryRenderer = new SummaryRenderer(this)
+            this.summaryRenderer.render()
+        }
 
         this.#abort = new AbortController()
 
@@ -145,10 +147,10 @@ class SplitTable {
 
         if (this.dataSource.isDataLoading) {
             this.footerRenderer.setLoading()
-            this.summaryRenderer.setLoading()
+            this.summaryRenderer?.setLoading()
         } else {
             this.footerRenderer.render()
-            this.summaryRenderer.render()
+            this.summaryRenderer?.render()
         }
     }
 
@@ -156,33 +158,62 @@ class SplitTable {
      * @param { IRecalculateData[] } updates
      */
     recalculate(updates) {
-        const updateRequest = updates.shift()
+        const updateRequest = updates[0]
+        const data = this.dataSource.getData()
 
-        if (updateRequest.WithChildren) {
-            this.refresh()
+        let rowId = ''
+
+        if (this.rowGroup.isGrouped()) {
+            const groupColumn = this.rowGroup.groupedColumn
+
+            const oldGroup = data.find(item => {
+                const group = item[RowGroup.GROUP_FIELD]
+
+                return group.some(item => item.RowId === updateRequest.Data.RowId)
+            })
+
+            oldGroup[RowGroup.GROUP_FIELD].removeBy(item => item.RowId === updateRequest.Data.RowId)
+
+            rowId = String(groupColumn.getValue(updateRequest.Data))
+
+            const newGroup = data.find(item => item[RowGroup.KEY_FIELD] === rowId)
+            newGroup[RowGroup.GROUP_FIELD].push(updateRequest.Data)
+
+            this.refreshRow(oldGroup[RowGroup.KEY_FIELD], true)
         } else {
-            const data = this.dataSource.getData();
+            rowId = updateRequest.Data.RowId
 
-            const index = data.findIndex(item => item.RowId === updateRequest.Data.RowId)
+            const index = data.findIndex(item => item.RowId === rowId)
             data[index] = updateRequest.Data
 
-            const trs = this.getTrsByRowId(updateRequest.Data.RowId)
-
-            const rowRenderer = new RowRenderer(this)
-            trs.forEach((tr, i) => {
-                const panel = this.schemaModel[i]
-
-                const newTr = rowRenderer.render(panel, tr.dataset.rowIndex)
-
-                tr.replaceChildren(...newTr.children)
-            })
+            updates.shift()
         }
 
-
-        if (updates.length !== 0) {
-            this.#nested[updateRequest.Data.RowId]?.recalculate(updates)
+        if (updateRequest.WithChildren || updates.length > 0) {
+            this.#nested[rowId]?.refreshRows()
+        } else {
+            this.#nested[rowId]?.recalculate(updates)
         }
 
+        this.refreshRow(rowId)
+
+        this.refreshFooter()
+    }
+
+    refreshRow(rowId, withChildren = false) {
+        const trs = this.getTrsByRowId(rowId)
+
+        const rowRenderer = new RowRenderer(this)
+        for (let i = 0; i < trs.length; i++) {
+            const oldTr = trs[i]
+            const newTr = rowRenderer.render(this.schemaModel[i], oldTr.dataset.rowIndex)
+
+            oldTr.replaceChildren(...newTr.children)
+        }
+
+        if (withChildren) {
+            this.#nested[rowId]?.refreshRows()
+        }
     }
 
 
@@ -337,6 +368,10 @@ class SplitTable {
         return this.schemaModel[0].nestedField
     }
 
+    getDropdownTmpl() {
+        return this.schemaModel[0].row.dropdownTmpl
+    }
+
 
     getColumnEditModule(panelIndex) {
         return new ColumnEdit(this, this.schemaModel[panelIndex])
@@ -355,10 +390,10 @@ class SplitTable {
             let selector
             switch (target) {
                 case "body":
-                    selector = '.split-table-content tbody'
+                    selector = '.split-table-content > table > tbody'
                     break;
                 case "header":
-                    selector = '.split-table-header thead'
+                    selector = '.split-table-header > table > thead'
                     break
             }
             targetElements.push(panel.querySelector(selector))

@@ -6,14 +6,8 @@ class RowRenderer {
      */
     splitTable
 
-    #cellRenderer
-    #dummyRenderer
-
     constructor(splitTable) {
         this.splitTable = splitTable
-
-        this.#cellRenderer = new CellRenderer()
-        this.#dummyRenderer = new DummyCellRenderer()
     }
 
     /**
@@ -26,14 +20,11 @@ class RowRenderer {
 
         const data = this.splitTable.dataSource.getData()
         const rowData = data[rowIndex]
-        const rowId = rowData["RowId"]
+        const rowId = rowData[RowModel.ROW_ID_FIELD]
 
         const tr = this.#createRow(panelModel.row, rowIndex, rowId)
 
-        const dummyRenderer = new DummyCellRenderer()
-        const cellRenderer = this.splitTable.rowGroup.isGrouped()
-            ? new GroupCellRenderer(this.splitTable.rowGroup)
-            : new CellRenderer(this.splitTable)
+        const cellRenderer = new CellRenderer(this.splitTable)
 
         for (const column of columns) {
             const td = cellRenderer.render(column, rowData)
@@ -44,7 +35,7 @@ class RowRenderer {
             tr.append(td)
         }
 
-        tr.append(dummyRenderer.render())
+        tr.append(CellRenderer.dummy())
 
         return tr
     }

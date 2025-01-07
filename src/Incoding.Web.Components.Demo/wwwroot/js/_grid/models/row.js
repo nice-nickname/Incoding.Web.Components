@@ -1,6 +1,8 @@
 ﻿
 class RowModel {
 
+    static ROW_ID_FIELD = 'RowId'
+
     /**
      * @type { string }
      */

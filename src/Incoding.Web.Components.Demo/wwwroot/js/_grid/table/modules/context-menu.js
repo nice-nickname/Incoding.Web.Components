@@ -42,7 +42,7 @@ class ContextMenu {
         const td = target.closest('td')
         const tr = target.closest('tr')
 
-        if (td.classList.contains(classes.nestedTableContainer)) {
+        if (td.classList.contains(classes.nestedTableContainer) || td.closest('tfoot') !== null) {
             return
         }
 

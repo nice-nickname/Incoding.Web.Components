@@ -23,7 +23,7 @@ class RowExpand {
 
         if (target.role === roles.expand) {
             ev.stopPropagation()
-            
+
             this.#toggleExpandCollapse(target)
         }
     }

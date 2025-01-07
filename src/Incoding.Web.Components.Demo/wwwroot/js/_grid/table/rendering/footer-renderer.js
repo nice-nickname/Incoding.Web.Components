@@ -73,7 +73,7 @@ class TableFooterRenderer extends TablePanelRendererBase {
         let data = this.parent.dataSource.getData()
 
         if (this.parent.rowGroup.isGrouped()) {
-            data = data.map(rowData => rowData[RowGroup.GROUP_FIELD])
+            data = data.flatMap(rowData => rowData[RowGroup.GROUP_FIELD])
         }
 
         const field = column.getField()

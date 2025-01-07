@@ -29,11 +29,10 @@ class RowGroup {
      * @param { ColumnModel } groupColumn
      */
     groupBy(groupColumn) {
-        const newData = this.#getGroupedData(groupColumn.getField())
+        const newData = this.#getGroupedData(groupColumn)
         const newSchema = this.#getGroupedSchema(groupColumn)
 
         this.groupedColumn = groupColumn
-
 
         this.splitTable.dataSource.setData(newData)
         this.splitTable.schemaModel = newSchema
@@ -44,29 +43,30 @@ class RowGroup {
     ungroup() {
         this.groupedColumn = null;
 
+        this.splitTable.schemaModel = this.#getUngroupedSchema()
+
         this.splitTable.dataSource.setData(this.#getUngroupedData())
         this.splitTable.refresh()
     }
 
     destroy() { }
 
-    #getGroupedData(groupField) {
+    #getGroupedData(groupColumn) {
         let data = this.splitTable.dataSource.getData()
         if (this.isGrouped()) {
             data = this.#getUngroupedData()
         }
 
-        const groupObj = Object.groupBy(data, item => item[groupField])
+        const groups = Object.entries(Object.groupBy(data, item => groupColumn.getValue(item)))
 
-        return Object
-            .entries(groupObj)
-            .map(([key, value]) => {
-                const item = { }
-                item[RowGroup.KEY_FIELD] = key
-                item[RowGroup.GROUP_FIELD] = value
+        return groups.map(([key, value]) => {
+            const item = { }
+            item[RowGroup.KEY_FIELD] = key
+            item[RowGroup.GROUP_FIELD] = value
+            item[RowModel.ROW_ID_FIELD] = key
 
-                return item
-            })
+            return item
+        })
     }
 
     #getUngroupedData() {
@@ -86,12 +86,13 @@ class RowGroup {
             const newPanel = newSchema[i]
             const oldPanel = schemas[i]
 
+            newPanel.row.dropdownTmpl = null
+            newPanel.nestedField = RowGroup.GROUP_FIELD
+            newPanel.nested = oldPanel
+
             if (oldPanel.columns.indexOf(groupColumn) !== -1) {
                 newPanel.edit(edit => edit.moveColumn(groupColumn.uid, 0))
             }
-
-            newPanel.nestedField = RowGroup.GROUP_FIELD
-            newPanel.nested = oldPanel
         }
 
         return newSchema

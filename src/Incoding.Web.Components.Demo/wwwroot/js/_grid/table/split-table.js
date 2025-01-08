@@ -255,7 +255,7 @@ class SplitTable {
 
             const td = document.createElement('td')
             td.classList.add(classes.nestedTableContainer)
-            td.colSpan = panelModel.getFlatColumns().length + 1
+            td.colSpan = panelModel.getFlatColumns().length
 
             nestedTr.append(td)
 

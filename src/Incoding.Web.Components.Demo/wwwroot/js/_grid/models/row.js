@@ -32,13 +32,11 @@ class RowModel {
         this.attrs = row.attrs
 
         if (row.dropdownTmpl) {
-            const dropdown = TemplateHelper.decodeTempalte(row.dropdownTmpl)
-            this.dropdownTmpl = ExecutableInsert.Template.compile(dropdown)
+            this.dropdownTmpl = TemplateHelper.compileTemplate(row.dropdownTmpl)
         }
 
         if (row.executable) {
-            const executable = TemplateHelper.decodeTempalte(row.executable)
-            this.executableTmpl = ExecutableInsert.Template.compile(executable)
+            this.executableTmpl = TemplateHelper.compileTemplate(row.executable)
         }
     }
 

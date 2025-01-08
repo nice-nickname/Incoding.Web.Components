@@ -86,12 +86,24 @@ class RowGroup {
             const newPanel = newSchema[i]
             const oldPanel = schemas[i]
 
+            newPanel.row.executableTmpl = null
             newPanel.row.dropdownTmpl = null
             newPanel.nestedField = RowGroup.GROUP_FIELD
             newPanel.nested = oldPanel
 
             if (oldPanel.columns.indexOf(groupColumn) !== -1) {
                 newPanel.edit(edit => edit.moveColumn(groupColumn.uid, 0))
+            }
+
+            for (const column of newPanel.getFlatColumns()) {
+                const isGroupColumn = column.equals(groupColumn)
+
+                column.executableTmpl = null
+                column.contentTmpl = null
+
+                if (!column.totalable && !isGroupColumn) {
+                    column.field = null
+                }
             }
         }
 

@@ -59,16 +59,6 @@ class ColumnModel {
     spreadField
 
     /**
-     * @type { string }
-     */
-    executable
-
-    /**
-     * @type { string | null }
-     */
-    content
-
-    /**
      * @type { ColumnType }
      */
     type
@@ -158,8 +148,15 @@ class ColumnModel {
      */
     isFiltered
 
-    #contentTmpl
-    #executableTmpl
+    /**
+     * @type { string }
+     */
+    contentTmpl = null
+
+    /**
+     * @type { string }
+     */
+    executableTmpl = null
 
     /**
      * @type { FormatService }
@@ -199,13 +196,11 @@ class ColumnModel {
         this.css = column.css
 
         if (column.executable) {
-            this.executable = TemplateHelper.decodeTempalte(column.executable)
-            this.#executableTmpl = ExecutableInsert.Template.compile(this.executable)
+            this.executableTmpl = TemplateHelper.compileTemplate(column.executable)
         }
 
         if (column.content) {
-            this.content = TemplateHelper.decodeTempalte(column.content)
-            this.#contentTmpl = ExecutableInsert.Template.compile(this.content)
+            this.contentTmpl = TemplateHelper.compileTemplate(column.content)
         }
 
         this.hidden = column.hidden
@@ -239,19 +234,11 @@ class ColumnModel {
         return this.parentUid != null
     }
 
-    getTempalteFn() {
-        return this.#contentTmpl
-    }
-
-    getExecutableFn() {
-        return this.#executableTmpl
-    }
-
     /**
      * @param { object } data
      */
     getValue(data) {
-        var value = this.spreadField ?
+        const value = this.spreadField ?
             data[this.spreadField][this.spreadIndex][this.field] :
             data[this.field];
 
@@ -346,8 +333,6 @@ class ColumnModel {
             css: this.css,
             spreadIndex: this.spreadIndex,
             spreadField: this.spreadField,
-            executable: this.executable,
-            content: this.content,
             type: this.type,
             format: this.format,
             alignment: this.alignment,
@@ -367,7 +352,14 @@ class ColumnModel {
             stacked: [],
             controlColumn: this.controlColumn,
             summaryExpr: this.summaryExpr,
+
+            executable: null,
+            content: null
+
         }, this.#formatter)
+
+        column.executableTmpl = this.executableTmpl
+        column.contentTmpl = this.contentTmpl
 
         column.stacked = this.stacked.map(s => s.clone())
 

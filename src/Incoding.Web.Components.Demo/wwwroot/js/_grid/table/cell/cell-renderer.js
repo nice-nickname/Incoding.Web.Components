@@ -126,7 +126,7 @@ class CellTemplateContentRenderer {
 
         const template = document.createElement("div")
 
-        template.innerHTML = ExecutableInsert.Template.render(column.getTempalteFn(), data)
+        template.innerHTML = ExecutableInsert.Template.render(column.contentTmpl, data)
 
         const formatElement = template.querySelector('.format')
         if (formatElement) {
@@ -168,44 +168,55 @@ class CellRenderer {
         td.dataset.index = column.index
         td.dataset.colIndex = column.index
 
+        if (column.executableTmpl) {
+            td.setAttribute('incoding', ExecutableInsert.Template.render(column.executableTmpl, data))
+        }
+
         td.style.textAlign = column.alignment.toString().toLowerCase()
 
         const contentElements = this.#renderCellContent(column, data)
 
-        contentElements.forEach(el => {
-            if (el) {
-                td.append(el)
-            }
-        })
+        if (_.isArray(contentElements)) {
+            contentElements.forEach(el => {
+                if (el) {
+                    td.append(el)
+                }
+            })
+        } else {
+            td.append(contentElements)
+        }
 
         return td;
     }
 
     #renderCellContent(column, data) {
-        const elements = []
+        let result
 
         if (column.isControlColumn()) {
             if (column.controlColumn === ControlColumn.Expand) {
-                elements.push(this.cells.expand.render(column, data))
+                result = this.cells.expand.render(column, data)
             }
 
             if (column.controlColumn === ControlColumn.Dropdown) {
-                elements.push(this.cells.dropdown.render(column, data))
+                result = this.cells.dropdown.render(column, data)
             }
         }
 
         if (column.content) {
             const template = this.cells.template.render(column, data)
-            td.append(...template.children)
 
-            elements.push(...template.children)
+            result = [...template.children]
         }
 
         if (!column.content && column.field) {
-            elements.push(this.cells.text.render(column, data))
+            result = this.cells.text.render(column, data)
         }
 
-        return elements
+        if (!_.isArray(result)) {
+            result = [result]
+        }
+
+        return result
     }
 
 }

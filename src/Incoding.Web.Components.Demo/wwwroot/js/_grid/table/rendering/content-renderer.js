@@ -63,6 +63,8 @@ class TableContentRenderer extends TablePanelRendererBase {
         for (const tbody of this.tbodies) {
             this.#ensureDummyRowIsLast(tbody)
         }
+
+        IncodingEngine.Current.parse(this.tbodies)
     }
 
     destroy() {
@@ -111,12 +113,6 @@ class TableContentRenderer extends TablePanelRendererBase {
             tbody.querySelectorAll(`[role=${roles.temp}]`)
                 .forEach((tempTr) => tempTr.remove())
         }
-    }
-
-    #createDummy() {
-
-
-        return tr
     }
 
     /**

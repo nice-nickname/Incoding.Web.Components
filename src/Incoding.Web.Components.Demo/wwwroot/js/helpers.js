@@ -27,6 +27,10 @@ class TemplateHelper {
         return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
     }
 
+    static compileTemplate(tmpl) {
+        return ExecutableInsert.Template.compile(this.decodeTempalte(tmpl))
+    }
+
     static renderToElement(tmpl, data) {
         const template = document.createElement('template')
         template.innerHTML = ExecutableInsert.Template.render(tmpl, data)

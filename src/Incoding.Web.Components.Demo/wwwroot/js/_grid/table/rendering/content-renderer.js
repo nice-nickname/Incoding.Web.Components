@@ -33,6 +33,13 @@ class TableContentRenderer extends TablePanelRendererBase {
             this.placeholders.push(placeholder)
             element.append(placeholder)
         })
+
+        this.tbodies.forEach(tbody => {
+            const dummy = document.createElement('tr')
+            dummy.classList.add('dummy-row')
+
+            tbody.append(dummy)
+        })
     }
 
     renderRows(data) {
@@ -52,6 +59,10 @@ class TableContentRenderer extends TablePanelRendererBase {
 
             this.#rowIndex++
         }
+
+        for (const tbody of this.tbodies) {
+            this.#ensureDummyRowIsLast(tbody)
+        }
     }
 
     destroy() {
@@ -61,6 +72,7 @@ class TableContentRenderer extends TablePanelRendererBase {
     removeRows() {
         for (const tbody of this.tbodies) {
             tbody.innerHTML = ''
+            this.#ensureDummyRowIsLast(tbody)
         }
         this.#rowIndex = 0
     }
@@ -90,6 +102,7 @@ class TableContentRenderer extends TablePanelRendererBase {
 
             const trs = Array.from({ length: 3 }, () => rowRenderer.renderLoadingRow(panelModel))
             tbody.append(...trs)
+            this.#ensureDummyRowIsLast(tbody)
         }
     }
 
@@ -98,6 +111,26 @@ class TableContentRenderer extends TablePanelRendererBase {
             tbody.querySelectorAll(`[role=${roles.temp}]`)
                 .forEach((tempTr) => tempTr.remove())
         }
+    }
+
+    #createDummy() {
+
+
+        return tr
+    }
+
+    /**
+     * @param { HTMLTableElement } tbody
+     */
+    #ensureDummyRowIsLast(tbody) {
+        let dummy = [...tbody.children].find(el => el.classList.contains('dummy-row'))
+
+        if (!dummy) {
+            dummy = document.createElement('tr')
+            dummy.className = 'dummy-row'
+        }
+
+        tbody.append(dummy)
     }
 
 }

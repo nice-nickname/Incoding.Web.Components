@@ -21,6 +21,11 @@ class TablePanelEditor {
         if (column.hasStackedParent()) {
             const parent = this.panelModel.getColumn(column.parentUid)
             parent.stacked.remove(column)
+
+            if (parent.stacked.length === 0) {
+                const siblings = this.panelModel.getSiblings(parent.uid)
+                siblings.remove(parent)
+            }
         } else {
             this.panelModel.columns.remove(column)
         }

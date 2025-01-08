@@ -48,11 +48,13 @@ class ColgroupRenderer {
         ]
 
         tables.forEach(table => {
-            const colgroup = table.querySelector('colgroup')
+            const cols = table.querySelectorAll(`col[data-uid="${column.uid}"]`)
 
-            const col = colgroup.querySelector(`col[data-uid="${column.uid}"]`)
-
-            col.style.width = column.width + 'px'
+            if (cols) {
+                cols.forEach(col => {
+                    col.style.width = column.width + 'px'
+                })
+            }
         })
     }
 

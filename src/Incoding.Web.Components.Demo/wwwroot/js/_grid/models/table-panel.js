@@ -103,6 +103,16 @@ class TablePanelModel {
         return searchColumn(this.columns)
     }
 
+    getSiblings(uid) {
+        const column = this.getColumn(uid)
+
+        if (column.hasStackedParent()) {
+            return this.getColumn(column.parentUid).stacked
+        }
+
+        return this.columns
+    }
+
     /**
      * @param { (editor: TablePanelEditor) => void } callback
      */

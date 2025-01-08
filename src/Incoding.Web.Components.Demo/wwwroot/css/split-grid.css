@@ -110,6 +110,7 @@
     margin: 0;
     padding: 0;
     width: 0;
+    height: 100%;
 
     table-layout: fixed;
 
@@ -137,6 +138,14 @@
     display: block;
     overflow-x: hidden;
     text-overflow: ellipsis;
+}
+
+.split-table .dummy-row {
+    height: 100%;
+}
+
+.split-table > thead {
+    height: 82px;
 }
 
 .split-table > tfoot {

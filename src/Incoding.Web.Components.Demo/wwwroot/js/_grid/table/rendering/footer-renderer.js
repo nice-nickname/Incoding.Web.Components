@@ -75,10 +75,6 @@ class TableFooterRenderer {
     #calculateTotal(column) {
         let data = this.parent.dataSource.getData()
 
-        if (this.parent.rowGroup?.isGrouped()) {
-            data = data.flatMap(rowData => rowData[RowGroup.GROUP_FIELD])
-        }
-
         const field = column.getField()
 
         return DataUtil.aggregate(data, field, 'sum')

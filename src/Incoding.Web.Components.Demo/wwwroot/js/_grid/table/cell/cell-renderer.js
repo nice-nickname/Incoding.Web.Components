@@ -68,7 +68,7 @@ class CellTextContentRenderer {
      * @param { object[] } data
      */
     render(column, data) {
-        const value = this.getValue(column, data)
+        const value = column.getValue(data)
 
         const textSpan = document.createElement("span")
         column.formatElement(value, textSpan)
@@ -82,28 +82,6 @@ class CellTextContentRenderer {
         return textSpan
     }
 
-    /**
-     * @param { ColumnModel } column
-     * @param { object[] } data
-     */
-    getValue(column, data) {
-        let value = ''
-        if (this.splitTable.rowGroup.isGrouped()) {
-            const groupColumn = this.splitTable.rowGroup.groupedColumn
-
-            if (groupColumn.equals(column)) {
-                value = data[RowGroup.KEY_FIELD]
-            }
-            else if (column.type === ColumnType.Numeric && column.format !== ColumnFormat.Percentage) {
-                const groupData = data[RowGroup.GROUP_FIELD]
-                value = DataUtil.aggregate(groupData, column.getField(), "sum")
-            }
-        } else {
-            value = column.getValue(data)
-        }
-
-        return value
-    }
 };
 
 class CellTemplateContentRenderer {

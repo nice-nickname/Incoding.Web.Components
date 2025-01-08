@@ -59,13 +59,44 @@ class RowGroup {
 
         const groups = Object.entries(Object.groupBy(data, item => groupColumn.getValue(item)))
 
+        const allTotalable = this.splitTable.getAllFlatColumns().filter(col => col.totalable)
+
         return groups.map(([key, value]) => {
             const item = { }
             item[RowGroup.KEY_FIELD] = key
             item[RowGroup.GROUP_FIELD] = value
             item[RowModel.ROW_ID_FIELD] = key
 
-            return item
+            return new Proxy(item, {
+                get(target, prop) {
+                    if (prop === RowGroup.KEY_FIELD || prop === RowGroup.GROUP_FIELD || prop === RowModel.ROW_ID_FIELD) {
+                        return Reflect.get(...arguments)
+                    }
+
+                    for (const column of allTotalable) {
+                        const groupData = target[RowGroup.GROUP_FIELD]
+
+                        if (column.field === prop) {
+                            return DataUtil.aggregate(groupData, column.getField(), 'sum')
+                        }
+
+                        if (column.spreadField === prop) {
+                            const allSameSpreaded = allTotalable.filter(col => col.spreadField === prop)
+                            return allSameSpreaded.reduce((obj, col) => {
+                                if (!obj[col.spreadIndex]) {
+                                    obj[col.spreadIndex] = { }
+                                }
+
+                                obj[col.spreadIndex][col.field] = DataUtil.aggregate(groupData, col.getField(), 'sum')
+
+                                return obj
+                            }, {})
+                        }
+                    }
+
+                    return ''
+                }
+            })
         })
     }
 

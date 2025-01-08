@@ -1,4 +1,88 @@
 ﻿
+class CellRenderer {
+
+    /**
+     * @type { SplitTable }
+     */
+    splitTable
+
+    constructor(splitTable) {
+        this.splitTable = splitTable
+
+        this.cells = {
+            text: new CellTextContentRenderer(splitTable),
+            template: new CellTemplateContentRenderer(splitTable),
+            expand: new CellExpandContentRenderer(splitTable),
+            dropdown: new CellDropdownContentRenderer(splitTable)
+        }
+    }
+
+    /**
+     * @param { ColumnModel } column
+     * @param { Object } data
+     * @returns { HTMLElement }
+     */
+    render(column, data) {
+        const td = document.createElement('td')
+
+        td.className = column.css
+        td.dataset.uid = column.uid
+        td.dataset.index = column.index
+        td.dataset.colIndex = column.index
+
+        if (column.executableTmpl) {
+            td.setAttribute('incoding', ExecutableInsert.Template.render(column.executableTmpl, data))
+        }
+
+        td.style.textAlign = column.alignment.toString().toLowerCase()
+
+        const contentElements = this.#renderCellContent(column, data)
+
+        if (_.isArray(contentElements)) {
+            contentElements.forEach(el => {
+                if (el) {
+                    td.append(el)
+                }
+            })
+        } else {
+            td.append(contentElements)
+        }
+
+        return td;
+    }
+
+    #renderCellContent(column, data) {
+        let result
+
+        if (column.isControlColumn()) {
+            if (column.controlColumn === ControlColumn.Expand) {
+                result = this.cells.expand.render(column, data)
+            }
+
+            if (column.controlColumn === ControlColumn.Dropdown) {
+                result = this.cells.dropdown.render(column, data)
+            }
+        }
+
+        if (column.content) {
+            const template = this.cells.template.render(column, data)
+
+            result = [...template.children]
+        }
+
+        if (!column.content && column.field) {
+            result = this.cells.text.render(column, data)
+        }
+
+        if (!_.isArray(result)) {
+            result = [result]
+        }
+
+        return result
+    }
+
+}
+
 class CellExpandContentRenderer {
 
     /**
@@ -114,87 +198,3 @@ class CellTemplateContentRenderer {
         return template;
     }
 };
-
-class CellRenderer {
-
-    /**
-     * @type { SplitTable }
-     */
-    splitTable
-
-    constructor(splitTable) {
-        this.splitTable = splitTable
-
-        this.cells = {
-            text: new CellTextContentRenderer(splitTable),
-            template: new CellTemplateContentRenderer(splitTable),
-            expand: new CellExpandContentRenderer(splitTable),
-            dropdown: new CellDropdownContentRenderer(splitTable)
-        }
-    }
-
-    /**
-     * @param { ColumnModel } column
-     * @param { Object } data
-     * @returns { HTMLElement }
-     */
-    render(column, data) {
-        const td = document.createElement('td')
-
-        td.className = column.css
-        td.dataset.uid = column.uid
-        td.dataset.index = column.index
-        td.dataset.colIndex = column.index
-
-        if (column.executableTmpl) {
-            td.setAttribute('incoding', ExecutableInsert.Template.render(column.executableTmpl, data))
-        }
-
-        td.style.textAlign = column.alignment.toString().toLowerCase()
-
-        const contentElements = this.#renderCellContent(column, data)
-
-        if (_.isArray(contentElements)) {
-            contentElements.forEach(el => {
-                if (el) {
-                    td.append(el)
-                }
-            })
-        } else {
-            td.append(contentElements)
-        }
-
-        return td;
-    }
-
-    #renderCellContent(column, data) {
-        let result
-
-        if (column.isControlColumn()) {
-            if (column.controlColumn === ControlColumn.Expand) {
-                result = this.cells.expand.render(column, data)
-            }
-
-            if (column.controlColumn === ControlColumn.Dropdown) {
-                result = this.cells.dropdown.render(column, data)
-            }
-        }
-
-        if (column.content) {
-            const template = this.cells.template.render(column, data)
-
-            result = [...template.children]
-        }
-
-        if (!column.content && column.field) {
-            result = this.cells.text.render(column, data)
-        }
-
-        if (!_.isArray(result)) {
-            result = [result]
-        }
-
-        return result
-    }
-
-}

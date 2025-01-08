@@ -45,7 +45,11 @@ class RowHover {
     }
 
     #hoverInCurrentTable(ev) {
-        const tr = ev.target.closest("tr")
+        let tr = ev.target.closest("tr")
+
+        if (tr.role !== roles.row) {
+            tr = tr.previousSibling
+        }
         const rowIndex = Number(tr.dataset.rowIndex)
 
         this.hoverRow(rowIndex)
@@ -60,8 +64,13 @@ class RowHover {
         let tr = container.closest('tr')
         while (tr) {
             if (tr.tagName === 'TR') {
-                const rowIndex = Number(tr.previousSibling.dataset.rowIndex)
-                this.hoverRow(rowIndex)
+                const prevRow = tr.previousSibling
+                const rowIndex = Number(prevRow.dataset.rowIndex)
+
+                if (!prevRow.classList.contains(classes.hover)) {
+                    this.hoverRow(rowIndex)
+                    break;
+                }
             }
             tr = tr.parentNode
         }

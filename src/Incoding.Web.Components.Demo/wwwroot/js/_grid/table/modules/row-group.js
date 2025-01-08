@@ -34,7 +34,7 @@ class RowGroup {
 
         this.groupedColumn = groupColumn
 
-        this.splitTable.dataSource.setData(newData)
+        this.splitTable.dataSource = new DataSource(newData)
         this.splitTable.schemaModel = newSchema
 
         this.splitTable.refresh()

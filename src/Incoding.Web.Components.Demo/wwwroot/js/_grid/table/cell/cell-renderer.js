@@ -64,13 +64,13 @@ class CellRenderer {
             }
         }
 
-        if (column.content) {
+        if (column.contentTmpl) {
             const template = this.cells.template.render(column, data)
 
             result = [...template.children]
         }
 
-        if (!column.content && column.field) {
+        if (!column.contentTmpl && column.field) {
             result = this.cells.text.render(column, data)
         }
 

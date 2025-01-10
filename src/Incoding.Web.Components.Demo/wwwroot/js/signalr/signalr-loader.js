@@ -125,7 +125,7 @@ class SignalRLoader {
 
         this.#splitTable.contentRenderer.hideLoadingRows()
         this.#splitTable.footerRenderer.render()
-        this.#splitTable.summaryRenderer.render()
+        this.#splitTable.summaryRenderer?.render()
 
         this.#root.dispatchEvent(new Event(events.signalr.complete))
         this.#streamStatus = "stopped"

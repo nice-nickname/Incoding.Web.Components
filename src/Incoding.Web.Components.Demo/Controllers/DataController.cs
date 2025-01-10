@@ -62,6 +62,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.Start, s => s.Date.Past())
                             .RuleFor(s => s.End, s => s.Date.Future())
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
+                            .RuleFor(s => s.IsValue, f => f.Random.Bool())
                     ;
 
             var data = fakerData.Generate(count);

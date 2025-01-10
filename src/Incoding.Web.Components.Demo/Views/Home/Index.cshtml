@@ -15,7 +15,7 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/SubGrid.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-primary"
@@ -25,7 +25,7 @@
                          </text>))
 
         @(Html.When(JqueryBind.Click)
-              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Simple.cshtml").Html())
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Stacked.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-primary"

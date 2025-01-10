@@ -47,6 +47,10 @@ class RowHover {
     #hoverInCurrentTable(ev) {
         let tr = ev.target.closest("tr")
 
+        if (tr.role === roles.temp) {
+            return
+        }
+
         if (tr.role !== roles.row) {
             tr = tr.previousSibling
         }

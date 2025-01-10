@@ -26,6 +26,8 @@ namespace Incoding.Web.Components.Demo
 
         public decimal? JTDHours { get; set; }
 
+        public bool IsValue { get; set; }
+
         public List<SamplePeriod> Period { get; set; } = [];
 
         public List<SampleData> Children { get; set; } = [];

@@ -15,7 +15,10 @@ class ColumnResize {
     destroy() { }
 
     resize(panelIndex, column, width) {
-        column.width = width
+        const panel = this.splitTable.schemaModel[panelIndex]
+        panel.edit(editor => {
+            editor.resize(column.uid, width)
+        })
 
         this.splitTable.colgroupsRenderer.updateColumn(panelIndex, column)
     }

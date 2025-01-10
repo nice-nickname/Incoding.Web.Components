@@ -97,6 +97,8 @@ class SplitTable {
             this.summaryRenderer.render()
         }
 
+        this.resizeColumnsToFit()
+
         this.#abort = new AbortController()
 
         this.columnMenu = new ColumnMenu(this);
@@ -376,6 +378,30 @@ class SplitTable {
     }
 
 
+    resizeColumnsToFit() {
+        for (let i = 0; i < this.panelElements.length; i++) {
+            const panel = this.panelElements[i]
+            const columns = this.schemaModel[i].getFlatColumns()
+
+            const columnsToFit = columns.filter(c => !c.width)
+
+            if (columnsToFit.length === 0) {
+                continue
+            }
+
+            const totalWidth = panel.clientWidth
+            const sizedWidth = DataUtil.aggregate(columns.filter(column => column.width), 'width', 'sum')
+            const widthPerColumn = (totalWidth - sizedWidth) / columnsToFit.length
+
+            requestAnimationFrame(() => {
+                columnsToFit.forEach(column => {
+                    this.columnResize.resize(i, column, widthPerColumn)
+                })
+            })
+        }
+    }
+
+
     /**
      * @param { "header" | "body" } target
      * @param {  keyof HTMLElementEventMap } eventStr
@@ -426,12 +452,19 @@ class SplitTable {
             const headerPanel = this.headerRenderer.elements[i]
             const contentPanel = this.contentRenderer.elements[i]
 
-            const scroll = (left, right) => {
-                right.scrollLeft = left.scrollLeft
+            let prevScrollLeft = 0;
+            const scroll = (ev, left, right) => {
+                const currentScrollLeft = ev.target.scrollLeft
+                if (prevScrollLeft !== currentScrollLeft) {
+
+                    right.scrollLeft = left.scrollLeft
+
+                    prevScrollLeft = currentScrollLeft
+                }
             }
 
-            headerPanel.addEventListener('scroll', (ev) => scroll(headerPanel, contentPanel))
-            contentPanel.addEventListener('scroll', (ev) => scroll(contentPanel, headerPanel))
+            headerPanel.addEventListener('scroll', (ev) => scroll(ev, headerPanel, contentPanel))
+            contentPanel.addEventListener('scroll', (ev) => scroll(ev, contentPanel, headerPanel))
         }
     }
 }

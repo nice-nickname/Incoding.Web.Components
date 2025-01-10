@@ -174,7 +174,16 @@ class SplitGrid {
     #connectVerticalPanelsScroll() {
         const scrollablePanels = this.splitTable.contentRenderer.elements
 
+        let prevScrollTop
         const handleScroll = (ev) => {
+            const currentScrollTop = ev.target.scrollTop
+
+            if (prevScrollTop === currentScrollTop) {
+                return
+            }
+
+            prevScrollTop = currentScrollTop
+
             scrollablePanels.forEach(panel => {
                 if (!panel.isSameNode(ev.target)) {
                     panel.scrollTop = ev.target.scrollTop

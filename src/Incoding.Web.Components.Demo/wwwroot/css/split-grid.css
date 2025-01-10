@@ -155,7 +155,8 @@
 .split-table > tfoot {
     position: sticky;
     bottom: -1px;
-    background: white;
+    z-index: 11;
+    background: #fff;
 }
 
 .split-table > thead > th.pinned,
@@ -263,6 +264,13 @@
 
 .split-grid-stacked .split-table .table-container {
     padding: 10px 0;
+    content-visibility: auto;
+}
+
+.column-pinned {
+    position: sticky;
+    z-index: 10;
+    background: white !important;
 }
 
 .split-grid-stacked .table-container .split-table thead {

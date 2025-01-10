@@ -27,10 +27,7 @@ public class ColumnBuilder<T>
     {
         Html = html;
 
-        Column = new Column
-                 {
-                         Width = 100
-                 };
+        Column = new Column();
     }
 
     public ColumnBuilder(IHtmlHelper html, int index)

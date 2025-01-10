@@ -41,9 +41,16 @@ class TableFooterRenderer {
 
         const tr = document.createElement('tr')
 
-        column.forEach((column) => {
+        let pinOffset = 0
+        column.forEach(column => {
             const td = document.createElement('td')
             td.style.textAlign = column.alignment;
+
+            if (column.isPinned) {
+                td.classList.add('column-pinned')
+                td.style.left = pinOffset + 'px'
+                pinOffset += column.width
+            }
 
             const span = document.createElement('span')
 

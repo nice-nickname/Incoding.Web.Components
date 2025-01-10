@@ -5,13 +5,23 @@
 <div class="d-flex flex-column vh-100 pb-3">
     <div class="d-flex gap-3 mx-3 my-3">
         @(Html.When(JqueryBind.Click)
+              .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Basic.cshtml").Html())
+              .AsHtmlAttributes(new
+                                {
+                                        @class = "btn btn-sm btn-primary"
+                                })
+              .ToButton(@<text>
+                             Basic
+                         </text>))
+
+        @(Html.When(JqueryBind.Click)
               .OnSuccess(dsl => dsl.With(s => s.EqualsAttribute("role", "main")).Insert.WithTemplateByView("~/Views/Examples/Regular.cshtml").Html())
               .AsHtmlAttributes(new
                                 {
                                         @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
-                             Regular
+                             SubGrid
                          </text>))
 
         @(Html.When(JqueryBind.Click)
@@ -21,7 +31,7 @@
                                         @class = "btn btn-sm btn-primary"
                                 })
               .ToButton(@<text>
-                             Simple
+                             Stacked
                          </text>))
 
         @(Html.When(JqueryBind.Click)

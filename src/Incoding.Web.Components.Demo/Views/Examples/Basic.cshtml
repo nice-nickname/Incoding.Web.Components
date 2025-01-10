@@ -1,0 +1,35 @@
+﻿@using Incoding.Web.Components.Demo.Controllers
+@using Incoding.Web.Components.Grid
+
+@(Html.Grid<SampleData>("grid")
+      .Mode(GridMode.SubGrid)
+      .Table(table => table.Columns(cols =>
+                                    {
+                                        cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable().Totalable();
+                                        cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable().Totalable().Filterable();
+                                        cols.Add().Field(s => s.AmountPercentage).Format(ColumnFormat.Percentage).Resizable().Title("Amount %")
+                                            .Attr("monkey", "type")
+                                            .Attr("data-value", tmpl => tmpl.For(s => s.Amount).ToHtmlString())
+                                            .IsAttr(tmpl => tmpl.Index, "ahaha")
+                                            .NotAttr(tmpl => tmpl.Index, "hehehe")
+                                            .Bind((iml, tmpl) => iml.When(JqueryBind.Click)
+                                                                    .StopPropagation()
+                                                                    .OnSuccess(dsl => dsl.Window.Alert(tmpl.For(s => s.AmountPercentage))));
+
+                                        cols.Stacked(s => s.Title("Dates"),
+                                                     stacked =>
+                                                     {
+                                                         stacked.Add().Field(s => s.Start).Resizable();
+                                                         stacked.Add().Field(s => s.End).Resizable();
+                                                     });
+                                    })
+                           .DropdownTmpl("~/Views/Shared/Dropdown.cshtml"))
+      .Empty(await Html.PartialAsync("~/Views/Shared/NoData.cshtml"))
+      .DataSource(new DataSource.SignalR
+                  {
+                          Event = JqueryBind.None,
+                          ChunkSize = 40,
+                          Method = nameof(SignalHub.StreamData_Many_Floating)
+                  })
+      .InfiniteScrolling()
+      .Render())

@@ -55,12 +55,19 @@ class TableHeaderRenderer extends TablePanelRendererBase {
     #createCells(cells, columns, level = 0) {
         if (!cells[level]) {
             cells[level] = []
+            cells[level].pinOffset = 0
         }
 
         columns.forEach(column => {
             const cell = new HeaderCellComponent(column)
 
             cells[level].push(cell)
+
+            if (column.isPinned) {
+                cell.element.classList.add('column-pinned')
+                cell.element.style.left = cells[level].pinOffset + 'px'
+                cells[level].pinOffset += column.width
+            }
 
             if (column.isStacked()) {
                 this.#createCells(cells, column.stacked, level + 1)

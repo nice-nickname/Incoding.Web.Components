@@ -24,8 +24,16 @@ class RowRenderer {
 
         const cellRenderer = new CellRenderer(this.splitTable)
 
+        let pinOffset = 0
         for (const column of columns) {
             const td = cellRenderer.render(column, rowData)
+
+            if (column.isPinned) {
+                td.classList.add('column-pinned')
+                td.style.left = pinOffset + 'px'
+                pinOffset += column.width
+            }
+
             td.dataset.rowIndex = rowIndex
 
             cellRenderer.render(column, rowData)

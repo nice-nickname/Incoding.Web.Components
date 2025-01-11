@@ -48,9 +48,6 @@ class SplitGrid {
     /** @type { SplitTable } */
     splitTable
 
-    /** @type { IRowRenderStrategy } */
-    renderingStrategy
-
 
     /**
      * @type { SplitLayout }
@@ -76,9 +73,12 @@ class SplitGrid {
         const panels = this.splitLayout.getPanels()
         this.splitTable = new SplitTable(this.dataSource, this.schemaModel, panels, this.mode, this.services)
 
-        this.renderingStrategy = this.infiniteScroll
-            ? new InfiniteScrollStrategy(this.splitTable, this.dataSource, this.infiniteScroll, this.splitTable.contentRenderer.elements[0])
-            : new RenderingStrategy(this.splitTable, this.dataSource)
+        const renderingStrategy = this.infiniteScroll
+            ? new InfiniteScrollStrategy(this.splitTable, this.infiniteScroll, this.splitTable.contentRenderer.elements[0])
+            : new RenderingStrategy(this.splitTable)
+
+        this.splitTable.setRenderingStrategy(renderingStrategy)
+
 
         this.#connectVerticalPanelsScroll()
 
@@ -114,13 +114,6 @@ class SplitGrid {
     }
 
 
-    clearData() {
-        this.renderingStrategy.reset()
-        this.dataSource.clear()
-
-        this.splitTable.clearData()
-    }
-
     /**
      * @param { Object[] | string } data
      */
@@ -133,8 +126,11 @@ class SplitGrid {
             data = JSON.parse(data || "[]")
         }
 
-        this.dataSource.appendData(data)
-        this.renderingStrategy.handleDataChanged()
+        this.splitTable.appendData(data)
+    }
+
+    clearData() {
+        this.splitTable.clearData()
     }
 
 

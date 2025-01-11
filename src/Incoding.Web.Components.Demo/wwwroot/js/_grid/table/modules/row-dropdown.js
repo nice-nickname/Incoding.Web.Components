@@ -47,7 +47,6 @@ class RowDropdown {
             if (this.#menu) {
                 const wasOpened = this.#menu.isOpen()
 
-                this.#menu.hide()
                 this.#menu.destroy()
                 this.#menu = null
 

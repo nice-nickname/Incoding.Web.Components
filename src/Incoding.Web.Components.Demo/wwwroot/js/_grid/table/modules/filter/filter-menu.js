@@ -85,7 +85,7 @@ class FilterMenu {
     #apply() {
         const criteria = this.#collectFilter()
 
-        this.splitTable.filter.filterColumn(this.column, criteria)
+        this.splitTable.filter.addFilter(this.column, criteria)
     }
 
     #clear() {

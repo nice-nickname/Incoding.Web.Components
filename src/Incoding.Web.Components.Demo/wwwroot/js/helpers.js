@@ -23,12 +23,12 @@ Array.prototype.removeBy = function(predicate) {
 
 class TemplateHelper {
 
-    static decodeTempalte(tmpl) {
+    static decodeTemplate(tmpl) {
         return tmpl.replaceAll('!-', '{{').replaceAll('-!', '}}')
     }
 
     static compileTemplate(tmpl) {
-        return ExecutableInsert.Template.compile(this.decodeTempalte(tmpl))
+        return ExecutableInsert.Template.compile(this.decodeTemplate(tmpl))
     }
 
     static renderToElement(tmpl, data) {

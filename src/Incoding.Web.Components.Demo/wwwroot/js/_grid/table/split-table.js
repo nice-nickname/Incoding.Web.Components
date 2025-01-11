@@ -56,12 +56,18 @@ class SplitTable {
      */
     id
 
+
     /**
      * Calling .abort() of this controller will remove
      * all event listeners automatically
      * @type { AbortController }
      */
     #abort
+
+    /**
+     * @type { IRowRenderStrategy }
+     */
+    #renderingStrategy
 
     /**
      * @type { { [rowId: string]: SplitTable } }
@@ -100,6 +106,7 @@ class SplitTable {
         this.resizeColumnsToFit()
 
         this.#abort = new AbortController()
+        this.#renderingStrategy = new RenderingStrategy(this)
 
         this.columnMenu = new ColumnMenu(this);
         this.rowGroup = new RowGroup(this);
@@ -113,6 +120,12 @@ class SplitTable {
 
         this.#connectHorizontalTableBodyScroll()
     }
+
+
+    setRenderingStrategy(strategy) {
+        this.#renderingStrategy = strategy
+    }
+
 
     render() {
         this.headerRenderer.render()
@@ -139,14 +152,28 @@ class SplitTable {
         this.headerRenderer.destroy()
         this.footerRenderer.destroy()
         this.contentRenderer.destroy()
+        this.summaryRenderer?.destroy()
     }
 
     clearData() {
+        this.dataSource.clear()
+        this.#renderingStrategy.reset()
+
         this.contentRenderer.showNoRows()
         this.contentRenderer.removeRows()
     }
 
     appendData(data) {
+        this.dataSource.appendData(data)
+
+        if (this.filter.isFiltered()) {
+            this.filter.updateDataSource()
+        }
+
+        this.#renderingStrategy.handleDataChanged()
+    }
+
+    appendRows(data) {
         this.contentRenderer.renderRows(data)
 
         if (this.dataSource.isDataLoading) {
@@ -238,7 +265,11 @@ class SplitTable {
 
     refreshRows() {
         this.contentRenderer.removeRows()
-        this.contentRenderer.renderRows(this.dataSource.getData())
+
+        this.#renderingStrategy.reset()
+        if (this.dataSource.getData().length) {
+            this.#renderingStrategy.handleDataChanged()
+        }
     }
 
 

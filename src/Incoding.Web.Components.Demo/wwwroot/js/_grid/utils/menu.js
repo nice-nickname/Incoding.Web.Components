@@ -43,6 +43,12 @@ class Menu {
     #clickableInside
 
     /**
+     * @type { boolean }
+     */
+    #keepOnClose
+
+
+    /**
      * @param { MenuOptions } options
      */
     constructor(options) {
@@ -55,6 +61,8 @@ class Menu {
         this.#onMenuClick = options.onClick || noop
         this.#onMenuClose = options.onClose || noop
         this.#clickableInside = options.clickableInside ?? false
+        this.#keepOnClose = options.keepOnClose ?? false
+
 
         this.#render()
         this.#addEventListeners()
@@ -93,7 +101,10 @@ class Menu {
     hide() {
         this.#element.classList.remove(classes.dropdownShow)
         this.#onMenuClose()
-        this.destroy()
+
+        if (!this.#keepOnClose) {
+            this.destroy()
+        }
     }
 
     destroy() {
@@ -218,7 +229,6 @@ class Menu {
      * @param { PointerEvent } ev
      */
     #handleClick = (ev) => {
-        ev.stopPropagation()
         const li = ev.target.closest('li')
 
         if (!li || li.hasAttribute('disabled')) return
@@ -245,6 +255,7 @@ class Menu {
      */
     #handleGlobalContextMenu = (ev) => {
         this.#handleGlobalClick(ev)
+
         if (this.#element.contains(ev.target)) {
             ev.preventDefault()
         }

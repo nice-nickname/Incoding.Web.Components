@@ -13,9 +13,9 @@ class RenderingStrategy {
     /** @type { number } */
     #renderedIndex
 
-    constructor(splitTable, dataSource) {
+    constructor(splitTable) {
         this.splitTable = splitTable;
-        this.dataSource = dataSource;
+        this.dataSource = splitTable.dataSource;
 
         this.reset()
     }
@@ -28,7 +28,7 @@ class RenderingStrategy {
             .getData()
             .slice(start, end)
 
-        this.splitTable.appendData(data)
+        this.splitTable.appendRows(data)
 
         this.#renderedIndex = end
     }

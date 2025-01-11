@@ -70,16 +70,12 @@ class SignalRLoader {
             .subscribe({
                 next: (data) => {
                     this.#onDataChunk(data)
-
-                    if (!data.IsNext) {
-                        this.#onComplete()
-                    }
                 },
                 error: (err) => {
                     this.#onError(err)
                 },
                 complete: () => {
-
+                    this.#onComplete()
                 }
             })
 
@@ -106,6 +102,10 @@ class SignalRLoader {
     }
 
     #onDataChunk = (data) => {
+        if (!data.IsNext) {
+            this.#dataSource.isDataLoading = false
+        }
+
         this.#splitTable.contentRenderer.hideLoadingRows()
         this.#splitGrid.appendData(data.Items)
         this.#splitTable.contentRenderer.showLoadingRows()

@@ -25,9 +25,9 @@ class InfiniteScrollStrategy {
     #nextChunkRequested = true
 
 
-    constructor(splitTable, dataSource, options, scrollElement) {
+    constructor(splitTable, options, scrollElement) {
         this.splitTable = splitTable;
-        this.dataSource = dataSource;
+        this.dataSource = splitTable.dataSource;
         this.scroller = scrollElement;
         this.options = options;
 
@@ -73,7 +73,8 @@ class InfiniteScrollStrategy {
             .getData()
             .slice(start, end)
 
-        this.splitTable.appendData(data)
+
+        this.splitTable.appendRows(data)
 
 
         this.#nextChunkRequested = false

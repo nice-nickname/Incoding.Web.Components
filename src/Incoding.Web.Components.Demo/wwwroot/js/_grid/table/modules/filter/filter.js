@@ -15,7 +15,7 @@ class Filter {
         this.splitTable = splitTable
     }
 
-    filterColumn(column, criteria) {
+    addFilter(column, criteria) {
         column.isFiltered = true
 
         let filter = this.#filters.find(filter => filter.column === column)
@@ -27,23 +27,28 @@ class Filter {
 
         filter.criteria = criteria
 
-        this.#updateDataSource()
+        this.updateDataSource()
         this.splitTable.refreshRows()
     }
 
     removeFilter(column) {
         this.#filters.removeBy(filter => filter.column === column)
 
-        this.#updateDataSource()
+        this.updateDataSource()
         this.splitTable.refreshRows()
     }
 
     clearFilters() {
         this.#filters = []
 
-        this.#updateDataSource()
+        this.updateDataSource()
         this.splitTable.refreshRows()
     }
+
+    isFiltered() {
+        return this.#filters.length !== 0
+    }
+
 
     showFilterMenu(column, position) {
         new FilterMenu(this.splitTable, column, this.getFilterData(column))
@@ -54,7 +59,7 @@ class Filter {
 
     }
 
-    #updateDataSource() {
+    updateDataSource() {
         const data = this.splitTable.dataSource.getInitialData()
 
         const filtered = data.filter(rowData => {
@@ -73,6 +78,7 @@ class Filter {
 
         this.splitTable.dataSource.setData(filtered)
     }
+
 
     /**
      * @param { ColumnModel } column

@@ -131,6 +131,7 @@ class TablePanelModel {
                 css: this.css,
                 row: { },
                 columns: [],
+                summary: this.summary
             },
             services, this.mode)
 

@@ -89,7 +89,7 @@ class FilterMenu {
     }
 
     #clear() {
-        this.splitTable.filter.clearFilter(this.column)
+        this.splitTable.filter.removeFilter(this.column)
     }
 
     /**

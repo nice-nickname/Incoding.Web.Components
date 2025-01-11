@@ -358,6 +358,9 @@ class SplitTable {
         })
     }
 
+    /**
+     * @return {ColumnModel[]}
+     */
     getAllFlatColumns() {
         return this.schemaModel.flatMap(panel => {
             return panel.getFlatColumns()
@@ -379,9 +382,9 @@ class SplitTable {
 
 
     resizeColumnsToFit() {
-        for (let i = 0; i < this.panelElements.length; i++) {
-            const panel = this.panelElements[i]
-            const columns = this.schemaModel[i].getFlatColumns()
+        for (let panelIndex = 0; panelIndex < this.panelElements.length; panelIndex++) {
+            const panel = this.panelElements[panelIndex]
+            const columns = this.schemaModel[panelIndex].getFlatColumns()
 
             const columnsToFit = columns.filter(c => !c.width)
 
@@ -389,13 +392,19 @@ class SplitTable {
                 continue
             }
 
-            const totalWidth = panel.clientWidth
+
+            let totalWidth = panel.clientWidth - 1
+            if (panelIndex === this.panelElements.length - 1) {
+                const scrollWidth = 10
+                totalWidth -= scrollWidth;
+            }
+
             const sizedWidth = DataUtil.aggregate(columns.filter(column => column.width), 'width', 'sum')
             const widthPerColumn = (totalWidth - sizedWidth) / columnsToFit.length
 
             requestAnimationFrame(() => {
                 columnsToFit.forEach(column => {
-                    this.columnResize.resize(i, column, widthPerColumn)
+                    this.columnResize.resize(panelIndex, column, widthPerColumn)
                 })
             })
         }

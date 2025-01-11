@@ -59,44 +59,47 @@ class RowGroup {
 
         const groups = Object.entries(Object.groupBy(data, item => groupColumn.getValue(item)))
 
-        const allTotalable = this.splitTable.getAllFlatColumns().filter(col => col.totalable)
+        const columns = this.splitTable.getAllFlatColumns()
 
-        return groups.map(([key, value]) => {
+        return groups.map(([key, values]) => {
             const item = { }
             item[RowGroup.KEY_FIELD] = key
-            item[RowGroup.GROUP_FIELD] = value
+            item[RowGroup.GROUP_FIELD] = values
             item[RowModel.ROW_ID_FIELD] = key
 
-            return new Proxy(item, {
-                get(target, prop) {
-                    if (prop === RowGroup.KEY_FIELD || prop === RowGroup.GROUP_FIELD || prop === RowModel.ROW_ID_FIELD) {
-                        return Reflect.get(...arguments)
+            const getValue = (column) => {
+                if (column.type === ColumnType.Boolean) {
+                    return column.getValue(values[0])
+                }
+
+                if (column.totalable) {
+                    return DataUtil.aggregate(values, column.getField(), 'sum')
+                }
+
+                return ''
+            }
+
+            columns.forEach((column) => {
+                if (column.spreadField !== null) {
+                    if (!item[column.spreadField]) {
+                        item[column.spreadField] = []
                     }
 
-                    for (const column of allTotalable) {
-                        const groupData = target[RowGroup.GROUP_FIELD]
-
-                        if (column.field === prop) {
-                            return DataUtil.aggregate(groupData, column.getField(), 'sum')
-                        }
-
-                        if (column.spreadField === prop) {
-                            const allSameSpreaded = allTotalable.filter(col => col.spreadField === prop)
-                            return allSameSpreaded.reduce((obj, col) => {
-                                if (!obj[col.spreadIndex]) {
-                                    obj[col.spreadIndex] = { }
-                                }
-
-                                obj[col.spreadIndex][col.field] = DataUtil.aggregate(groupData, col.getField(), 'sum')
-
-                                return obj
-                            }, {})
-                        }
+                    if (!item[column.spreadField][column.spreadIndex]) {
+                        item[column.spreadField][column.spreadIndex] = { }
                     }
 
-                    return ''
+                    const spreadItem = item[column.spreadField][column.spreadIndex]
+
+                    spreadItem[column.field] = getValue(column)
+                }
+
+                if (column.field !== null) {
+                    item[column.field] = getValue(column)
                 }
             })
+
+            return item
         })
     }
 
@@ -113,24 +116,27 @@ class RowGroup {
         }
         const newSchema = schemas.map(panel => panel.clone(this.splitTable.services))
 
-        for (let i = 0; i < newSchema.length; i++) {
-            const newPanel = newSchema[i]
-            const oldPanel = schemas[i]
+        for (let panelIndex = 0; panelIndex < newSchema.length; panelIndex++) {
+            const newPanel = newSchema[panelIndex]
+            const oldPanel = schemas[panelIndex]
 
             newPanel.row.executableTmpl = null
             newPanel.row.dropdownTmpl = null
             newPanel.nestedField = RowGroup.GROUP_FIELD
             newPanel.nested = oldPanel
 
+            if (panelIndex === 0 && newPanel.columns.findIndex(({ controlColumn }) => controlColumn === ControlColumn.Expand) === -1) {
+                newPanel.columns.unshift(ColumnModel.ControlColumn(ControlColumn.Expand))
+            }
+
             if (oldPanel.columns.indexOf(groupColumn) !== -1) {
-                newPanel.edit(edit => edit.moveColumn(groupColumn.uid, 0))
+                newPanel.edit(edit => edit.pin(groupColumn.uid))
             }
 
             for (const column of newPanel.getFlatColumns()) {
                 const isGroupColumn = column.equals(groupColumn)
 
                 column.executableTmpl = null
-                column.contentTmpl = null
 
                 if (!column.totalable && !isGroupColumn) {
                     column.field = null

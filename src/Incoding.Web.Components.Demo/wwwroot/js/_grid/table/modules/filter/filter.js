@@ -31,7 +31,7 @@ class Filter {
         this.splitTable.refreshRows()
     }
 
-    clearFilter(column) {
+    removeFilter(column) {
         this.#filters.removeBy(filter => filter.column === column)
 
         this.#updateDataSource()

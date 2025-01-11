@@ -373,4 +373,13 @@ class ColumnModel {
     static DEFAULT_MIN_WIDTH = 70
 
     static MAX_WIDTH = 700
+
+    static ControlColumn(type) {
+        return new ColumnModel({
+            width: 32,
+            controlColumn: type,
+            stacked: [],
+            alignment: ColumnAlignment.Left
+        }, null)
+    }
 }

@@ -7,7 +7,7 @@
                                     {
                                         cols.Add().Field(s => s.Index).Format(ColumnFormat.Empty).SortedBy(SortOrder.Asc).Resizable().Totalable();
                                         cols.Add().Field(s => s.IsValue).Title("Is Value").Filterable().Content(@<text>
-                                                                                                                     <input type="checkbox" @item.IsInline(s => s.IsValue, "checked") readonly />
+                                                                                                                     <input type="checkbox" @item.IsInline(s => s.IsValue, "checked") />
                                                                                                                  </text>);
 
                                         cols.Add().Field(s => s.Amount).Format(ColumnFormat.Currency).Resizable().Totalable().Filterable();

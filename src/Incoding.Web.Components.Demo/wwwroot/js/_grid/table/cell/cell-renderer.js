@@ -182,10 +182,6 @@ class CellTemplateContentRenderer {
      * @param { object[] } data
      */
     render(column, data) {
-        if (this.splitTable.rowGroup.isGrouped()) {
-            return undefined
-        }
-
         const template = document.createElement("div")
 
         template.innerHTML = ExecutableInsert.Template.render(column.contentTmpl, data)

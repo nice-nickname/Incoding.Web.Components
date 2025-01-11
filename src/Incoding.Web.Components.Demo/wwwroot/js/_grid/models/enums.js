@@ -24,6 +24,12 @@ const SortOrder = {
     Desc: 'Desc'
 };
 
+const ColumnAlignment = {
+    Left: 'Left',
+    Right: 'Right',
+    Center: 'Center'
+}
+
 const ControlColumn = {
     Expand: 'Expand',
     Dropdown: 'Dropdown'

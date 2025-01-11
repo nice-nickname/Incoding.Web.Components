@@ -45,6 +45,7 @@ namespace Incoding.Web.Components.Demo.Controllers
                             .RuleFor(s => s.JTDHours, s => s.Random.Decimal(-1000, 1000))
                             .RuleFor(s => s.Start, s => s.Date.Past())
                             .RuleFor(s => s.End, s => s.Date.Future())
+                            .RuleFor(s => s.IsValue, f => f.Random.Bool())
                             .RuleFor(s => s.Period, f => fakerPeriod.Generate(5))
                     ;
 

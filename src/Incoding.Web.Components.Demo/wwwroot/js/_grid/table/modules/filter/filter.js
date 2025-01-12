@@ -92,7 +92,7 @@ class Filter {
                 return value ? 'True' : 'False'
             }
 
-            if (column.type === ColumnType.Numeric && ExecutableHelper.IsNullOrEmpty(value)) {
+            if (column.type !== ColumnType.Numeric && ExecutableHelper.IsNullOrEmpty(value)) {
                 return '(Blank)'
             }
 
@@ -107,7 +107,8 @@ class Filter {
             .map(value => ({
                 value,
                 text: formatValue(value),
-                selected: isSelected(value)
+                selected: isSelected(value),
+                visible: true
             }))
     }
 

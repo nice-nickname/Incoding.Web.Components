@@ -7,9 +7,6 @@ class InfiniteScrollStrategy {
     /** @type { SplitTable } */
     splitTable
 
-    /** @type { DataSource } */
-    dataSource
-
     /** @type { HTMLElement } */
     scroller
 
@@ -27,7 +24,6 @@ class InfiniteScrollStrategy {
 
     constructor(splitTable, options, scrollElement) {
         this.splitTable = splitTable;
-        this.dataSource = splitTable.dataSource;
         this.scroller = scrollElement;
         this.options = options;
 
@@ -69,7 +65,7 @@ class InfiniteScrollStrategy {
         const start = chunk * this.options.chunkSize
         const end = start + this.options.chunkSize
 
-        const data = this.dataSource
+        const data = this.splitTable.dataSource
             .getData()
             .slice(start, end)
 
@@ -82,9 +78,11 @@ class InfiniteScrollStrategy {
     }
 
     #getAvailableChunks() {
-        const availableChunks = this.dataSource.getData().length / this.options.chunkSize
+        const dataSource = this.splitTable.dataSource
 
-        return this.dataSource.isDataLoading
+        const availableChunks = dataSource.getData().length / this.options.chunkSize
+
+        return dataSource.isDataLoading
             ? Math.floor(availableChunks)
             : Math.ceil(availableChunks)
     }

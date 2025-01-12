@@ -29,6 +29,10 @@ class RowGroup {
      * @param { ColumnModel } groupColumn
      */
     groupBy(groupColumn) {
+        if (this.splitTable.filter.isFiltered()) {
+            this.splitTable.filter.clearFilters()
+        }
+
         const newData = this.#getGroupedData(groupColumn)
         const newSchema = this.#getGroupedSchema(groupColumn)
 
@@ -64,8 +68,8 @@ class RowGroup {
         return groups.map(([key, values]) => {
             const item = { }
             item[RowGroup.KEY_FIELD] = key
-            item[RowGroup.GROUP_FIELD] = values
             item[RowModel.ROW_ID_FIELD] = key
+            item[RowGroup.GROUP_FIELD] = values
 
             const getValue = (column) => {
                 if (column.type === ColumnType.Boolean) {

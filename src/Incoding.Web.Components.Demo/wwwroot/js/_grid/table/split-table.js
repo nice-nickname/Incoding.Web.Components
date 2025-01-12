@@ -74,12 +74,24 @@ class SplitTable {
      */
     #nested = { }
 
-    constructor(dataSource, schemaModel, panels, mode, services) {
+
+    /**
+     * @param { ISplitTableProps } props
+     * @param { ServiceCollection } services
+     */
+    constructor(props, services) {
+        const {
+            dataSource,
+            schemaModel,
+            mode,
+            parentElements
+        } = props
+
         this.id = createGuid()
 
         this.dataSource = dataSource
         this.schemaModel = schemaModel
-        this.panelElements = this.#createPanels(panels)
+        this.panelElements = this.#createPanels(parentElements)
 
         this.mode = mode
 
@@ -165,6 +177,10 @@ class SplitTable {
 
     appendData(data) {
         this.dataSource.appendData(data)
+
+        if (this.rowGroup.isGrouped()) {
+
+        }
 
         if (this.filter.isFiltered()) {
             this.filter.updateDataSource()
@@ -307,7 +323,12 @@ class SplitTable {
         const nestedDataSource = new DataSource(nestedData)
         const nestedSchema = this.schemaModel.map(s => s.nested)
 
-        const nested = new SplitTable(nestedDataSource, nestedSchema, tds, this.services)
+        const nested = new SplitTable({
+            schemaModel: nestedSchema,
+            parentElements: tds,
+            mode: this.mode,
+            dataSource: nestedDataSource
+        }, this.services)
         nested.render()
 
         if (this.isStackedMode() && this.sort.isSorted()) {

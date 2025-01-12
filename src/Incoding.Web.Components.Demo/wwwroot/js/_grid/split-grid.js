@@ -39,9 +39,6 @@ class SplitGrid {
 
 
 
-    /** @type { DataSource } */
-    dataSource
-
     /** @type { ServiceCollection } */
     services
 
@@ -64,14 +61,21 @@ class SplitGrid {
         this.services.register(SplitGrid.NAME, this)
         this.services.register(FormatService.NAME, new FormatService(options.format))
 
-        this.dataSource = new DataSource([])
 
         this.schemaModel = options.tables.map(table => new TablePanelModel(table, this.services, this.mode))
 
         this.#createElements(options)
 
         const panels = this.splitLayout.getPanels()
-        this.splitTable = new SplitTable(this.dataSource, this.schemaModel, panels, this.mode, this.services)
+
+        const dataSource = new DataSource([])
+
+        this.splitTable = new SplitTable({
+            dataSource: dataSource,
+            mode: this.mode,
+            parentElements: panels,
+            schemaModel: this.schemaModel
+        }, this.services)
 
         const renderingStrategy = this.infiniteScroll
             ? new InfiniteScrollStrategy(this.splitTable, this.infiniteScroll, this.splitTable.contentRenderer.elements[0])

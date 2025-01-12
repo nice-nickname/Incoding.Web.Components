@@ -7,26 +7,22 @@ class RenderingStrategy {
     /** @type { SplitTable } */
     splitTable
 
-    /** @type { DataSource } */
-    dataSource
-
     /** @type { number } */
     #renderedIndex
 
     constructor(splitTable) {
         this.splitTable = splitTable;
-        this.dataSource = splitTable.dataSource;
 
         this.reset()
     }
 
     handleDataChanged() {
-        const start = this.#renderedIndex
-        const end = this.dataSource.getData().length
+        const dataSource = this.splitTable.dataSource
 
-        const data = this.dataSource
-            .getData()
-            .slice(start, end)
+        const start = this.#renderedIndex
+        const end = dataSource.getData().length
+
+        const data = dataSource.getData().slice(start, end)
 
         this.splitTable.appendRows(data)
 

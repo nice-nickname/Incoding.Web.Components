@@ -247,6 +247,16 @@ interface IPosition {
     left: number
 }
 
+interface ISplitTableProps {
+    dataSource,
+
+    schemaModel,
+
+    parentElements,
+
+    mode,
+}
+
 interface IRecalculateData {
     Data: {
         RowId: number,
